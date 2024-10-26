@@ -19,3 +19,11 @@ Mohammad Moustaqim - 30203478
 Tanisha Mattapalli - 30212526
 
 Natesh Oad - 30204200
+
+Victoria Piquer - 30206836
+
+Ethan Braum - 30205114
+
+Nathan Phan - 30114324
+
+Morteza Faraji - 30220450
