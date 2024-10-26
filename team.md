@@ -27,3 +27,13 @@ Ethan Braum - 30205114
 Nathan Phan - 30114324
 
 Morteza Faraji - 30220450
+
+Anmoldeep Gill - 30204965
+
+Sharon Wong - 30204805
+
+Orest Sinani - 30221738
+
+Lisa Tatarnikov - 30227087
+
+Mostafa Abdelazim - 30232131
