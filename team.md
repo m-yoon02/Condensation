@@ -37,3 +37,7 @@ Orest Sinani - 30221738
 Lisa Tatarnikov - 30227087
 
 Mostafa Abdelazim - 30232131
+
+Gabriel Moises - 30210912
+
+Samuel Ergando - 30211443
