@@ -41,3 +41,7 @@ Mostafa Abdelazim - 30232131
 Gabriel Moises - 30210912
 
 Samuel Ergando - 30211443
+
+Amir Khan - 30224881
+
+Elizabeth Akinpelu - 30230758
