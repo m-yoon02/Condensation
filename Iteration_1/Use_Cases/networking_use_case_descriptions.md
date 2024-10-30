@@ -48,9 +48,63 @@
 
 **Actor**: Player
 
+**Goal in Context**:
+
+**Preconditions**:
+
+**Trigger**:
+**Scenario**:
+
+**Post Conditions**:
+
+
+**Exceptions**:
+
+
+**Priority**:
+
+**When Available**:
+
+**Frequency of use**:
+**Channel to Actor**:
+
+**Secondary Actor**:
+
+**Channels to Secondary Actor**:
+
+**Open Issues**:
+
+
 ## **Use Case**: Queue Entry
 
 **Actor**: Player
+
+**Goal in Context**:
+
+**Preconditions**:
+
+**Trigger**:
+**Scenario**:
+
+**Post Conditions**:
+
+
+**Exceptions**:
+
+
+**Priority**:
+
+**When Available**:
+
+**Frequency of use**:
+**Channel to Actor**:
+
+**Secondary Actor**:
+
+**Channels to Secondary Actor**:
+
+**Open Issues**:
+
 
 
 
@@ -58,12 +112,29 @@
 
 **Actor**: Player
 
+**Goal in Context**:
+
+**Preconditions**:
+
+**Trigger**:
+**Scenario**:
+
+**Post Conditions**:
 
 
+**Exceptions**:
 
 
+**Priority**:
 
+**When Available**:
 
+**Frequency of use**:
+**Channel to Actor**:
 
+**Secondary Actor**:
 
-## Use Cases for Network
+**Channels to Secondary Actor**:
+
+**Open Issues**:
+
