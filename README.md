@@ -8,4 +8,5 @@
     -
 
 `team.md` in the main repository
+`SENG300_Project_Contract_Signed.pdf` in the main repository
 
