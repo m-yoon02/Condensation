@@ -1,7 +1,7 @@
 # Network Use Case Descriptions (Ethan)
 note: put into pdf when all use cases are done
 
-Use Case: Initialise Connection
+## Use Case: Initialise Connection
 
 Iteration: 1
 
@@ -34,7 +34,7 @@ Frequency of Use: Very high
 
 Channel to Actor: User interface, network connection
 
-Use Case: Maintain Connection
+## Use Case: Maintain Connection
 
 Iteration: 1
 
