@@ -59,3 +59,55 @@
 - **Frequency of Use:** Very frequent (as this will allow the users to play eventually)
 - **Channel to actor:** Player plays the game with just simple mouse clicks/keys as per the game functionality.
 
+## End Game
+- **Use Case:** End game
+- **Primary Actor:** Network
+- **Goal in Context:** Terminates a game session, whenever a winning move is played thereby resulting the game to end and then notifies both the players about the results.
+- **Preconditions:**
+	- Both the players are in an active game session.
+    - Either of the player has played a winning move resulting in game termination.
+    - Either of the player has played a move that resulted in a draw, the game also terminates in that case and notifes the player.
+- **Trigger:** The system detects that either of the players has played a winning/losing/drawing move.
+- **Scenario:**
+	- The system receives the last move from the player.
+    - The move is then verified and checked.
+    - The game state is updated and synchronized for both the players.
+    - The system then does all the calculations and detects that it is a winning move played by either of the players.
+    - The system then displays the game results to both the players and indicates that the game is over.
+    - The system then updates the leaderboard as per the game results and player's stats.
+- **Postconditions:** 
+    - The game session is terminated properly.
+    - Player rankings are updated accordingly in the leaderboard after every game played.
+- **Exceptions:**
+	- Connection disruption may occur due to which even after playing a winning move, the system couldn't detect that and the game doesn't end.
+    - The move played wasn't checked properly might also lead to end the game abruptly.
+    - The game stats for the players weren't updated properly.
+- **Priority:**  High
+- **When Available:** 3rd Iteration 
+- **Frequency of Use:** Very frequent (after every game session)
+- **Channel to actor:** The system coordinates the game ending process automatically after it detects the move played.
+
+## View Leaderboard
+- **Use Case:** View Leaderboard
+- **Primary Actor:** Player
+- **Goal in Context:** Allows player to check the leaderboard in order to view their current standings and rankings for other players.
+- **Preconditions:**
+	- The player is logged in and has played sufficient number of games in order to be visible on the leaderboard.
+    - Leaderboard is available to retrieve the rankings for all players as per their gaming history and stats.
+- **Trigger:** Whenever the player requests to view the leaderboard. 
+- **Scenario:**
+	- The player has finished their game sesssion.
+    - The player then requests to view the leaderboard.
+    - The request is received by the system and thereby it fetches all the current top rankings from the database.
+    - The GUI interface receives the requested data and displays it as a leaderboard.
+    - The players therefore can then view their current standings and compare it with their opponents too.
+- **Postconditions:** 
+    - The player is able to successfully retrive the leaderboard data and view their rankings.
+    - The rankings calculated are correct and that it was updated as per the latest game played by the player.
+- **Exceptions:**
+	- There was a disruption in connection which caused miscalculation in rankings thereby the ranking displayed was incorrect.
+    - The leaderboard rankings were not updated after each game played.
+- **Priority:** High
+- **When Available:** 3rd iteration 
+- **Frequency of Use:** Quite a few sometimes.(Depends on the player)
+- **Channel to actor:** Player interacts with the GUI just normally using the mouse in order to navigate and view the leaderboard.
