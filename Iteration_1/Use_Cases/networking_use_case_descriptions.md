@@ -306,4 +306,3 @@
 - **When Available:** 3rd iteration 
 - **Frequency of Use:** Quite a few sometimes.(Depends on the player)
 - **Channel to actor:** Player interacts with the GUI just normally using the mouse in order to navigate and view the leaderboard.
-
