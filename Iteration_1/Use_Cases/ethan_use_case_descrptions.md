@@ -108,3 +108,38 @@ When Available: 1st iteration
 Frequency of Use: Very high
 
 Channel to Actor: Network connection, server logs, graphical interface
+
+## Use Case: Session Timeout/Inactive
+
+Iteration: 2
+	
+Primary Actor: Network
+
+Goal in Context: End inactive sessions to free up network resources
+
+Preconditions: 
+- The player is connected to the network and their session has been idle for 10 minutes 
+- NetworkManager is functioning
+
+Trigger: The current players session has been idle (no activity) for 10 minutes
+
+Scenario:
+1. A players session has been idle for 10 minutes
+2. An inactivity warning is displayed to the player
+3. If the player remains inactive NetworkManager terminates their session
+4. A notification that their session has been terminated is displayed to the player
+
+Post Conditions:
+- Player status is updated to offline
+
+Exceptions:
+- Player resumes activity during the warning period, cancelling the timeout.
+- NetworkManager fails to terminate the session due to a network error.
+
+Priority: Medium
+
+When Available: 2nd iteration
+
+Frequency of Use: Low to medium
+
+Channel to actor: Graphical interface and server logs
