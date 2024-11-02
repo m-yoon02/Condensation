@@ -260,8 +260,9 @@
 - **Goal in Context:** Terminates a game session, whenever a winning move is played thereby resulting the game to end and then notifies both the players about the results.
 - **Preconditions:**
 	- Both the players are in an active game session.
-    - Either of the player has played a winning move resulting in game termination.
-    - Either of the player has played a move that resulted in a draw, the game also terminates in that case and notifes the player.
+    - Either of the players have played a winning move resulting in game termination.
+    - Either of the players have played a move that resulted in a draw, the game also terminates in that case and notifes the player.
+    - Either of the players have forfeited. A forefiet will terminate the game and the player who forfeited will automatically lose.
 - **Trigger:** The system detects that either of the players has played a winning/losing/drawing move.
 - **Scenario:**
 	- The system receives the last move from the player.
