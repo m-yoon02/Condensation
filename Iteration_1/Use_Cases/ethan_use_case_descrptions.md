@@ -70,3 +70,41 @@ When Available: 1st iteration
 Frequency of Use: Very high
 
 Channel to Actor: User interface, network connection, connection notifications
+
+## Use Case: Manage Network
+
+Iteration: 1
+
+Primary Actor: Network
+
+Goal in Context: To Ensure that all connections are being managed. Which includes initialization, maintenance, and termination of player connections to maintain a stable connection to the network
+
+Preconditions:
+- The servers are active, and NetworkManager is functioning
+- Online services (Matchmaking, chat, game sessions) are enabled, and accessible to players
+
+Trigger: The player initiates any kind of network activity
+
+Scenario: 
+1. The NetworkManager is active and listening for network requests from players
+2. A request is received and NetworkManager checks for network availability
+3. NetworkManager fulfils the players request
+4. NetworkManager continues to monitor for requests and routing to different services
+
+Post Conditions:
+- All active connections are monitored, maintained, and closed as needed
+- Network resources are efficiently allocated and released
+- Players experience minimal interruptions in their connection to network services
+
+Exceptions:
+- NetworkManager fails to establish a connection insufficient resources
+- NetworkManager encounters unexpected latency during an active session
+- Disconnection occurs due to a network error
+
+Priority: Essential
+
+When Available: 1st iteration
+
+Frequency of Use: Very high
+
+Channel to Actor: Network connection, server logs, graphical interface
