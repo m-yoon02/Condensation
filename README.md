@@ -1,6 +1,6 @@
 # SENG 300 Project Group P-4
 
-## Iteration 1 Deliverables in `Iteration_1`
+## Iteration 1 Deliverables in `Iteration_1` (all files for Iteration 1 are here)
 - `Documentation`
   - `Backend_Planning`: Contains the planning document used by the backend team
   - `Frontend_Planning`: Contains the planning documents used by the frontend team
@@ -12,6 +12,7 @@
   - `frontend_use_case_diagram.png`: The Frontend Use Case Diagram
   - `backend_use_case_description.pdf`: The Backend Use Case Descriptions
   - `frontend_use_case_description.pdf`: The Frontend Use Case Descriptions
+- `project_tracker.xlsx`: Project Tracker for the Iteration 1
     
 ## Iteration 2 Deliverables in `Iteration_2`
     -   
