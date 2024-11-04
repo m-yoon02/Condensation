@@ -5,6 +5,7 @@
   - `Backend_Planning`: Contains the planning document used by the backend team
   - `Frontend_Planning`: Contains the planning documents used by the frontend team
   - `Network_Planning`: Contains the planning document used by the network team
+  - `Lead Planning`: Files used by Sam to help the leads and Rishabh in planning
 - `Structure Diagrams`
   - `backend_structure_diagram.png`: The Backend Class Structure Diagram
   - `frontend_structure_diagram.png`: The Frontend Class Structure Diagram
