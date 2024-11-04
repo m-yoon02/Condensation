@@ -7,6 +7,11 @@
 - `Structure Diagrams`
   - `backend_structure_diagram.png`: The Backend Class Structure Diagram
   - `frontend_structure_diagram.png`: The Frontend Class Structure Diagram
+- `Use_Cases`
+  - `backend_use_case_diagram.png`: The Backend Use Case Diagram
+  - `frontend_use_case_diagram.png`: The Frontend Use Case Diagram
+  - `backend_use_case_description.pdf`: The Backend Use Case Descriptions
+  - `frontend_use_case_description.pdf`: The Frontend Use Case Descriptions
     
 ## Iteration 2 Deliverables in `Iteration_2`
     -   
