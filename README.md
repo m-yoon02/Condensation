@@ -24,7 +24,7 @@
     -
 
 - `team.md`: in the main repository
-- `gitlab_link.txt`: the gitlab link
-- `contract.md`: the contract that people signed
+- `gitlab_link.txt`: the gitlab link in the main repository
+- `contract.md`: the contract that people signed in the main repository
 - `SENG300_Project_Contract_Signed.pdf`: in the main repository
 
