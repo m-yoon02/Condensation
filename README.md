@@ -2,10 +2,11 @@
 
 ## Iteration 1 Deliverables in `Iteration_1`
 - `Documentation`
-   -   `Backend_Planning`: Contains the planning document used by the backend team
-  
+  - `Backend_Planning`: Contains the planning document used by the backend team
+  - `Frontend_Planning`: Contains the planning documents used by the frontend team
 - `Structure Diagrams`
-   - 
+  - `backend_structure_diagram.png`: The Backend Class Structure Diagram
+  - `frontend_structure_diagram.png`: The Frontend Class Structure Diagram
     
 ## Iteration 2 Deliverables in `Iteration_2`
     -   
