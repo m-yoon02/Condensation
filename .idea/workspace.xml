@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="648e2c6a-0a4d-45a6-8050-61b607155d28" name="Changes" comment="" />
+    <list default="true" id="9be17e6c-0729-4f00-8598-b2e4b7fe3e09" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,13 +10,30 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitLabMergeRequestFiltersHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPENED",
+    "assignee": {
+      "type": "org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue",
+      "username": "project_6104_bot_3a2e84f106400ba9841a79ce44d344e6",
+      "fullname": "meow"
+    }
+  }
+}]]></component>
+  <component name="GitLabMergeRequestsSettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "first": "git@csgit.ucalgary.ca:ssafe/seng300-f24-project.git",
+    "second": "04d4e59c-ca8e-4db2-9727-4f13bc7e3e16"
+  }
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
   "associatedIndex": 2
 }]]></component>
-  <component name="ProjectId" id="2oS2PGpod3AgrKyD2A6aE7JrQjD" />
+  <component name="ProjectId" id="2oS4w8TAxsO9DzsD7mqe402e6I1" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
@@ -27,12 +41,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "networking__code__planning",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -40,12 +50,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="648e2c6a-0a4d-45a6-8050-61b607155d28" name="Changes" comment="" />
-      <created>1730848630826</created>
+      <changelist id="9be17e6c-0729-4f00-8598-b2e4b7fe3e09" name="Changes" comment="" />
+      <created>1730849879184</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1730848630826</updated>
-      <workItem from="1730848631866" duration="366000" />
+      <updated>1730849879184</updated>
+      <workItem from="1730849881632" duration="58000" />
     </task>
     <servers />
   </component>
