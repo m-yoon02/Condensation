@@ -7,9 +7,11 @@
   - `Network_Planning`: Contains the planning document used by the network team
   - `Lead Planning`: Files used by Sam to help the leads and Rishabh in planning
 - `Structure Diagrams`
-  - `backend_structure_diagram.png`: The Backend Class Structure Diagram
-  - `frontend_structure_diagram.png`: The Frontend Class Structure Diagram
-  - `networking_structure_diagram.png`: The Networking Class Structure Diagram
+  - `backend_class_structure_diagram.png`: The Backend Class Structure Diagram
+  - `frontend_class_structure_diagram.png`: The Frontend Class Structure Diagram
+  - `networking_class_structure_diagram.png`: The Networking Class Structure Diagram
+  - `class_diagram.png`: All the diagrams merged
+
 - `Use_Cases`
   - `backend_use_case_diagram.png`: The Backend Use Case Diagram
   - `frontend_use_case_diagram.png`: The Frontend Use Case Diagram
