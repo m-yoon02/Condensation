@@ -1,4 +1,4 @@
-package Networking.Models;
+package Networking.DTO;
 
 import Networking.DTO.Player;
 
