@@ -1,4 +1,4 @@
-package Networking.Services;
+package Networking.Managers;
 
 public class GameSessionManager {
 }
