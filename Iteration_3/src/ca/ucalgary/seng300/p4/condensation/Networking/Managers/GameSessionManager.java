@@ -1,4 +1,4 @@
-package Networking.Managers;
+package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
 
 import java.util.HashMap;
 import java.util.Map;

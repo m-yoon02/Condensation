@@ -1,4 +1,4 @@
-package Networking.DTO;
+package ca.ucalgary.seng300.p4.condensation.Networking.DTO;
 
 import java.util.UUID;
 
