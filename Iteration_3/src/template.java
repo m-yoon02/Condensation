@@ -1,4 +1,7 @@
-package PACKAGE_NAME;
-
 public class template {
+
+    public boolean returnTemplate(){
+        return true;
+    }
+
 }
