@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Vector2;
 
 public abstract class GamePiece {
     private int x;
@@ -21,8 +22,8 @@ public abstract class GamePiece {
         return y;
     }
 
-    public int[] getPosition(){
-        return new int[]{x, y};
+    public Vector2 getPosition(){
+        return new Vector2(x, y);
     }
 
     public PieceColor getColor() {

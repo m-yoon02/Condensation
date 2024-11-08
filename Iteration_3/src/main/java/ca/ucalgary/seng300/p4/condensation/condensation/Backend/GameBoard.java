@@ -4,11 +4,9 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.GamePiece
 
 import java.util.ArrayList;
 
-//May or may not switch from int[]{x, y} to just int x, int y
-
 public class GameBoard<T extends GamePiece> {
-    private int rowSize;
-    private int columnSize;
+    private final int rowSize;
+    private final int columnSize;
     private ArrayList<ArrayList<T>> board;
 
     public GameBoard(int rowSize, int columnSize) {
@@ -24,24 +22,24 @@ public class GameBoard<T extends GamePiece> {
         }
     }
 
-    public boolean positionWithinBounds(int[] position){
-        return position[0] >= 0 && position[0] < columnSize
-                && position[1] >= 0 && position[0] < rowSize;
+    public boolean positionWithinBounds(Vector2 position){
+        return position.getX() >= 0 && position.getX() < columnSize
+                && position.getY() >= 0 && position.getY() < rowSize;
     }
 
-    public boolean placePiece(T piece, int[] position){
+    public boolean placePiece(T piece, Vector2 position){
         return false;
     }
 
-    public boolean movePiece(int[] oldPosition, int[] newPosition){
+    public boolean movePiece(Vector2 oldPosition, Vector2 newPosition){
         return false;
     }
 
-    public boolean removePiece(int[] position){
+    public boolean removePiece(Vector2 position){
         return false;
     }
 
-    public boolean isMovePossible(int[] position){
+    public boolean isMovePossible(Vector2 position){
         return false;
     }
 
@@ -49,7 +47,7 @@ public class GameBoard<T extends GamePiece> {
         return false;
     }
 
-    public T getPiece(int[] position){
+    public T getPiece(Vector2 position){
         return null;
     }
 }
