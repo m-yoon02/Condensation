@@ -19,9 +19,9 @@ public class GameTimer {
         }
     }
 
-    private PieceColor getOtherPlayerColor(PieceColor currentColor){
+    private PieceColor getOtherPlayerColor(PieceColor thisColor){
         for (PieceColor color: playerColors){
-            if (color != currentColor){
+            if (color != thisColor){
                 return color;
             }
         }
@@ -39,7 +39,7 @@ public class GameTimer {
         this.currentPlayerColor = getOtherPlayerColor(playerColorToSwitchFrom);
     }
 
-    public void startTimer() throws InterruptedException {
+    public void startTimer(){
 
     }
 
