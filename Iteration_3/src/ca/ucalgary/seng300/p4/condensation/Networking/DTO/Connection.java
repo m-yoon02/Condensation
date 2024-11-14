@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.DTO;
 
+
 import java.util.UUID;
 
 public class Connection {
@@ -33,4 +34,3 @@ public class Connection {
         System.out.println("Player " + playerID + " is disconnected.");
     }
 }
-
