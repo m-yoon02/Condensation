@@ -58,7 +58,13 @@ Each team member will assume specific technical roles (e.g., Backend Developer, 
 ## 7. Accountability and Consequences
 
 - **Quality Standards**: Work not meeting project standards must be revised by the team leader before submission.
-- **Remarks in Peer Review**: In extreme cases, the members will write about the poor performance
+- **Remarks in Peer Review**: In extreme cases, the members will write about the poor performance.
+- **Accountability Table:**
 
+  | Name        | Adjustment | Reason                                                                   |
+  |-------------|------------|--------------------------------------------------------------------------|
+  | Alpha       | 0 | Consistently met deadlines and team expectations.                        |
+  | Beta        | -1 | Low Contribution. No inputs.                                             |
+  | Gamma | -9 | No Response and No contact. |
 ## 8. Acknowledgment
 By signing below, each team member agrees to the terms outlined above and commits to active, respectful, and professional collaboration.
