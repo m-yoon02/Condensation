@@ -25,3 +25,14 @@ A console log is beneficial for debugging since it can identify problems within 
 have a message that is written to a log file and can be used by devs to improve the system. Additionally, it is useful to 
 identify program crashes that may result from the GUI not initializing components properly. In principle these logs are 
 written to the system output in the IDE, however can be saved to a file that is overwritten each time program initializes.
+
+1. **Debugging Purposes:** By implementing error codes developers can quickly target errors and resolve issues appropriately.
+   These are particularly important for first iterations of developmental code to see side effects before code is created for production.
+
+2. **User Accessibility**: Specific error logging ensures that the end user is able to report issues that may have skipped testing
+   phase, which then can be relayed to developers who can issue patches. Additionally, developer can see the sequence of behaviour that
+   lead the end user to encounter the specific bug.
+
+3. **Testing Identification**: Similar to user accessibility, it can be difficult to pinpoint the specific behaviour that 
+can cause unit testing to fail. By having a console log, developers can recreate the scenario and target the lines of
+code that is causing the error to appear. 
