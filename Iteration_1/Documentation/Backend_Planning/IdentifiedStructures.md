@@ -1,0 +1,14 @@
+## Identified Structures
+- GameBoard \<T extends GamePiece>
+- GamePiece
+    - CheckersPiece
+    - TicTacToePiece
+    - Connect4Piece
+- IGameHandler (Has listeners for when the game ends or the player turn ends)
+    - Abstract GameHandler (Each child class has constants to define board size and game piece type), (contains a GameBoard)
+        - CheckersHandler
+        - TicTacToeHandler
+        - Connect4Handler
+- Networking Structures (TBD)
+    - Will need something that turns game state into JSON
+    - Might also need some things that take in JSON (or networking can take care of parsing the JSON)
