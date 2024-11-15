@@ -1,0 +1,26 @@
+Feature Proposal: Have three different teams. This is likely the reason why the
+group went a bit overboard on Networking. It would have been more productive to
+merge the responsibilities of the two other teams into the Networking team, with
+the Backend handling game logic and the Frontend focusing on the GUI. This way,
+the Networking team wouldn't have to go unnecessarily in-depth on a
+synchronization plan. That said, I understand why they put so much effort into
+this—it’s definitely above and beyond, but perhaps a little too ambitious for a
+SENG final project.
+
+Feature Proposal: 
+Since the group is working on multiple clients connecting to a server, you could
+use threads or processes to handle each client connection separately. This would
+make the server logic simpler and avoid the need for so many nested loops.
+Another option is to use a singleton class for simplicity, but the current loop
+idea seems tricky to implement and would likely be hard to debug. Switching to
+one of these approaches could make the system much easier to manage.
+
+
+
+
+
+
+
+
+
+
