@@ -4,26 +4,24 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 
 public abstract class GamePiece {
-    private int x;
-    private int y;
+    private Vector2 position;
     private final PieceColor color;
 
-    public GamePiece(int x, int y, PieceColor color) {
-        this.x = x;
-        this.y = y;
+    public GamePiece(Vector2 position, PieceColor color) {
+        this.position = position;
         this.color = color;
     }
 
     public int getX() {
-        return x;
+        return position.x();
     }
 
     public int getY() {
-        return y;
+        return position.y();
     }
 
     public Vector2 getPosition(){
-        return new Vector2(x, y);
+        return position;
     }
 
     public PieceColor getColor() {
@@ -31,8 +29,7 @@ public abstract class GamePiece {
     }
 
     //Note: This is a local only change, this will not update on the game board
-    public void moveTo(int x, int y){
-        this.x = x;
-        this.y = y;
+    public void moveTo(Vector2 newPosition){
+        this.position = newPosition;
     }
 }
