@@ -1,7 +1,6 @@
-package ca.ucalgary.seng300.p4.condensation.Frontend;
+package ca.ucalgary.seng300.p4.condensation;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,8 +19,5 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
-    }
-
-    public void onHelloButtonClick(ActionEvent event) {
     }
 }
