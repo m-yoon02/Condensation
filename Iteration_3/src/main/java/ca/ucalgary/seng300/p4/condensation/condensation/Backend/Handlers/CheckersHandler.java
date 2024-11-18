@@ -4,7 +4,7 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.*;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.CheckersMoveData;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.CheckersPiece;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Vector2;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 
 public class CheckersHandler extends GameHandler<CheckersMoveData> {
     private static final int[] BOARD_SIZE = {8, 8};

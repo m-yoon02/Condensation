@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend;
 
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.GamePiece;
 
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ public class GameBoard<T extends GamePiece> {
     }
 
     public boolean positionWithinBounds(Vector2 position){
-        return position.getX() >= 0 && position.getX() < columnSize
-                && position.getY() >= 0 && position.getY() < rowSize;
+        return position.x() >= 0 && position.x() < columnSize
+                && position.y() >= 0 && position.y() < rowSize;
     }
 
     public boolean placePiece(T piece, Vector2 position){

@@ -1,7 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Vector2;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 
 public class MoveData {
     private final PieceColor pieceColor;

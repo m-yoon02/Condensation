@@ -1,7 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Vector2;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 
 public abstract class GamePiece {
     private int x;

@@ -3,7 +3,7 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.MoveData;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.TicTacToePiece;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Vector2;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 
 public class TicTacToeHandler extends GameHandler<MoveData> {
     private static final int[] BOARD_SIZE = {3, 3};
