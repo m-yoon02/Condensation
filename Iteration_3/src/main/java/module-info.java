@@ -12,4 +12,5 @@ module ca.ucalgary.seng300.p4.condensation.Frontend {
     requires com.almasb.fxgl.all;
 
     opens ca.ucalgary.seng300.p4.condensation.Frontend to javafx.fxml;
+    exports ca.ucalgary.seng300.p4.condensation.Frontend;
 }
