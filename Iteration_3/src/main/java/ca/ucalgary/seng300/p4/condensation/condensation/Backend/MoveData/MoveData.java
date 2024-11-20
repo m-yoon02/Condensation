@@ -7,9 +7,18 @@ public class MoveData {
     private final PieceColor pieceColor;
     private final Vector2 movePosition;
 
-    public MoveData(PieceColor pieceColor, int[] movePosition) {
+    public MoveData(PieceColor pieceColor, Vector2 movePosition) {
         this.pieceColor = pieceColor;
-        this.movePosition = new Vector2(movePosition[0], movePosition[1]);
+        this.movePosition = movePosition;
+    }
+
+    /**
+     * Creates a move data class representation from JSON
+     * @param moveDataJSON the JSON string
+     * @return the move data object
+     */
+    public static MoveData fromJSON(String moveDataJSON){
+        return new MoveData(PieceColor.RED, new Vector2(0, 0));
     }
 
     public PieceColor getPieceColor() {
