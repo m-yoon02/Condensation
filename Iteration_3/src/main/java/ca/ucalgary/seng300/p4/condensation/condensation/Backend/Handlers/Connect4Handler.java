@@ -5,7 +5,7 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.MoveDat
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.ConnectFourPiece;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 
-public class Connect4Handler extends GameHandler<MoveData> {
+public class Connect4Handler extends GameHandler {
     private static final int[] BOARD_SIZE = {6, 7};
     private final GameBoard<ConnectFourPiece> board = new GameBoard<>(BOARD_SIZE[0], BOARD_SIZE[1]);
 
@@ -15,7 +15,7 @@ public class Connect4Handler extends GameHandler<MoveData> {
     }
 
     @Override
-    public void makeMove(MoveData moveData) {
+    public void makeMove(String moveDataJSON) {
 
     }
 

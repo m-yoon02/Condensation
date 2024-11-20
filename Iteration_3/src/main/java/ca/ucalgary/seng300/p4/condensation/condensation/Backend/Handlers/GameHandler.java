@@ -8,7 +8,7 @@ import java.util.UUID;
 
 //TODO: Need to somehow think of adding a GameTimer class that will be used here
 
-public abstract class GameHandler<T extends MoveData> implements IGameHandler<T>{
+public abstract class GameHandler implements IGameHandler{
     private final ArrayList<GameEndListener> gameEndListeners = new ArrayList<>();
     private final ArrayList<TurnEndListener> turnEndListeners = new ArrayList<>();
 
