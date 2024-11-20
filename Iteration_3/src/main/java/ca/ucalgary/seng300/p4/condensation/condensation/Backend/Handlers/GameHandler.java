@@ -2,18 +2,21 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.PlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.*;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameTimer.GameTimer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
-//TODO: Need to somehow think of adding a GameTimer class that will be used here
-
 public abstract class GameHandler implements IGameHandler{
+    //NOTE: Might change this later depending on if we want time to change depending on games
+    private static final int DEFAULT_TIME = 60 * 10;
+
     private final ArrayList<GameEndListener> gameEndListeners = new ArrayList<>();
     private final ArrayList<TurnEndListener> turnEndListeners = new ArrayList<>();
     private final HashMap<UUID, PlayerMemo> playerMemoHashMap = new HashMap<>();
+    protected final GameTimer gameTimer;
 
     public GameHandler(UUID player1ID, UUID player2ID, PieceColor[] colors){
         Random rnd = new Random();
@@ -21,6 +24,13 @@ public abstract class GameHandler implements IGameHandler{
         int player2ColorIndex = player1ColorIndex == 0 ? 1 : 0;
         playerMemoHashMap.put(player1ID, new PlayerMemo(player1ID, colors[player1ColorIndex]));
         playerMemoHashMap.put(player2ID, new PlayerMemo(player2ID, colors[player2ColorIndex]));
+        gameTimer = new GameTimer(player1ID, player2ID, DEFAULT_TIME);
+        gameTimer.setTimerTo(player1ColorIndex == 0 ? player1ID : player2ID);
+    }
+
+    @Override
+    public void startGame() {
+        gameTimer.startTimer();
     }
 
     @Override
@@ -49,6 +59,8 @@ public abstract class GameHandler implements IGameHandler{
      * @param winnerID the ID of the winner player if the game has ended on a win
      */
     protected void notifyGameEnd(GameResult gameResult, UUID winnerID){
+        //Stop the timer when the game ends obviously
+        gameTimer.stopTimer();
         for (GameEndListener listener: gameEndListeners){
             listener.onGameEnd(gameResult, winnerID);
         }
