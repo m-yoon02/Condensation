@@ -20,12 +20,12 @@ public class TicTacToeHandler extends GameHandler {
 
     @Override
     public void startGame() {
-
     }
 
     @Override
     public void makeMove(String moveDataJSON) {
-
+        //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
+        MoveData moveData = MoveData.fromJSON(moveDataJSON);
     }
 
     private void checkForThreeInARow(Vector2 pos){
