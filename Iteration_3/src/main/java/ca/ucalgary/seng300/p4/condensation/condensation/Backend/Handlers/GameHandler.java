@@ -22,12 +22,21 @@ public abstract class GameHandler<T extends MoveData> implements IGameHandler<T>
         turnEndListeners.add(listener);
     }
 
+    /**
+     * Notifies all turn end listeners that a turn has ended and which player's turn it is currently
+     * @param currentPlayerTurnID the ID of the next player's turn
+     */
     protected void notifyTurnEnd(UUID currentPlayerTurnID){
         for (TurnEndListener listener: turnEndListeners){
             listener.onTurnEnd(currentPlayerTurnID);
         }
     }
 
+    /**
+     * Notifies all game end listeners that the game has ended
+     * @param gameResult the game result
+     * @param winnerID the ID of the winner player if the game has ended on a win
+     */
     protected void notifyGameEnd(GameResult gameResult, UUID winnerID){
         for (GameEndListener listener: gameEndListeners){
             listener.onGameEnd(gameResult, winnerID);
