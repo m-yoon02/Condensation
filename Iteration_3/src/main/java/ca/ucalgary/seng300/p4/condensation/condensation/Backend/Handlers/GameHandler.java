@@ -3,6 +3,7 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.PlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.*;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameTimer.GameTimer;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameTimer.TimerEndListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,13 @@ public abstract class GameHandler implements IGameHandler{
     private final HashMap<UUID, PlayerMemo> playerMemoHashMap = new HashMap<>();
     protected final GameTimer gameTimer;
 
+    private class EndGameOnTimerEndListener implements TimerEndListener {
+        @Override
+        public void onTimerEnd(UUID winnerPlayerID) {
+            notifyGameEnd(GameResult.WIN, winnerPlayerID);
+        }
+    }
+
     public GameHandler(UUID player1ID, UUID player2ID, PieceColor[] colors){
         Random rnd = new Random();
         int player1ColorIndex = rnd.nextInt(2);
@@ -26,6 +34,7 @@ public abstract class GameHandler implements IGameHandler{
         playerMemoHashMap.put(player2ID, new PlayerMemo(player2ID, colors[player2ColorIndex]));
         gameTimer = new GameTimer(player1ID, player2ID, DEFAULT_TIME);
         gameTimer.setTimerTo(player1ColorIndex == 0 ? player1ID : player2ID);
+        gameTimer.addTimerEndListener(new EndGameOnTimerEndListener());
     }
 
     @Override
