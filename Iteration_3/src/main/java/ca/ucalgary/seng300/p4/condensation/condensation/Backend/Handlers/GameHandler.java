@@ -4,6 +4,7 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.*;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.MoveData;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 //TODO: Need to somehow think of adding a GameTimer class that will be used here
 
@@ -21,15 +22,15 @@ public abstract class GameHandler<T extends MoveData> implements IGameHandler<T>
         turnEndListeners.add(listener);
     }
 
-    protected void notifyTurnEnd(PieceColor currentPlayerTurnColor){
+    protected void notifyTurnEnd(UUID currentPlayerTurnID){
         for (TurnEndListener listener: turnEndListeners){
-            listener.onTurnEnd(currentPlayerTurnColor);
+            listener.onTurnEnd(currentPlayerTurnID);
         }
     }
 
-    protected void notifyGameEnd(GameResult gameResult, PieceColor winnerColor){
+    protected void notifyGameEnd(GameResult gameResult, UUID winnerID){
         for (GameEndListener listener: gameEndListeners){
-            listener.onGameEnd(gameResult, winnerColor);
+            listener.onGameEnd(gameResult, winnerID);
         }
     }
 }
