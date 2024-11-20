@@ -1,57 +1,53 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameTimer;
 
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class GameTimer {
-    //Map PieceColor (To represent the players) to the time left
-    private final HashMap<PieceColor, Integer> timerHashMap = new HashMap<>();
+    //Map UUID (To represent the players) to the time left
+    private final HashMap<UUID, Integer> timerHashMap = new HashMap<>();
     private final ArrayList<TimerEndListener> timerEndListeners = new ArrayList<>();
-    private final PieceColor[] playerColors;
-    //currentPlayerColor is the color of the player whose timer is currently being counted down
-    private PieceColor currentPlayerColor;
+    //currentPlayerID is the ID of the player whose timer is currently being counted down
+    private UUID currentPlayerID;
 
-    public GameTimer(PieceColor[] colors, int timeInSeconds){
-        this.playerColors = colors;
-        this.currentPlayerColor = colors[0];
-        for (PieceColor color: colors){
-            timerHashMap.put(color, timeInSeconds);
-        }
+    public GameTimer(UUID player1ID, UUID player2ID, int timeInSeconds){
+        currentPlayerID = player1ID;
+        timerHashMap.put(player1ID, timeInSeconds);
+        timerHashMap.put(player2ID, timeInSeconds);
     }
 
     /**
-     * Gets the PieceColor that is not thisColor, so the other player's color
-     * @param thisColor the color to NOT get
-     * @return the other player color that is not thisColor
+     * Gets the UUID that is not this playerID, so the other player's ID
+     * @param playerID the UUId to NOT get
+     * @return the other player UUID that is not UUID
      */
-    private PieceColor getOtherPlayerColor(PieceColor thisColor){
-        for (PieceColor color: playerColors){
-            if (color != thisColor){
-                return color;
+    private UUID getOtherPlayerID(UUID playerID){
+        for (UUID id: timerHashMap.keySet()){
+            if (!id.equals(playerID)){
+                return id;
             }
         }
-        return playerColors[0];
+        return null;
     }
 
     /**
-     * Notifies all listeners that one of the player's timers has run out, passes the winning color
-     * @param loserColor the color of the player whose timer has run out
+     * Notifies all listeners that one of the player's timers has run out, passes the winning player ID
+     * @param loserPlayerID the ID of the player whose timer has run out
      */
-    private void notifyTimerEnded(PieceColor loserColor){
-        PieceColor winnerColor = getOtherPlayerColor(loserColor);
+    private void notifyTimerEnded(UUID loserPlayerID){
+        UUID winnerPlayerID = getOtherPlayerID(loserPlayerID);
         for (TimerEndListener listener: timerEndListeners){
-            listener.onTimerEnd(winnerColor);
+            listener.onTimerEnd(winnerPlayerID);
         }
     }
 
     /**
-     * Sets the current timer to the other player from playerColorToSwitchFrom
-     * @param playerColorToSwitchFrom the color of the player to switch from
+     * Sets the current timer to the other player from playerIDToSwitchFrom
+     * @param playerIDToSwitchFrom the id of the player to switch from
      */
-    public void switchTimer(PieceColor playerColorToSwitchFrom){
-        this.currentPlayerColor = getOtherPlayerColor(playerColorToSwitchFrom);
+    public void switchTimer(UUID playerIDToSwitchFrom){
+        this.currentPlayerID = getOtherPlayerID(playerIDToSwitchFrom);
     }
 
     public void startTimer(){

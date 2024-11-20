@@ -1,7 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameTimer;
 
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
+import java.util.UUID;
 
 public interface TimerEndListener {
-    void onTimerEnd(PieceColor playerColor);
+    void onTimerEnd(UUID winnerPlayerID);
 }
