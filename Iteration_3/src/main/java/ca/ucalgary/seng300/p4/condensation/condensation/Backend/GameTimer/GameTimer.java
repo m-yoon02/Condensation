@@ -10,6 +10,7 @@ public class GameTimer {
     private final ArrayList<TimerEndListener> timerEndListeners = new ArrayList<>();
     //currentPlayerID is the ID of the player whose timer is currently being counted down
     private UUID currentPlayerID;
+    private boolean active = false;
 
     public GameTimer(UUID player1ID, UUID player2ID, int timeInSeconds){
         currentPlayerID = player1ID;
@@ -62,8 +63,19 @@ public class GameTimer {
         }
     }
 
+    /**
+     * Starts the game timer countdown
+     */
     public void startTimer(){
+        active = true;
+        //If you are using a while loop here, make sure to BREAK it if one of the player's timer's reaches zero
+    }
 
+    /**
+     * Stops the game timer countdown (when the game ends or something)
+     */
+    public void stopTimer(){
+        active = false;
     }
 
     public void addTimerEndListener(TimerEndListener listener){
