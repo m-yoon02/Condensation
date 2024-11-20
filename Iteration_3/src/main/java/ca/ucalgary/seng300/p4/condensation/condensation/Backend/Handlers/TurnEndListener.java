@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
+
+import java.util.UUID;
 
 public interface TurnEndListener {
-    void onTurnEnd(PieceColor currentPlayerColor);
+    void onTurnEnd(UUID playersTurnID);
 }
