@@ -53,4 +53,41 @@ public abstract class GameHandler implements IGameHandler{
             listener.onGameEnd(gameResult, winnerID);
         }
     }
+
+    /**
+     * Gets the player memo from a given player ID
+     * @param playerID the player ID
+     * @return the player memo representing the player from the ID
+     */
+    public PlayerMemo getPlayerMemoFromUUID(UUID playerID){
+        return playerMemoHashMap.get(playerID);
+    }
+
+    /**
+     * Gets the other player's player memo whose PlayerID differs from the given player id
+     * @param playerID the player id of which player NOT to get
+     * @return the other player, if one exists
+     */
+    public PlayerMemo getOtherPlayerMemoFromUUID(UUID playerID){
+        for (PlayerMemo playerMemo: playerMemoHashMap.values()){
+            if (!playerMemo.playerID().equals(playerID)) {
+                return playerMemo;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets the player memo from a given PieceColor
+     * @param pieceColor the PieceColor that the player chose
+     * @return the player memo if the player exists, otherwise null
+     */
+    public PlayerMemo getPlayerMemoFromPieceColor(PieceColor pieceColor){
+        for (PlayerMemo playerMemo: playerMemoHashMap.values()){
+            if (playerMemo.pieceColor() == pieceColor) {
+                return playerMemo;
+            }
+        }
+        return null;
+    }
 }
