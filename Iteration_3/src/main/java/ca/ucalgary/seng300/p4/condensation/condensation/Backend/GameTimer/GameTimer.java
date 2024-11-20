@@ -47,7 +47,19 @@ public class GameTimer {
      * @param playerIDToSwitchFrom the id of the player to switch from
      */
     public void switchTimer(UUID playerIDToSwitchFrom){
-        this.currentPlayerID = getOtherPlayerID(playerIDToSwitchFrom);
+        if (timerHashMap.containsKey(playerIDToSwitchFrom)) {
+            this.currentPlayerID = getOtherPlayerID(playerIDToSwitchFrom);
+        }
+    }
+
+    /**
+     * Sets the current timer to the player ID of playerIDTOSet
+     * @param playerIDToSet the player ID to set to
+     */
+    public void setTimerTo(UUID playerIDToSet) {
+        if (timerHashMap.containsKey(playerIDToSet)) {
+            this.currentPlayerID = playerIDToSet;
+        }
     }
 
     public void startTimer(){
