@@ -42,9 +42,9 @@ public class MatchmakingService {
             player1 = players.get(j);
 
             //the minimum rank that a possible match for player 1 should have
-            int minRank = player1.getElo() - 100;
+            int minRank = player1.getElo() - rankThreshold;
             //the maximum rank that a possible match for player 1 should have
-            int maxRank = player1.getElo() + 100;
+            int maxRank = player1.getElo() + rankThreshold;
 
             //use a for loop to go through all the other players and match them
             for (int i = 1; i < players.size(); i++) { //start at i = 1 because we are not checking the first player in queue
