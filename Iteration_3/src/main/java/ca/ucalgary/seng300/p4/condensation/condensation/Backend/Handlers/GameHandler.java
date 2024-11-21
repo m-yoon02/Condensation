@@ -57,6 +57,7 @@ public abstract class GameHandler implements IGameHandler{
      * @param currentPlayerTurnID the ID of the next player's turn
      */
     protected void notifyTurnEnd(UUID currentPlayerTurnID){
+        gameTimer.setTimerTo(currentPlayerTurnID);
         for (TurnEndListener listener: turnEndListeners){
             listener.onTurnEnd(currentPlayerTurnID);
         }
