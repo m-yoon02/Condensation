@@ -47,20 +47,23 @@ public class MatchmakingService {
             int maxRank = player1.getElo() + rankThreshold;
 
             //use a for loop to go through all the other players and match them
-            for (int i = 1; i < players.size(); i++) { //start at i = 1 because we are not checking the first player in queue
+            for (int i = 1; i < players.size(); i++) { //to do less, we can skip the first player in queue because we don't need to check them anymore after 1st iteration
                 //update player 2
                 player2 = players.get(i);
 
-                //check if that player can be a possible match
-                if (player2.getElo() >= minRank || player2.getElo() <= maxRank) {
-                    //match found!
-                    flag = true; //set the flag to true
+                //if player1 and player2 are not the same player, check if it could be a possible match
+                if (player1 != player2) {
+                    //check if that player can be a possible match
+                    if (player2.getElo() >= minRank || player2.getElo() <= maxRank) {
+                        //match found!
+                        flag = true; //set the flag to true
 
-                    //remove both of those players from queue
-                    pool.removePlayer(player1);
-                    pool.removePlayer(player2);
+                        //remove both of those players from queue
+                        pool.removePlayer(player1);
+                        pool.removePlayer(player2);
 
-                    break; //exit the loop
+                        break; //exit the loop
+                    }
                 }
             }
         }
