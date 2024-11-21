@@ -70,8 +70,9 @@ public class MatchmakingService {
             throw new RuntimeException("No possible matches found.");
         }
 
+        //create a game session for those two players
         GameSession gameSession = new GameSession(player1, player2);
 
-        return gameSession;
+        return gameSession; //return that game session
     }
 }
