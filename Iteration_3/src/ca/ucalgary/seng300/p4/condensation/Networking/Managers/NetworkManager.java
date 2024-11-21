@@ -73,6 +73,7 @@ public class NetworkManager {
 
         if(recieverConnection != null && recieverConnection.isConnected()){
             System.out.println("Sending message to " + receivingPlayedId.toString() + ": " + message);
+            // send message to backend
 
             // do checks for different types of message like for Chat what else ???
         }
@@ -88,5 +89,6 @@ public class NetworkManager {
 
     // define recieve message
     // -- will require some kind of logic to dilnieate how to handle the message.
+
 
 }

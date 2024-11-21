@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
 
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Player;
+import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,9 +38,16 @@ public class GameSessionManager {
      */
 
     public void createSession(Player player1) {
+        // tentative
 
-            // We need to have Matchmaking Service return a Player 2 match update the
-            // creates a session: GameSession( Player 1, Player 2)
+            Player Player2;
+
+            // We need to have Matchmaking Service to return Player 2 object to us. Or are we just returnin either way I dont mind
+            player2 = MatchmakingService.class(player1); // this class should return a player 2 object.
+            GameSession gameSession = new GameSession(player1, player2);
+
+
+        // creates a session: GameSession( Player 1, Player 2)
             // Generate a sessionID and put into the sessions Hashmap
             System.out.println("Player:" + player1.getPlayerID() + " you have been matched with " + player2.getPlayerID());
 
