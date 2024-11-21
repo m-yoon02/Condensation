@@ -20,7 +20,7 @@ public class MatchmakingPool {
      * @param player the player being added
      */
     public void addPlayer(Player player) {
-
+        pool.add(player);
     }
 
     /**
@@ -28,7 +28,7 @@ public class MatchmakingPool {
      * @param player the player being removed
      */
     public void removePlayer(Player player) {
-
+        pool.remove(player);
     }
 
     /**
