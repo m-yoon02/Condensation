@@ -2,18 +2,11 @@ package ca.ucalgary.seng300.p4.condensation.Networking.Services;
 
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MatchmakingPool {
-    private List<Player> pool;
-
-    /**
-     * Constructor for MatchmakingPool
-     * @param pool takes the pool list
-     */
-    public MatchmakingPool(List<Player> pool) {
-        this.pool = pool;
-    }
+    private List<Player> pool = new ArrayList<>();
 
     /**
      * This method adds a player into the matchmaking pool
@@ -21,6 +14,7 @@ public class MatchmakingPool {
      */
     public void addPlayer(Player player) {
         pool.add(player);
+        System.out.println("Player Added: " + player.getPlayerID());
     }
 
     /**
@@ -36,6 +30,8 @@ public class MatchmakingPool {
      * @return the pool list
      */
     public List<Player> getPool() {
+        System.out.println(pool.size());
         return pool;
+
     }
 }

@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Connection;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatManager;
+import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingPool;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingService;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class NetworkManager {
     private final MatchmakingService matchmakingService;
     private final GameSessionManager gameSessionManager;
     private final ChatManager chatManager;
+    private final MatchmakingPool matchmakingPool;
 
 
     /**
@@ -28,7 +30,8 @@ public class NetworkManager {
      */
     private NetworkManager(){
         connections = new HashMap<>();
-        matchmakingService = new MatchmakingService();
+        matchmakingPool = new MatchmakingPool();
+        matchmakingService = new MatchmakingService(matchmakingPool);
         gameSessionManager = new GameSessionManager();
         chatManager = new ChatManager();
     }

@@ -25,13 +25,8 @@ public class MatchmakingService {
     public GameSession findAndMatchPlayers() {
         //get the pool of players
         List<Player> players = pool.getPool();
+        GameSession ourGamesession;
 
-        //create a flag to know if a match was found or not, if not, throw an exception
-        boolean flag = false;
-
-        //initialize player 1 and player 2
-        Player player1 = null;
-        Player player2 = null;
 
         //first for loop will go through all the players starting with the first player in queue
         //if the first player does not get a match (from the second for loop), it will move on to looking for a match
@@ -39,7 +34,7 @@ public class MatchmakingService {
         for (int j = 0; j < players.size(); j++) {
 
             //get the player we are setting as "player1" for now in this iteration
-            player1 = players.get(j);
+            Player player1 = players.get(j);
 
             //the minimum rank that a possible match for player 1 should have
             int minRank = player1.getElo() - rankThreshold;
@@ -49,33 +44,25 @@ public class MatchmakingService {
             //use a for loop to go through all the other players and match them
             for (int i = 1; i < players.size(); i++) { //to do less, we can skip the first player in queue because we don't need to check them anymore after 1st iteration
                 //update player 2
-                player2 = players.get(i);
+                Player player2 = players.get(i);
 
                 //if player1 and player2 are not the same player, check if it could be a possible match
                 if (player1 != player2) {
                     //check if that player can be a possible match
                     if (player2.getElo() >= minRank && player2.getElo() <= maxRank) {
                         //match found!
-                        flag = true; //set the flag to true
 
                         //remove both of those players from queue
                         pool.removePlayer(player1);
                         pool.removePlayer(player2);
 
-                        break; //exit the loop
+                         ourGamesession = new GameSession(player1, player2);
+                         return ourGamesession;
+
                     }
                 }
             }
         }
-
-        //if the flag is still false, no matches were found and throw an exception
-        if (!flag) {
-            throw new RuntimeException("No possible matches found.");
-        }
-
-        //create a game session for those two players
-        GameSession gameSession = new GameSession(player1, player2);
-
-        return gameSession; //return that game session
+        throw new RuntimeException("No game found");
     }
 }
