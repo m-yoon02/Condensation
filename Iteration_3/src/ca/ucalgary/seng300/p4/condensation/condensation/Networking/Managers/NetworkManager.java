@@ -1,5 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Connection;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatManager;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingPool;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingService;
@@ -34,6 +36,7 @@ public class NetworkManager {
         matchmakingService = new MatchmakingService(matchmakingPool);
         gameSessionManager = new GameSessionManager();
         chatManager = new ChatManager();
+
     }
 
 
@@ -50,21 +53,24 @@ public class NetworkManager {
     }
 
     /**
-     * Simulates a user connection by logging their connection status.
+     * queuePlayer method recieves a queuedMemoObject from the client and pools it. Then
+     * @param queuedMemoObject This has playerUUID, gameType, and the elo
      */
-    public void connect(UUID playerID){
-        Connection connection = new Connection(playerID);
-        connections.put(playerID.toString(), connection);
-        System.out.println("User " + playerID.toString() + " is connected.");
+    public void queuePlayer(QueuedPlayerMemo queuedMemoObject){
+
+        matchmakingPool.addPlayer(queuedMemoObject);                                // adds the playerMemo to a matchmakingPool
+        network.sendCreatedGameSession(matchmakingService.findAndMatchPlayers());   // This will match first available player in the list to eligible player2
 
     }
 
     /**
-     *  Simulates a user disconnection by logging their connection status.
+     * sendCreatedGameSession will send the gameSession object to the GameSession Manager
+     * @param gameSession
+     * @return
      */
-    public void disconnect(UUID playerID) {
-        connections.remove(playerID.toString());
-        System.out.println("User " + playerID.toString() + " disconnected.");
+    public void sendCreatedGameSession(GameSession gameSession){
+        gameSessionManager.addGameSession(gameSession);
+
     }
 
 

@@ -48,6 +48,11 @@ public class GameSession implements GameEndListener, TurnEndListener {
         this.gameHandler = gameHandler1;
     }
 
+
+    public UUID getSessionId() {
+        return sessionId;
+    }
+
     @Override
     public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
 

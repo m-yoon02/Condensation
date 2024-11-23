@@ -5,6 +5,7 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class GameSessionManager {
 
@@ -12,7 +13,7 @@ public class GameSessionManager {
     // GameSession Manager will be a singleton like Network and will keep a hashmap called sessions
 
     private static GameSessionManager gameSessionManager;
-    private final Map<String, GameSession> sessionsMap;
+    private final Map<UUID, GameSession> sessionsMap;
     private Player player2;
 
 
@@ -28,6 +29,16 @@ public class GameSessionManager {
             gameSessionManager = new GameSessionManager();
         }
         return gameSessionManager;
+    }
+    /**
+     * addGameSession
+     * @param gameSession
+     */
+    public void addGameSession(GameSession gameSession){
+        // add gameSession object to the hashmap
+        UUID sessionID = gameSession.getSessionId();
+        gameSessionManager.sessionsMap.put(sessionID, gameSession);
+
     }
 
     // we need to parse the json payload we recieve from frontend
