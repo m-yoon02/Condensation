@@ -53,6 +53,8 @@ All game handlers will extend from the abstract GameHandler class.
 
 GameHandlers have a GameBoard object which you will use to represent the current state of the game
 
+They also contain **PlayerMemos** of the players currently playing, there are multiple methods on how you can get these PlayerMemos from GameHandler
+
 Specific game handlers (CheckersHandler, TicTacToeHandler, Connect4Handler) will have extra methods that you **can** modify at will.
 
 You can also add extra methods to specific game handlers if needed.
