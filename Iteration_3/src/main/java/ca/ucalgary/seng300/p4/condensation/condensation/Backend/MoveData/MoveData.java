@@ -6,12 +6,10 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 import java.util.UUID;
 
 public class MoveData {
-    private final PieceColor pieceColor;
     private final Vector2 movePosition;
     private final UUID playerID;
 
-    public MoveData(PieceColor pieceColor, Vector2 movePosition, UUID playerID) {
-        this.pieceColor = pieceColor;
+    public MoveData(UUID playerID, Vector2 movePosition) {
         this.movePosition = movePosition;
         this.playerID = playerID;
     }
@@ -22,15 +20,11 @@ public class MoveData {
      * @return the move data object
      */
     public static MoveData fromJSON(String moveDataJSON){
-        return new MoveData(PieceColor.RED, new Vector2(0, 0), UUID.randomUUID());
+        return new MoveData(UUID.randomUUID(), new Vector2(0, 0));
     }
 
     public UUID getPlayerID() {
         return playerID;
-    }
-
-    public PieceColor getPieceColor() {
-        return pieceColor;
     }
 
     public Vector2 getMovePosition() {
