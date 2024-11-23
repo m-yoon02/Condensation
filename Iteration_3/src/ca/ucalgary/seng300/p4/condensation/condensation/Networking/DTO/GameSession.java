@@ -15,8 +15,8 @@ public class GameSession implements GameEndListener, TurnEndListener {
      * Passes GameSession objects GameEnd and TurnEnd listeners into GameHandler.
      */
     private final UUID sessionId;
-    private final UUID player1;
-    private final UUID player2;
+    private final UUID player1ID;
+    private final UUID player2ID;
     // field for instantited GameHandler
     private final GameHandler gameHandler;
 
@@ -24,25 +24,28 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
     /**
      * When creating GameSession we initialize sessionID field, and player1 and player2 UUIDs which will be passed into some instance of GameHandler
-     * @param player1
-     * @param player2
+     * @param playerMemo1
+     * @param playerMemo2
      */
 
-    public GameSession(Player player1, Player player2) {
+    public GameSession(QueuedPlayerMemo playerMemo1, QueuedPlayerMemo playerMemo2) {
+        GameHandler gameHandler1 = null;
         this.sessionId = UUID.randomUUID();
-        this.player1 =  player1.getPlayerID();
-        this.player2 =  player2.getPlayerID();
+        this.player1ID =  playerMemo1.PlayerID();
+        this.player2ID =  playerMemo2.PlayerID();
         // We might have to define something in GameHandler that takes a string gameType, and
         //
-        GameTypes gameType = player1.getType();
+        GameTypes gameType = playerMemo1.gameType();
             switch (gameType) {
                 case CHECKERS :
-                    return new CheckersHandler(this, this)
-
-
+                    gameHandler1 = new CheckersHandler(this.player1ID, this.player2ID);
+                case TICTACTOE:
+                    gameHandler1 = new TicTacToeHandler(this.player1ID, this.player2ID);
+                case CONNECT4:
+                    gameHandler1 = new TicTacToeHandler(this.player1ID, this.player2ID);
           }
-        this.gameHandler //TODO: retriveve game type
 
+        this.gameHandler = gameHandler1;
     }
 
     @Override

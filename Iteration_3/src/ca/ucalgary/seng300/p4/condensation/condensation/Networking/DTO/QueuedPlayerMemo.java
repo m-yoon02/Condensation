@@ -4,4 +4,4 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTyp
 
 import java.util.UUID;
 
-public record QueuedPlayerMemo (UUID Player, GameTypes gameType) {}
+public record QueuedPlayerMemo (UUID PlayerID, GameTypes gameType) {}
