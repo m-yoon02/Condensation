@@ -3,10 +3,7 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO;
 import java.util.UUID;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.GameEndListener;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.GameHandler;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.IGameHandler;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.TurnEndListener;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.*;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTypes;
 
 
@@ -37,10 +34,13 @@ public class GameSession implements GameEndListener, TurnEndListener {
         this.player2 =  player2.getPlayerID();
         // We might have to define something in GameHandler that takes a string gameType, and
         //
-//        GameTypes gameType = player1.getType();
-//        switch (gameType) {
-//            case CHECKERS ->
-//        }
+        GameTypes gameType = player1.getType();
+            switch (gameType) {
+                case CHECKERS :
+                    return new CheckersHandler(this, this)
+
+
+          }
         this.gameHandler //TODO: retriveve game type
 
     }
