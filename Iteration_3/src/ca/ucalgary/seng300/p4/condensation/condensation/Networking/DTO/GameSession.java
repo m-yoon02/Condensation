@@ -1,10 +1,15 @@
-package ca.ucalgary.seng300.p4.condensation.Networking.DTO;
+package ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.GameEndListener;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.GameHandler;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.IGameHandler;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.TurnEndListener;
 
-public class GameSession implements GameEndListener, TurnEndListeners {
+
+public class GameSession implements GameEndListener, TurnEndListener {
 
     /**
      * We Created Turn END and Game END Listeners that subscribe to listener lists in GameHandler respectively
@@ -15,7 +20,7 @@ public class GameSession implements GameEndListener, TurnEndListeners {
     private final UUID player1;
     private final UUID player2;
     // field for instantited GameHandler
-    private final IGameHandler gameHandler;
+    private final GameHandler gameHandler;
 
 
 
@@ -31,7 +36,17 @@ public class GameSession implements GameEndListener, TurnEndListeners {
         this.player2 =  player2.getPlayerID();
         // We might have to define something in GameHandler that takes a string gameType, and
         //
-        this.gameHandler = createGameHandler(gameType);
+//        this.gameHandler = createGameHandler(gameType);
+
+    }
+
+    @Override
+    public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
+
+    }
+
+    @Override
+    public void onTurnEnd(UUID playersTurnID) {
 
     }
 

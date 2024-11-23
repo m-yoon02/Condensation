@@ -1,6 +1,6 @@
-package ca.ucalgary.seng300.p4.condensation.Networking.Services;
+package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services;
 
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Player;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Player;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,12 +1,10 @@
-package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
+package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
 
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Player;
-import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingService;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Player;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class GameSessionManager {
 

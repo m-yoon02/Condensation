@@ -1,8 +1,8 @@
-package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Connection;
-import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatManager;
-import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingPool;
-import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingService;
+package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Connection;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatManager;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingPool;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingService;
 
 import java.util.HashMap;
 import java.util.Map;
