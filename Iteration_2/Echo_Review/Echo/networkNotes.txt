@@ -1,0 +1,58 @@
+- addresses are used frequently in java.net APIs as host identifiers, or socket endpoint identifiers
+
+- The INetAddress class is the abstraction for IP addresses
+    - Inet4Address for IPv4
+    - Inet6Address for IPv6
+
+- most cases, there is no need to deal directly with the subclasses
+
+- two main entities, client and server
+    - communicate via network sockets
+
+
+EXAMPLE CODE
+
+
+Main.java:
+    import java.util.Scanner;
+
+    final int PORT_NUMBER = 1234; // like a mailing address for a house
+
+    void main(){
+        try (var scanner = new Scanner(System.in)){
+            System.out.println("is this a server? (y/n)");
+            if (scanner.nextLine().equalsIgnoreCase("y")){
+                new MyServer().start(PORT_NUMBER);
+            } else {
+                System.out.println("client TODO")
+            }
+        }
+
+    }
+
+MyServer.java:
+
+    import java.io.IOException;
+    import java.net.ServerSocket;
+
+    public class MyServer {
+        public void start(final int portNumber){
+            try (var serverSocket = new ServerSocket(portNumber)){ // port number is to tell which port to use
+                *var socket = serverSocket.accept();    // used to accept connection, strea, socket by default
+                                                        //matches TCP 
+                                                        // after this line, we have an established connection- 
+                                                        // with the client, has info like IP address, port-
+                                                        //number and message(payload data)
+                                                        // read input stream, and print out into server
+                var client = serverSocket.accept();
+                var clientIP = client.getInetAddress().getHostAddress();
+                var clientPort = client.getPort();
+                var clientInput = new BufferedREader(new inputStreamReader(client.getInputStream()));
+                for (String inputLine; (inputLine = new clientInput.readLine()) != null;){
+                    System.out.println(STR."(\{clientIP}:\{clientPort}): \{inputLine}")
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
