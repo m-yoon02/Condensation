@@ -7,6 +7,7 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.GameEnd
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.GameHandler;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.IGameHandler;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.TurnEndListener;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTypes;
 
 
 public class GameSession implements GameEndListener, TurnEndListener {
@@ -16,7 +17,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
      * Passes Player 1 UUID and Player 2 into GameHandler
      * Passes GameSession objects GameEnd and TurnEnd listeners into GameHandler.
      */
-    private final String sessionId;
+    private final UUID sessionId;
     private final UUID player1;
     private final UUID player2;
     // field for instantited GameHandler
@@ -31,12 +32,16 @@ public class GameSession implements GameEndListener, TurnEndListener {
      */
 
     public GameSession(Player player1, Player player2) {
-        this.sessionId = UUID.randomUUID().toString();
+        this.sessionId = UUID.randomUUID();
         this.player1 =  player1.getPlayerID();
         this.player2 =  player2.getPlayerID();
         // We might have to define something in GameHandler that takes a string gameType, and
         //
-//        this.gameHandler = createGameHandler(gameType);
+//        GameTypes gameType = player1.getType();
+//        switch (gameType) {
+//            case CHECKERS ->
+//        }
+        this.gameHandler //TODO: retriveve game type
 
     }
 
