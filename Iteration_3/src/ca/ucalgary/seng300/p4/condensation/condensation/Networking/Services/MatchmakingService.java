@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Player;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class MatchmakingService {
      */
     public GameSession findAndMatchPlayers() {
         //get the pool of players
-        List<Player> players = pool.getPool();
+        List<QueuedPlayerMemo> players = pool.getPool();
         GameSession ourGamesession;
 
 
@@ -34,22 +35,25 @@ public class MatchmakingService {
         for (int j = 0; j < players.size(); j++) {
 
             //get the player we are setting as "player1" for now in this iteration
-            Player player1 = players.get(j);
+            QueuedPlayerMemo player1 = players.get(j);
 
             //the minimum rank that a possible match for player 1 should have
-            int minRank = player1.getElo() - rankThreshold;
+            int minRank = player1.Elo() - rankThreshold;
             //the maximum rank that a possible match for player 1 should have
-            int maxRank = player1.getElo() + rankThreshold;
+            int maxRank = player1.Elo() + rankThreshold;
 
             //use a for loop to go through all the other players and match them
             for (int i = 1; i < players.size(); i++) { //to do less, we can skip the first player in queue because we don't need to check them anymore after 1st iteration
                 //update player 2
-                Player player2 = players.get(i);
+                QueuedPlayerMemo player2 = players.get(i);
+                if (player1.gameType() != player2.gameType()) {
+                    continue;
+                }
 
                 //if player1 and player2 are not the same player, check if it could be a possible match
                 if (player1 != player2) {
                     //check if that player can be a possible match
-                    if (player2.getElo() >= minRank && player2.getElo() <= maxRank) {
+                    if (player2.Elo() >= minRank && player2.Elo() <= maxRank) {
                         //match found!
 
                         //remove both of those players from queue
