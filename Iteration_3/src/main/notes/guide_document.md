@@ -8,6 +8,7 @@
   - [Game Handlers](#game-handlers)
   - [Game Board](#game-board)
   - [Game Timer](#game-timer)
+  - [Move Data](#move-data)
 
 ## Introduction
 The long awaited guide document you guys have been waiting for 😭. Apologies for the long wait and I hope coding without this hasn't been too much of a hassle, but let's get started.
@@ -128,3 +129,25 @@ An important method to regard :
 private void notifyTimerEnded(UUID loserPlayerID)
 ```
 You are required to call this if whenever one of the player's has used up all their time. Simply pass in the ID of the player who has no more time left
+
+## Move Data
+
+**NOTE** : CheckersMoveData is almost entirely the same as MoveData, but it has an extra field **oldPosition** which represents the already existing piece that needs to be moved
+
+MoveData is a vital DTO which represents what move the player is intending to make
+
+This is a DTO (Record) which contains the following :
+- The ID of the player who made the move
+- The positional data of the move
+```java
+//The position where the player placed the piece (or moved if its checkers)
+private final Vector2 movePosition;
+// ID of the player
+private final UUID playerID;
+```
+
+**How to get the PieceColor from MoveData?**
+- In any of the specific Game Handlers, simply do :
+```java
+getPlayerMemoFromUUID(moveData.getPlayerID()).pieceColor()
+```
