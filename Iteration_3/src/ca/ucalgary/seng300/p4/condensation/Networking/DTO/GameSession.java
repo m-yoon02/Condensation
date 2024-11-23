@@ -7,13 +7,16 @@ import java.util.UUID;
 public class GameSession implements GameEndListener, TurnEndListeners {
 
     /**
-     * We Created Turn END and Game END Listeners that subscribe to listener lists in GameHandler respectivly
+     * We Created Turn END and Game END Listeners that subscribe to listener lists in GameHandler respectively
      * Passes Player 1 UUID and Player 2 into GameHandler
-     * Passes GameSession objects GameEnd and TurnEnd listners into GameHandler.
+     * Passes GameSession objects GameEnd and TurnEnd listeners into GameHandler.
      */
     private final String sessionId;
     private final UUID player1;
     private final UUID player2;
+    // field for instantited GameHandler
+    private final IGameHandler gameHandler;
+
 
 
     /**
@@ -26,16 +29,44 @@ public class GameSession implements GameEndListener, TurnEndListeners {
         this.sessionId = UUID.randomUUID().toString();
         this.player1 =  player1.getPlayerID();
         this.player2 =  player2.getPlayerID();
+        // We might have to define something in GameHandler that takes a string gameType, and
+        //
+        this.gameHandler = createGameHandler(gameType);
+
     }
+
+    // do we instantiate gameHandler or just set it since who is supposed to handle exactly what kind of game a customer picks ??
+    // Create a new GameHandler with the provided player IDs
+    // -- this.gameHandler = new GameHandler(this.player1, this.player2, new PieceColor[]{PieceColor.RED, PieceColor.BLUE});
+
+
+    //************
+    // we will send MoveData to the backEnd
+
+
     /**
      * Listener pattern implementation
-     * Instanitiate listeners for TurnEnd and GameEnd Listeners
+     * Instantiate listeners for TurnEnd and GameEnd Listeners
      * pass this information to backend so that  they can subscribe them
      */
 
+    //this.gameHandler.addGameEndListener(this); // Adds GameSesison to instance of GameHandler
+    //this.gameHandler.addTurnEndListener(this); //
 
-    // here we need to send something to network manager, or a send message possobly a JSON payload which backend can then parse.
-    //
+    // Or we can simply set this
+
+    // For this do we do a this.addListener(this)
+
+    //  void onGameEnd(GameResult gameResult, UUID winnerPlayer);
+    // -- logic that goes to the sessionManager and removes game session
+    // -- logic that sets player that lost, we know who won
+    // -- leaderboard
+
+    // if GameEnd
+
+
+
+
 
 
 }
