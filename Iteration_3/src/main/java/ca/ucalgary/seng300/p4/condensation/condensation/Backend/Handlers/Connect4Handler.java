@@ -31,7 +31,7 @@ public class Connect4Handler extends GameHandler {
         return false;
     }
 
-    private boolean columnIsFull(int column) {
+    private boolean columnIsFull(int column ) {
         return false;
     }
 
