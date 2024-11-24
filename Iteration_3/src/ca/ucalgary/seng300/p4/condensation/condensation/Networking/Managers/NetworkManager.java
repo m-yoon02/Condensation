@@ -56,7 +56,6 @@ public class NetworkManager {
     // Network methods that handles queueing, creating, and starting game session sequence.
     // ---------------------------------------------------------------------------------------------------
 
-
     /**
      * queuePlayer method recieves a queuedMemoObject from the client and pools it. Then
      * @param queuedMemoObject This has playerUUID, gameType, and the elo of the player
@@ -75,43 +74,42 @@ public class NetworkManager {
      */
     public void sendCreatedGameSession(GameSession gameSession){
         gameSessionManager.addGameSession(gameSession);
-        network.sendPlayerReferences(gameSession);
+        network.sendPlayerReferences(gameSession.getPlayer1ID(), gameSession.getPlayer2ID());
     }
 
     /**
      * sendPlayerReferences sends the players UUIDSs to backend for reference, this concludes the starting game session sequence.
-     * -- We need to discuss sending information back to the backend here either just sessionID, uuid,
-     * @param
-     * @param
+     * Following backend will start game and the inter-game session sequence will begin
+     * @param Player1 this represents player1's uuid
+     * @param Player2 this represents player2's uuid
      */
-    public void sendPlayerReferences(GameSession gameSession){
-        // send this information to the backend
+    public void sendPlayerReferences(UUID Player1, UUID Player2){
+
+        // send this information to the backend they need to define some kind of recieve class
     }
 
 
-    // define send message
-    public void sendMessage(UUID receivingPlayedId, String message){
+    // ---------------------------------------------------------------------------------------------------
+    // Network methods that handle intra game session methods and logic.
+    // ---------------------------------------------------------------------------------------------------
 
-        // checks to see if the receiving player is connected
-        Connection recieverConnection = connections.get(receivingPlayedId.toString());
+    /**
+     * sendGameDataToClients the readyPayload = sessionID + gameState payload to the clients
+     * @param readyPayload
+     */
+    public void sendGameDataToClients(String readyPayload){
+        // send the sessionID + gameState payload to the clients
+    }
 
-        if(recieverConnection != null && recieverConnection.isConnected()){
-            System.out.println("Sending message to " + receivingPlayedId.toString() + ": " + message);
-            // send message to backend
+    public void recieveGameDataFromClient(){
 
-            // do checks for different types of message like for Chat what else ???
-        }
-        else {
-            System.out.println("Cannot send message: " + receivingPlayedId.toString() + " is not connected.");
-        }
+        // recives the
+
+
 
     }
 
 
-
-
-    // define recieve message
-    // -- will require some kind of logic to dilnieate how to handle the message.
 
 
 }

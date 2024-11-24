@@ -7,6 +7,7 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.*;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.GameSessionManager;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.NetworkManager;
 
 
 public class GameSession implements GameEndListener, TurnEndListener {
@@ -21,10 +22,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
     private final UUID player2ID;
     // field for instantited GameHandler
     private final GameHandler gameHandler;
-
-//    private final TurnEndListener turnEndListener;
-//    private final GameEndListener gameEndListener;
-
+    private UUID currentPlayerTurn;
 
     /**
      * When creating GameSession we initialize sessionID field, and player1 and player2 UUIDs which will be passed into some instance of GameHandler
@@ -49,11 +47,20 @@ public class GameSession implements GameEndListener, TurnEndListener {
                     gameHandler1 = new TicTacToeHandler(this.player1ID, this.player2ID);
           }
 
+
         this.gameHandler = gameHandler1;
         this.gameHandler.addTurnEndListener(this);
         this.gameHandler.addGameEndListener(this);
+        this.currentPlayerTurn = null;
     }
 
+    public UUID getPlayer1ID() {
+        return player1ID;
+    }
+
+    public UUID getPlayer2ID() {
+        return player2ID;
+    }
 
     public UUID getSessionId() {
         return sessionId;
@@ -63,7 +70,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
     public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
         System.out.println("Game has ended");
         if (winnerPlayer.equals(this.player1ID)) {
-            // update leaderboard for palyer1
+            // update leaderboard for player 1
         } else {
             // update leaderboard for player 2
         }
@@ -72,8 +79,13 @@ public class GameSession implements GameEndListener, TurnEndListener {
     }
 
     @Override
-    public void onTurnEnd(UUID playersTurnID) {
+    public void onTurnEnd(UUID playersTurnID, String gameStateJson) {
         System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
+        this.currentPlayerTurn = playersTurnID;
+
+        String readyPayload = this.sessionId.toString() + gameStateJson;
+        NetworkManager.getNetworkInstance().sendGameDataToClients(readyPayload);    // sessionID + gameState
+
     }
 
     // do we instantiate gameHandler or just set it since who is supposed to handle exactly what kind of game a customer picks ??
@@ -92,9 +104,6 @@ public class GameSession implements GameEndListener, TurnEndListener {
      */
 
 
-    // Or we can simply set this
-
-    // For this do we do a this.addListener(this)
 
     //  void onGameEnd(GameResult gameResult, UUID winnerPlayer);
     // -- logic that goes to the sessionManager and removes game session
