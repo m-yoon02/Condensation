@@ -149,21 +149,46 @@ public class Connect4Handler extends GameHandler {
         return false;
     }
 
+    /**
+     * Checks if a player has won by having 4 consecutive pieces of a specified color in a given column.
+     *
+     * Preconditions:
+     * - The `columnIndex` must be a valid column within the bounds of the board.
+     * - The `pieceColor` must not be `null`.
+     *
+     * Postconditions:
+     * - Returns `true` if exactly 4 consecutive pieces of the specified color exist in the column.
+     * - Returns `false` if no such sequence of 4 pieces exists in the column.
+     *
+     * @param columnIndex The index of the column to check for a win. Must be within board boundaries.
+     * @param pieceColor The color of the piece to check for consecutive alignment. Must not be null.
+     * @return `true` if there are 4 consecutive pieces of the given color in the column,
+     *         `false` otherwise.
+     */
+
     private boolean winInColumn(int columnIndex, PieceColor pieceColor) {
+        // Variable to track consecutive pieces of the same color in a column.
         int chain = 0;
 
-        for (int rowIndex = 0; rowIndex < board.getRowSize() - 1; col++) {
+        // Loop through each row in the specified column
+        for (int rowIndex = 0; rowIndex < board.getRowSize(); col++) {
+            // Get the piece at the current position in the column.
             T currentPiece = board.getAt(columnIndex, rowIndex);
+            // If the piece exists and its color matches the provided pieceColor.
             if (currentPiece != null && currentPiece.getColor() == pieceColor) {
+                // Increment the chain of matching pieces.
                 chain++;
+                // If there are 4 consecutive pieces of the same color in the column, return true indicating a win.
                 if (chain == 4) {
                     return true;
                 }
             }
             else {
+                // If the piece is null or the color doesn't match, reset the chain count.
                 chain = 0;
             }
         }
+        // Return false if no 4 consecutive pieces of the same color were found.
         return false;
     }
 
