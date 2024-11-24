@@ -41,6 +41,10 @@ public class GameSessionManager {
 
     }
 
+    public void removeGameSession(UUID sessionID) {
+        gameSessionManager.sessionsMap.remove(sessionID);
+    }
+
     // we need to parse the json payload we recieve from frontend
     // parse for the sessionID
     // method here that returns to gameSession obj the unparsed move data

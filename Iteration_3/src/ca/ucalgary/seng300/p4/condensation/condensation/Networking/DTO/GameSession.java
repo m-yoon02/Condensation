@@ -6,6 +6,7 @@ import java.util.UUID;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.*;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTypes;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.GameSessionManager;
 
 
 public class GameSession implements GameEndListener, TurnEndListener {
@@ -61,6 +62,12 @@ public class GameSession implements GameEndListener, TurnEndListener {
     @Override
     public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
         System.out.println("Game has ended");
+        if (winnerPlayer.equals(this.player1ID)) {
+            // update leaderboard for palyer1
+        } else {
+            // update leaderboard for player 2
+        }
+        GameSessionManager.getInstance().removeGameSession(this.sessionId);
 
     }
 
