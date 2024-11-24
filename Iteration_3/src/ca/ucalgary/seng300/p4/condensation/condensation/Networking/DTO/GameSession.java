@@ -70,10 +70,13 @@ public class GameSession implements GameEndListener, TurnEndListener {
     public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
         System.out.println("Game has ended");
         if (winnerPlayer.equals(this.player1ID)) {
-            // update leaderboard for player 1
+            // update leaderboard for player 1 as winner and player 2 as loser
         } else {
-            // update leaderboard for player 2
+            // update leaderboard for player 2 winner, and player 1 as loser
         }
+
+        // we will need to send something to the FrontEnd about the Game being over
+
         GameSessionManager.getInstance().removeGameSession(this.sessionId);
 
     }
@@ -81,36 +84,28 @@ public class GameSession implements GameEndListener, TurnEndListener {
     @Override
     public void onTurnEnd(UUID playersTurnID, String gameStateJson) {
         System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
-        this.currentPlayerTurn = playersTurnID;
+        this.currentPlayerTurn = playersTurnID;         // we might need to actually turn to the frontend
 
-        String readyPayload = this.sessionId.toString() + gameStateJson;
-        NetworkManager.getNetworkInstance().sendGameDataToClients(readyPayload);    // sessionID + gameState
+        // add sessionId to the gameState payload and send it over the network
+        JSONObject readyPayloadJson = new JSONObject();
+        readyPayloadJson.put("sessionId", this.sessionId.toString());
+        readyPayloadJson.put("gameState", new JSONObject(gameStateJson));
+
+
+        String readyPayload = readyPayloadJson.toString();
+        NetworkManager.getNetworkInstance().sendGameDataToClients(readyPayload);
 
     }
 
-    // do we instantiate gameHandler or just set it since who is supposed to handle exactly what kind of game a customer picks ??
-    // Create a new GameHandler with the provided player IDs
-    // -- this.gameHandler = new GameHandler(this.player1, this.player2, new PieceColor[]{PieceColor.RED, PieceColor.BLUE});
 
 
     //************
-    // we will send MoveData to the backEnd
-
-
-    /**
-     * Listener pattern implementation
-     * Instantiate listeners for TurnEnd and GameEnd Listeners
-     * pass this information to backend so that  they can subscribe them
-     */
+    // we will sends to backend "sendGameDataToBackEnd()"
+    // frontEnd data,
+    // im backend recieve method
 
 
 
-    //  void onGameEnd(GameResult gameResult, UUID winnerPlayer);
-    // -- logic that goes to the sessionManager and removes game session
-    // -- logic that sets player that lost, we know who won
-    // -- leaderboard
-
-    // if GameEnd
 
 
 

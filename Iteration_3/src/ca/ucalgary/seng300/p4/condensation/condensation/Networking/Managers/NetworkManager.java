@@ -1,5 +1,4 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
-import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Connection;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatManager;
@@ -98,16 +97,26 @@ public class NetworkManager {
      * @param readyPayload
      */
     public void sendGameDataToClients(String readyPayload){
-        // send the sessionID + gameState payload to the clients
+        // send the readyPayload = sessionID + PlayerTurn + gameState payload to the clients
+        // there needs to be somekind of recieving method from the frontEnd
     }
 
     public void recieveGameDataFromClient(){
 
-        // recives the
-
+        // recieve a payload json formatted String
+        // GameSession gameSession = retured by GSM;
+        //
 
 
     }
+
+    // ---------------------------------------------------------------------------------------------------
+    // Network methods that handle end game session methods and logic.
+    // ---------------------------------------------------------------------------------------------------
+
+
+    // we need to
+
 
 
 
