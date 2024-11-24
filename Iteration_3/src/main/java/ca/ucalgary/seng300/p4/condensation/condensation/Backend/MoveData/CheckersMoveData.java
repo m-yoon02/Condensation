@@ -1,13 +1,14 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData;
 
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
+
+import java.util.UUID;
 
 public class CheckersMoveData extends MoveData {
     private final Vector2 oldPosition;
 
-    public CheckersMoveData(PieceColor pieceColor, Vector2 movePosition, Vector2 oldPosition) {
-        super(pieceColor, movePosition);
+    public CheckersMoveData(UUID playerID, Vector2 movePosition, Vector2 oldPosition) {
+        super(playerID, movePosition);
         this.oldPosition = oldPosition;
     }
 
@@ -17,7 +18,7 @@ public class CheckersMoveData extends MoveData {
      * @return the move data object
      */
     public static CheckersMoveData fromJSON(String moveDataJSON){
-        return new CheckersMoveData(PieceColor.RED, new Vector2(0, 0), new Vector2(1, 1));
+        return new CheckersMoveData(UUID.randomUUID(), new Vector2(0, 0), new Vector2(1, 1));
     }
 
     public Vector2 getOldPosition() {
