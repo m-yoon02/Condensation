@@ -76,14 +76,16 @@ public class GameTimer {
      * Starts the game timer countdown
      */
     public void startTimer() throws InterruptedException {
+        UUID backupCurrentPlayer;
         active = true;
         while (active) {
-            currentPlayerTimer = timerHashMap.get(currentPlayerID);
+            backupCurrentPlayer = currentPlayerID;
+            currentPlayerTimer = timerHashMap.get(backupCurrentPlayer);
             currentPlayerTimer--;
-            timerHashMap.put(currentPlayerID, currentPlayerTimer);
+            timerHashMap.put(backupCurrentPlayer, currentPlayerTimer);
             if (currentPlayerTimer <= 0){
                 stopTimer();
-                notifyTimerEnded(currentPlayerID);
+                notifyTimerEnded(backupCurrentPlayer);
             }
             Thread.sleep(1000);
         }
