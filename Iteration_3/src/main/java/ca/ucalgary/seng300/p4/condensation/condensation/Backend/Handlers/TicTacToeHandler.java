@@ -22,6 +22,11 @@ public class TicTacToeHandler extends GameHandler {
     public void makeMove(String moveDataJSON) {
         //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
         MoveData moveData = MoveData.fromJSON(moveDataJSON);
+        UUID playerID = moveData.getPlayerID();
+        PieceColor color = getPlayerMemoFromUUID(moveData.getPlayerID()).pieceColor();
+        Vector2 movePosition = moveData.getMovePosition();
+
+        boolean isMovePossible = board.isMovePossible();
     }
 
     private void checkForThreeInARow(Vector2 pos){
