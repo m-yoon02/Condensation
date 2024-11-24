@@ -53,9 +53,9 @@ public class Connect4Handler extends GameHandler {
      * 1. Board is initialized
      *
      * post-conditions:
-     * 1.Returns false:
+     * 1. Returns false:
      *      If any position in the top row (row TOP_ROW) is empty (null).
-     * Returns true:
+     * 2. Returns true:
      *      If all positions in the top row (row TOP_ROW) are occupied (non-null).
      *
      * @return true if all cells in the top row are occupied (non-null);
@@ -74,8 +74,29 @@ public class Connect4Handler extends GameHandler {
         return true;
     }
 
+    /**
+     * pre-conditions:
+     * 1. Board is initialized
+     * 2. Valid column index
+     *
+     * post-conditions:
+     * 1. Returns false:
+     *      If the cell at the top row (TOP_ROW) of the specified column is empty (null).
+     * 2. Returns true:
+     *      If the cell at the top row (TOP_ROW) of the specified column is occupied (non-null).
+     * @param column, index of target column
+     * @return true if the cell at the top row of the specified column is occupied (non-null);
+     *         false if the cell is empty (null).
+     */
     private boolean columnIsFull(int column) {
-        return false;
+        int TOP_ROW  = 0;
+        // Check if the top row cell at the given column is empty.
+        if (board.getAt(column, TOP_ROW) == null){
+            // If the cell is empty, return false.
+            return false;
+        }
+        // If the cell is not empty, return true.
+        return true;
     }
 
     private void checkForConnectedFour(Vector2 piecePos){
