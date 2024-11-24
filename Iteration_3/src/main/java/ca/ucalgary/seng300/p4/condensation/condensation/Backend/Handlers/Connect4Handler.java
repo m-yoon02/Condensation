@@ -100,10 +100,27 @@ public class Connect4Handler extends GameHandler {
     }
 
     private void checkForConnectedFour(Vector2 piecePos){
+        int row = piecePos.x();
+        int column = piecePos.y();
 
+        PieceColor pieceColor = board.getAt(column, row).getColor();
     }
 
-    private boolean winInRow() {
+    private boolean winInRow(int rowIndex, PieceColor pieceColor) {
+        int chain = 0;
+
+        for (int columnIndex = 0; columnIndex < board.getColumnSize() - 1; col++) {
+            T currentPiece = board.getAt(columnIndex, rowIndex);
+            if (currentPiece != null && currentPiece.getColor() == pieceColor) {
+                chain++;
+                if (chain == 4) {
+                    return true;
+                }
+            }
+            else {
+                chain = 0;
+            }
+        }
         return false;
     }
 
