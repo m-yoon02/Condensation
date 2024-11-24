@@ -192,61 +192,118 @@ public class Connect4Handler extends GameHandler {
         return false;
     }
 
+    /**
+     * Checks if a player has won by having 4 consecutive pieces of a specified color along a
+     * backslash (`\`) diagonal starting from the specified position.
+     *
+     * Preconditions:
+     * - The `rowIndex` and `columnIndex` must be valid indices within the bounds of the board.
+     * - The `pieceColor` must not be `null`.
+     *
+     * Postconditions:
+     * - Returns `true` if exactly 4 consecutive pieces of the specified color exist along the diagonal.
+     * - Returns `false` if no such sequence of 4 pieces exists along the diagonal.
+     *
+     * @param rowIndex The row index of the starting position to check for a win.
+     * @param columnIndex The column index of the starting position to check for a win.
+     * @param pieceColor The color of the piece to check for consecutive alignment. Must not be null.
+     * @return `true` if there are 4 consecutive pieces of the given color along the diagonal,
+     *         `false` otherwise.
+     */
     private boolean winInDiagonalBackslash(int rowIndex, int columnIndex, PieceColor pieceColor) {
         int topRow;
         int leftCol;
 
+        // Trace back to the top-leftmost position of the diagonal.
         while (rowIndex > 0 && columnIndex > 0) {
             rowIndex -= 1;
             columnIndex -= 1;
         }
 
+        // Store the top-leftmost position of the diagonal.
         topRow = rowIndex;
         leftCol = columnIndex;
+
+        // Variable to track consecutive pieces of the same color along the diagonal.
         int chain = 0;
 
-        for (; topRow < board.getRowSize() - 1, leftCol < board.getColumnSize() - 1; topRow++, leftCol++) {
+        // Iterate diagonally down-right to check for consecutive pieces of the specified color.
+        for (; topRow < board.getRowSize() && leftCol < board.getColumnSize(); topRow++, leftCol++) {
+            // Get the piece at the current position in the diagonal.
             T currentPiece = board.getAt(leftCol, topRow);
+            // If the piece exists and its color matches the provided pieceColor.
             if (currentPiece != null && currentPiece.getColor() == pieceColor) {
+                // Increment the chain of matching pieces.
                 chain++;
+                // If there are 4 consecutive pieces of the same color, return true indicating a win.
                 if (chain == 4) {
                     return true;
                 }
             }
             else {
+                // If the piece is null or the color doesn't match, reset the chain count.
                 chain = 0;
             }
         }
-
+        // Return false if no 4 consecutive pieces of the same color were found along the diagonal.
         return false;
     }
 
+    /**
+     * Checks if a player has won by having 4 consecutive pieces of a specified color along a
+     * frontslash (`/`) diagonal starting from the specified position.
+     *
+     * Preconditions:
+     * - The `rowIndex` and `columnIndex` must be valid indices within the bounds of the board.
+     * - The `pieceColor` must not be `null`.
+     *
+     * Postconditions:
+     * - Returns `true` if exactly 4 consecutive pieces of the specified color exist along the diagonal.
+     * - Returns `false` if no such sequence of 4 pieces exists along the diagonal.
+     *
+     * @param rowIndex The row index of the starting position to check for a win.
+     * @param columnIndex The column index of the starting position to check for a win.
+     * @param pieceColor The color of the piece to check for consecutive alignment. Must not be null.
+     * @return `true` if there are 4 consecutive pieces of the given color along the diagonal,
+     *         `false` otherwise.
+     */
     private boolean winInDiagonalFrontslash(int rowIndex, int columnIndex, PieceColor pieceColor) {
+        // Variables to track the starting point of the diagonal traversal.
         int bottomRow;
         int leftCol;
 
+        // Trace back to the bottom-leftmost position of the diagonal.
         while ((rowIndex < board.getRowSize() - 1) && (columnIndex > 0)) {
             rowIndex += 1;
             columnIndex -= 1;
         }
 
+        // Store the bottom-leftmost position of the diagonal.
         bottomRow = rowIndex;
         leftCol = columnIndex;
+
+        // Variable to track consecutive pieces of the same color along the diagonal.
         int chain = 0;
 
-        for (; bottomRow > 0, leftCol < board.getColumnSize() - 1; bottomRow--, leftCol++) {
+        // Iterate diagonally up-right to check for consecutive pieces of the specified color.
+        for (; bottomRow > 0 && leftCol < board.getColumnSize(); bottomRow--, leftCol++) {
+            // Get the piece at the current position in the diagonal.
             T currentPiece = board.getAt(leftCol, bottomRow);
+            // If the piece exists and its color matches the provided pieceColor.
             if (currentPiece != null && currentPiece.getColor() == pieceColor) {
+                // Increment the chain of matching pieces.
                 chain++;
+                // If there are 4 consecutive pieces of the same color, return true indicating a win.
                 if (chain == 4) {
                     return true;
                 }
             }
             else {
+                // If the piece is null or the color doesn't match, reset the chain count.
                 chain = 0;
             }
         }
-
+        // Return false if no 4 consecutive pieces of the same color were found along the diagonal.
         return false;
     }
 
