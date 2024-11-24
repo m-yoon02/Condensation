@@ -106,21 +106,46 @@ public class Connect4Handler extends GameHandler {
         PieceColor pieceColor = board.getAt(column, row).getColor();
     }
 
+    /**
+     * Checks if a player has won by having 4 consecutive pieces in a given row.
+     *
+     * Preconditions:
+     *  - The `rowIndex` must be a valid row within the bounds of the board.
+     *  - The `pieceColor` must not be `null`.
+     *
+     * Postconditions:
+     *  - Returns `true` if exactly 4 consecutive pieces of the specified color exist in the row.
+     *  - Returns `false` if no such sequence of 4 pieces exists in the row.
+     *
+     * @param rowIndex The index of the row to check for a win.
+     * @param pieceColor The color of the piece to check for consecutive alignment.
+     * @return `true` if there are 4 consecutive pieces of the given color in the row,
+     *         `false` otherwise.
+     */
+
     private boolean winInRow(int rowIndex, PieceColor pieceColor) {
+        // Variable to track consecutive pieces of the same color in a row
         int chain = 0;
 
-        for (int columnIndex = 0; columnIndex < board.getColumnSize() - 1; col++) {
+        // Loop through each column in the specified row
+        for (int columnIndex = 0; columnIndex < board.getColumnSize(); col++) {
+            // Get the piece at the current position in the row.
             T currentPiece = board.getAt(columnIndex, rowIndex);
+            // If the piece exists and its color matches the provided pieceColor.
             if (currentPiece != null && currentPiece.getColor() == pieceColor) {
+                // Increment the chain of matching pieces
                 chain++;
+                // If there are 4 consecutive pieces of the same color in a row, return true indicating a win.
                 if (chain == 4) {
                     return true;
                 }
             }
             else {
+                // If the piece is null or the color doesn't match, reset the chain count.
                 chain = 0;
             }
         }
+        // Return false if no 4 consecutive pieces of the same color were found.
         return false;
     }
 
