@@ -8,6 +8,7 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.*;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.GameSessionManager;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.NetworkManager;
+import org.json.simple.JSONObject;
 
 
 public class GameSession implements GameEndListener, TurnEndListener {
@@ -22,7 +23,6 @@ public class GameSession implements GameEndListener, TurnEndListener {
     private final UUID player2ID;
     // field for instantited GameHandler
     private final GameHandler gameHandler;
-    private UUID currentPlayerTurn;
 
     /**
      * When creating GameSession we initialize sessionID field, and player1 and player2 UUIDs which will be passed into some instance of GameHandler
@@ -77,18 +77,25 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
         // we will need to send something to the FrontEnd about the Game being over
 
+
         GameSessionManager.getInstance().removeGameSession(this.sessionId);
 
     }
 
+    /**
+     *
+     * @param playersTurnID
+     * @param gameStateJson
+     */
+
     @Override
     public void onTurnEnd(UUID playersTurnID, String gameStateJson) {
         System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
-        this.currentPlayerTurn = playersTurnID;         // we might need to actually turn to the frontend
 
         // add sessionId to the gameState payload and send it over the network
         JSONObject readyPayloadJson = new JSONObject();
         readyPayloadJson.put("sessionId", this.sessionId.toString());
+        readyPayloadJson.put("playersTurnID", playersTurnID);
         readyPayloadJson.put("gameState", new JSONObject(gameStateJson));
 
 

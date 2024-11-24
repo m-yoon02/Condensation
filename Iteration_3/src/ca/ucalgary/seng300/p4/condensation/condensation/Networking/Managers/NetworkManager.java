@@ -18,7 +18,6 @@ public class NetworkManager {
      */
 
     private static NetworkManager network;
-    private final Map<String, Connection> connections;  // map of userID to Connection
     private final MatchmakingService matchmakingService;
     private final GameSessionManager gameSessionManager;
     private final ChatManager chatManager;
@@ -30,12 +29,10 @@ public class NetworkManager {
      *
      */
     private NetworkManager(){
-        connections = new HashMap<>();
         matchmakingPool = new MatchmakingPool();
         matchmakingService = new MatchmakingService(matchmakingPool);
         gameSessionManager = new GameSessionManager();
         chatManager = new ChatManager();
-
     }
 
 
@@ -56,10 +53,10 @@ public class NetworkManager {
     // ---------------------------------------------------------------------------------------------------
 
     /**
-     * queuePlayer method recieves a queuedMemoObject from the client and pools it. Then
+     * clientQueuePlayer method recieves a queuedMemoObject from the client and pools it. Then
      * @param queuedMemoObject This has playerUUID, gameType, and the elo of the player
      */
-    public void queuePlayer(QueuedPlayerMemo queuedMemoObject){
+    public void clientQueuePlayer(QueuedPlayerMemo queuedMemoObject){
 
         matchmakingPool.addPlayer(queuedMemoObject);                                // adds the playerMemo to a matchmakingPool
         network.sendCreatedGameSession(matchmakingService.findAndMatchPlayers());   // This will match first available player in the list to eligible player2
@@ -68,7 +65,7 @@ public class NetworkManager {
 
     /**
      * sendCreatedGameSession will send the gameSession object to the GameSession Manager
-     * @param gameSession
+     * @param gameSession object that has all the info. about the ongoing game it corresponds to.
      * @return
      */
     public void sendCreatedGameSession(GameSession gameSession){
