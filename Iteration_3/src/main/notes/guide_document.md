@@ -77,6 +77,7 @@ public void makeMove(String moveDataJSON) {
 /**
  * Notifies all turn end listeners that a turn has ended and which player's turn it is currently
  * @param currentPlayerTurnID the ID of the next player's turn
+ * @param boardStateJSON a JSON string representing changes in
  */
 protected void notifyTurnEnd(UUID currentPlayerTurnID)
 ```
