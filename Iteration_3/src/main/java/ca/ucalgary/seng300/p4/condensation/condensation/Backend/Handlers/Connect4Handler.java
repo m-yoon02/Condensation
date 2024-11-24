@@ -142,7 +142,32 @@ public class Connect4Handler extends GameHandler {
         return false;
     }
 
-    private boolean winInDiagonalBackslash() {
+    private boolean winInDiagonalBackslash(int rowIndex, int columnIndex, PieceColor pieceColor) {
+        int topRow;
+        int leftCol;
+
+        while (rowIndex > 0 && columnIndex > 0) {
+            rowIndex -= 1;
+            columnIndex -= 1;
+        }
+
+        topRow = rowIndex;
+        leftCol = columnIndex;
+        int chain = 0;
+
+        for (; topRow < board.getRowSize() - 1, leftCol < board.getColumnSize() - 1; topRow++, leftCol++) {
+            T currentPiece = board.getAt(leftCol, topRow);
+            if (currentPiece != null && currentPiece.getColor() == pieceColor) {
+                chain++;
+                if (chain == 4) {
+                    return true;
+                }
+            }
+            else {
+                chain = 0;
+            }
+        }
+
         return false;
     }
 
