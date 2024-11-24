@@ -29,7 +29,14 @@ public class Connect4Handler extends GameHandler {
     }
 
     private int findAvailableRow(int column) {
-        return 0;
+        // Iterates through the rows of the specified column from bottom to top.
+        for(int row = board.length - 1; row >= 0 ; row--){
+            if (board[column][row] == 0){
+                return row;
+            }
+        }
+        // No available row was found.
+        return -1;
     }
 
     private boolean allColumnsAreFull() {
