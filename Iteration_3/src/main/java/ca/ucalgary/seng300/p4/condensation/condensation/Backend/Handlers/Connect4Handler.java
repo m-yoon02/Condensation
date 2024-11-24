@@ -23,10 +23,23 @@ public class Connect4Handler extends GameHandler {
         MoveData moveData = MoveData.fromJSON(moveDataJSON);
     }
 
+    /**
+     * pre conditions:
+     * 1.valid column index,
+     * 2.non-negative column size
+     *
+     * post conditions:
+     * 1. If an empty (null) row exists in the specified column:
+     *      The method returns the index of the lowest empty row in the column.
+     * 2. If no empty row exists in the specified column:
+     *      The method returns -1
+     * @param column
+     * @return the index of the lowest available row for specified column
+     */
     private int findAvailableRow(int column) {
         // Iterates through the rows of the specified column from bottom to top.
-        for(int row = board.length - 1; row >= 0 ; row--){
-            if (board[column][row] == 0){
+        for(int row = board.getColumnSize() - 1; row >= 0 ; row--){
+            if (board.getAt(column, row) == null){
                 return row;
             }
         }
