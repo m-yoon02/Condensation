@@ -11,6 +11,7 @@ public class GameTimer {
     //currentPlayerID is the ID of the player whose timer is currently being counted down
     private UUID currentPlayerID;
     private boolean active = false;
+    private int currentPlayerTimer;
 
     public GameTimer(UUID player1ID, UUID player2ID, int timeInSeconds){
         currentPlayerID = player1ID;
@@ -54,6 +55,14 @@ public class GameTimer {
     }
 
     /**
+     * Overloaded switchTimer method that alternates between players without needing to specify
+     * current player
+     */
+    public void switchTimer(){
+        this.currentPlayerID = getOtherPlayerID(currentPlayerID);
+    }
+
+    /**
      * Sets the current timer to the player ID of playerIDTOSet
      * @param playerIDToSet the player ID to set to
      */
@@ -66,9 +75,18 @@ public class GameTimer {
     /**
      * Starts the game timer countdown
      */
-    public void startTimer(){
+    public void startTimer() throws InterruptedException {
         active = true;
-        //If you are using a while loop here, make sure to BREAK it if one of the player's timer's reaches zero
+        while (active) {
+            currentPlayerTimer = timerHashMap.get(currentPlayerID);
+            currentPlayerTimer--;
+            timerHashMap.put(currentPlayerID, currentPlayerTimer);
+            if (currentPlayerTimer <= 0){
+                stopTimer();
+                notifyTimerEnded(currentPlayerID);
+            }
+            Thread.sleep(1000);
+        }
     }
 
     /**
