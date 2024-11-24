@@ -102,4 +102,21 @@ public class Connect4Handler extends GameHandler {
     private void checkForConnectedFour(Vector2 piecePos){
 
     }
+
+    private boolean winInRow() {
+        return false;
+    }
+
+    private boolean winInColumn() {
+        return false;
+    }
+
+    private boolean winInDiagonalBackslash() {
+        return false;
+    }
+
+    private boolean winInDiagonalFrontslash() {
+        return false;
+    }
+
 }
