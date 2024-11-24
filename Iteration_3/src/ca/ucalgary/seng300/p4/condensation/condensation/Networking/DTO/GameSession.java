@@ -74,6 +74,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
     @Override
     public void onTurnEnd(UUID playersTurnID) {
         System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
+
     }
 
     // do we instantiate gameHandler or just set it since who is supposed to handle exactly what kind of game a customer picks ??

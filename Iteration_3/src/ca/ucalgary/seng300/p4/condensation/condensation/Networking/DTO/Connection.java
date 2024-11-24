@@ -1,6 +1,5 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO;
 
-
 import java.util.UUID;
 
 public class Connection {
