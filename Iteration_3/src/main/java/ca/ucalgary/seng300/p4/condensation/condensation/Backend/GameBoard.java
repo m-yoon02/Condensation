@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class GameBoard<T extends GamePiece> {
     private final int rowSize;
     private final int columnSize;
-    private ArrayList<ArrayList<T>> board;
+    private final ArrayList<ArrayList<T>> board;
 
     public GameBoard(int rowSize, int columnSize) {
         this.rowSize = rowSize;
@@ -24,13 +24,23 @@ public class GameBoard<T extends GamePiece> {
     }
 
     /**
-     * Checks if a position is within the bounds of a board
-     * @param position the position to check for
+     * Checks if (x, y) is within the board's bounds
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return true if within bounds, else false
+     */
+    public boolean positionWithinBounds(int x, int y){
+        return x >= 0 && x < columnSize
+                && y >= 0 && y < rowSize;
+    }
+
+    /**
+     * Checks if the given Vector2 position is within bounds
+     * @param position the Vector2 position
      * @return true if within bounds, else false
      */
     public boolean positionWithinBounds(Vector2 position){
-        return position.x() >= 0 && position.x() < columnSize
-                && position.y() >= 0 && position.y() < rowSize;
+        return positionWithinBounds(position.x(), position.y());
     }
 
     /**
@@ -40,6 +50,10 @@ public class GameBoard<T extends GamePiece> {
      * @return true if it is successfully placed, else false
      */
     public boolean placePiece(T piece, Vector2 position){
+        if (isMovePossible(position)) {
+            board.get(position.y()).set(position.x(), piece);
+            return true;
+        }
         return false;
     }
 
@@ -50,6 +64,12 @@ public class GameBoard<T extends GamePiece> {
      * @return true if the move was successful, else false
      */
     public boolean movePiece(Vector2 oldPosition, Vector2 newPosition){
+        T piece = getAt(oldPosition);
+        if (isMovePossible(newPosition) && piece != null){
+            placePiece(piece, newPosition);
+            removePiece(oldPosition);
+            return true;
+        }
         return false;
     }
 
@@ -58,6 +78,7 @@ public class GameBoard<T extends GamePiece> {
      * @param position the position of the piece
      */
     public void removePiece(Vector2 position){
+        board.get(position.y()).set(position.x(), null);
     }
 
     /**
@@ -66,7 +87,7 @@ public class GameBoard<T extends GamePiece> {
      * @return true if it is possible, else false
      */
     public boolean isMovePossible(Vector2 position){
-        return false;
+        return positionWithinBounds(position) && !isPieceAt(position);
     }
 
     /**
@@ -74,7 +95,43 @@ public class GameBoard<T extends GamePiece> {
      * @return true if full, else false
      */
     public boolean isBoardFull(){
-        return false;
+        for (ArrayList<T> arrayList: board){
+            for (T piece: arrayList){
+                if (piece == null){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks if there is currently a piece at the position
+     * @param position the position to check for
+     * @return true if there is a piece, else false
+     */
+    public boolean isPieceAt(Vector2 position){
+        return isPieceAt(position.x(), position.y());
+    }
+
+    /**
+     * Checks if a piece exists at (x, y)
+     * @param x the x position
+     * @param y the y position
+     * @return the piece at (x, y) if it exists, else null
+     */
+    public boolean isPieceAt(int x, int y){
+        return getAt(x, y) != null;
+    }
+
+    /**
+     * Gets the piece at (x, y)
+     * @param x the x position
+     * @param y the y position
+     * @return the piece if it exists, else null
+     */
+    public T getAt(int x, int y){
+        return board.get(y).get(x);
     }
 
     /**
@@ -82,7 +139,15 @@ public class GameBoard<T extends GamePiece> {
      * @param position the position of the piece
      * @return the piece if it exists, else null
      */
-    public T getPiece(Vector2 position){
-        return null;
+    public T getAt(Vector2 position){
+        return getAt(position.x(), position.y());
+    }
+
+    public int getRowSize() {
+        return rowSize;
+    }
+
+    public int getColumnSize() {
+        return columnSize;
     }
 }
