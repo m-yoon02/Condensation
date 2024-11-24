@@ -1,7 +1,8 @@
-package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Connection;
-import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatManager;
-import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingService;
+package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Connection;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatManager;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingPool;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class NetworkManager {
     private final MatchmakingService matchmakingService;
     private final GameSessionManager gameSessionManager;
     private final ChatManager chatManager;
+    private final MatchmakingPool matchmakingPool;
 
 
     /**
@@ -28,7 +30,8 @@ public class NetworkManager {
      */
     private NetworkManager(){
         connections = new HashMap<>();
-        matchmakingService = new MatchmakingService();
+        matchmakingPool = new MatchmakingPool();
+        matchmakingService = new MatchmakingService(matchmakingPool);
         gameSessionManager = new GameSessionManager();
         chatManager = new ChatManager();
     }
@@ -73,6 +76,7 @@ public class NetworkManager {
 
         if(recieverConnection != null && recieverConnection.isConnected()){
             System.out.println("Sending message to " + receivingPlayedId.toString() + ": " + message);
+            // send message to backend
 
             // do checks for different types of message like for Chat what else ???
         }
@@ -85,8 +89,8 @@ public class NetworkManager {
 
 
 
-
     // define recieve message
     // -- will require some kind of logic to dilnieate how to handle the message.
+
 
 }
