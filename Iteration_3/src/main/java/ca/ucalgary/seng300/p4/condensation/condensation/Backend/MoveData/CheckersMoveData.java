@@ -1,6 +1,5 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData;
 
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 
 import java.util.UUID;
