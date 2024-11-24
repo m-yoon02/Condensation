@@ -24,16 +24,17 @@ public class Connect4Handler extends GameHandler {
     }
 
     /**
-     * pre conditions:
-     * 1.valid column index,
-     * 2.non-negative column size
+     * pre-conditions:
+     * 1. Board is initialized
+     * 2. valid column index,
+     * 3. non-negative column size
      *
-     * post conditions:
+     * post-conditions:
      * 1. If an empty (null) row exists in the specified column:
      *      The method returns the index of the lowest empty row in the column.
      * 2. If no empty row exists in the specified column:
      *      The method returns -1
-     * @param column
+     * @param column, index of target column
      * @return the index of the lowest available row for specified column
      */
     private int findAvailableRow(int column) {
@@ -47,8 +48,30 @@ public class Connect4Handler extends GameHandler {
         return -1;
     }
 
+    /**
+     * pre-conditions:
+     * 1. Board is initialized
+     *
+     * post-conditions:
+     * 1.Returns false:
+     *      If any position in the top row (row TOP_ROW) is empty (null).
+     * Returns true:
+     *      If all positions in the top row (row TOP_ROW) are occupied (non-null).
+     *
+     * @return true if all cells in the top row are occupied (non-null);
+     *         false if at least one cell in the top row is empty (null)
+     */
     private boolean allColumnsAreFull() {
-        return false;
+        int TOP_ROW  = 0;
+        // Loop through each column in the top row.
+        for(int i = 0; i < board.getRowSize(); i++ ){
+            // If any spot in the top row is empty, the board is not full.
+            if (board.getAt(i, TOP_ROW) == null){
+                return false;
+            }
+        }
+        // All spots in the top row are filled, so the board is full.
+        return true;
     }
 
     private boolean columnIsFull(int column) {
