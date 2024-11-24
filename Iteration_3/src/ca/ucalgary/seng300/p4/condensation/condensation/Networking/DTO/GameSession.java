@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO;
 
+import java.net.http.WebSocket;
 import java.util.UUID;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
@@ -20,6 +21,8 @@ public class GameSession implements GameEndListener, TurnEndListener {
     // field for instantited GameHandler
     private final GameHandler gameHandler;
 
+//    private final TurnEndListener turnEndListener;
+//    private final GameEndListener gameEndListener;
 
 
     /**
@@ -46,6 +49,8 @@ public class GameSession implements GameEndListener, TurnEndListener {
           }
 
         this.gameHandler = gameHandler1;
+        this.gameHandler.addTurnEndListener(this);
+        this.gameHandler.addGameEndListener(this);
     }
 
 
@@ -55,12 +60,13 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
     @Override
     public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
+        System.out.println("Game has ended");
 
     }
 
     @Override
     public void onTurnEnd(UUID playersTurnID) {
-
+        System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
     }
 
     // do we instantiate gameHandler or just set it since who is supposed to handle exactly what kind of game a customer picks ??
@@ -78,8 +84,6 @@ public class GameSession implements GameEndListener, TurnEndListener {
      * pass this information to backend so that  they can subscribe them
      */
 
-    //this.gameHandler.addGameEndListener(this); // Adds GameSesison to instance of GameHandler
-    //this.gameHandler.addTurnEndListener(this); //
 
     // Or we can simply set this
 
