@@ -52,9 +52,14 @@ public class NetworkManager {
         return network;
     }
 
+    // ---------------------------------------------------------------------------------------------------
+    // Network methods that handles queueing, creating, and starting game session sequence.
+    // ---------------------------------------------------------------------------------------------------
+
+
     /**
      * queuePlayer method recieves a queuedMemoObject from the client and pools it. Then
-     * @param queuedMemoObject This has playerUUID, gameType, and the elo
+     * @param queuedMemoObject This has playerUUID, gameType, and the elo of the player
      */
     public void queuePlayer(QueuedPlayerMemo queuedMemoObject){
 
@@ -70,7 +75,17 @@ public class NetworkManager {
      */
     public void sendCreatedGameSession(GameSession gameSession){
         gameSessionManager.addGameSession(gameSession);
+        network.sendPlayerReferences(gameSession);
+    }
 
+    /**
+     * sendPlayerReferences sends the players UUIDSs to backend for reference, this concludes the starting game session sequence.
+     * -- We need to discuss sending information back to the backend here either just sessionID, uuid,
+     * @param
+     * @param
+     */
+    public void sendPlayerReferences(GameSession gameSession){
+        // send this information to the backend
     }
 
 
