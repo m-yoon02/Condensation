@@ -124,7 +124,21 @@ public class Connect4Handler extends GameHandler {
         return false;
     }
 
-    private boolean winInColumn() {
+    private boolean winInColumn(int columnIndex, PieceColor pieceColor) {
+        int chain = 0;
+
+        for (int rowIndex = 0; rowIndex < board.getRowSize() - 1; col++) {
+            T currentPiece = board.getAt(columnIndex, rowIndex);
+            if (currentPiece != null && currentPiece.getColor() == pieceColor) {
+                chain++;
+                if (chain == 4) {
+                    return true;
+                }
+            }
+            else {
+                chain = 0;
+            }
+        }
         return false;
     }
 
