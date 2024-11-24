@@ -18,11 +18,6 @@ public class CheckersHandler extends GameHandler {
     }
 
     @Override
-    public void startGame() {
-
-    }
-
-    @Override
     public void makeMove(String moveDataJSON) {
         //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
         CheckersMoveData checkersMoveData = CheckersMoveData.fromJSON(moveDataJSON);
