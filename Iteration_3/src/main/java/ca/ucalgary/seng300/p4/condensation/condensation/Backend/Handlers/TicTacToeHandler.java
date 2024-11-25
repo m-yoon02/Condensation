@@ -26,8 +26,9 @@ public class TicTacToeHandler extends GameHandler {
         UUID playerID = moveData.getPlayerID();
         PieceColor color = getPlayerMemoFromUUID(moveData.getPlayerID()).pieceColor();
         Vector2 movePosition = moveData.getMovePosition();
-
-        boolean isMovePossible = board.isMovePossible();
+        TicTacToePiece piece = new TicTacToePiece(movePosition, color);
+        this.board.placePiece(piece, movePosition);
+        this.notifyTurnEnd(playerID, moveDataJSON);
     }
 
     private boolean checkForThreeInARow(PieceColor color){
