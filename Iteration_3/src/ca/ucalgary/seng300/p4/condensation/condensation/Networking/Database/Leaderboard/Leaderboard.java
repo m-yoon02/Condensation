@@ -88,6 +88,8 @@ public class Leaderboard {
         //just print the JSON in JSON format
 
         //sort the users by elo in descending order
+        //not sure if I'm supposed to change users for this...if not im thinking we just loop through it and compare all users to each other
+        //add/remove in top5Players when a user's elo is greater or less,,,don't know how much we care about that...
         users.sort((user1, user2) -> {
             Number elo1 = (Number) ((JSONObject) user1).get("elo");
             Number elo2 = (Number) ((JSONObject) user2).get("elo");
