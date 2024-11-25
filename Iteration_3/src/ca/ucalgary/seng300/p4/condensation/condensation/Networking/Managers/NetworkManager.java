@@ -66,9 +66,6 @@ public class NetworkManager {
     // Network methods that handles userLogin and userSignup
     // ---------------------------------------------------------------------------------------------------
 
-
-    // do we load a database here when ever we instatiate rthe singletom
-
     /**
      * Handles a login request from the frontend.
      * @param loginPayload JSONObject containing username and password
@@ -128,7 +125,6 @@ public class NetworkManager {
     }
 
 
-
     /**
      * Retrieves a logged-in client by a playerID. This can be used during game or other actions that require client logged
      * in precondition.
@@ -145,12 +141,14 @@ public class NetworkManager {
         return client;
     }
 
+    // ---------------------------------------------------------------------------------------------------
+    // Network methods that handles client listener implementation to gameSession for real-time updates
+    // ---------------------------------------------------------------------------------------------------
 
     /**
      * subscribeToGameSession this method is used to subscribe a client to a list of listeners that map to particular sessionID
-     * @param sessionID
+     * @param sessionID The game session's UUID
      * @param client
-     *
      */
     public void subscribeToGameSession(UUID sessionID, Client client) {
         // Check if the sessionID already exists in the map
@@ -168,8 +166,21 @@ public class NetworkManager {
         System.out.println("Client subscribed to session: " + sessionID);
     }
 
-
-
+    /**
+     * Notifies all clients subscribed to a game session.
+     * @param sessionID The game session's UUID
+     * @param gameData The game state data to send
+     */
+    public void notifyGameSessionClients(UUID sessionID, JSONObject gameData) {
+        List<GameDataListener> listeners = sessionListeners.get(sessionID);         // will get the list containing both clients so it can notify
+        if (listeners != null) {
+            for (GameDataListener listener : listeners) {
+                listener.onGameDataReceived(gameData);
+            }
+        } else {
+            System.out.println("No listeners found for session: " + sessionID);
+        }
+    }
 
 
 
@@ -193,15 +204,34 @@ public class NetworkManager {
     }
 
     /**
-     * sendCreatedGameSession is helper to clientQueuePlayer, this will send the gameSession object to the GameSession Manager
-     * @param gameSession object that has all the info. about the ongoing game it corresponds to.
-     * PreCondition: recieves a gameSession returned by matchmaking service
-     * PostCondition: adds gameSession to the sessions hashmap in GameSessionManager, and sends the PlayerReferences to the backend
-     * @return
+     * sendCreatedGameSession is a helper to clientQueuePlayer. This method manages the process of associating a newly created
+     * game session with the necessary components and listeners.
+     * @param gameSession The GameSession object containing all the details about the ongoing game it corresponds to.
+     * PreCondition:
+     * - Receives a valid gameSession object returned by the matchmaking service.
+     * - Assumes that the players involved in the session are already logged in and exist in the loggedInClients map.
+     * PostCondition:
+     * - Adds the gameSession to the sessions map in GameSessionManager for tracking active sessions.
+     * - Subscribes both player clients to the game session's updates by associating them with the session's listener list.
+     * - Sends the player references (player UUIDs) to the backend for game initialization and processing.
      */
     public void sendCreatedGameSession(GameSession gameSession){
+
+
+        UUID sessionID = gameSession.getSessionId();
+        Client player1ID = getClient(gameSession.getPlayer1ID());
+        Client player2ID = getClient(gameSession.getPlayer2ID());
+
+        // Subscribe both players to the game session
+        // Each client is subscribed as a listener to receive real-time updates for the specified game session
+        subscribeToGameSession(sessionID, player1ID);
+        subscribeToGameSession(sessionID, player1ID);
+
+        // Add the session to the GameSessionManager
         gameSessionManager.addGameSession(gameSession);
-        network.sendPlayerReferences(gameSession.getPlayer1ID(), gameSession.getPlayer2ID());
+
+        // Notify backend of session creation (if required)
+        sendPlayerReferences(gameSession.getPlayer1ID(), gameSession.getPlayer2ID());
     }
 
     /**
@@ -212,7 +242,7 @@ public class NetworkManager {
      */
     public void sendPlayerReferences(UUID Player1, UUID Player2){
         // This remains a stub for now, however functionality would require a backend listener
-        // this should send to something to a subscribed Backend Listener
+        // this should send to something to a subscribed Backend Listener, however since we have one backend how will this work
     }
 
 
@@ -226,6 +256,12 @@ public class NetworkManager {
      */
     public void sendGameDataToClients(JSONObject clientPayload){
         // This remains a stub, but implementation would require having client listeners you implement GamaData Listener
+
+        // Parse sessionID from the payload
+        String sessionIdString = (String) clientPayload.get("sessionId");
+        UUID sessionId = UUID.fromString(sessionIdString);
+        notifyGameSessionClients(sessionId, clientPayload);          // Notify all subscribed clients
+
     }
 
     /**

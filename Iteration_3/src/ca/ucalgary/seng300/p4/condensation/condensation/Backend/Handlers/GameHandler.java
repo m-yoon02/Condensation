@@ -4,6 +4,7 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.PlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.*;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameTimer.GameTimer;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameTimer.TimerEndListener;
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public abstract class GameHandler implements IGameHandler{
      * Notifies all turn end listeners that a turn has ended and which player's turn it is currently
      * @param currentPlayerTurnID the ID of the next player's turn
      */
-    protected void notifyTurnEnd(UUID currentPlayerTurnID, String gameStateJson){
+    protected void notifyTurnEnd(UUID currentPlayerTurnID, JSONObject gameStateJson){
         gameTimer.setTimerTo(currentPlayerTurnID);
         for (TurnEndListener listener: turnEndListeners){
             listener.onTurnEnd(currentPlayerTurnID, gameStateJson);
