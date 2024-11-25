@@ -100,8 +100,8 @@ public class Connect4Handler extends GameHandler {
     }
 
     private void checkForConnectedFour(Vector2 piecePos){
-        int row = piecePos.x();
-        int column = piecePos.y();
+        int row = piecePos.y();
+        int column = piecePos.x();
 
         PieceColor pieceColor = board.getAt(column, row).getColor();
     }
