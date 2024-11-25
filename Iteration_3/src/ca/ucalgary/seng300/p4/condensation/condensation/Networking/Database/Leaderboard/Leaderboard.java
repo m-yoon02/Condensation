@@ -111,7 +111,7 @@ public class Leaderboard {
         }
 
         //print the top 5 players, don't know if its needed, wrote it anyways just in case. Can delete if we dont want it.
-        //(understood the instructions a lil wrong SRRY)
+        //(understood the instructions a lil wrong SRRY), can also use this as a debugger ig
         System.out.println("The Top 5 Players:"); //print a header
         for (Object object : top5Players) {
             JSONObject user = (JSONObject) object;
