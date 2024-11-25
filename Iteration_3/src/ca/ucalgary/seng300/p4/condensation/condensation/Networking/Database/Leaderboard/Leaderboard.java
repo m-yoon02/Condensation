@@ -83,7 +83,41 @@ public class Leaderboard {
     }
 
     public JSONArray fetchTop5Players() {
+        //Instructions: Basically just try and parse and print the leaderboard if you
+        //can make it pretty that's awesome, if not deadass
+        //just print the JSON in JSON format
 
+        //sort the users by elo in descending order
+        users.sort((user1, user2) -> {
+            Number elo1 = (Number) ((JSONObject) user1).get("elo");
+            Number elo2 = (Number) ((JSONObject) user2).get("elo");
+            return Integer.compare(elo2.intValue(), elo1.intValue()); // compare them, if elo 1 is greater, put at front, if not push back
+        });
+
+        //we can create a new array that will hold the top 5 players
+        JSONArray top5Players = new JSONArray();
+
+        //to make sure there is ONLY 5 players that go into the array, we have a count that keeps track of how many objects it extracts from users
+        int count = 0;
+
+        //loop through the array and add the players into top5Players
+        for (Object object : users) {
+            if (count <= 5) {
+                top5Players.add(object);
+                count++;
+            } else {
+                break; //exit loop if 5 objects are in the top5Players
+            }
+        }
+
+        //print the top 5 players
+        System.out.println("The Top 5 Players:"); //print a header
+        for (Object object : top5Players) {
+            JSONObject user = (JSONObject) object;
+            System.out.println("Name: " + user.get("name") + ", Elo: " + user.get("elo"));
+        }
+
+        return top5Players;
     }
 
 
