@@ -50,19 +50,13 @@ public class Player {
     }
 
     /**
-     * Creates a Player object from a JSON representation which is solely designed for verifying
+     * Parses JSON object for the playerUUID string and returns it to login handler
      * @param json JSONObject representing the player
      * @return Player object
      */
-    public static Player fromJson(JSONObject json) {
-        String username = (String) json.get("username");
-        String playerUUID = (String) json.get("playerUUID");
-        int leaderBoardPosition = ((Long) json.get("leaderBoardPosition")).intValue();
-        int elo = ((Long) json.get("elo")).intValue();
-        Player player = new Player(username, leaderBoardPosition, elo);
-        player.setPlayerID(UUID.fromString(playerUUID));
-
-        return new Player(username, leaderBoardPosition, elo);
+    public String fromJson(JSONObject json) {
+        String playerUUIDString = (String) json.get("playerUUID");
+        return playerUUIDString;
     }
 
 }

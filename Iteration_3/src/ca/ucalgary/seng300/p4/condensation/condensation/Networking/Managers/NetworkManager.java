@@ -103,9 +103,8 @@ public class NetworkManager {
             String password = (String) json.get("password");
 
             // Check the database for username and password
-            Player player = validateUserCredentials(username, password);
-            UUID playerUUID = player.getPlayerID();
-            int playerELO = player.getElo();
+            // will return PlayerUUID if user found in database
+            UUID playerUUID = validateUserCredentials(username, password);
 
             if (playerUUID == null) {
                 throw new IllegalArgumentException("Invalid username or password");
@@ -117,7 +116,7 @@ public class NetworkManager {
             }
 
             // Create and store the Client object
-            Client client = new Client(playerUUID, username, null, playerELO);          // we set gameType to null for now this and elo
+            Client client = new Client(playerUUID, username);
             loggedInClients.put(playerUUID, client);
 
             JSONObject response = new JSONObject();
@@ -127,127 +126,11 @@ public class NetworkManager {
             // Return a success response
             System.out.println("User logged in: " + username + " (" + playerUUID + ")");
             return responseString;
-        } catch (ParseException | IOException e) {
+        } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid login payload", e);
         }
     }
 
-    /**
-     * Validates the user's credentials by checking the simulated database. Helper to playerLoginHandler
-     * @param username The provided username
-     * @param password The provided password
-     * @return The Player object if credentials are valid, or null if invalid
-     * */
-    public Player validateUserCredentials(String username, String password) throws IOException, ParseException {
-
-        for (Object obj : userDatabase) {           // parses the json
-            JSONObject playerJson = (JSONObject) obj;
-
-            // Check if username and password match
-            if (playerJson.get("username").equals(username) && playerJson.get("password").equals(password)) {
-                // Deserialize the matching player into a Player object this is neccessary because we need to values about the player to returned
-                // so we make a new player object return it, and now login get all the fields it needs from here to make a client.
-                return Player.fromJson(playerJson);
-            }
-        }
-        return null; // No match found
+    public UUID validateUserCredentials(String username, String password) {
     }
-
-    // The method for signup is easy, since it will just write userinfo to the userDatabase
-
-    /**
-     * createUser
-     * @param signupPayload
-     * */
-    public void  createUser(String signupPayload){
-        // write to the database or call some database function that does this
-    }
-
-    /**
-     * Retrieves a logged-in client by their playerID. Can be used in application whenever certain actions require a logged in client
-     * @param playerId The playerId
-     * @return The Client object, or null if not logged in
-     */
-    public Client getClient(UUID playerId) {
-        return loggedInClients.get(playerId);
-    }
-
-
-
-    // ---------------------------------------------------------------------------------------------------
-    // Network methods that handles queueing, creating, and starting game session sequence.
-    // ---------------------------------------------------------------------------------------------------
-    /**
-     * queuedPlayerMemo called by the controller to recieve a queuedPlayerm they can get the client by PlayerID and set the client class
-     * @param queuedPlayerMemo This has playerUUID, gameType, and the elo of the player and also acts as a listener which we can subscribe to a gameSession and notify
-     * @PreCondition Frontend would have the plauerID
-     */
-    public void clientQueuePlayer(QueuedPlayerMemo queuedPlayerMemo){
-        matchmakingPool.addPlayer(queuedPlayerMemo);                                          // adds the playerMemo to a matchmakingPool
-        GameSession matchedGameSession = matchmakingService.findAndMatchPlayers();
-        network.sendCreatedGameSession(matchedGameSession);                          // This will match first available player in the list to eligible player2
-    }
-
-    /**
-     * sendCreatedGameSession will send the gameSession object to the GameSession Manager
-     * @param gameSession object that has all the info. about the ongoing game it corresponds to.
-     * @return
-     */
-    public void sendCreatedGameSession(GameSession gameSession){
-        gameSessionManager.addGameSession(gameSession);
-        network.sendPlayerReferencesToBackend(gameSession.getPlayer1ID(), gameSession.getPlayer2ID());
-    }
-
-    /**
-     * sendPlayerReferences sends the players UUIDSs to backend for reference, this concludes the starting game session sequence.
-     * Following backend will start game and the inter-game session sequence will begin
-     * @param Player1 this represents player1's uuid
-     * @param Player2 this represents player2's uuid
-     */
-    public void sendPlayerReferencesToBackend(UUID Player1, UUID Player2){
-        // this should send to some Backend recieve method the UUIDs of Player1 and Player2
-    }
-
-
-    // ---------------------------------------------------------------------------------------------------
-    // Network methods that handle intra game session methods and logic.
-    // ---------------------------------------------------------------------------------------------------
-
-    /**
-     * sendGameDataToClients sends the toClientPayload clients who are subscribed to listener lists that map to their current gameSession
-     * @param toClientPayload
-     */
-    public void sendGameDataToClients(String toClientPayload){
-        // send the clientPayload to the clients
-        // there needs to be somekind of recieving method from the frontEnd
-    }
-
-    /**
-     *recieveGameDataFromClient - this is the sessionID  + gameData information from the frontEnd following a player making a move
-     */
-    public void recieveGameDataFromClients(String recieveClientPayload){
-        // recieve a payload json formatted String
-        // GameSession gameSession = retured by GSM;
-    }
-
-
-
-
-
-
-
-
-
-
-    // ---------------------------------------------------------------------------------------------------
-    // Network methods that handle end game session methods and logic.
-    // ---------------------------------------------------------------------------------------------------
-
-
-    // we need to
-
-
-
-
-
 }
