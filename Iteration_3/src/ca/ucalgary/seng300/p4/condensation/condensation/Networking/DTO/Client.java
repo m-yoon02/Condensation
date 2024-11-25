@@ -6,16 +6,16 @@ import java.util.UUID;
 
 public class Client implements GameDataListener {
 
-    private final UUID userId;
+    private final UUID playerId;
     private final String username;
 
-    public Client(UUID userId, String username) {
-        this.userId = userId;
+    public Client(UUID playerId, String username) {
+        this.playerId = playerId;
         this.username = username;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getPlayerId() {
+        return playerId;
     }
 
     public String getUsername() {
