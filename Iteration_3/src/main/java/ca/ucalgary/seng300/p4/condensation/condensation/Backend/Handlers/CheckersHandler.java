@@ -27,8 +27,17 @@ public class CheckersHandler extends GameHandler {
         return false;
     }
 
-    private void checkForGameEnd(){
-
+    private boolean checkForGameEnd(PieceColor color){
+        boolean gameEnd = true;
+        for(int i = 0; i < BOARD_SIZE[0]; i++){
+            for(int j = 0; j < BOARD_SIZE[1]; j++){
+                Vector2 pos = new Vector2(i, j);
+                if(board.getPiece(pos).getColor().equals(color)){
+                    gameEnd = false;
+                }
+            }
+        }
+        return gameEnd;
     }
 
     private void checkForPromotion(Vector2 pos){
