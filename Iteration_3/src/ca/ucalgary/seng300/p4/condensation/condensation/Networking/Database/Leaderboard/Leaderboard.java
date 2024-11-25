@@ -124,6 +124,16 @@ public class Leaderboard {
 
     /// THIS SHOULD BE THE SAME AS THE TOP FUNCTION JUST INCREAMENT THE VALUE BY 30
     public void updateEloForLosingPlayer(UUID playerID) {
+        if (findUserById(playerID) == null) {
+            return;
+        }
+
+        JSONObject losingPlayer = findUserById(playerID);
+        Number currentElo = (Number) losingPlayer.get("elo");
+        currentElo = currentElo.intValue() + 30; //idk if im understanding this but is this right??? or do u mean -30? change it when u review it ;-;
+
+        losingPlayer.put("elo", currentElo);
+
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
 
