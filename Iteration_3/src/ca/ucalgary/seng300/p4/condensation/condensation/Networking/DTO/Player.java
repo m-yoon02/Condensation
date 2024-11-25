@@ -4,7 +4,6 @@ import java.util.UUID;
 
 public class Player {
     UUID playerID;
-
     String userName;
     int leaderBoardPosition;
     int elo;
