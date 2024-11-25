@@ -22,7 +22,8 @@
 - `project_tracker.xlsx`: Project Tracker for the Iteration 1
     
 ## Iteration 2 Deliverables in `Iteration_2`
-    -   
+    - Files for Delta are in `Delta_Review\final_submission`
+    - Files for Echo are in `Echo_Review\final_submission`
 ## Iteration 3 Deliverables in `Iteration_3`
     -
 
