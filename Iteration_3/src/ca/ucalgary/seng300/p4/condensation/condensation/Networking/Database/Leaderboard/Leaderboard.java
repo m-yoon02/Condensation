@@ -110,7 +110,8 @@ public class Leaderboard {
             }
         }
 
-        //print the top 5 players
+        //print the top 5 players, don't know if its needed, wrote it anyways just in case. Can delete if we dont want it.
+        //(understood the instructions a lil wrong SRRY)
         System.out.println("The Top 5 Players:"); //print a header
         for (Object object : top5Players) {
             JSONObject user = (JSONObject) object;
@@ -134,5 +135,11 @@ public class Leaderboard {
 
     public void printLeaderboard() {
         System.out.println("PRINTED LEADER BOARD:");
+
+        //loop through the users and print them!
+        for (Object object : users) {
+            JSONObject user = (JSONObject) object;
+            System.out.println("Name: " + user.get("name") + ", Elo: " + user.get("elo"));
+        }
     }
 }
