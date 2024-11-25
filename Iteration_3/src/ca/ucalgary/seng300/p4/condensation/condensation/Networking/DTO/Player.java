@@ -1,5 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO;
 
+import org.json.simple.JSONObject;
+
 import java.util.UUID;
 
 public class Player {
@@ -23,6 +25,10 @@ public class Player {
         this.userName = userName;
     }
 
+    public void setPlayerID(UUID playerID) {
+        this.playerID = playerID;
+    }
+
     public UUID getPlayerID() {
         return playerID;
     }
@@ -41,6 +47,22 @@ public class Player {
 
     public void setElo(int elo) {
         this.elo = elo;
+    }
+
+    /**
+     * Creates a Player object from a JSON representation which is solely designed for verifying
+     * @param json JSONObject representing the player
+     * @return Player object
+     */
+    public static Player fromJson(JSONObject json) {
+        String username = (String) json.get("username");
+        String playerUUID = (String) json.get("playerUUID");
+        int leaderBoardPosition = ((Long) json.get("leaderBoardPosition")).intValue();
+        int elo = ((Long) json.get("elo")).intValue();
+        Player player = new Player(username, leaderBoardPosition, elo);
+        player.setPlayerID(UUID.fromString(playerUUID));
+
+        return new Player(username, leaderBoardPosition, elo);
     }
 
 }
