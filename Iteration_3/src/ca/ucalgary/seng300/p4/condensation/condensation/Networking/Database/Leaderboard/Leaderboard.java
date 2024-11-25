@@ -64,9 +64,8 @@ public class Leaderboard {
         return null;
     }
 
-    public String JSONObjectToString() {
+    public String JSONObjectToString(JSONObject object) {
 
-        // TODO: do this
     }
 
     public void updateEloForWinningPlayer(UUID playerID) {
