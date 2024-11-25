@@ -95,11 +95,11 @@ public class GameSession implements GameEndListener, TurnEndListener {
      * @param playersTurnID
      * @param gameStateJson
      * PreCondition : recieves the PlayerTurnID and gameStateJson on listener notification.
-     * PostCondition : Calls network singelton method that sends formatted JSON data to client
+     * PostCondition : Calls network singelton method that sends formatted JSON Object data to client
      */
 
     @Override
-    public void onTurnEnd(UUID playersTurnID, String gameStateJson) {
+    public void onTurnEnd(UUID playersTurnID, JSONObject gameStateJson) {
         System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
         String currentPlayerTurn = null;
 
@@ -114,10 +114,10 @@ public class GameSession implements GameEndListener, TurnEndListener {
         clientPayload.put("sessionId", this.sessionId.toString());
         clientPayload.put("currentPlayerTurnID", playersTurnID);              // display name for frontend
         clientPayload.put("currentPlayerTurnDisplayName", currentPlayerTurn); // uuid for checks frontEND may need on their end
-        clientPayload.put("gameState",gameStateJson);   // represents the gameState following backend applying move data
+        clientPayload.put("gameState",gameStateJson);                        // represents the gameState following backend applying move data
 
         // sends the game data to clients via the network singleton
-        NetworkManager.getNetworkInstance().sendGameDataToClients(clientPayload.toJSONString());
+        NetworkManager.getNetworkInstance().sendGameDataToClients(clientPayload);
 
     }
 

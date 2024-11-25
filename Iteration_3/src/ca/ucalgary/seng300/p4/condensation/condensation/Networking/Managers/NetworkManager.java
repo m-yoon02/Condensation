@@ -10,10 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class NetworkManager {
 
@@ -30,8 +27,9 @@ public class NetworkManager {
     private final MatchmakingPool matchmakingPool;
 
     // client listener lists mapped to specific to their gameSessions
-    private final Map<UUID, List<GameDataListener>> sessionListeners;
-    private final Map<UUID, Client> loggedInClients;
+    private Map<UUID, Client> loggedInClients;
+    private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();
+
 
     // we need some kind of database instance here
     private final String userDatabaseFilePath = "ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/UserDatabase.json";
@@ -48,7 +46,7 @@ public class NetworkManager {
         gameSessionManager = new GameSessionManager();
         chatManager = new ChatManager();
         sessionListeners = new HashMap<>();
-        this.loggedInClients = new HashMap<>();
+        loggedInClients = new HashMap<>();
 
     }
 
@@ -73,19 +71,19 @@ public class NetworkManager {
 
     /**
      * Handles a login request from the frontend.
-     * @param loginPayload JSON string containing username and password
-     * @return If a success the string on the player UUID and if not some kind of fail message
+     * @param loginPayload JSONObject containing username and password
+     * @return If a success the string on the player UUID and if not some kind of fail message ( exception)
      * @throws IllegalArgumentException If the login payload is invalid
+     * PreCondition : the client calls this network method with the parameter : loginPayload
+     * PostCondition : the method verfies login information, adds client to logged in list, and returns a playerID json string back to client
+     *
      */
-    public String playerLoginHandler(String loginPayload) throws IllegalArgumentException {
+    public String playerLoginHandler(JSONObject loginPayload) throws IllegalArgumentException {
         try {
-            // parses the JSON payload
-            JSONParser parser = new JSONParser();
-            JSONObject json = (JSONObject) parser.parse(loginPayload);
 
             // Extract username and password
-            String username = (String) json.get("username");
-            String password = (String) json.get("password");
+            String username = (String) loginPayload.get("username");
+            String password = (String) loginPayload.get("password");
 
             // Check the database for username and password
             UUID playerUUID = validateUserCredentials(username, password);     // do we define this in network manager or something else
@@ -118,12 +116,15 @@ public class NetworkManager {
 
 
     /**
-     * createUser This will be used by frontend to add player to tne user databse
+     * createUser This will be used by frontend to add player to tne user database
      * @param signupPayload
+     * PreCondition : The client sends the signupPayload
+     * PostCondition : A player object is instantiated and a json representation of the client is saved to the user database
+     * NOTE : This would interact with methods in the Database class so not sure how this would be Tested.
      * */
 
-    public void  createUser(String signupPayload) {
-        // write to the database or call some database function that does this
+    public void  createUser(JSONObject signupPayload){
+
     }
 
 
@@ -133,6 +134,8 @@ public class NetworkManager {
      * in precondition.
      * @param playerId The playerId
      * @return The Client object, or null if not logged in
+     * PreCondition : whoever needs to access a specific logged in client would pass in a player UUID
+     * PostCondition : The method should return a client object if logged in, or throw an exception
      */
     public Client getClient(UUID playerId) {
         Client client = loggedInClients.get(playerId);
@@ -141,6 +144,30 @@ public class NetworkManager {
         }
         return client;
     }
+
+
+    /**
+     * subscribeToGameSession this method is used to subscribe a client to a list of listeners that map to particular sessionID
+     * @param sessionID
+     * @param client
+     *
+     */
+    public void subscribeToGameSession(UUID sessionID, Client client) {
+        // Check if the sessionID already exists in the map
+        List<GameDataListener> listeners = sessionListeners.get(sessionID);
+
+        // If no listeners exist for this sessionID, create a new list
+        if (listeners == null) {
+            listeners = new ArrayList<>();
+            sessionListeners.put(sessionID, listeners);
+        }
+        // Add the listener to the list
+        listeners.add(client);
+
+        // Print a confirmation message
+        System.out.println("Client subscribed to session: " + sessionID);
+    }
+
 
 
 
@@ -153,18 +180,23 @@ public class NetworkManager {
     /**
      * clientQueuePlayer called by the controller to recieve a queuedPlayer
      * @param queuedMemoObject This has playerUUID, gameType, and the elo of the player
+     * PreCondition: client instantiates a queuedMemo which has information on the playerID and the gameType they selected
+     * PostCondition: able to verify the client is logged in, and them to pool and returns a matchedGameSession object, which eventually sends created
+     *               gameSession information to the GameSessionManager and finally uuids to the backend via (sendCreatedGameSession)
      */
     public void clientQueuePlayer(QueuedPlayerMemo queuedMemoObject){
         UUID playerUUID = queuedMemoObject.PlayerID();
-        Client client = getClient(playerUUID);                                    // reference to logged in client 
+        Client client = getClient(playerUUID);                                    // reference to logged in client
         matchmakingPool.addPlayer(queuedMemoObject);                                // adds the playerMemo to a matchmakingPool
         GameSession matchedGameSession = matchmakingService.findAndMatchPlayers();
         network.sendCreatedGameSession(matchedGameSession);   // This will match first available player in the list to eligible player2
     }
 
     /**
-     * sendCreatedGameSession will send the gameSession object to the GameSession Manager
+     * sendCreatedGameSession is helper to clientQueuePlayer, this will send the gameSession object to the GameSession Manager
      * @param gameSession object that has all the info. about the ongoing game it corresponds to.
+     * PreCondition: recieves a gameSession returned by matchmaking service
+     * PostCondition: adds gameSession to the sessions hashmap in GameSessionManager, and sends the PlayerReferences to the backend
      * @return
      */
     public void sendCreatedGameSession(GameSession gameSession){
@@ -179,7 +211,8 @@ public class NetworkManager {
      * @param Player2 this represents player2's uuid
      */
     public void sendPlayerReferences(UUID Player1, UUID Player2){
-        // this should send to some Backend recieve method the UUIDs of Player1 and Player2
+        // This remains a stub for now, however functionality would require a backend listener
+        // this should send to something to a subscribed Backend Listener
     }
 
 
@@ -188,18 +221,18 @@ public class NetworkManager {
     // ---------------------------------------------------------------------------------------------------
 
     /**
-     * sendGameDataToClients the readyPayload = sessionID + gameState payload to the clients
-     * @param clientPayload t
+     * sendGameDataToClients sends the clientPayload = sessionID + gameState payload to the clients
+     * @param clientPayload
      */
-    public void sendGameDataToClients(String clientPayload){
-        // send the clientPayload to the clients
-        // there needs to be somekind of recieving method from the frontEnd
+    public void sendGameDataToClients(JSONObject clientPayload){
+        // This remains a stub, but implementation would require having client listeners you implement GamaData Listener
     }
 
     /**
-     *recieveGameDataFromClient
+     * recieveGameDataFromClient recieves the gameState json payload (includes sessionID) from client
+     * - calls GameSessionManager instance partFrontEndPayload method -> returns gameSession object,  gameState json(only gameState data)
      */
-    public void recieveGameDataFromClient(){
+    public void recieveGameDataFromClient(JSONObject recieveClientPayload){
         // recieve a payload json formatted String
         // GameSession gameSession = retured by GSM;
     }
