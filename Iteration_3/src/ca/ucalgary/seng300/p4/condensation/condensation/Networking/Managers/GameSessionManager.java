@@ -45,7 +45,12 @@ public class GameSessionManager {
 
     }
 
+    /**
+     * removeGameSession removes gameSession following on gameEnd
+     * @param sessionID
+     */
     public void removeGameSession(UUID sessionID) {
+        // remove gameSession object from hashmap
         gameSessionManager.sessionsMap.remove(sessionID);
     }
 

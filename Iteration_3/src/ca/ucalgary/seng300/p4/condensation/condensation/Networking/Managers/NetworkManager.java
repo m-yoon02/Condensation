@@ -1,11 +1,13 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Listeners.GameDataListener;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatManager;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingPool;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,18 +25,22 @@ public class NetworkManager {
     private final ChatManager chatManager;
     private final MatchmakingPool matchmakingPool;
 
+    // client listener lists mapped to specific to their gameSessions
+    private final Map<UUID, List<GameDataListener>> sessionListeners;
+
+
 
     /**
      * constructor for network manager instance, when creating a new one
-     *
      */
     private NetworkManager(){
         matchmakingPool = new MatchmakingPool();
         matchmakingService = new MatchmakingService(matchmakingPool);
         gameSessionManager = new GameSessionManager();
         chatManager = new ChatManager();
-    }
+        sessionListeners = new HashMap<>();
 
+    }
 
     /**
      * Singleton instance getter
@@ -49,18 +55,26 @@ public class NetworkManager {
     }
 
     // ---------------------------------------------------------------------------------------------------
+    // Network methods that handles userLogin and userSignup
+    // ---------------------------------------------------------------------------------------------------
+
+    // what kind of information will frontend send us here
+
+
+
+
+    // ---------------------------------------------------------------------------------------------------
     // Network methods that handles queueing, creating, and starting game session sequence.
     // ---------------------------------------------------------------------------------------------------
 
     /**
-     * clientQueuePlayer method recieves a queuedMemoObject from the client and pools it. Then
+     * clientQueuePlayer called by the controller to recieve a queuedPlayer
      * @param queuedMemoObject This has playerUUID, gameType, and the elo of the player
      */
     public void clientQueuePlayer(QueuedPlayerMemo queuedMemoObject){
-
         matchmakingPool.addPlayer(queuedMemoObject);                                // adds the playerMemo to a matchmakingPool
-        network.sendCreatedGameSession(matchmakingService.findAndMatchPlayers());   // This will match first available player in the list to eligible player2
-
+        GameSession matchedGameSession = matchmakingService.findAndMatchPlayers();
+        network.sendCreatedGameSession(matchedGameSession);   // This will match first available player in the list to eligible player2
     }
 
     /**
@@ -80,8 +94,7 @@ public class NetworkManager {
      * @param Player2 this represents player2's uuid
      */
     public void sendPlayerReferences(UUID Player1, UUID Player2){
-
-        // send this information to the backend they need to define some kind of recieve class
+        // this should send to some Backend recieve method the UUIDs of Player1 and Player2
     }
 
 
@@ -91,20 +104,19 @@ public class NetworkManager {
 
     /**
      * sendGameDataToClients the readyPayload = sessionID + gameState payload to the clients
-     * @param readyPayload
+     * @param clientPayload t
      */
-    public void sendGameDataToClients(String readyPayload){
-        // send the readyPayload = sessionID + PlayerTurn + gameState payload to the clients
+    public void sendGameDataToClients(String clientPayload){
+        // send the clientPayload to the clients
         // there needs to be somekind of recieving method from the frontEnd
     }
 
+    /**
+     *recieveGameDataFromClient
+     */
     public void recieveGameDataFromClient(){
-
         // recieve a payload json formatted String
         // GameSession gameSession = retured by GSM;
-        //
-
-
     }
 
     // ---------------------------------------------------------------------------------------------------
