@@ -3,7 +3,6 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Client;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Player;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
-import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Listeners.GameDataListener;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatManager;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingPool;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingService;
@@ -15,7 +14,6 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -36,7 +34,7 @@ public class NetworkManager {
     // client listener lists mapped to specific to their gameSessions
    // private final Map<UUID, List<GameDataListener>> sessionListeners;
     private final JSONArray userDatabase;
-    private final String userDatabaseFilePath = "ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/PlayerInformation/Database.json";
+    private final String userDatabaseFilePath = "ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/PlayerInformation/UserDatabase.json";
 
     private final Map<UUID, Client> loggedInClients;
 
@@ -91,7 +89,7 @@ public class NetworkManager {
     /**
      * Handles a login request from the frontend.
      * @param loginPayload JSON string containing username and password
-     * @return A success or failure response as JSON
+     * @return A response with the PlayerUUID is successfull,otherwise responds with error message
      * @throws IllegalArgumentException If the login payload is invalid
      */
     public String playerLoginHandler(String loginPayload) throws IllegalArgumentException {
@@ -106,25 +104,29 @@ public class NetworkManager {
 
             // Check the database for username and password
             Player player = validateUserCredentials(username, password);
-            UUID plauerUUID = player.getPlayerID();
+            UUID playerUUID = player.getPlayerID();
             int playerELO = player.getElo();
 
-            if (plauerUUID == null) {
+            if (playerUUID == null) {
                 throw new IllegalArgumentException("Invalid username or password");
             }
 
             // Check if the user is already logged in
-            if (loggedInClients.containsKey(plauerUUID)) {
+            if (loggedInClients.containsKey(playerUUID)) {
                 throw new IllegalArgumentException("User already logged in");
             }
 
             // Create and store the Client object
-            Client client = new Client(plauerUUID, username, null, playerELO);          // we set gameType to null for now this and elo
-            loggedInClients.put(plauerUUID, client);
+            Client client = new Client(playerUUID, username, null, playerELO);          // we set gameType to null for now this and elo
+            loggedInClients.put(playerUUID, client);
+
+            JSONObject response = new JSONObject();
+            response.put("playerID", playerUUID.toString());
+            String responseString = response.toJSONString();
 
             // Return a success response
-            System.out.println("User logged in: " + username + " (" + plauerUUID + ")");
-            return "Login Successful";
+            System.out.println("User logged in: " + username + " (" + playerUUID + ")");
+            return responseString;
         } catch (ParseException | IOException e) {
             throw new IllegalArgumentException("Invalid login payload", e);
         }
@@ -151,6 +153,16 @@ public class NetworkManager {
         return null; // No match found
     }
 
+    // The method for signup is easy, since it will just write userinfo to the userDatabase
+
+    /**
+     * createUser
+     * @param signupPayload
+     * */
+    public void  createUser(String signupPayload){
+        // write to the database or call some database function that does this
+    }
+
     /**
      * Retrieves a logged-in client by their playerID. Can be used in application whenever certain actions require a logged in client
      * @param playerId The playerId
@@ -166,13 +178,14 @@ public class NetworkManager {
     // Network methods that handles queueing, creating, and starting game session sequence.
     // ---------------------------------------------------------------------------------------------------
     /**
-     * clientQueuePlayer called by the controller to recieve a queuedPlayer
-     * @param queuedMemoObject This has playerUUID, gameType, and the elo of the player
+     * queuedPlayerMemo called by the controller to recieve a queuedPlayerm they can get the client by PlayerID and set the client class
+     * @param queuedPlayerMemo This has playerUUID, gameType, and the elo of the player and also acts as a listener which we can subscribe to a gameSession and notify
+     * @PreCondition Frontend would have the plauerID
      */
-    public void clientQueuePlayer(QueuedPlayerMemo queuedMemoObject){
-        matchmakingPool.addPlayer(queuedMemoObject);                                // adds the playerMemo to a matchmakingPool
+    public void clientQueuePlayer(QueuedPlayerMemo queuedPlayerMemo){
+        matchmakingPool.addPlayer(queuedPlayerMemo);                                          // adds the playerMemo to a matchmakingPool
         GameSession matchedGameSession = matchmakingService.findAndMatchPlayers();
-        network.sendCreatedGameSession(matchedGameSession);   // This will match first available player in the list to eligible player2
+        network.sendCreatedGameSession(matchedGameSession);                          // This will match first available player in the list to eligible player2
     }
 
     /**
@@ -201,18 +214,18 @@ public class NetworkManager {
     // ---------------------------------------------------------------------------------------------------
 
     /**
-     * sendGameDataToClients the readyPayload = sessionID + gameState payload to the clients
-     * @param clientPayload t
+     * sendGameDataToClients sends the toClientPayload clients who are subscribed to listener lists that map to their current gameSession
+     * @param toClientPayload
      */
-    public void sendGameDataToClients(String clientPayload){
+    public void sendGameDataToClients(String toClientPayload){
         // send the clientPayload to the clients
         // there needs to be somekind of recieving method from the frontEnd
     }
 
     /**
-     *recieveGameDataFromClient
+     *recieveGameDataFromClient - this is the sessionID  + gameData information from the frontEnd following a player making a move
      */
-    public void recieveGameDataFromClient(){
+    public void recieveGameDataFromClients(String recieveClientPayload){
         // recieve a payload json formatted String
         // GameSession gameSession = retured by GSM;
     }
