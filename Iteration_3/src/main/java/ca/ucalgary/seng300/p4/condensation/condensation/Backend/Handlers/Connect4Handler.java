@@ -99,11 +99,18 @@ public class Connect4Handler extends GameHandler {
         return true;
     }
 
-    private void checkForConnectedFour(Vector2 piecePos){
+    private boolean checkForConnectedFour(Vector2 piecePos){
         int row = piecePos.y();
         int column = piecePos.x();
 
         PieceColor pieceColor = board.getAt(column, row).getColor();
+
+        if (winInColumn(column, pieceColor) || winInRow(column, pieceColor) || winInDiagonalBackslash(row, column, pieceColor) || winInDiagonalFrontslash(row, column, pieceColor)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
