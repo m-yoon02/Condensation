@@ -5,9 +5,5 @@ import javafx.fxml.FXML;
 public class WelcomeScreen {
 
 
-    public FXML getScene(){
-
-    }
-
 
 }
