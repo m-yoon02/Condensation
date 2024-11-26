@@ -42,5 +42,13 @@ public class ChatManager {
 
 
 
+    // if we want to pursue with more chat options here are some ideas
+    // - retrieve chat history
+    // - filtering - not likely but a thing to keep in mind
+    // - add some sort of game specific chat features? such as [system]: It's Player 1's turn
+    // - move notifications? seems more like backend stuff
+
+
+
 
 }
