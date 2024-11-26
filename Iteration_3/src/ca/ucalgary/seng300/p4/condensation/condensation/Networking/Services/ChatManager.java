@@ -13,16 +13,20 @@ public class ChatManager {
         chatSessions = new HashMap<>(); // for later use that we can store the chats, and if we want to create a method to retrieve chat history or something along the lines of that
     }
 
-    // ANI THIS PART IS FOR YOU
-
     /**
-     * Creates a new chat session
+     * Creates a new chat session and stores them in a HashMap as a key value pair of sessionIDs and Messages respectively
      * @param sessionID -- some unique identifier for the game session
      */
     public void createChatSessions(String sessionID) {
+        if(!chatSessions.containsKey(sessionID)){                                       // checks if the messages for a particular sessionID already exists in the HashMap or not.
+            chatSessions.put(sessionID,new ArrayList<>());                              // adds new chatSessions into the HashMap as per the sessionIDs where sessionID is the key and the ArrayList containing the messages is the value
+            System.out.println("Chat Session created for the session: " + sessionID);   
+        }
+        else{
+            System.out.println("Chat Session already exists. Hence, no new session is created");
+        }
 
     }
-
 
     /**
      * Sends a message in a specific chat session
