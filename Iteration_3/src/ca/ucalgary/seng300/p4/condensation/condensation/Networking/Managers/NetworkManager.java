@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
-import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Connection;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatManager;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingPool;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingService;
@@ -34,6 +35,7 @@ public class NetworkManager {
         matchmakingService = new MatchmakingService(matchmakingPool);
         gameSessionManager = new GameSessionManager();
         chatManager = new ChatManager();
+
     }
 
 
@@ -49,48 +51,74 @@ public class NetworkManager {
         return network;
     }
 
-    /**
-     * Simulates a user connection by logging their connection status.
-     */
-    public void connect(UUID playerID){
-        Connection connection = new Connection(playerID);
-        connections.put(playerID.toString(), connection);
-        System.out.println("User " + playerID.toString() + " is connected.");
-
-    }
+    // ---------------------------------------------------------------------------------------------------
+    // Network methods that handles queueing, creating, and starting game session sequence.
+    // ---------------------------------------------------------------------------------------------------
 
     /**
-     *  Simulates a user disconnection by logging their connection status.
+     * queuePlayer method recieves a queuedMemoObject from the client and pools it. Then
+     * @param queuedMemoObject This has playerUUID, gameType, and the elo of the player
      */
-    public void disconnect(UUID playerID) {
-        connections.remove(playerID.toString());
-        System.out.println("User " + playerID.toString() + " disconnected.");
-    }
+    public void queuePlayer(QueuedPlayerMemo queuedMemoObject){
 
-
-    // define send message
-    public void sendMessage(UUID receivingPlayedId, String message){
-
-        // checks to see if the receiving player is connected
-        Connection recieverConnection = connections.get(receivingPlayedId.toString());
-
-        if(recieverConnection != null && recieverConnection.isConnected()){
-            System.out.println("Sending message to " + receivingPlayedId.toString() + ": " + message);
-            // send message to backend
-
-            // do checks for different types of message like for Chat what else ???
-        }
-        else {
-            System.out.println("Cannot send message: " + receivingPlayedId.toString() + " is not connected.");
-        }
+        matchmakingPool.addPlayer(queuedMemoObject);                                // adds the playerMemo to a matchmakingPool
+        network.sendCreatedGameSession(matchmakingService.findAndMatchPlayers());   // This will match first available player in the list to eligible player2
 
     }
 
+    /**
+     * sendCreatedGameSession will send the gameSession object to the GameSession Manager
+     * @param gameSession
+     * @return
+     */
+    public void sendCreatedGameSession(GameSession gameSession){
+        gameSessionManager.addGameSession(gameSession);
+        network.sendPlayerReferences(gameSession.getPlayer1ID(), gameSession.getPlayer2ID());
+    }
+
+    /**
+     * sendPlayerReferences sends the players UUIDSs to backend for reference, this concludes the starting game session sequence.
+     * Following backend will start game and the inter-game session sequence will begin
+     * @param Player1 this represents player1's uuid
+     * @param Player2 this represents player2's uuid
+     */
+    public void sendPlayerReferences(UUID Player1, UUID Player2){
+
+        // send this information to the backend they need to define some kind of recieve class
+    }
+
+
+    // ---------------------------------------------------------------------------------------------------
+    // Network methods that handle intra game session methods and logic.
+    // ---------------------------------------------------------------------------------------------------
+
+    /**
+     * sendGameDataToClients the readyPayload = sessionID + gameState payload to the clients
+     * @param readyPayload
+     */
+    public void sendGameDataToClients(String readyPayload){
+        // send the readyPayload = sessionID + PlayerTurn + gameState payload to the clients
+        // there needs to be somekind of recieving method from the frontEnd
+    }
+
+    public void recieveGameDataFromClient(){
+
+        // recieve a payload json formatted String
+        // GameSession gameSession = retured by GSM;
+        //
+
+
+    }
+
+    // ---------------------------------------------------------------------------------------------------
+    // Network methods that handle end game session methods and logic.
+    // ---------------------------------------------------------------------------------------------------
+
+
+    // we need to
 
 
 
-    // define recieve message
-    // -- will require some kind of logic to dilnieate how to handle the message.
 
 
 }
