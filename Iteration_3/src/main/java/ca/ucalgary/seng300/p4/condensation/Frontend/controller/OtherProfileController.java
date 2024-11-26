@@ -37,9 +37,11 @@ public class OtherProfileController {
     private Scene createScene;
 
     @FXML
-    protected void returnToProfileMenu(Event event) throws IOException
+    private Label playerFound;
+
+    @FXML
+    protected void returnToProfile(Event event) throws IOException
     {
-        //Generates home menu window
         origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Profile.fxml")));
         createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         createScene = new Scene(origin);
