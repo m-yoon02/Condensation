@@ -24,6 +24,14 @@ public class CheckersHandler extends GameHandler {
     }
 
     private boolean captureIsPossible(PieceColor color) {
+        for (int x = 0; x < BOARD_SIZE[0]; x++) {
+            for (int y = 0; y < BOARD_SIZE[1]; y ++) {
+                CheckersPiece piece = board.getPiece(new Vector2(x, y));
+                if(piece != null && piece.getColor() == color && canCapture(piece)){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
