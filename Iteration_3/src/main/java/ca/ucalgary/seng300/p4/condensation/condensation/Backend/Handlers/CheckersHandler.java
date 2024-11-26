@@ -1,12 +1,12 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers;
 
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.*;
+import java.util.UUID;
+
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.CheckersMoveData;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.CheckersPiece;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
-
-import java.util.UUID;
 
 public class CheckersHandler extends GameHandler {
     private static final int[] BOARD_SIZE = {8, 8};
@@ -26,6 +26,36 @@ public class CheckersHandler extends GameHandler {
     private boolean captureIsPossible(PieceColor color) {
         return false;
     }
+
+    private boolean canCapture(CheckersPiece piece) {
+        int[][] directions = getDirections(piece);
+        for (int[] dir: directions){
+            Vector2 adjacentPos = new Vector2(piece.getX() + dir[0], piece.getY() + dir[1]);
+            Vector2 capturePos = new Vector2(piece.getX() + dir[0] * 2, piece.getY() + dir[1] * 2);
+            if (board.positionWithinBounds(capturePos) && board.positionWithinBounds(adjacentPos)){
+                CheckersPiece adjacentPiece = board.getPiece(adjacentPos);
+                if (adjacentPiece != null && board.isMovePossible(capturePos) && adjacentPiece.getColor() != piece.getColor()){
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
+    private int[][] getDirections(CheckersPiece piece){
+        if (piece.isKing()){
+            return new int[][]{{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+        }
+        // Assuming red is on the bottom and black is on the top
+        else if (piece.getColor() == PieceColor.RED){
+            return new int[][]{{1, -1}, {-1, -1}};
+        }
+        else{
+            return new int[][]{{1, 1}, {-1, 1}};
+        }
+    }
+
 
     private void checkForGameEnd(){
 
