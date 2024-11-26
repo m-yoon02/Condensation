@@ -46,10 +46,6 @@ public class OtherProfileController {
         createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         createScene = new Scene(origin);
         createWindow.setScene(createScene);
-        createWindow.setWidth(800);
-        createWindow.setHeight(800);
-        createWindow.setMaxHeight(425);
-        createWindow.setMaxWidth(610);
         createWindow.show();
     }
 }
