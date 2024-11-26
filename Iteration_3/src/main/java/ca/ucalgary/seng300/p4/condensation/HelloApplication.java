@@ -1,4 +1,4 @@
-package ca.ucalgary.seng300.p4.condensation.condensation;
+package ca.ucalgary.seng300.p4.condensation;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

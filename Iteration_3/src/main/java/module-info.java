@@ -1,4 +1,4 @@
-module ca.ucalgary.seng300.p4.condensation.condensation {
+module ca.ucalgary.seng300.p4.condensation {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -11,6 +11,6 @@ module ca.ucalgary.seng300.p4.condensation.condensation {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens ca.ucalgary.seng300.p4.condensation.condensation to javafx.fxml;
-    exports ca.ucalgary.seng300.p4.condensation.condensation;
+    opens ca.ucalgary.seng300.p4.condensation to javafx.fxml;
+    exports ca.ucalgary.seng300.p4.condensation;
 }

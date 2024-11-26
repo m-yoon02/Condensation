@@ -1,12 +1,11 @@
 ## Identified Use Cases
 
-- Place A Piece
-    - Different for Checkers, Connect 4, TicTacToe
+- <s>Place Piece</s>
 - Start Game
-- End Game (Needs further review)
-- Resign Game
-- Choose Side (Red/Black, X/O, Blue/Yellow)
-- Validate Move
-    - Different for Checkers, Connect 4, TicTacToe
-- Check For Game End (Win/Loss/Tie)
-    - Different for Checkers, Connect 4, TicTacToe
+- End Game
+- <s>Resign Game</s>
+- <s>Choose A Side (Red/Black, X/O, Blue/Yellow)</s>
+- <s>Validate Move</s>
+- <s>Check Game End (Win/Loss/Tie)</s>
+- Update Player Timer
+- <s>Check For Captures (Checkers)</s>
