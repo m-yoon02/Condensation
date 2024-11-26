@@ -7,7 +7,11 @@ public class ChatManager {
 
     // have a hashmap to store the chat sessions with the sessionID as key and list of messages as value
     // something like this
-    // private final HashMap<String, List<ChatMessage>> chatSessions;
+    private final HashMap<String, List<String>> chatSessions;
+
+    public ChatManager() {
+        chatSessions = new HashMap<>(); // for later use that we can store the chats, and if we want to create a method to retrieve chat history or something along the lines of that
+    }
 
     // ANI THIS PART IS FOR YOU
 
@@ -26,7 +30,15 @@ public class ChatManager {
      * @param playerUUID    the UUID of the player sending the message
      * @param message   the message content
      */
-    public void sendMessage(String sessionID, String playerUUID, String message)
+    public void sendMessage(String sessionID, String playerUUID, String message) {
+
+        // checking to see if the chatSession contains the sessionID key that matches with the players
+        if (chatSessions.containsKey(sessionID)) {
+            String formattedMessage = "[" + playerUUID + "]: " + message; // for ex: [nathanphan22]: "hello!"
+            chatSessions.get(sessionID).add(formattedMessage); // gets the sessionID number so that the formatted message is associated with that game session
+
+        }
+    }
 
 
 
