@@ -5,9 +5,10 @@ import java.util.UUID;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.json.simple.JSONObject;
 
 public class Leaderboard {
-    private static final String DATA_FILE = "Leaderboard.json";
+    private static final String DATA_FILE = "/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Leaderboard/Leaderboard.json";
     private JSONArray users;
 
 
@@ -16,11 +17,18 @@ public class Leaderboard {
     }
 
     public void loadData() throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        FileReader reader = new FileReader(DATA_FILE);
 
-        users = (JSONArray) parser.parse(reader);
-        reader.close();
+        try {
+            JSONParser parser = new JSONParser();
+            FileReader reader = new FileReader(DATA_FILE);
+
+            users = (JSONArray) parser.parse(reader);
+            printLeaderboard();
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void saveData() throws IOException {
@@ -43,13 +51,25 @@ public class Leaderboard {
 
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
-            if (user.get("name") == name) {
+            if (user.get("username").equals(name)) {
                 return user;
             }
         }
 
         return null;
     }
+    public String findUserByNameToString(String name) {
+
+        for (Object object : users) {
+            JSONObject user = (JSONObject) object;
+            if (user.get("username").equals(name)) {
+                return user.toJSONString();
+            }
+        }
+
+        return null;
+    }
+
 
 
     public JSONObject findUserById(UUID uuid) {
@@ -57,16 +77,13 @@ public class Leaderboard {
 
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
-            if (user.get("id") == uuidToString) {
+            if (user.get("playerUUID").equals(uuidToString)) {
                 return user;
             }
         }
         return null;
     }
 
-    public String JSONObjectToString(JSONObject object) {
-
-    }
 
     public void updateEloForWinningPlayer(UUID playerID) {
         if (findUserById(playerID) == null) {
@@ -83,9 +100,6 @@ public class Leaderboard {
     }
 
     public JSONArray fetchTop5Players() {
-        //Instructions: Basically just try and parse and print the leaderboard if you
-        //can make it pretty that's awesome, if not deadass
-        //just print the JSON in JSON format
 
         //sort the users by elo in descending order
         //not sure if I'm supposed to change users for this...if not im thinking we just loop through it and compare all users to each other
@@ -93,6 +107,9 @@ public class Leaderboard {
         users.sort((user1, user2) -> {
             Number elo1 = (Number) ((JSONObject) user1).get("elo");
             Number elo2 = (Number) ((JSONObject) user2).get("elo");
+            if (elo1 == null || elo2 == null) {
+                throw new IllegalArgumentException("User is missing 'elo' field.");
+            }
             return Integer.compare(elo2.intValue(), elo1.intValue()); // compare them, if elo 1 is greater, put at front, if not push back
         });
 
@@ -104,7 +121,7 @@ public class Leaderboard {
 
         //loop through the array and add the players into top5Players
         for (Object object : users) {
-            if (count <= 5) {
+            if (count < 5) {
                 top5Players.add(object);
                 count++;
             } else {
@@ -117,12 +134,11 @@ public class Leaderboard {
         System.out.println("The Top 5 Players:"); //print a header
         for (Object object : top5Players) {
             JSONObject user = (JSONObject) object;
-            System.out.println("Name: " + user.get("name") + ", Elo: " + user.get("elo"));
+            System.out.println("Name: " + user.get("username") + ", Elo: " + user.get("elo"));
         }
 
         return top5Players;
     }
-
 
     /// THIS SHOULD BE THE SAME AS THE TOP FUNCTION JUST INCREAMENT THE VALUE BY 30
     public void updateEloForLosingPlayer(UUID playerID) {
@@ -132,7 +148,7 @@ public class Leaderboard {
 
         JSONObject losingPlayer = findUserById(playerID);
         Number currentElo = (Number) losingPlayer.get("elo");
-        currentElo = currentElo.intValue() + 30; //idk if im understanding this but is this right??? or do u mean -30? change it when u review it ;-;
+        currentElo = currentElo.intValue() - 3000;
 
         losingPlayer.put("elo", currentElo);
 
@@ -140,18 +156,33 @@ public class Leaderboard {
     }
 
 
-    public void refreshLeaderboard() {
-        System.out.println("Refreshed leaderboard");
+    public JSONArray refreshLeaderboard() {
+        users.sort((user1, user2) -> {
+            Number elo1 = (Number) ((JSONObject) user1).get("elo");
+            Number elo2 = (Number) ((JSONObject) user2).get("elo");
+            if (elo1 == null || elo2 == null) {
+                throw new IllegalArgumentException("User is missing 'elo' field.");
+            }
+            return Integer.compare(elo2.intValue(), elo1.intValue()); // compare them, if elo 1 is greater, put at front, if not push back
+        });
+
+        JSONArray sortedLeaderboard = new JSONArray();
+
+        System.out.println("Sorted LeaderBoard"); //print a header
+        for (Object object : users) {
+            JSONObject user = (JSONObject) object;
+            System.out.println("Name: " + user.get("username") + ", Elo: " + user.get("elo"));
+        }
+        return sortedLeaderboard;
     }
 
 
     public void printLeaderboard() {
         System.out.println("PRINTED LEADER BOARD:");
 
-        //loop through the users and print them!
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
-            System.out.println("Name: " + user.get("name") + ", Elo: " + user.get("elo"));
+            System.out.println("Name: " + user.get("username") + ", Elo: " + user.get("elo"));
         }
     }
 }

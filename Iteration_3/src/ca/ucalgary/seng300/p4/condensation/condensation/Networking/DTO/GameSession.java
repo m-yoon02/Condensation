@@ -8,6 +8,7 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.*;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.GameSessionManager;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.NetworkManager;
+import org.json.simple.JSONObject;
 
 
 public class GameSession implements GameEndListener, TurnEndListener {
@@ -81,21 +82,25 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
     }
 
+//    @Override
+//    public void onTurnEnd(UUID playersTurnID, JSONObject gameStateJson) {
+//        System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
+//
+//        // add sessionId to the gameState payload and send it over the network
+//        JSONObject readyPayloadJson = new JSONObject();
+//        readyPayloadJson.put("sessionId", this.sessionId.toString());
+//        readyPayloadJson.put("gameState", gameStateJson);
+//
+//
+//        String readyPayload = readyPayloadJson.toString();
+//        NetworkManager.getNetworkInstance().sendGameDataToClients(readyPayload);
+//
+//    }
+
     @Override
-    public void onTurnEnd(UUID playersTurnID, String gameStateJson) {
-        System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
-
-        // add sessionId to the gameState payload and send it over the network
-        JSONObject readyPayloadJson = new JSONObject();
-        readyPayloadJson.put("sessionId", this.sessionId.toString());
-        readyPayloadJson.put("gameState", new JSONObject(gameStateJson));
-
-
-        String readyPayload = readyPayloadJson.toString();
-        NetworkManager.getNetworkInstance().sendGameDataToClients(readyPayload);
+    public void onTurnEnd(UUID playersTurnID) {
 
     }
-
 
 
     //************

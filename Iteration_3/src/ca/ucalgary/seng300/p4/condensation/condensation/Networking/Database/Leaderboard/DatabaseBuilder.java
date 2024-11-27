@@ -6,23 +6,14 @@ import java.util.UUID;
 
 public class DatabaseBuilder {
     public static void main(String[] args) {
-        //put code in a try catch
         try {
             Leaderboard leaderboard = new Leaderboard();
 
-            //make a bunch of users to test this
-            leaderboard.getAllUsers().add(createUser("Hannah", 1500));
-            leaderboard.getAllUsers().add(createUser("Nathan", 100));
-            leaderboard.getAllUsers().add(createUser("Phil", 2000));
-            leaderboard.getAllUsers().add(createUser("Sam", 2500));
-            leaderboard.getAllUsers().add(createUser("Jack", 300));
+            System.out.println(leaderboard.findUserByName("Michelle"));
+            UUID id = UUID.fromString("345e6789-e89d-45d5-a678-627836485231");
+            leaderboard.updateEloForLosingPlayer(id);
+            leaderboard.refreshLeaderboard();
 
-            // This should print the top 5 players
-            System.out.println(leaderboard.fetchTop5Players().toString());
-
-            // Basically this class is so that we can test the leaderboard stuff
-
-            //NOTE: it doesn't let me run this to test it because of javaFX not existing rn so i believe thats frontend stuff?
 
         } catch (Exception e){
             e.printStackTrace();

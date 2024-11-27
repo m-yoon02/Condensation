@@ -18,7 +18,7 @@ public class NetworkManager {
      */
 
     private static NetworkManager network;
-    private final Map<String, Connection> connections;  // map of userID to Connection
+//    private final Map<String, Connection> connections;  // map of userID to Connection
     private final MatchmakingService matchmakingService;
     private final GameSessionManager gameSessionManager;
     private final ChatManager chatManager;
@@ -30,7 +30,7 @@ public class NetworkManager {
      *
      */
     private NetworkManager(){
-        connections = new HashMap<>();
+//        connections = new HashMap<>();
         matchmakingPool = new MatchmakingPool();
         matchmakingService = new MatchmakingService(matchmakingPool);
         gameSessionManager = new GameSessionManager();
