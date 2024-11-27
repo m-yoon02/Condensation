@@ -30,4 +30,12 @@ public record Vector2(int x, int y) {
     public Vector2 sub(Vector2 other) {
         return new Vector2(x - other.x, y - other.y);
     }
+
+    /**
+     * Converts the Vector2 into an int array
+     * @return the integer array representing the Vector2
+     */
+    public int[] toArray() {
+        return new int[] {x, y};
+    }
 }
