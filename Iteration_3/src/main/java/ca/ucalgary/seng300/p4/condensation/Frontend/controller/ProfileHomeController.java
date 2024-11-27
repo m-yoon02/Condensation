@@ -1,55 +1,74 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 
 public class ProfileHomeController {
 
     @FXML
-    private Button leaderboardButton;
+    private TableView<?> tableView;// TODO: add actual data from networking in <?>
 
     @FXML
-    private Button playerProfilesButton;
+    private TableColumn<?, ?> dateColumn;
 
     @FXML
-    private Button gamesButton;
+    private TableColumn<?, ?> gameColumn;
 
     @FXML
-    private Button logoutButton;
+    private TableColumn<?, ?> scoreColumn;
 
     @FXML
     private TextField usernameField;
 
     @FXML
+    private Button leaderboardButton;
+
+    @FXML
+    private Button gamesButton;
+
+    @FXML
+    private Button playerProfileButton;
+
+    @FXML
+    private Button logoutButton;
+
+    @FXML
+    private Label titleLabel;
+
+    /*// Initialize method to handle setup logic
+    @FXML
     public void initialize() {
-        // Initialize any required logic
-        usernameField.setText("Guest User");
+        // Example: Initialize the table columns or other components
+        System.out.println("Profile Home initialized");
+    }*/
+
+    @FXML
+    void onLeaderboardButtonClicked(ActionEvent event) {
+        System.out.println("Leaderboard button clicked");
+        // Navigate to leaderboard view
     }
 
     @FXML
-    private void handleLeaderboardButton() {
-        System.out.println("Leaderboard button clicked!");
-        // Add navigation or functionality here
+    void onGamesButtonClicked(ActionEvent event) {
+        System.out.println("Games button clicked");  // TODO
+        // Navigate to games view
+
     }
 
     @FXML
-    private void handlePlayerProfilesButton() {
-        System.out.println("Player Profiles button clicked!");
-        // Add navigation or functionality here
+    void onPlayerProfileButtonClicked(ActionEvent event) {
+        System.out.println("Player Profile button clicked");
+        // Navigate to player profile view
     }
 
     @FXML
-    private void handleGamesButton() {
-        System.out.println("Games button clicked!");
-        // Add navigation or functionality here
-    }
-
-    @FXML
-    private void handleLogoutButton() {
-        System.out.println("Log out button clicked!");
-        // Add logout logic here, e.g., close the stage
-        System.exit(0);
+    void onLogoutButtonClicked(ActionEvent event) {
+        System.out.println("Logout button clicked");
+        // Perform logout and return to login view
     }
 }
-
