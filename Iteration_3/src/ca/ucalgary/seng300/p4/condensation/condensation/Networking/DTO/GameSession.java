@@ -23,7 +23,6 @@ public class GameSession implements GameEndListener, TurnEndListener {
     private final UUID player2ID;
     // field for instantited GameHandler
     private final GameHandler gameHandler;
-    private UUID currentPlayerTurn;
 
     /**
      * When creating GameSession we initialize sessionID field, and player1 and player2 UUIDs which will be passed into some instance of GameHandler
@@ -36,8 +35,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
         this.sessionId = UUID.randomUUID();
         this.player1ID =  playerMemo1.PlayerID();
         this.player2ID =  playerMemo2.PlayerID();
-        // We might have to define something in GameHandler that takes a string gameType, and
-        //
+
         GameTypes gameType = playerMemo1.gameType();
             switch (gameType) {
                 case CHECKERS :
@@ -48,11 +46,12 @@ public class GameSession implements GameEndListener, TurnEndListener {
                     gameHandler1 = new TicTacToeHandler(this.player1ID, this.player2ID);
           }
 
-
+        // adding gameSession to listen to TurnEnd and GameEnd
         this.gameHandler = gameHandler1;
         this.gameHandler.addTurnEndListener(this);
         this.gameHandler.addGameEndListener(this);
-        this.currentPlayerTurn = null;
+
+
     }
 
     public UUID getPlayer1ID() {
@@ -67,6 +66,14 @@ public class GameSession implements GameEndListener, TurnEndListener {
         return sessionId;
     }
 
+
+    /**
+     * onGameEnd will update leaderboards, remove gameSession object from the sessions hashmap, and will send this information to the frontend.
+     * @param gameResult
+     * @param winnerPlayer
+     * @PreCondition Game just ended and backend notifies game session listener that this event has occured
+     * @PostCondiiton update leaderboards, remove gameSession object from the sessions hashmap, and will send this information to the frontend as JSON Payload
+     */
     @Override
     public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
         System.out.println("Game has ended");
@@ -78,27 +85,39 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
         // we will need to send something to the FrontEnd about the Game being over
 
+
         GameSessionManager.getInstance().removeGameSession(this.sessionId);
 
     }
 
-//    @Override
-//    public void onTurnEnd(UUID playersTurnID, JSONObject gameStateJson) {
-//        System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
-//
-//        // add sessionId to the gameState payload and send it over the network
-//        JSONObject readyPayloadJson = new JSONObject();
-//        readyPayloadJson.put("sessionId", this.sessionId.toString());
-//        readyPayloadJson.put("gameState", gameStateJson);
-//
-//
-//        String readyPayload = readyPayloadJson.toString();
-//        NetworkManager.getNetworkInstance().sendGameDataToClients(readyPayload);
-//
-//    }
+    /**
+     * onTurnEnd This is the implementation for the method that's invoked when a Turn has ended on the backend.
+     * @param playersTurnID
+     * @param gameStateJson
+     * PreCondition : recieves the PlayerTurnID and gameStateJson on listener notification.
+     * PostCondition : Calls network singelton method that sends formatted JSON Object data to client
+     */
 
     @Override
-    public void onTurnEnd(UUID playersTurnID) {
+    public void onTurnEnd(UUID playersTurnID, JSONObject gameStateJson) {
+        System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
+        String currentPlayerTurn = null;
+
+        if(playersTurnID == this.player1ID){
+            currentPlayerTurn = "Player1";
+        }else{
+            currentPlayerTurn = "Player2";
+        }
+
+        // add sessionId to the gameState payload and send it over the network
+        JSONObject clientPayload = new JSONObject();
+        clientPayload.put("sessionId", this.sessionId.toString());
+        clientPayload.put("currentPlayerTurnID", playersTurnID);              // display name for frontend
+        clientPayload.put("currentPlayerTurnDisplayName", currentPlayerTurn); // uuid for checks frontEND may need on their end
+        clientPayload.put("gameState",gameStateJson);                        // represents the gameState following backend applying move data
+
+        // sends the game data to clients via the network singleton
+        NetworkManager.getNetworkInstance().sendGameDataToClients(clientPayload);
 
     }
 

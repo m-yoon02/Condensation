@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Player;
+import org.json.simple.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,9 +32,15 @@ public class GameSessionManager {
         return gameSessionManager;
     }
 
-    // a method that parses the payload and extracts the sessionID
-    // sessionID -> gameSession from hashmap
-    // return a gameSession Object to networking method
+
+    public GameSession recieveGameDataFromClient(JSONObject recieveClientPayload){
+        // a method that parses the payload and extracts the sessionID
+        // sessionID -> gameSession from hashmap
+        // return a gameSession Object to networking method
+
+        return null;     // should return the gameSession object
+    }
+
     /**
      * addGameSession
      * @param gameSession
@@ -45,7 +52,12 @@ public class GameSessionManager {
 
     }
 
+    /**
+     * removeGameSession removes gameSession following on gameEnd
+     * @param sessionID
+     */
     public void removeGameSession(UUID sessionID) {
+        // remove gameSession object from hashmap
         gameSessionManager.sessionsMap.remove(sessionID);
     }
 
