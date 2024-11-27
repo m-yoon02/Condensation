@@ -11,6 +11,10 @@ module ca.ucalgary.seng300.p4.condensation {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens ca.ucalgary.seng300.p4.condensation to javafx.fxml;
-    exports ca.ucalgary.seng300.p4.condensation;
+    opens ca.ucalgary.seng300.p4.condensation to javafx.fxml, javafx.graphics;
+    exports ca.ucalgary.seng300.p4.condensation.Frontend.controller to javafx.fxml, javafx.graphics;
+
 }
+
+
+
