@@ -72,7 +72,7 @@ public class GameBoard<T extends GamePiece> {
             addPieceAt(piece, position);
             stateChanges.add(new StateChange(
                     piece.getColor(),
-                    TypeChange.Add,
+                    TypeChange.ADD,
                     new int[][]{position.toArray()}
             ));
             return true;
@@ -92,7 +92,7 @@ public class GameBoard<T extends GamePiece> {
             addPieceAt(piece, newPosition);
             deletePieceAt(oldPosition);
             stateChanges.add(new StateChange(
-                    TypeChange.Move,
+                    TypeChange.MOVE,
                     new int[][]{
                         newPosition.toArray(),
                         oldPosition.toArray()
@@ -110,7 +110,7 @@ public class GameBoard<T extends GamePiece> {
     public void removePiece(Vector2 position){
         if (positionWithinBounds(position) && isPieceAt(position)) {
             deletePieceAt(position);
-            stateChanges.add(new StateChange(TypeChange.Remove, new int[][]{position.toArray()}));
+            stateChanges.add(new StateChange(TypeChange.REMOVE, new int[][]{position.toArray()}));
         }
     }
 
