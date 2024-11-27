@@ -38,6 +38,8 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
         GameTypes gameType = playerMemo1.gameType();
             switch (gameType) {
+                // since we basically handle the state of backend we would pass into gameHandler the PlayerIDs, and we simply send client payload to this.gamehandler
+
                 case CHECKERS :
                     gameHandler1 = new CheckersHandler(this.player1ID, this.player2ID);
                 case TICTACTOE:
@@ -50,6 +52,8 @@ public class GameSession implements GameEndListener, TurnEndListener {
         this.gameHandler = gameHandler1;
         this.gameHandler.addTurnEndListener(this);
         this.gameHandler.addGameEndListener(this);
+
+        // since we basically handle the state of backend we would pass into gameHandler the PlayerIDs
 
 
     }
