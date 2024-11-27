@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers;
 
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.MoveData;
@@ -33,7 +34,11 @@ public class TicTacToeHandler extends GameHandler {
         Vector2 movePosition = moveData.getMovePosition();
         TicTacToePiece piece = new TicTacToePiece(movePosition, color);
         this.board.placePiece(piece, movePosition);
-        this.notifyTurnEnd(playerID, moveDataJSON);
+        if (checkForThreeInARow(color)){
+            this.notifyGameEnd(GameResult.WIN, playerID);
+        }else {
+            this.notifyTurnEnd(playerID, moveDataJSON);
+        }
     }
 
     private boolean checkForThreeInARow(PieceColor color){
