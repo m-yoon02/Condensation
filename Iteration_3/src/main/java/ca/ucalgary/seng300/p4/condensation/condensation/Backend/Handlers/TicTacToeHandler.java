@@ -19,6 +19,11 @@ public class TicTacToeHandler extends GameHandler {
         super(player1ID, player2ID, COLORS);
     }
 
+    // This is the main driver of your game logic.
+    // Assume that this method is called whenever a player makes a move
+    // You are to use the move data and translate it to the GameBoard
+    // You are also required to check for game winning scenarios here
+    // This will also notify when the game has ended, and which player's turn it is after the move
     @Override
     public void makeMove(String moveDataJSON) {
         //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
