@@ -11,6 +11,7 @@ import java.io.*;
 import static org.junit.Assert.*;
 public class LeaderboardTest {
     private Leaderboard leaderboard;
+//    private static final Stringzzz
 
     @Before
     public void setUp() throws Exception {
