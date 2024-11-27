@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Database.Leaderboard;
 
 import java.io.*;
+import java.util.Collection;
 import java.util.UUID;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
@@ -12,7 +13,7 @@ import org.json.simple.JSONObject;
  * provides functionality for retrieving and updating leaderboard information.
  */
 public class Leaderboard {
-    private static final String DATA_FILE = "/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Leaderboard/Leaderboard.json";
+    private static final String DATA_FILE = "C:\\Users\\Rishabh\\University\\Fall 2024\\SENG 300\\Project-With-JFX-Updated\\seng300-f24-project\\Iteration_3\\src\\ca\\ucalgary\\seng300\\p4\\condensation\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json";
     private JSONArray users;
 
     /**
@@ -23,6 +24,10 @@ public class Leaderboard {
      */
     public Leaderboard() throws IOException, ParseException {
         loadData();
+    }
+
+    protected String getDataFilePath() {
+        return DATA_FILE;
     }
 
     /**
@@ -258,4 +263,6 @@ public class Leaderboard {
             System.out.println("Name: " + user.get("username") + ", Elo: " + user.get("elo"));
         }
     }
+
+
 }
