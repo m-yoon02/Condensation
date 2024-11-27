@@ -26,7 +26,7 @@ public class CheckersHandler extends GameHandler {
     private boolean captureIsPossible(PieceColor color) {
         for (int x = 0; x < BOARD_SIZE[0]; x++) {
             for (int y = 0; y < BOARD_SIZE[1]; y ++) {
-                CheckersPiece piece = board.getPiece(new Vector2(x, y));
+                CheckersPiece piece = board.getAt(x, y);
                 if(piece != null && piece.getColor() == color && canCapture(piece)){
                     return true;
                 }
@@ -41,7 +41,7 @@ public class CheckersHandler extends GameHandler {
             Vector2 adjacentPos = new Vector2(piece.getX() + dir[0], piece.getY() + dir[1]);
             Vector2 capturePos = new Vector2(piece.getX() + dir[0] * 2, piece.getY() + dir[1] * 2);
             if (board.positionWithinBounds(capturePos) && board.positionWithinBounds(adjacentPos)){
-                CheckersPiece adjacentPiece = board.getPiece(adjacentPos);
+                CheckersPiece adjacentPiece = board.getAt(adjacentPos);
                 if (adjacentPiece != null && board.isMovePossible(capturePos) && adjacentPiece.getColor() != piece.getColor()){
                     return true;
                 }
@@ -70,7 +70,7 @@ public class CheckersHandler extends GameHandler {
         for(int i = 0; i < BOARD_SIZE[0]; i++){
             for(int j = 0; j < BOARD_SIZE[1]; j++){
                 Vector2 pos = new Vector2(i, j);
-                if(board.getPiece(pos).getColor().equals(color)){
+                if(board.getAt(pos).getColor().equals(color)){
                     if(canMove(pos)){
                         gameEnd = false;
                     }
@@ -88,36 +88,36 @@ public class CheckersHandler extends GameHandler {
         if(pos.x() == 0){
             if(pos.y() == 0){
                 Vector2 goal = new Vector2(pos.x()+1, pos.y()+1);
-                if(board.getPiece(goal) == null){
+                if(board.getAt(goal) == null){
                     return true;
                 }
             } else if(pos.y() == 7){
                 Vector2 goal = new Vector2(pos.x()+1, pos.y()-1);
-                if(board.getPiece(goal) == null){
+                if(board.getAt(goal) == null){
                     return true;
                 }
             } else {
                 Vector2 goal = new Vector2(pos.x()+1, pos.y()+1);
                 Vector2 goal2 = new Vector2(pos.x()+1, pos.y()-1);
-                if(board.getPiece(goal) == null || board.getPiece(goal2) == null){
+                if(board.getAt(goal) == null || board.getAt(goal2) == null){
                     return true;
                 }
             }
         } else if(pos.x() == 7){
             if(pos.y() == 0){
                 Vector2 goal = new Vector2(pos.x()-1, pos.y()+1);
-                if(board.getPiece(goal) == null){
+                if(board.getAt(goal) == null){
                     return true;
                 }
             } else if(pos.y() == 7){
                 Vector2 goal = new Vector2(pos.x()-1, pos.y()-1);
-                if(board.getPiece(goal) == null){
+                if(board.getAt(goal) == null){
                     return true;
                 }
             } else {
                 Vector2 goal = new Vector2(pos.x()-1, pos.y()+1);
                 Vector2 goal2 = new Vector2(pos.x()-1, pos.y()-1);
-                if(board.getPiece(goal) == null || board.getPiece(goal2) == null){
+                if(board.getAt(goal) == null || board.getAt(goal2) == null){
                     return true;
                 }
             }
@@ -125,13 +125,13 @@ public class CheckersHandler extends GameHandler {
             if(pos.y() == 0){
                 Vector2 goal = new Vector2(pos.x()-1, pos.y()+1);
                 Vector2 goal2 = new Vector2(pos.x()+1, pos.y()+1);
-                if(board.getPiece(goal) == null || board.getPiece(goal2) == null){
+                if(board.getAt(goal) == null || board.getAt(goal2) == null){
                     return true;
                 }
             } else if(pos.y() == 7){
                 Vector2 goal = new Vector2(pos.x()-1, pos.y()-1);
                 Vector2 goal2 = new Vector2(pos.x()+1, pos.y()-1);
-                if(board.getPiece(goal) == null || board.getPiece(goal2) == null){
+                if(board.getAt(goal) == null || board.getAt(goal2) == null){
                     return true;
                 }
             } else {
@@ -139,8 +139,8 @@ public class CheckersHandler extends GameHandler {
                 Vector2 goal2 = new Vector2(pos.x()+1, pos.y()-1);
                 Vector2 goal3 = new Vector2(pos.x()+1, pos.y()+1);
                 Vector2 goal4 = new Vector2(pos.x()-1, pos.y()-1);
-                if(board.getPiece(goal) == null || board.getPiece(goal2) == null
-                || board.getPiece(goal3) == null || board.getPiece(goal4) == null){
+                if(board.getAt(goal) == null || board.getAt(goal2) == null
+                || board.getAt(goal3) == null || board.getAt(goal4) == null){
                     return true;
                 }
             }
