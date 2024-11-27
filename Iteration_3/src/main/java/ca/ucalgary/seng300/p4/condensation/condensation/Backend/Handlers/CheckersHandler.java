@@ -91,61 +91,41 @@ public class CheckersHandler extends GameHandler {
      */
     private boolean canMove(Vector2 pos){
         if(pos.x() == 0){
-            if(pos.y() == 0){
-                Vector2 goal = new Vector2(pos.x()+1, pos.y()+1);
-                if(board.getAt(goal) == null){
-                    return true;
-                }
-            } else if(pos.y() == 7){
-                Vector2 goal = new Vector2(pos.x()+1, pos.y()-1);
-                if(board.getAt(goal) == null){
+            if(pos.y() == 7){
+                if(board.getAt(pos.x()+1, pos.y()-1) == null){
                     return true;
                 }
             } else {
-                Vector2 goal = new Vector2(pos.x()+1, pos.y()+1);
-                Vector2 goal2 = new Vector2(pos.x()+1, pos.y()-1);
-                if(board.getAt(goal) == null || board.getAt(goal2) == null){
+                if(board.getAt(pos.x()+1, pos.y()+1) == null
+                        || board.getAt(pos.x()+1, pos.y()-1) == null){
                     return true;
                 }
             }
         } else if(pos.x() == 7){
             if(pos.y() == 0){
-                Vector2 goal = new Vector2(pos.x()-1, pos.y()+1);
-                if(board.getAt(goal) == null){
-                    return true;
-                }
-            } else if(pos.y() == 7){
-                Vector2 goal = new Vector2(pos.x()-1, pos.y()-1);
-                if(board.getAt(goal) == null){
+                if(board.getAt(pos.x()-1, pos.y()+1) == null){
                     return true;
                 }
             } else {
-                Vector2 goal = new Vector2(pos.x()-1, pos.y()+1);
-                Vector2 goal2 = new Vector2(pos.x()-1, pos.y()-1);
-                if(board.getAt(goal) == null || board.getAt(goal2) == null){
+                if(board.getAt(pos.x()-1, pos.y()+1) == null
+                        || board.getAt(pos.x()-1, pos.y()-1) == null){
                     return true;
                 }
             }
         } else{
             if(pos.y() == 0){
-                Vector2 goal = new Vector2(pos.x()-1, pos.y()+1);
-                Vector2 goal2 = new Vector2(pos.x()+1, pos.y()+1);
-                if(board.getAt(goal) == null || board.getAt(goal2) == null){
+                if(board.getAt(pos.x()-1, pos.y()+1) == null
+                        || board.getAt(pos.x()+1, pos.y()+1) == null){
                     return true;
                 }
             } else if(pos.y() == 7){
-                Vector2 goal = new Vector2(pos.x()-1, pos.y()-1);
-                Vector2 goal2 = new Vector2(pos.x()+1, pos.y()-1);
-                if(board.getAt(goal) == null || board.getAt(goal2) == null){
+                if(board.getAt(pos.x()-1, pos.y()-1) == null
+                        || board.getAt(pos.x()+1, pos.y()-1) == null){
                     return true;
                 }
             } else {
-                Vector2 goal = new Vector2(pos.x()-1, pos.y()+1);
-                Vector2 goal2 = new Vector2(pos.x()+1, pos.y()-1);
-                Vector2 goal3 = new Vector2(pos.x()+1, pos.y()+1);
-                Vector2 goal4 = new Vector2(pos.x()-1, pos.y()-1);
-                if(board.getAt(goal) == null || board.getAt(goal2) == null
-                || board.getAt(goal3) == null || board.getAt(goal4) == null){
+                if(board.getAt(pos.x()-1, pos.y()+1) == null || board.getAt(pos.x()+1, pos.y()-1) == null
+                || board.getAt(pos.x()+1, pos.y()+1) == null || board.getAt(pos.x()-1, pos.y()-1) == null){
                     return true;
                 }
             }
