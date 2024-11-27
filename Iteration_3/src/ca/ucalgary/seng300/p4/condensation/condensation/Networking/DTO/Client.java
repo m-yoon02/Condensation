@@ -24,7 +24,12 @@ public class Client implements GameDataListener {
     }
 
     @Override
-    public void onGameDataReceived(JSONObject gameData) {
+    public void onGameEvent(JSONObject gameData) {
+
+        // I need to handle the different kinds of GameEventsGAME_START
+        // else if , TURN_END,
+        // else if GAME_END,
+        // else if CHAT_MESSAGE_RECEIVED
         System.out.println("Client " + username + " received game data: " + gameData);
         // Handle game data (e.g., forward to frontend) which can be access via the client class by getClient(playerUID)
     }

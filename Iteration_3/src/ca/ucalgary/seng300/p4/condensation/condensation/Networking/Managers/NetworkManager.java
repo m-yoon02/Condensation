@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Listeners.GameDataListener;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatService;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingPool;
@@ -28,8 +29,8 @@ public class NetworkManager {
     private final MatchmakingPool matchmakingPool;
 
     // client listener lists mapped to specific to their gameSessions
-    private Map<UUID, Client> loggedInClients;
-    private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();
+    private Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
+    private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final Leaderboard leaderboard = new Leaderboard();
     private final ChatService chatService;
 
@@ -81,7 +82,7 @@ public class NetworkManager {
      * PostCondition : the method verfies login information, adds client to logged in list, and returns a playerID json string back to client
      *
      */
-    public String playerLoginHandler(JSONObject loginPayload) throws IllegalArgumentException {
+    public JSONObject playerLoginHandler(JSONObject loginPayload) throws IllegalArgumentException {
 
         // Extract username and password
         String username = (String) loginPayload.get("username");
@@ -107,9 +108,9 @@ public class NetworkManager {
         // The response pay,load that frontEnd will recieve
         JSONObject response = new JSONObject();
         response.put("playerID", playerUUID.toString());
+        response.put("username", username);
 
-        System.out.println("User logged in: " + username + " (" + playerUUID + ")");
-        return response.toJSONString(); // Return the response as a JSON string
+        return response;   // returns the json payload to client
 
     }
 
@@ -222,8 +223,53 @@ public class NetworkManager {
     }
 
     /**
-     * sendCreatedGameSession is a helper to clientQueuePlayer. This method manages the process of associating a newly created
-     * game session with the necessary components and listeners.
+     * ** Bypasses matchmaking logic in clientQueuePlayer
+     * handleQueuePlayer called by the controller to recieve a queuedPlayer
+     * @param queuedPlayerMemo1 This has playerUUID, gameType, and the elo of the player
+     * PreCondition: client instantiates a queuedMemo which has information on the playerID and the gameType they selected
+     * PostCondition: able to verify the client is logged in, and them to pool and returns a matchedGameSession object, which eventually sends created
+     *               gameSession information to the GameSessionManager and finally uuids to the backend via (sendCreatedGameSession)
+     */
+    public JSONObject handleQueuePlayer(QueuedPlayerMemo queuedPlayerMemo1){
+        UUID player1UUID = queuedPlayerMemo1.PlayerID();
+        GameTypes gameType = queuedPlayerMemo1.gameType();
+        int elo = queuedPlayerMemo1.Elo();
+
+        // we are going to mimic the process of a second client signup and matchmaking process.
+        UUID player2UUID = UUID.fromString("345e6789-e89d-45d5-a678-62783628511");
+        QueuedPlayerMemo queuedPlayerMemo2 = new QueuedPlayerMemo(player2UUID, gameType, elo + 20);
+
+        Client client1 = getClient(player1UUID);
+        Client client2 = new Client(player2UUID, "Alan");
+        loggedInClients.put(player2UUID, client2);                  // so now the second client is logged in and a match has been found
+
+
+        // this instantiates a new gameSession which also holds the state of the gameHandler, so communication should really occur between
+        GameSession matchedGameSession = new GameSession(queuedPlayerMemo1, queuedPlayerMemo2);
+        UUID sessionID = matchedGameSession.getSessionId();
+        network.sendCreatedGameSession(matchedGameSession);   // This will match first available player in the list to eligible player2
+
+
+
+        JSONObject matchedSessionResponse = new JSONObject();
+//        {
+//            "sessionId": "abcdef12-3456-7890-abcd-ef1234567890",
+//                "player1": "UUID",
+//                "player2": "UUID",
+//                "gameType": "TICTACTOE"
+//        }
+
+        matchedSessionResponse.put("sessionID", sessionID);
+        matchedSessionResponse.put("player1", player1UUID);
+        matchedSessionResponse.put("player2", player2UUID);
+        matchedSessionResponse.put("gameType", gameType);
+
+        // frontend should save these references to player1 and player2 as part of the client side state,  this is how they will access the client listener which is notified by backend via the network.
+        return matchedSessionResponse;
+    }
+
+    /**
+     * sendCreatedGameSession is a helper to clientQueuePlayer. This method manages the process of associating a newly created game session with the necessary components and listeners.
      * @param gameSession The GameSession object containing all the details about the ongoing game it corresponds to.
      * PreCondition:
      * - Receives a valid gameSession object returned by the matchmaking service.
@@ -231,8 +277,7 @@ public class NetworkManager {
      * PostCondition:
      * - Adds the gameSession to the sessions map in GameSessionManager for tracking active sessions.
      * - Subscribes both player clients to the game session's updates by associating them with the session's listener list.
-     * - Sends the player references (player UUIDs) to the backend for game initialization and processing.
-     */
+     * */
     public void sendCreatedGameSession(GameSession gameSession){
 
 
@@ -243,24 +288,11 @@ public class NetworkManager {
         // Subscribe both players to the game session
         // Each client is subscribed as a listener to receive real-time updates for the specified game session
         subscribeToGameSession(sessionID, player1ID);
-        subscribeToGameSession(sessionID, player1ID);
+        subscribeToGameSession(sessionID, player2ID);
 
         // Add the session to the GameSessionManager
         gameSessionManager.addGameSession(gameSession);
 
-        // Notify backend of session creation (if required)
-        sendPlayerReferences(gameSession.getPlayer1ID(), gameSession.getPlayer2ID());
-    }
-
-    /**
-     * sendPlayerReferences sends the players UUIDSs to backend for reference, this concludes the starting game session sequence.
-     * Following backend will start game and the inter-game session sequence will begin
-     * @param Player1 this represents player1's uuid
-     * @param Player2 this represents player2's uuid
-     */
-    public void sendPlayerReferences(UUID Player1, UUID Player2){
-        // This remains a stub for now, however functionality would require a backend listener
-        // this should send to something to a subscribed Backend Listener, however since we have one backend how will this work
     }
 
 
@@ -301,7 +333,7 @@ public class NetworkManager {
 
     public JSONArray recievePlayerMessage(String msg) {
 
-        //TODO: Need to get the reference of the user name
+        //TODO: Need to get the reference of the user name, client should store UUID information on their following login and after creating a session.
         JSONArray messages = chatService.sendChatMessage(msg, "username");
         return messages;
     }
