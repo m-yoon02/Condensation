@@ -3,12 +3,12 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSessi
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Listeners.GameDataListener;
-import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatManager;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatService;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingPool;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingService;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Client;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -25,18 +25,15 @@ public class NetworkManager {
     private static NetworkManager network;
     private final MatchmakingService matchmakingService;
     private final GameSessionManager gameSessionManager;
-    private final ChatManager chatManager;
     private final MatchmakingPool matchmakingPool;
 
     // client listener lists mapped to specific to their gameSessions
     private Map<UUID, Client> loggedInClients;
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();
-
     private final Leaderboard leaderboard = new Leaderboard();
+    private final ChatService chatService;
 
 
-    // we need some kind of database instance here
-    private final String userDatabaseFilePath = "ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/UserDatabase.json";
 
 
 
@@ -48,7 +45,7 @@ public class NetworkManager {
         matchmakingPool = new MatchmakingPool();
         matchmakingService = new MatchmakingService(matchmakingPool);
         gameSessionManager = new GameSessionManager();
-        chatManager = new ChatManager();
+        chatService = new ChatService();
         sessionListeners = new HashMap<>();
         loggedInClients = new HashMap<>();
 
@@ -130,8 +127,14 @@ public class NetworkManager {
      * NOTE : This would interact with methods in the Database class so not sure how this would be Tested.
      * */
 
-    public void  createUser(JSONObject signupPayload){
 
+    public String signUpHandler (JSONObject signupPayload) throws IOException {
+        String username = (String) signupPayload.get("username");
+        String password = (String) signupPayload.get("password");
+
+        leaderboard.createUser(username, password);
+        String responseString = String.format("Successfully created user with username %s and password %s", username, password);
+        return responseString;
     }
 
 
@@ -291,7 +294,12 @@ public class NetworkManager {
     // we need to
 
 
+    public JSONArray recievePlayerMessage(String msg) {
 
+        //TODO: Need to get the reference of the user name
+        JSONArray messages = chatService.sendChatMessage(msg, "username");
+        return messages;
+    }
 
 
 }

@@ -70,6 +70,18 @@ public class Leaderboard {
         return users;
     }
 
+
+
+    public void createUser(String name, String password) throws IOException {
+        JSONObject user = new JSONObject(); //create new object
+
+        user.put("id", UUID.randomUUID().toString()); //assign random uuid
+        user.put("name", name);
+        user.put("passowrd", password);
+        user.put("elo", 0);
+
+        this.saveData();
+    }
     /**
      * Finds a user by their username.
      *
