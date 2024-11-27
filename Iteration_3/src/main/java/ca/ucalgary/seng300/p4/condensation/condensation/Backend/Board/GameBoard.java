@@ -1,4 +1,4 @@
-package ca.ucalgary.seng300.p4.condensation.condensation.Backend;
+package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Board;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.GamePiece;
