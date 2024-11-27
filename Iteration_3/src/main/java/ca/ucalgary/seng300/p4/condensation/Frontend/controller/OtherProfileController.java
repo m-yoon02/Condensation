@@ -18,7 +18,6 @@ public class OtherProfileController {
 
     @FXML
     private TextField playerUser;
-
     @FXML
     private Label titleOfScreen;
 
