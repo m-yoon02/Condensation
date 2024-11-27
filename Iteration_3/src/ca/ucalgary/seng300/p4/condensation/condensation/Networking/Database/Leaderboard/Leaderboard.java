@@ -70,6 +70,18 @@ public class Leaderboard {
         return users;
     }
 
+
+
+    public void createUser(String name, String password) throws IOException {
+        JSONObject user = new JSONObject(); //create new object
+
+        user.put("id", UUID.randomUUID().toString()); //assign random uuid
+        user.put("name", name);
+        user.put("passowrd", password);
+        user.put("elo", 0);
+
+        this.saveData();
+    }
     /**
      * Finds a user by their username.
      *
@@ -80,6 +92,22 @@ public class Leaderboard {
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
             if (user.get("username").equals(name)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Finds a user by their password.
+     *
+     * @param pwd the username of the user.
+     * @return a JSONObject representing the user, or null if no user is found.
+     */
+    public JSONObject findUserByPassword(String pwd) {
+        for (Object object : users) {
+            JSONObject user = (JSONObject) object;
+            if (user.get("password").equals(pwd)) {
                 return user;
             }
         }

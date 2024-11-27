@@ -1,15 +1,17 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Listeners.GameDataListener;
-import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatManager;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatService;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingPool;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.MatchmakingService;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Client;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.*;
 
 public class NetworkManager {
@@ -23,16 +25,15 @@ public class NetworkManager {
     private static NetworkManager network;
     private final MatchmakingService matchmakingService;
     private final GameSessionManager gameSessionManager;
-    private final ChatManager chatManager;
     private final MatchmakingPool matchmakingPool;
 
     // client listener lists mapped to specific to their gameSessions
     private Map<UUID, Client> loggedInClients;
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();
+    private final Leaderboard leaderboard = new Leaderboard();
+    private final ChatService chatService;
 
 
-    // we need some kind of database instance here
-    private final String userDatabaseFilePath = "ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/UserDatabase.json";
 
 
 
@@ -40,11 +41,11 @@ public class NetworkManager {
     /**
      * constructor for network manager instance, when creating a new one
      */
-    private NetworkManager(){
+    private NetworkManager() throws IOException, ParseException {
         matchmakingPool = new MatchmakingPool();
         matchmakingService = new MatchmakingService(matchmakingPool);
         gameSessionManager = new GameSessionManager();
-        chatManager = new ChatManager();
+        chatService = new ChatService();
         sessionListeners = new HashMap<>();
         loggedInClients = new HashMap<>();
 
@@ -76,41 +77,47 @@ public class NetworkManager {
      *
      */
     public String playerLoginHandler(JSONObject loginPayload) throws IllegalArgumentException {
-        try {
 
-            // Extract username and password
-            String username = (String) loginPayload.get("username");
-            String password = (String) loginPayload.get("password");
+        // Extract username and password
+        String username = (String) loginPayload.get("username");
+        String password = (String) loginPayload.get("password");
 
-            // Check the database for username and password
-            UUID playerUUID = validateUserCredentials(username, password);     // do we define this in network manager or something else
-            if (playerUUID == null) {
-                throw new IllegalArgumentException("Invalid username or password");
-            }
+        // Check the database for username and password
+        JSONObject validatePlayer = validateUserCredentials(username, password);     // do we define this in network manager or something else
+        UUID playerUUID = (UUID) validatePlayer.get("playerUUID");
 
-            // Check if the user is already logged in
-            if (loggedInClients.containsKey(playerUUID)) {
-                throw new IllegalArgumentException("User already logged in");
-            }
-
-            // Create and store the Client object
-            Client client = new Client(playerUUID, username);
-            loggedInClients.put(playerUUID, client);
-
-            // The response pay,load that frontEnd will recieve
-            JSONObject response = new JSONObject();
-            response.put("playerID", playerUUID.toString());
-
-            System.out.println("User logged in: " + username + " (" + playerUUID + ")");
-            return response.toJSONString(); // Return the response as a JSON string
-
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid login payload", e);
-            throw new RuntimeException(e);
+        if (playerUUID == null) {
+            throw new IllegalArgumentException("Invalid username or password");
         }
+
+        // Check if the user is already logged in
+        if (loggedInClients.containsKey(playerUUID)) {
+            throw new IllegalArgumentException("User already logged in");
+        }
+
+        // Create and store the Client object
+        Client client = new Client(playerUUID, username);
+        loggedInClients.put(playerUUID, client);
+
+        // The response pay,load that frontEnd will recieve
+        JSONObject response = new JSONObject();
+        response.put("playerID", playerUUID.toString());
+
+        System.out.println("User logged in: " + username + " (" + playerUUID + ")");
+        return response.toJSONString(); // Return the response as a JSON string
 
     }
 
+    public JSONObject validateUserCredentials(String username, String password) {
+        JSONObject JSONusername = leaderboard.findUserByName(username);
+        JSONObject JSONpassword =leaderboard.findUserByPassword(password);
+
+        if (JSONusername.equals(JSONpassword)) {
+            return JSONpassword;
+        }
+        return null;
+
+    }
 
     /**
      * createUser This will be used by frontend to add player to tne user database
@@ -120,8 +127,14 @@ public class NetworkManager {
      * NOTE : This would interact with methods in the Database class so not sure how this would be Tested.
      * */
 
-    public void  createUser(JSONObject signupPayload){
 
+    public String signUpHandler (JSONObject signupPayload) throws IOException {
+        String username = (String) signupPayload.get("username");
+        String password = (String) signupPayload.get("password");
+
+        leaderboard.createUser(username, password);
+        String responseString = String.format("Successfully created user with username %s and password %s", username, password);
+        return responseString;
     }
 
 
@@ -281,7 +294,12 @@ public class NetworkManager {
     // we need to
 
 
+    public JSONArray recievePlayerMessage(String msg) {
 
+        //TODO: Need to get the reference of the user name
+        JSONArray messages = chatService.sendChatMessage(msg, "username");
+        return messages;
+    }
 
 
 }
