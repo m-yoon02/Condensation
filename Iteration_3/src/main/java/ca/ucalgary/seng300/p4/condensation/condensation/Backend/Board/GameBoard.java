@@ -9,6 +9,7 @@ public class GameBoard<T extends GamePiece> {
     private final int rowSize;
     private final int columnSize;
     private final ArrayList<ArrayList<T>> board;
+    private final ArrayList<StateChange> stateChanges = new ArrayList<>();
 
     public GameBoard(int rowSize, int columnSize) {
         this.rowSize = rowSize;
@@ -21,6 +22,23 @@ public class GameBoard<T extends GamePiece> {
             }
             board.add(inner);
         }
+    }
+
+    /**
+     * Internal method to make removing easier
+     * @param position the position of the piece to be removed
+     */
+    private void deletePieceAt(Vector2 position) {
+        board.get(position.y()).set(position.x(), null);
+    }
+
+    /**
+     * Internal place method to make adding easier
+     * @param piece the piece to be added
+     * @param position the position to add it in
+     */
+    private void addPieceAt(T piece, Vector2 position){
+        board.get(position.y()).set(position.x(), piece);
     }
 
     /**
@@ -51,7 +69,12 @@ public class GameBoard<T extends GamePiece> {
      */
     public boolean placePiece(T piece, Vector2 position){
         if (isMovePossible(position)) {
-            board.get(position.y()).set(position.x(), piece);
+            addPieceAt(piece, position);
+            stateChanges.add(new StateChange(
+                    piece.getColor(),
+                    TypeChange.Add,
+                    new int[][]{position.toArray()}
+            ));
             return true;
         }
         return false;
@@ -66,8 +89,15 @@ public class GameBoard<T extends GamePiece> {
     public boolean movePiece(Vector2 oldPosition, Vector2 newPosition){
         T piece = getAt(oldPosition);
         if (isMovePossible(newPosition) && piece != null){
-            placePiece(piece, newPosition);
-            removePiece(oldPosition);
+            addPieceAt(piece, newPosition);
+            deletePieceAt(oldPosition);
+            stateChanges.add(new StateChange(
+                    TypeChange.Move,
+                    new int[][]{
+                        newPosition.toArray(),
+                        oldPosition.toArray()
+                    }
+            ));
             return true;
         }
         return false;
@@ -78,7 +108,10 @@ public class GameBoard<T extends GamePiece> {
      * @param position the position of the piece
      */
     public void removePiece(Vector2 position){
-        board.get(position.y()).set(position.x(), null);
+        if (positionWithinBounds(position) && isPieceAt(position)) {
+            deletePieceAt(position);
+            stateChanges.add(new StateChange(TypeChange.Remove, new int[][]{position.toArray()}));
+        }
     }
 
     /**
@@ -149,5 +182,13 @@ public class GameBoard<T extends GamePiece> {
 
     public int getColumnSize() {
         return columnSize;
+    }
+
+    /**
+     * Clears the current recording of state changes to start a new recording
+     * TO BE CALLED AT THE START WHENEVER A NEW MOVE IS MADE
+     */
+    public void startRecordingStateChanges() {
+        stateChanges.clear();
     }
 }
