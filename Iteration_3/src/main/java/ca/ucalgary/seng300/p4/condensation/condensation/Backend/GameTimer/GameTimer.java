@@ -74,6 +74,7 @@ public class GameTimer {
 
     /**
      * Starts the game timer countdown
+     * @exception Throws InterruptedException if the thread is interupted while sleeping
      */
     public void startTimer() throws InterruptedException {
         UUID backupCurrentPlayer;
