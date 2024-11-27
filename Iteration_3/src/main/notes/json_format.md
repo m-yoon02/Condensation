@@ -33,7 +33,8 @@ One JSON string is sent to frontend to notify state, **make sure to differentiat
     "Data": {
         "Changes": [
             {
-                "Type": "Add", //Can be Add, Move or Remove
+                "Type": "Add", //Can be Add, Move or Remove (Any maybe Promotion for Checkers)
+                "Color": "RED", //RED, BLACK, WHITE, BLUE, ORANGE (IFF Type is Add)
                 "Positions": [
                     [0, 5],
                     //If the type is Move:
