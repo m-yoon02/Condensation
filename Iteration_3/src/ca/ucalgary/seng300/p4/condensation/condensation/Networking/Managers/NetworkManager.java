@@ -57,10 +57,15 @@ public class NetworkManager {
     public static NetworkManager getNetworkInstance() {
 
         // creates network instance if one doesn't exist
-        if (network == null) {
-            network = new NetworkManager();
+        try{
+            if (network == null) {
+                network = new NetworkManager();
+            }
+            return network;
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
         }
-        return network;
+        return null;
     }
 
     // ---------------------------------------------------------------------------------------------------
