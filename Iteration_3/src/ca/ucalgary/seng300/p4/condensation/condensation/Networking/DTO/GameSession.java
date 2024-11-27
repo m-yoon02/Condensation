@@ -122,7 +122,6 @@ public class GameSession implements GameEndListener, TurnEndListener {
     }
 
 
-
     //************
     // we will sends to backend "sendGameDataToBackEnd()"
     // frontEnd data,
