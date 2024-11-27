@@ -11,26 +11,26 @@
    <children>
       <Pane layoutX="178.0" layoutY="25.0" prefHeight="349.0" prefWidth="244.0" style="-fx-background-color: Grey; -fx-background-radius: 5px;">
          <children>
-            <TextField layoutX="21.0" layoutY="51.0" prefHeight="26.0" prefWidth="205.0" />
+            <TextField layoutX="21.0" layoutY="51.0" prefHeight="26.0" prefWidth="205.0" promptText="Email Address" />
             <Text layoutX="22.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email Address">
                <font>
                   <Font size="7.0" />
                </font>
             </Text>
             <Text layoutX="77.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an Account" />
-            <TextField layoutX="22.0" layoutY="98.0" prefHeight="26.0" prefWidth="205.0" />
+            <TextField layoutX="22.0" layoutY="98.0" prefHeight="26.0" prefWidth="205.0" promptText="Display Name" />
             <Text layoutX="23.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Display Name">
                <font>
                   <Font size="7.0" />
                </font>
             </Text>
-            <TextField layoutX="22.0" layoutY="146.0" prefHeight="26.0" prefWidth="205.0" />
+            <TextField layoutX="22.0" layoutY="146.0" prefHeight="26.0" prefWidth="205.0" promptText="Username" />
             <Text layoutX="23.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
                <font>
                   <Font size="7.0" />
                </font>
             </Text>
-            <TextField layoutX="22.0" layoutY="195.0" prefHeight="26.0" prefWidth="205.0" />
+            <TextField layoutX="22.0" layoutY="195.0" prefHeight="26.0" prefWidth="205.0" promptText="Password" />
             <Text layoutX="23.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                <font>
                   <Font size="7.0" />

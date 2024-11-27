@@ -16,9 +16,9 @@
                   <Font size="20.0" />
                </font>
             </Text>
-            <TextField layoutX="86.0" layoutY="66.0" prefHeight="34.0" prefWidth="275.0" />
+            <TextField layoutX="86.0" layoutY="66.0" prefHeight="34.0" prefWidth="275.0" promptText="Email Address" />
             <Text layoutX="87.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email Address" />
-            <TextField layoutX="86.0" layoutY="132.0" prefHeight="34.0" prefWidth="275.0" />
+            <TextField layoutX="86.0" layoutY="132.0" prefHeight="34.0" prefWidth="275.0" promptText="Password" />
             <Text layoutX="87.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
             <Button layoutX="133.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="181.0" text="LOGIN" />
             <Text layoutX="178.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forget Password" />
