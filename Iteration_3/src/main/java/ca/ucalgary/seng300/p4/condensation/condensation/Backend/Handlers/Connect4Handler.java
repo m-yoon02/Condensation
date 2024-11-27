@@ -104,16 +104,42 @@ public class Connect4Handler extends GameHandler {
         return true;
     }
 
+    /**
+     * Checks if a player has achieved a "Connect Four" by examining the given piece's position
+     * for a sequence of 4 consecutive pieces of the same color in any direction.
+     *
+     * Preconditions:
+     * - `piecePos` must be a valid position on the board, with both `x` and `y` coordinates within bounds.
+     * - The piece at the specified position must exist and have a valid color.
+     *
+     * Postconditions:
+     * - Returns `true` if a "Connect Four" condition is found in any direction (vertical, horizontal, or diagonal).
+     * - Returns `false` if no such sequence of 4 pieces is found.
+     *
+     * @param piecePos A `Vector2` representing the position of the most recently placed piece on the board.
+     *                 `piecePos.x()` represents the column index, and `piecePos.y()` represents the row index.
+     * @return `true` if there are 4 consecutive pieces of the same color in any direction (vertical,
+     *         horizontal, or diagonal), `false` otherwise.
+     */
     private boolean checkForConnectedFour(Vector2 piecePos){
+        // Extract row and column indices from the piece's position.
         int row = piecePos.y();
         int column = piecePos.x();
 
+        // Get the color of the piece at the specified position.
         PieceColor pieceColor = board.getAt(column, row).getColor();
 
+        // Check for a win condition in each possible direction:
+        // 1. Vertical win (column check).
+        // 2. Horizontal win (row check).
+        // 3. Backslash diagonal (`\`) win (top-left to bottom-right).
+        // 4. Frontslash diagonal (`/`) win (bottom-left to top-right).
         if (winInColumn(column, pieceColor) || winInRow(column, pieceColor) || winInDiagonalBackslash(row, column, pieceColor) || winInDiagonalFrontslash(row, column, pieceColor)) {
+            // Return true if any win condition is satisfied.
             return true;
         }
         else {
+            // Return false if no win condition is satisfied.
             return false;
         }
     }
