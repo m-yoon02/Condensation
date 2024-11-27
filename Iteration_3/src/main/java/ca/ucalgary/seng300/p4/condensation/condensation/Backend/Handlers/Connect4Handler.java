@@ -135,9 +135,9 @@ public class Connect4Handler extends GameHandler {
         int chain = 0;
 
         // Loop through each column in the specified row
-        for (int columnIndex = 0; columnIndex < board.getColumnSize(); col++) {
+        for (int columnIndex = 0; columnIndex < board.getColumnSize(); columnIndex++) {
             // Get the piece at the current position in the row.
-            T currentPiece = board.getAt(columnIndex, rowIndex);
+            ConnectFourPiece currentPiece = board.getAt(columnIndex, rowIndex);
             // If the piece exists and its color matches the provided pieceColor.
             if (currentPiece != null && currentPiece.getColor() == pieceColor) {
                 // Increment the chain of matching pieces
@@ -178,9 +178,9 @@ public class Connect4Handler extends GameHandler {
         int chain = 0;
 
         // Loop through each row in the specified column
-        for (int rowIndex = 0; rowIndex < board.getRowSize(); col++) {
+        for (int rowIndex = 0; rowIndex < board.getRowSize(); rowIndex++) {
             // Get the piece at the current position in the column.
-            T currentPiece = board.getAt(columnIndex, rowIndex);
+            ConnectFourPiece currentPiece = board.getAt(columnIndex, rowIndex);
             // If the piece exists and its color matches the provided pieceColor.
             if (currentPiece != null && currentPiece.getColor() == pieceColor) {
                 // Increment the chain of matching pieces.
@@ -237,7 +237,7 @@ public class Connect4Handler extends GameHandler {
         // Iterate diagonally down-right to check for consecutive pieces of the specified color.
         for (; topRow < board.getRowSize() && leftCol < board.getColumnSize(); topRow++, leftCol++) {
             // Get the piece at the current position in the diagonal.
-            T currentPiece = board.getAt(leftCol, topRow);
+            ConnectFourPiece currentPiece = board.getAt(leftCol, topRow);
             // If the piece exists and its color matches the provided pieceColor.
             if (currentPiece != null && currentPiece.getColor() == pieceColor) {
                 // Increment the chain of matching pieces.
@@ -295,7 +295,7 @@ public class Connect4Handler extends GameHandler {
         // Iterate diagonally up-right to check for consecutive pieces of the specified color.
         for (; bottomRow > 0 && leftCol < board.getColumnSize(); bottomRow--, leftCol++) {
             // Get the piece at the current position in the diagonal.
-            T currentPiece = board.getAt(leftCol, bottomRow);
+            ConnectFourPiece currentPiece = board.getAt(leftCol, bottomRow);
             // If the piece exists and its color matches the provided pieceColor.
             if (currentPiece != null && currentPiece.getColor() == pieceColor) {
                 // Increment the chain of matching pieces.
