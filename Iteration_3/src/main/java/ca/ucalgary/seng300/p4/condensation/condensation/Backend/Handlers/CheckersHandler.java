@@ -231,8 +231,28 @@ public class CheckersHandler extends GameHandler {
         return false;
     }
 
+    /**
+     * Checks if a piece at the specified position qualifies for promotion
+     * and promotes it to a king if it does.
+     *
+     * @param pos the position of the piece to check for promotion.
+     */
     private void checkForPromotion(Vector2 pos){
+        CheckersPiece piece = board.getAt(pos);
+        if (piece == null){
+            return;
+        }
 
+        int finalRow = -1;
+        if (piece.getColor() == PieceColor.RED){
+            finalRow = 0;
+        } else if (piece.getColor() == PieceColor.BLACK){
+            finalRow = 7;
+        }
+
+        if (pos.x() == finalRow && !piece.isKing()){
+            piece.promoteToKing();
+        }
     }
 
     private void processCaptureOnMove(Vector2 oldPos, Vector2 newPos) {
