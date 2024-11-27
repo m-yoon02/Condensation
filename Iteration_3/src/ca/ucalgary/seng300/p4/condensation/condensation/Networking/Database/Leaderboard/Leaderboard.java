@@ -87,6 +87,22 @@ public class Leaderboard {
     }
 
     /**
+     * Finds a user by their password.
+     *
+     * @param pwd the username of the user.
+     * @return a JSONObject representing the user, or null if no user is found.
+     */
+    public JSONObject findUserByPassword(String pwd) {
+        for (Object object : users) {
+            JSONObject user = (JSONObject) object;
+            if (user.get("password").equals(pwd)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Finds a user by their username and returns their details as a JSON string.
      *
      * @param name the username of the user.
