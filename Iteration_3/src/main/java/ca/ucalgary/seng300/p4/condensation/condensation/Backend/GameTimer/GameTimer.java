@@ -78,16 +78,24 @@ public class GameTimer {
      */
     public void startTimer() throws InterruptedException {
         UUID backupCurrentPlayer;
+        // This player's turn is now active
         active = true;
         while (active) {
             backupCurrentPlayer = currentPlayerID;
+            // get this player's remaining time
             currentPlayerTimer = getPlayerTimer(backupCurrentPlayer);
+            //decrement this player's time by one
             currentPlayerTimer--;
+            // update the timerHashMap to map this player to the decremented time
             timerHashMap.put(backupCurrentPlayer, currentPlayerTimer);
+            // check if this player has run out of time
             if (currentPlayerTimer <= 0){
+                // end this player's turn
                 stopTimer();
+                // notify listener of end of turn
                 notifyTimerEnded(backupCurrentPlayer);
             }
+            // pause the excecution of the while loop for 1 second
             Thread.sleep(1000);
         }
     }
