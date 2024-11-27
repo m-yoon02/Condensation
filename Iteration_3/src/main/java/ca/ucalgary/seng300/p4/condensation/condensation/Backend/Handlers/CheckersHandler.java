@@ -70,18 +70,18 @@ public class CheckersHandler extends GameHandler {
     }
 
 
-    private void checkForGameEnd(PieceColor color){
-        boolean gameEnd = true;
+    private boolean checkForGameEnd(PieceColor color){
         for(int i = 0; i < BOARD_SIZE[0]; i++){
             for(int j = 0; j < BOARD_SIZE[1]; j++){
                 Vector2 pos = new Vector2(i, j);
                 if(board.getAt(pos).getColor().equals(color)){
-                    if(canMove(pos)){
-                        gameEnd = false;
+                    if(canMove(pos) || canJump(pos)){
+                        return false;
                     }
                 }
             }
         }
+        return true;
     }
     /**
      *A helper method to check if a piece at a position can move 1 tile ahead. Doesn't check jumps
@@ -126,6 +126,104 @@ public class CheckersHandler extends GameHandler {
             } else {
                 if(board.getAt(pos.x()-1, pos.y()+1) == null || board.getAt(pos.x()+1, pos.y()-1) == null
                 || board.getAt(pos.x()+1, pos.y()+1) == null || board.getAt(pos.x()-1, pos.y()-1) == null){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * A helper method to check if a piece can jump over another piece from a given position
+     *
+     * @param pos
+     * @return boolean
+     */
+    private boolean canJump(Vector2 pos){
+        if(pos.x() == 0){
+            if(pos.y() == 1){
+                if (board.getAt(pos.x()+1, pos.y()+1) != null
+                        && board.getAt(pos.x()+2, pos.y()+2) == null) {
+                    return true;
+                }
+            } else if(pos.y() == 7){
+                if (board.getAt(pos.x()+1, pos.y()-1) != null
+                        && board.getAt(pos.x()+2, pos.y()-2) == null) {
+                    return true;
+                }
+            } else{
+                if((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
+                        || (board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)){
+                    return true;
+                }
+            }
+        } else if(pos.x() == 1){
+            if(pos.y() == 0){
+                if(board.getAt(pos.x()+1, pos.y()+1) != null
+                        && board.getAt(pos.x()+2, pos.y()+2) == null){
+                    return true;
+                }
+            } else if(pos.y() == 6){
+                if(board.getAt(pos.x()+1, pos.y()-1) != null
+                        && board.getAt(pos.x()+2, pos.y()-2) == null){
+                    return true;
+                }
+            } else{
+                if((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
+                        || (board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)){
+                    return true;
+                }
+            }
+        } else if(pos.x() == 6){
+            if(pos.y() == 1){
+                if (board.getAt(pos.x()-1, pos.y()+1) != null
+                        && board.getAt(pos.x()-2, pos.y()+2) == null) {
+                    return true;
+                }
+            } else if(pos.y() == 7){
+                if (board.getAt(pos.x()-1, pos.y()-1) != null
+                        && board.getAt(pos.x()-2, pos.y()-2) == null) {
+                    return true;
+                }
+            } else{
+                if((board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)
+                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)){
+                    return true;
+                }
+            }
+        } else if(pos.x() == 7){
+            if(pos.y() == 0){
+                if (board.getAt(pos.x()-1, pos.y()+1) != null
+                        && board.getAt(pos.x()-2, pos.y()+2) == null) {
+                    return true;
+                }
+            } else if(pos.y() == 6){
+                if (board.getAt(pos.x()-1, pos.y()-1) != null
+                        && board.getAt(pos.x()-2, pos.y()-2) == null) {
+                    return true;
+                }
+            } else{
+                if((board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)
+                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)){
+                    return true;
+                }
+            }
+        } else {
+            if(pos.y() == 0 || pos.y() == 1){
+                if((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
+                        || (board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)){
+                    return true;
+                }
+            }  else if(pos.y() == 6 || pos.y() == 7){
+                if((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
+                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)){
+                    return true;
+                }
+            } else{
+                if((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
+                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)
+                        || (board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
+                        || (board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)){
                     return true;
                 }
             }
