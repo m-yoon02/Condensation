@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Board;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.GamePiece;
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ public class GameBoard<T extends GamePiece> {
     private final int rowSize;
     private final int columnSize;
     private final ArrayList<ArrayList<T>> board;
-    private final ArrayList<StateChange> stateChanges = new ArrayList<>();
+    private final ArrayList<JSONObject> stateChanges = new ArrayList<>();
 
     public GameBoard(int rowSize, int columnSize) {
         this.rowSize = rowSize;
@@ -70,7 +71,7 @@ public class GameBoard<T extends GamePiece> {
     public boolean placePiece(T piece, Vector2 position){
         if (isMovePossible(position)) {
             addPieceAt(piece, position);
-            stateChanges.add(new StateChange(
+            stateChanges.add(StateChange.stateToJSONObject(
                     piece.getColor(),
                     TypeChange.ADD,
                     new int[][]{position.toArray()}
@@ -91,7 +92,7 @@ public class GameBoard<T extends GamePiece> {
         if (isMovePossible(newPosition) && piece != null){
             addPieceAt(piece, newPosition);
             deletePieceAt(oldPosition);
-            stateChanges.add(new StateChange(
+            stateChanges.add(StateChange.stateToJSONObject(
                     TypeChange.MOVE,
                     new int[][]{
                         newPosition.toArray(),
@@ -110,7 +111,7 @@ public class GameBoard<T extends GamePiece> {
     public void removePiece(Vector2 position){
         if (positionWithinBounds(position) && isPieceAt(position)) {
             deletePieceAt(position);
-            stateChanges.add(new StateChange(TypeChange.REMOVE, new int[][]{position.toArray()}));
+            stateChanges.add(StateChange.stateToJSONObject(TypeChange.REMOVE, new int[][]{position.toArray()}));
         }
     }
 
