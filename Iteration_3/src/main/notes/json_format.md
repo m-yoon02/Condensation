@@ -23,7 +23,11 @@ One JSON string is sent to frontend to notify state, **make sure to differentiat
 ```json
 {
     "UpdateType": "GAME_END", //(OR StateChange)
-    "GameState": "WIN" // (OR LOSE, TIE)
+    "GameState": "WIN", // (or TIE)
+    // IF GameState == WIN: 
+    "PlayerWon": "UUID of the player who won",
+    "PlayerLost": "UUID of the player who lost"
+    // if GameState == TIE, above fields will NOT exist
 }
 ```
 
@@ -35,13 +39,13 @@ One JSON string is sent to frontend to notify state, **make sure to differentiat
     "Changes": [
         {
             "Type": "ADD", //Can be ADD, MOVE or REMOVE
-            "Color": "RED", // IF Type == ADD, Color sent will depend on the game type
+            "Color": "RED", // IF Type == ADD, Color sent will depend on the game type, else this field will NOT exist
             "Positions": {
                 "NewPosition": [0, 5],
                 //If the type is Move:
                 "OldPosition": [1, 6]
                 //NewPosition represents the new position that the player wants to move the piece to
-                //IF TYPE IS MOVE, OldPosition will represent the old position of the piece
+                //IF TYPE IS MOVE, OldPosition will represent the old position of the piece, else this field will NOT exist
             }
         },
         ... //There can be more than one of these tables
