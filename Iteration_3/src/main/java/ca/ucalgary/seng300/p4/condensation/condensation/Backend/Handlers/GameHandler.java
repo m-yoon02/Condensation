@@ -17,6 +17,7 @@ public abstract class GameHandler implements IGameHandler{
     private final ArrayList<GameEndListener> gameEndListeners = new ArrayList<>();
     private final ArrayList<TurnEndListener> turnEndListeners = new ArrayList<>();
     private final HashMap<UUID, PlayerMemo> playerMemoHashMap = new HashMap<>();
+    private final UUID firstPlayerID;
     protected final GameTimer gameTimer;
 
     private class EndGameOnTimerEndListener implements TimerEndListener {
@@ -32,6 +33,7 @@ public abstract class GameHandler implements IGameHandler{
         int player2ColorIndex = player1ColorIndex == 0 ? 1 : 0;
         playerMemoHashMap.put(player1ID, new PlayerMemo(player1ID, colors[player1ColorIndex]));
         playerMemoHashMap.put(player2ID, new PlayerMemo(player2ID, colors[player2ColorIndex]));
+        firstPlayerID = getPlayerMemoFromPieceColor(colors[0]).playerID();
         gameTimer = new GameTimer(player1ID, player2ID, DEFAULT_TIME);
         gameTimer.setTimerTo(player1ColorIndex == 0 ? player1ID : player2ID);
         gameTimer.addTimerEndListener(new EndGameOnTimerEndListener());
@@ -130,5 +132,13 @@ public abstract class GameHandler implements IGameHandler{
             }
         }
         return null;
+    }
+
+    /**
+     * Gets the ID of the player who goes first
+     * @return UUID of the first player's ID
+     */
+    public UUID getFirstPlayerID() {
+        return firstPlayerID;
     }
 }
