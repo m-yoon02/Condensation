@@ -23,7 +23,7 @@ One JSON string is sent to frontend to notify state, **make sure to differentiat
 ```json
 {
     "UpdateType": "GAME_END", //(OR StateChange)
-    "GameState": "Win" // (OR Lose, Tie)
+    "GameState": "WIN" // (OR LOSE, TIE)
 }
 ```
 
@@ -65,4 +65,3 @@ One JSON string is sent to frontend to notify state, **make sure to differentiat
 
 - WHITE
 - BLACK
-
