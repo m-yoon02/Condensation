@@ -1,9 +1,9 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.welcomemat;
 
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.fxml.FXML;
 
 public class WelcomeScreen {
+
 
 
 }
