@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class GameTimer {
+public class GameTimer{
     //Map UUID (To represent the players) to the time left
     private final HashMap<UUID, Integer> timerHashMap = new HashMap<>();
     private final ArrayList<TimerEndListener> timerEndListeners = new ArrayList<>();
@@ -43,7 +43,6 @@ public class GameTimer {
             listener.onTimerEnd(winnerPlayerID);
         }
     }
-
     /**
      * Sets the current timer to the other player from playerIDToSwitchFrom
      * @param playerIDToSwitchFrom the id of the player to switch from
