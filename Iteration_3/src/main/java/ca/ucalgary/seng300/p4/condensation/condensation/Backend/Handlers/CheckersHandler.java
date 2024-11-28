@@ -243,7 +243,22 @@ public class CheckersHandler extends GameHandler {
         }
     }
 
+    /**
+     * Processes the capture of a piece, to be used after a capture move is performed
+     * @param oldPos the old position of the capturing piece
+     * @param newPos the new position of the capturing piece
+     */
     private void processCaptureOnMove(Vector2 oldPos, Vector2 newPos) {
+        // Checks if move is even a capturing move
+        CheckersPiece capturingPiece = board.getAt(oldPos);
+        if (!canCapture(capturingPiece)){
+            return;
+        }
+        // Calculated by using midpoint, and assuming kings capture with finite range
+        int capturedPieceRow = (oldPos.x() + newPos.x()) / 2;
+        int capturedPieceCol = (oldPos.y() + newPos.y()) / 2;
+        Vector2 capturedPiecePos = new Vector2(capturedPieceRow, capturedPieceCol);
 
+        board.removePiece(capturedPiecePos);
     }
 }
