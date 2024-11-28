@@ -40,14 +40,25 @@ public class NetworkManager {
 
 
 
-
     /**
      * constructor for network manager instance, when creating a new one
      */
     private NetworkManager() throws IOException, ParseException {
         matchmakingPool = new MatchmakingPool();
-        matchmakingService = new MatchmakingService(matchmakingPool);
+        matchmakingService = new MatchmakingService(matchmakingPool);   // matchmaking pool is already populated with queuedPlayerMemos.
+
+        // loop through the pool list to create clients for all the playerIDs in the matchmaking pool.
+        for( QueuedPlayerMemo queuedPlayer : matchmakingPool.getPool()){
+            UUID currentPlayerID = queuedPlayer.PlayerID();
+            Client currentClient = new Client(currentPlayerID);
+
+            // now all the queued players have a corresponding client listener that's loggedIn mimmicking the behaviour of a network
+            loggedInClients.put(currentPlayerID, currentClient);
+
+
+        }
         gameSessionManager = new GameSessionManager();
+
         chatService = new ChatService();
         sessionListeners = new HashMap<>();
         loggedInClients = new HashMap<>();
@@ -99,7 +110,7 @@ public class NetworkManager {
         }
 
         // Create and store the Client object
-        Client client = new Client(playerUUID, username);
+        Client client = new Client(playerUUID);
         loggedInClients.put(playerUUID, client);
 
         // The response pay,load that frontEnd will recieve
@@ -210,24 +221,13 @@ public class NetworkManager {
     // Network methods that handles queueing, creating, and starting game session sequence.
     // ---------------------------------------------------------------------------------------------------
 
+
     /**
      * clientQueuePlayer called by the controller to recieve a queuedPlayer
-     * @param queuedMemoObject This has playerUUID, gameType, and the elo of the player
+     * @param queuedPlayerPayload this has the playerID and the gameType enum
      * PreCondition: client instantiates a queuedMemo which has information on the playerID and the gameType they selected
      * PostCondition: able to verify the client is logged in, and them to pool and returns a matchedGameSession object, which eventually sends created
      *               gameSession information to the GameSessionManager and finally uuids to the backend via (sendCreatedGameSession)
-     */
-    public void clientQueuePlayer(QueuedPlayerMemo queuedMemoObject){
-        UUID playerUUID = queuedMemoObject.PlayerID();
-        Client client = getClient(playerUUID);                                    // reference to logged in client
-        matchmakingPool.addPlayer(queuedMemoObject);                                // adds the playerMemo to a matchmakingPool
-        GameSession matchedGameSession = matchmakingService.findAndMatchPlayers();
-        network.sendCreatedGameSession(matchedGameSession);   // This will match first available player in the list to eligible player2
-    }
-
-    /**
-     * handleQueuePlayer called by the controller to recieve a queuedPlayer
-     * @param queuedPlayerPayload This has playerUUID, gameType, and the elo of the player
      */
     public JSONObject handleQueuePlayer(JSONObject queuedPlayerPayload){
 
@@ -275,8 +275,6 @@ public class NetworkManager {
      * - Subscribes both player clients to the game session's updates by associating them with the session's listener list.
      * */
     public void sendCreatedGameSession(GameSession gameSession){
-
-
         UUID sessionID = gameSession.getSessionId();
         Client player1ID = getClient(gameSession.getPlayer1ID());
         Client player2ID = getClient(gameSession.getPlayer2ID());
@@ -335,14 +333,14 @@ public class NetworkManager {
     // ---------------------------------------------------------------------------------------------------
 
 
-    // we need to
-
+    // will delegate this to nathan and ani
 
     public JSONArray recievePlayerMessage(JSONObject recievePlayerMessage) {
 
         // P1 - UUID
         // Message
         // sendGameDataToClients
+        // which means we will have to subscribe them to some sort of listeners lists
 
 
 

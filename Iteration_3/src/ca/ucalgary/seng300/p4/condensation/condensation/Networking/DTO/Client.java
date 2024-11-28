@@ -10,33 +10,26 @@ import java.util.UUID;
 public class Client implements GameDataListener {
 
     private final UUID playerId;
-    private final String username;
 
-    public Client(UUID playerId, String username) {
+    public Client(UUID playerId) {
         this.playerId = playerId;
-        this.username = username;
     }
 
     public UUID getPlayerId() {
         return playerId;
     }
 
-    public String getUsername() {
-        return username;
-    }
+
+
 
     @Override
-    public void onGameEvent(JSONObject gameData, GameEventType gameEventType) {
-
-        if(gameEventType == GameEventType.CHAT_MESSAGE_RECEIVED){
-            // will recieve message information
+    public void onGameEvent(GameEventType eventType, JSONObject payload) {
+        if(eventType == GameEventType.CHAT_MESSAGE_RECEIVED){
+            // will recieve message information from the frontend
 
         }else{
 
             // we can call a frontend recieveMethod(JSONObject gameData);
-
-
-
         }
 
     }

@@ -11,6 +11,8 @@ public class MatchmakingPool {
 
     public MatchmakingPool() {
 
+
+
         // we need to hard code 3 random queuedPlayerMemos
 
     }
