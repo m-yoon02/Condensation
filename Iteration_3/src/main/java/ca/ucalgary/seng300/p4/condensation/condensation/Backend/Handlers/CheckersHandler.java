@@ -69,7 +69,12 @@ public class CheckersHandler extends GameHandler {
         }
     }
 
-
+    /**
+     * Checks if a player is able to make further moves
+     *
+     * @param color of pieces of the player to check
+     * @return true if game cannot continue, false otherwise
+     */
     private boolean checkForGameEnd(PieceColor color){
         for(int i = 0; i < BOARD_SIZE[0]; i++){
             for(int j = 0; j < BOARD_SIZE[1]; j++){
