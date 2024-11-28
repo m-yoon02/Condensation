@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers;
 
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.MoveData;
@@ -28,7 +29,7 @@ public class Connect4Handler extends GameHandler {
         MoveData moveData = MoveData.fromJSON(moveDataJSON);
 
         UUID playerID = moveData.getPlayerID();
-        Vector getPosition = moveData.getMovePosition();
+        Vector2 getPosition = moveData.getMovePosition();
 
         int row = getPosition.y();
         int column = getPosition.x();
@@ -40,10 +41,10 @@ public class Connect4Handler extends GameHandler {
             if (!columnIsFull(column)) {
                 int nextAvailableRow = findAvailableRow(column);
 
-                // Retrive the peice colour that is assigned to current player making move
-                ConnectFourPiece droppedPiece;
+                // Retrieve the piece colour that is assigned to current player making move
+                ConnectFourPiece droppedPiece = new ConnectFourPiece(getPlayerColorFromUUID(moveData.getPlayerID()));
 
-                Vector newPosition = new Vector(column, nextAvailableRow);
+                Vector2 newPosition = new Vector2(column, nextAvailableRow);
                 board.placePiece(droppedPiece, newPosition);
 
                 if (checkForConnectedFour(newPosition)) {
@@ -53,7 +54,7 @@ public class Connect4Handler extends GameHandler {
 
                     // Find the other players ID to pass in argument
                     // This can be found through the GameHandler class
-                    this.notifyTurnEnd(, "");
+                    this.notifyTurnEnd(getOtherPlayerUUID(moveData.getPlayerID()), "");
                 }
             }
             else {
