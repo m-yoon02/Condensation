@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ProfileLeaderBApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ProfileLeaderB.fxml"));
+        Parent root = FXMLLoader.load(HelloApplication.class.getResource("ProfileLeaderB.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

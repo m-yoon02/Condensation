@@ -46,9 +46,17 @@ public class ProfileHomeController {
 
     //When this method is called, it will change the scene to leaderboard page.
     @FXML
-    void handleLeaderboard(ActionEvent event) {
+    void onLeaderboardButtonClicked (ActionEvent event) throws IOException{
         System.out.println("Opening Leaderboard...");
         // Add functionality to open the leaderboard page
+        Parent gamesParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileLeaderB.fxml"));
+        Scene gamesScene = new Scene(gamesParent);
+
+        //This line gets the Stage information
+        Stage window= (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(gamesScene);
+        window.show();
+
     }
 
     //When this method is called, it will change the scene back to player profile page.

@@ -23,8 +23,8 @@
             </font>
         </Label>
         <TextField fx:id="usernameField" layoutX="158.0" layoutY="52.0" prefHeight="30.0" prefWidth="326.0" promptText="username" />
-        <Button fx:id="leaderboardButton" layoutX="36.0" layoutY="167.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Leaderboard" />
-        <Button fx:id="gamesButton" layoutX="34.0" layoutY="273.0" mnemonicParsing="false" onAction="#onGamesButtonClicked" prefHeight="30.0" prefWidth="96.0" text="Games" />
+        <Button fx:id="leaderboardButton" layoutX="36.0" layoutY="167.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Leaderboard"  onAction="#onLeaderboardButtonClicked" />
+        <Button fx:id="gamesButton" layoutX="34.0" layoutY="273.0" mnemonicParsing="false"  prefHeight="30.0" prefWidth="96.0" text="Games" onAction="#onGamesButtonClicked"/>
         <Button fx:id="playerProfilesButton" layoutX="35.0" layoutY="219.0" mnemonicParsing="false" text="Player Profile" />
         <Button fx:id="logoutButton" layoutX="489.0" layoutY="363.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Log out" />
     </children>
