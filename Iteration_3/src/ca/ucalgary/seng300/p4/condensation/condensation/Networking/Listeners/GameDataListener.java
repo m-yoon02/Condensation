@@ -6,5 +6,6 @@ import org.json.simple.JSONObject;
 public interface GameDataListener {
     void onGameEvent(GameEventType eventType, JSONObject payload);
 
+
 }
 

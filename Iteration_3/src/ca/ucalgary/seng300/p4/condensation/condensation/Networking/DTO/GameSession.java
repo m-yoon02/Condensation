@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.*;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.GameSessionManager;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.NetworkManager;
@@ -103,25 +104,20 @@ public class GameSession implements GameEndListener, TurnEndListener {
      */
 
     @Override
-    public void onTurnEnd(UUID playersTurnID, JSONObject gameStateJson) {
+    public void onTurnEnd(UUID playersTurnID, String gameStateJson) {
         System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
         String currentPlayerTurn = null;
 
-        if(playersTurnID == this.player1ID){
-            currentPlayerTurn = "Player1";
-        }else{
-            currentPlayerTurn = "Player2";
-        }
 
-        // add sessionId to the gameState payload and send it over the network
-        JSONObject clientPayload = new JSONObject();
-        clientPayload.put("sessionId", this.sessionId.toString());
-        clientPayload.put("currentPlayerTurnID", playersTurnID);              // display name for frontend
-        clientPayload.put("currentPlayerTurnDisplayName", currentPlayerTurn); // uuid for checks frontEND may need on their end
-        clientPayload.put("gameState",gameStateJson);                        // represents the gameState following backend applying move data
+        // verify if this is how frontend will recieve information from backend
+        JSONObject responseClientPayload = new JSONObject();
+        responseClientPayload.put("UpdateType", "StateChange");
+        responseClientPayload.put("SessionID", this.sessionId);
+        responseClientPayload.put("PlayerTurnID", GameEventType.TURN_END);
+        responseClientPayload.put("Changes", gameStateJson);
 
-        // sends the game data to clients via the network singleton
-        NetworkManager.getNetworkInstance().sendGameDataToClients(clientPayload);
+
+        NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload);
 
     }
 

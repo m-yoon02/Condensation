@@ -1,5 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO;
 
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameEventType;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Listeners.GameDataListener;
 import org.json.simple.JSONObject;
 
@@ -24,13 +26,9 @@ public class Client implements GameDataListener {
     }
 
     @Override
-    public void onGameEvent(JSONObject gameData) {
+    public void onGameEvent(JSONObject gameData, GameEventType gameEventType) {
 
-        // I need to handle the different kinds of GameEventsGAME_START
-        // else if , TURN_END,
-        // else if GAME_END,
-        // else if CHAT_MESSAGE_RECEIVED
-        System.out.println("Client " + username + " received game data: " + gameData);
-        // Handle game data (e.g., forward to frontend) which can be access via the client class by getClient(playerUID)
+        // we can call a frontend recieveMethod(JSONObject gameData);
+
     }
 }

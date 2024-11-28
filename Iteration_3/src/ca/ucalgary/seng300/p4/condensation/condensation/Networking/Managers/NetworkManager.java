@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Listeners.GameDataListener;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Services.ChatService;
@@ -160,39 +161,45 @@ public class NetworkManager {
     // ---------------------------------------------------------------------------------------------------
 
     /**
-     * subscribeToGameSession this method is used to subscribe a client to a list of listeners that map to particular sessionID
+     * subscribeToGameSession this method is used to subscribe a client to a list of listeners ( 2 client players) that map to particular sessionID
      * @param sessionID The game session's UUID
      * @param client
      */
     public void subscribeToGameSession(UUID sessionID, Client client) {
         // Check if the sessionID already exists in the map
-        List<GameDataListener> listeners = sessionListeners.get(sessionID);
+        List<GameDataListener> clientListeners = sessionListeners.get(sessionID);
 
-        // If no listeners exist for this sessionID, create a new list
-        if (listeners == null) {
-            listeners = new ArrayList<>();
-            sessionListeners.put(sessionID, listeners);
+        // if no listeners exist for this sessionID, create a new list
+        if (clientListeners == null) {
+            clientListeners = new ArrayList<>();
+            sessionListeners.put(sessionID, clientListeners);
         }
-        // Add the listener to the list
-        listeners.add(client);
+        // add the listener to the list
+        clientListeners.add(client);
 
         // Print a confirmation message
         System.out.println("Client subscribed to session: " + sessionID);
     }
 
     /**
-     * Notifies all clients subscribed to a game session.
-     * @param sessionID The game session's UUID
-     * @param gameData The game state data to send
+     *Notifies all clients subscribed to a game session about one of 4 different gameEvents
+     * @param sessionID
+     * @param eventType
+     * @param clientResponsePayload
      */
-    public void notifyGameSessionClients(UUID sessionID, JSONObject gameData) {
-        List<GameDataListener> listeners = sessionListeners.get(sessionID);         // will get the list containing both clients so it can notify
-        if (listeners != null) {
-            for (GameDataListener listener : listeners) {
-                listener.onGameDataReceived(gameData);
+    public void notifyGameSessionClients(UUID sessionID, GameEventType eventType, JSONObject clientResponsePayload) {
+
+        // here we are getting the specific list of clients that are subscribed to the session
+
+        List<GameDataListener> clientListeners = sessionListeners.get(sessionID);
+
+        if (clientListeners != null) {
+            for (GameDataListener listener : clientListeners) {
+
+                listener.onGameEvent(eventType, clientResponsePayload);
             }
         } else {
-            System.out.println("No listeners found for session: " + sessionID);
+            System.out.println("No clients found in the gameSession: " + sessionID);
         }
     }
 
@@ -220,22 +227,26 @@ public class NetworkManager {
     /**
      * ** Bypasses matchmaking logic in clientQueuePlayer
      * handleQueuePlayer called by the controller to recieve a queuedPlayer
-     * @param queuedPlayerMemo1 This has playerUUID, gameType, and the elo of the player
-     * PreCondition: client instantiates a queuedMemo which has information on the playerID and the gameType they selected
-     * PostCondition: able to verify the client is logged in, and them to pool and returns a matchedGameSession object, which eventually sends created
-     *               gameSession information to the GameSessionManager and finally uuids to the backend via (sendCreatedGameSession)
+     * @param queuedPlauerPayload This has playerUUID, gameType, and the elo of the player
      */
-    public JSONObject handleQueuePlayer(QueuedPlayerMemo queuedPlayerMemo1){
-        UUID player1UUID = queuedPlayerMemo1.PlayerID();
-        GameTypes gameType = queuedPlayerMemo1.gameType();
-        int elo = queuedPlayerMemo1.Elo();
+    public JSONObject handleQueuePlayer(JSONObject queuedPlauerPayload){
+
+        // get the id
+        // get the gameType
+        // we can get the elo from the database by playerID
+        // instantiate a queuedPlayerMemo1
+//        UUID player1UUID = queuedPlayerMemo1.PlayerID();
+//        GameTypes gameType = queuedPlayerMemo1.gameType();
+//        int elo = queuedPlayerMemo1.Elo();
+
+        QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo();
 
         // we are going to mimic the process of a second client signup and matchmaking process.
         UUID player2UUID = UUID.fromString("345e6789-e89d-45d5-a678-62783628511");
         QueuedPlayerMemo queuedPlayerMemo2 = new QueuedPlayerMemo(player2UUID, gameType, elo + 20);
 
-        Client client1 = getClient(player1UUID);
-        Client client2 = new Client(player2UUID, "Alan");
+        Client client1 = getClient(player1UUID);  // this client1
+        Client client2 = new Client(player2UUID, "Alan");   // a client2
         loggedInClients.put(player2UUID, client2);                  // so now the second client is logged in and a match has been found
 
 
@@ -249,8 +260,9 @@ public class NetworkManager {
         JSONObject matchedSessionResponse = new JSONObject();
 //        {
 //            "sessionId": "abcdef12-3456-7890-abcd-ef1234567890",
-//                "player1": "UUID",
-//                "player2": "UUID",
+//                "player1": "player1UUID",
+//                "player2": "player2UUID",
+//                "currentPlayerTurn" : "player1UUID",  // default turn to player1 so frontend can now start intra gamelogic
 //                "gameType": "TICTACTOE"
 //        }
 
@@ -260,6 +272,8 @@ public class NetworkManager {
         matchedSessionResponse.put("gameType", gameType);
 
         // frontend should save these references to player1 and player2 as part of the client side state,  this is how they will access the client listener which is notified by backend via the network.
+        // also everytime client sends network a payload they will need to give sessionID so we can find the gameSession object and update the game handler field in the GameSession's object.
+        // This way this.gamehandler recieves a payload and should then notify the frontend using the client listeners.
         return matchedSessionResponse;
     }
 
@@ -286,6 +300,7 @@ public class NetworkManager {
         subscribeToGameSession(sessionID, player2ID);
 
         // Add the session to the GameSessionManager
+        // this is just a hashmap that contains all active gameSession objects, which are mostly useful when we recieve data from the frontend
         gameSessionManager.addGameSession(gameSession);
 
     }
@@ -305,7 +320,7 @@ public class NetworkManager {
         // Parse sessionID from the payload
         String sessionIdString = (String) clientPayload.get("sessionId");
         UUID sessionId = UUID.fromString(sessionIdString);
-        notifyGameSessionClients(sessionId, clientPayload);          // Notify all subscribed clients
+        notifyGameSessionClients(sessionId, eventType, clientPayload);          // Notify all subscribed clients
 
     }
 
@@ -313,9 +328,19 @@ public class NetworkManager {
      * recieveGameDataFromClient recieves the gameState json payload (includes sessionID) from client
      * - calls GameSessionManager instance partFrontEndPayload method -> returns gameSession object,  gameState json(only gameState data)
      */
-    public void recieveGameDataFromClient(JSONObject recieveClientPayload){
+    public void recieveGameDataFromClient(String recieveClientPayload){
+
+        JSONObject payload = new JSONObject();
+
+        // we get the sessionID, to get the gameSession object
+        // gameSession has a field this.gamehandler
+        // -------------------------------------------------
         // recieve a payload json formatted String
         // GameSession gameSession = retured by GSM;
+        // gamehandler = gameSession.getGameHandler()
+        // gamehandler.makeMove(String moveDataJSON)
+        // -- this will notifyTurnEnd or notifyGameEnd
+        // -- which will
     }
 
     // ---------------------------------------------------------------------------------------------------
