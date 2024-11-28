@@ -1,0 +1,107 @@
+package ca.ucalgary.seng300.p4.condensation.Networking.Services;
+
+import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
+import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+
+public class MatchmakingPool {
+    private static List<QueuedPlayerMemo> pool = new ArrayList<>();
+
+    private static Leaderboard leaderboard;
+
+    static {
+        try {
+            leaderboard = new Leaderboard("/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public MatchmakingPool() {
+        this.fetch4RandomPlayers();
+    }
+
+    /**
+     * This method adds a player into the matchmaking pool
+     * @param player the player being added
+     */
+    public void addPlayer(QueuedPlayerMemo player, int index) {
+        pool.add(index, player);
+        System.out.println("Player Added: " + player.PlayerID());
+    }
+
+    public void addPlayer(QueuedPlayerMemo player) {
+        pool.add(player);
+        System.out.println("Player Added: " + player.PlayerID());
+    }
+
+
+
+    /**
+     * This method removes a player from the matchmaking pool
+     * @param player the player being removed
+     */
+    public void removePlayer(QueuedPlayerMemo player) {
+        pool.remove(player);
+    }
+
+    /**
+     * This is a getter method for the matchmaking pool. Used in MatchmakingService.
+     * @return the pool list
+     */
+    public List<QueuedPlayerMemo> getPool() {
+        System.out.println(pool.size());
+        return pool;
+
+    }
+
+    public void fetch4RandomPlayers() {
+        ArrayList<JSONObject> UUIDarrayList = new ArrayList<>();
+        for (Object object : leaderboard.getAllUsers()) {
+            JSONObject jsonObject = (JSONObject) object;
+            jsonObject.get("playerUUID");
+            UUIDarrayList.add(jsonObject);
+        }
+        Random random = new Random();
+        while (UUIDarrayList.size() < 8) {
+            int randomIndex = random.nextInt(UUIDarrayList.size());
+            JSONObject randomUUID = UUIDarrayList.get(randomIndex);
+
+            // avoid duplicates
+            if (!UUIDarrayList.contains(randomUUID)) {
+                UUIDarrayList.add(randomUUID);
+            }
+        }
+
+        GameTypes[] gameTypes = {GameTypes.CHECKERS, GameTypes.CONNECT4, GameTypes.TICTACTOE};
+
+
+        int index = 0;
+        for (JSONObject jsonObject : UUIDarrayList) {
+            UUID playerID = (UUID) jsonObject.get("playerUUID");
+            int elo = (Integer) jsonObject.get("elo");
+
+            // Get the game type based on the current index
+            GameTypes currentGameType = gameTypes[index];
+
+            // Create the QueuedPlayerMemo with the selected game type
+            QueuedPlayerMemo queuedPlayerMemo = new QueuedPlayerMemo(playerID, currentGameType, elo);
+            pool.add(queuedPlayerMemo);
+
+            index = (index + 1) % gameTypes.length; // Cycles back to 0 after the last game type
+        }
+
+
+    }
+}
