@@ -20,8 +20,8 @@ public class CheckersMoveData extends MoveData {
     public static CheckersMoveData fromJSON(String moveDataJSON){
         JSONParseResult jsonParseResult = JSONParseResult.parseJSON(moveDataJSON);
         return new CheckersMoveData(jsonParseResult.playerID()
-                , Vector2.fromArray(jsonParseResult.positions()[0])
-                , Vector2.fromArray(jsonParseResult.positions()[1]));
+                , Vector2.fromArray(jsonParseResult.newPosition())
+                , Vector2.fromArray(jsonParseResult.oldPosition()));
     }
 
     public Vector2 getOldPosition() {
