@@ -7,4 +7,8 @@ public class TicTacToePiece extends GamePiece {
     public TicTacToePiece(Vector2 position, PieceColor color) {
         super(position, color);
     }
+
+    public TicTacToePiece(PieceColor color) {
+        super(color);
+    }
 }
