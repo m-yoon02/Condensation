@@ -46,6 +46,9 @@ public class CloudManager {
         }
     }
 
+    public boolean isConnected(){
+        return isConnected;
+    }
 
 
 
