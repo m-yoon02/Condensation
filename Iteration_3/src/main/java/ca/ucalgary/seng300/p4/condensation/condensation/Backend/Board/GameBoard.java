@@ -40,6 +40,7 @@ public class GameBoard<T extends GamePiece> {
      */
     private void addPieceAt(T piece, Vector2 position){
         board.get(position.y()).set(position.x(), piece);
+        piece.moveTo(position);
     }
 
     /**
