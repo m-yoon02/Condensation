@@ -12,6 +12,11 @@ public abstract class GamePiece {
         this.color = color;
     }
 
+    public GamePiece(PieceColor color){
+        this.position = Vector2.ZERO;
+        this.color = color;
+    }
+
     public int getX() {
         return position.x();
     }
