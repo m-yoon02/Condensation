@@ -1,6 +1,5 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData;
 
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 
 import java.util.UUID;
@@ -20,7 +19,9 @@ public class MoveData {
      * @return the move data object
      */
     public static MoveData fromJSON(String moveDataJSON){
-        return new MoveData(UUID.randomUUID(), new Vector2(0, 0));
+        JSONParseResult jsonParseResult = JSONParseResult.parseJSON(moveDataJSON);
+        return new MoveData(jsonParseResult.playerID()
+                , Vector2.fromArray(jsonParseResult.positions()[0]));
     }
 
     public UUID getPlayerID() {

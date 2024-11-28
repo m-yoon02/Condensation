@@ -2,7 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameBoard;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.MoveData;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.TicTacToePiece;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
