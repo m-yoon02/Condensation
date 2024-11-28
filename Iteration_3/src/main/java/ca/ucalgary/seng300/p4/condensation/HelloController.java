@@ -75,16 +75,18 @@ public class HelloController {
     }
 
     private void setPlayerSymbol(Button button, Vector2 position) {
+        System.out.println(position);
         if (playerTurn == 0) {
             TicTacToePiece t1 = new TicTacToePiece(position,PieceColor.RED);
             gameHandler.getBoard().placePiece(t1 ,position); // Place RED piece
-
+            //gameHandler.makeMoveNOJSON(t1, position);
             button.setText("X");
             button.setTextFill(Color.RED);
             playerLabel.setText("Next Player"+ (1 - playerTurn));
             } else {
             TicTacToePiece t2 = new TicTacToePiece(position,PieceColor.BLUE);
             gameHandler.getBoard().placePiece(t2, position); // Place BLUE piece
+            //gameHandler.makeMoveNOJSON(t2, position);
             button.setText("O");
             button.setTextFill(Color.BLUE);
             playerLabel.setText("Next Player"+(1 - playerTurn));
@@ -95,9 +97,9 @@ public class HelloController {
 
     private void checkGameStatus() {
 
-        playerLabel.setText("checking");
-        PieceColor color1 = gameHandler.getBoard().getAt(0, 0).getColor();
-
+        System.out.println("Test");
+        //playerLabel.setText("checking");
+        //PieceColor color1 = gameHandler.getBoard().getAt(0, 0).getColor();
         if (gameHandler.checkForThreeInARow(PieceColor.RED)) {
             playerLabel.setText("RED Wins!");
             disableAllButtons();
@@ -105,13 +107,12 @@ public class HelloController {
             playerLabel.setText("BLUE Wins!");
             disableAllButtons();
         }
-//        else if (gameHandler.isBoardFull()) { // Handle ties
-//            playerLabel.setText("It's a Tie!");
-//            disableAllButtons();
-//        } else {
-//            // Update the label to reflect the next player's turn
-//            playerLabel.setText(playerTurn == 0 ? "Current Player: RED" : "Current Player: BLUE");
-//        }
+        else if (isBoardFull()) { // Handle ties
+            playerLabel.setText("It's a Tie!");
+            disableAllButtons();
+        } else {
+            playerLabel.setText(playerTurn == 0 ? "Current Player: RED" : "Current Player: BLUE");
+        }
     }
 
     private void disableAllButtons() { //when game ends
@@ -136,7 +137,17 @@ public class HelloController {
                 button.setTextFill(Color.BLACK);
             }
         }
-
         playerLabel.setText("Current Player: RED");
+    }
+
+    private boolean isBoardFull() {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (gameHandler.getBoard().getAt(row, col) == null) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
