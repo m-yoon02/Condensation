@@ -1,72 +1,96 @@
 .main-pane {
     -fx-font-family: Arial;
     -fx-background-color: #ffffff;
+    -fx-pref-width: 1500;
+    -fx-pref-height: 800;
 }
 .main-pane Button {
     -fx-font-family: Arial;
-    -fx-font-size: 16;
+    -fx-font-size: 30;
+}
+
+.v-box {
+    -fx-pref-width: 1500;
+    -fx-pref-height: 800;
+    -fx-background-color: #ffffff;
+}
+
+.h-box {
+    -fx-pref-width: 1500;
+    -fx-pref-height: 770;
+    -fx-background-color: #ffffff;
 }
 
 
 .menu-container {
-    -fx-background-color: #daf9ff;
+    -fx-background-color: #000000;
+    -fx-pref-width: 1500;
+    -fx-pref-height: 50;
 }
 .menu-container Button{
-    -fx-font-size: 12;
+    -fx-font-size: 16;
 }
 
 
 
 .game-container {
     -fx-alignment: top-center;
+    -fx-pref-width: 750;
+    -fx-pref-height: 690;
 }
 #nameLabel {
     -fx-alignment: left;
-    -fx-font-size: 30;
+    -fx-font-size: 70;
     -fx-font-weight: bold;
 }
 .game-container Imageview {
     -fx-alignment: top;
 }
 #playBtn {
-    -fx-pref-width: 150;
-    -fx-pref-height: 40;
-    -fx-background-color: #93ffcd;
+    -fx-pref-width: 300;
+    -fx-pref-height: 100;
+    -fx-font-size: 40;
 }
 #leaderboardBtn {
-    -fx-pref-width: 200;
-    -fx-pref-height: 30;
-    -fx-background-color: #abf5ff;
-    -fx-font-size: 14;
+    -fx-pref-width: 350;
+    -fx-pref-height: 80;
+    -fx-font-size: 30;
 }
 
 
 
 .detail-scroll-container {
     -fx-border-color: transparent;
-    -fx-background-color: transparent;
+    -fx-background-color: #ffffff;
+    -fx-pref-width: 750;
+    -fx-pref-height: 770;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
 }
 .detail-container {
     -fx-background-color: #ffffff;
+    -fx-pref-width: 750;
 }
 .detail-container Label {
     -fx-alignment: left;
-    -fx-font-size: 20;
+    -fx-font-size: 40;
     -fx-font-weight: bold;
 }
 .detail-container TextArea {
     -fx-alignment: left;
     -fx-pref-width: 200;
-    -fx-pref-height: 200;
+    -fx-pref-height: 400;
     -fx-border-color: transparent;
     -fx-background-color: #ffffff;
+    -fx-font-size: 20;
 }
 .detail-container TextArea .content {
     -fx-background-color: #ffffff;
     -fx-cursor: default;
 }
 #rulesArea {
-    -fx-pref-height: 300;
+    -fx-pref-height: 400;
+    -fx-font-size: 20;
 }
 .detail-buttons-container {
     -fx-alignment: top-center;
