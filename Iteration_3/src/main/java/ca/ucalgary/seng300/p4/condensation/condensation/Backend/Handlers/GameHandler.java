@@ -87,6 +87,15 @@ public abstract class GameHandler implements IGameHandler{
     }
 
     /**
+     * Gets the player color from a given player ID
+     * @param playerID the player ID to retrieve the color from
+     * @return the color of the player
+     */
+    public PieceColor getPlayerColorFromUUID(UUID playerID) {
+        return getPlayerMemoFromUUID(playerID).pieceColor();
+    }
+
+    /**
      * Gets the other player's player memo whose PlayerID differs from the given player id
      * @param playerID the player id of which player NOT to get
      * @return the other player, if one exists
@@ -98,6 +107,15 @@ public abstract class GameHandler implements IGameHandler{
             }
         }
         return null;
+    }
+
+    /**
+     * Gets the other player's player ID whose PlayerID differs from the given player id
+     * @param playerID the player id of which player NOT to get
+     * @return the other player's ID, if one exists
+     */
+    public UUID getOtherPlayerUUID(UUID playerID){
+        return getOtherPlayerMemoFromUUID(playerID).playerID();
     }
 
     /**
