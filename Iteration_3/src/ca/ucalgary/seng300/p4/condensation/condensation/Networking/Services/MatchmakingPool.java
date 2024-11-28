@@ -9,6 +9,12 @@ import java.util.List;
 public class MatchmakingPool {
     private static List<QueuedPlayerMemo> pool = new ArrayList<>();
 
+    public MatchmakingPool() {
+
+        // we need to hard code 3 random queuedPlayerMemos
+
+    }
+
     /**
      * This method adds a player into the matchmaking pool
      * @param player the player being added

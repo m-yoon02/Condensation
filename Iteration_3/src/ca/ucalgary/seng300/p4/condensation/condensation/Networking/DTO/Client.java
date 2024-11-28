@@ -28,7 +28,16 @@ public class Client implements GameDataListener {
     @Override
     public void onGameEvent(JSONObject gameData, GameEventType gameEventType) {
 
-        // we can call a frontend recieveMethod(JSONObject gameData);
+        if(gameEventType == GameEventType.CHAT_MESSAGE_RECEIVED){
+            // will recieve message information
+
+        }else{
+
+            // we can call a frontend recieveMethod(JSONObject gameData);
+
+
+
+        }
 
     }
 }
