@@ -22,9 +22,9 @@
       <TextArea layoutX="16.0" layoutY="83.0" prefHeight="171.0" prefWidth="173.0" text="TIC TAC TOE" />
       <TextArea layoutX="410.0" layoutY="83.0" prefHeight="171.0" prefWidth="173.0" text="CHECKERS" />
       <TextArea layoutX="214.0" layoutY="83.0" prefHeight="171.0" prefWidth="173.0" text="CONNECT 4" />
-      <Button layoutX="69.0" layoutY="271.0" mnemonicParsing="false" text="Play" />
-      <Button layoutX="473.0" layoutY="271.0" mnemonicParsing="false" text="Play" />
-      <Button layoutX="269.0" layoutY="271.0" mnemonicParsing="false" text="Play" />
-      <Button layoutX="523.0" layoutY="356.0" mnemonicParsing="false" text="Home" />
+      <Button fx:id="ticTacToePlayButton" layoutX="69.0" layoutY="271.0" mnemonicParsing="false" text="Play"  />
+      <Button fx:id="connect4PlayButton" layoutX="473.0" layoutY="271.0" mnemonicParsing="false" text="Play" />
+      <Button fx:id="checkersPlayButton" layoutX="269.0" layoutY="271.0" mnemonicParsing="false" text="Play" />
+      <Button fx:id="homeButton" layoutX="523.0" layoutY="356.0" mnemonicParsing="false" text="Home" onAction="#onHomeButtonClicked"/>
    </children>
 </AnchorPane>

@@ -1,9 +1,17 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ProfileGameController {
 
@@ -54,9 +62,17 @@ public class ProfileGameController {
     }
 
     @FXML
-    void onHomeButtonClicked(ActionEvent event) {
-        System.out.println("Home button clicked");
+    void onHomeButtonClicked(ActionEvent event) throws IOException {
+        System.out.println("Home button clicked...redirecting to home");
         // Navigate back to the Home screen
+        // Add functionality to go back to home
+        Parent gamesParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileHome.fxml"));
+        Scene gamesScene = new Scene(gamesParent);
+
+        //This line gets the Stage information
+        Stage window= (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(gamesScene);
+        window.show();
     }
 }
 
