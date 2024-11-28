@@ -31,11 +31,10 @@ public record JSONParseResult(UUID playerID, int[] newPosition, int[] oldPositio
             Object object = new JSONParser().parse(jsonString);
             JSONObject jsonObject = (JSONObject) object;
             String playerID = (String) jsonObject.get("PlayerID");
-            JSONObject positions = (JSONObject) jsonObject.get("Positions");
-            JSONArray oldPositionJSON = (JSONArray) positions.get("OldPosition");
+            JSONArray oldPositionJSON = (JSONArray) jsonObject.get("OldPosition");
             return new JSONParseResult(
                     UUID.fromString(playerID),
-                    convertJSONIntArray((JSONArray) positions.get("NewPosition")),
+                    convertJSONIntArray((JSONArray) jsonObject.get("NewPosition")),
                     oldPositionJSON != null ? convertJSONIntArray(oldPositionJSON) : null
             );
         } catch (ParseException e) {
