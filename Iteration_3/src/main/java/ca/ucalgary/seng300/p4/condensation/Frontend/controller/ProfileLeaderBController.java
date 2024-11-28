@@ -1,101 +1,77 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ProfileLeaderBController {
 
     @FXML
-    private TableView<PlayerScore> ticTacToeTable;
+    private Button btnHome;
 
     @FXML
-    private TableView<PlayerScore> connect4Table;
+    private TableView<?> tableView1;
 
     @FXML
-    private TableView<PlayerScore> checkersTable;
+    private TableView<?> tableView2;
 
     @FXML
-    private TableColumn<PlayerScore, Integer> ticTacToeRankColumn;
+    private TableView<?> tableView3;
 
     @FXML
-    private TableColumn<PlayerScore, String> ticTacToePlayerColumn;
+    private TableColumn<?, ?> colRank1;
 
     @FXML
-    private TableColumn<PlayerScore, Integer> ticTacToeScoreColumn;
+    private TableColumn<?, ?> colPlayer1;
 
     @FXML
-    private TableColumn<PlayerScore, Integer> connect4RankColumn;
+    private TableColumn<?, ?> colScore1;
 
     @FXML
-    private TableColumn<PlayerScore, String> connect4PlayerColumn;
+    private TableColumn<?, ?> colRank2;
 
     @FXML
-    private TableColumn<PlayerScore, Integer> connect4ScoreColumn;
+    private TableColumn<?, ?> colPlayer2;
 
     @FXML
-    private TableColumn<PlayerScore, Integer> checkersRankColumn;
+    private TableColumn<?, ?> colScore2;
 
     @FXML
-    private TableColumn<PlayerScore, String> checkersPlayerColumn;
+    private TableColumn<?, ?> colRank3;
 
     @FXML
-    private TableColumn<PlayerScore, Integer> checkersScoreColumn;
+    private TableColumn<?, ?> colPlayer3;
 
-    public void initialize() {
-        // Set up columns for Tic Tac Toe
-        ticTacToeRankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        ticTacToePlayerColumn.setCellValueFactory(new PropertyValueFactory<>("player"));
-        ticTacToeScoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+    @FXML
+    private TableColumn<?, ?> colScore3;
 
-        // Set up columns for Connect 4
-        connect4RankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        connect4PlayerColumn.setCellValueFactory(new PropertyValueFactory<>("player"));
-        connect4ScoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+    @FXML
+    private Label lblLeaderboard;
 
-        // Set up columns for Checkers
-        checkersRankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        checkersPlayerColumn.setCellValueFactory(new PropertyValueFactory<>("player"));
-        checkersScoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+    @FXML
+    private Label lblTicTacToe;
 
-        // Populate tables with sample data
-        /*ObservableList<PlayerScore> sampleData = FXCollections.observableArrayList(
-                new PlayerScore(1, "Alice", 100),
-                new PlayerScore(2, "Bob", 90),
-                new PlayerScore(3, "Charlie", 80)
-        );
+    @FXML
+    private Label lblCheckers;
 
-        ticTacToeTable.setItems(sampleData);
-        connect4Table.setItems(sampleData);
-        checkersTable.setItems(sampleData);  */
+    @FXML
+    private Label lblConnect4;
+
+    @FXML
+    private void initialize() {
+        // Initialization logic here
+        lblLeaderboard.setText("Leaderboard");
+        lblTicTacToe.setText("TIC TAC TOE");
+        lblCheckers.setText("CHECKERS");
+        lblConnect4.setText("CONNECT 4");
     }
 
-    // Define a simple data class for PlayerScore
-    public static class PlayerScore {
-        private final Integer rank;
-        private final String player;
-        private final Integer score;
-
-        public PlayerScore(Integer rank, String player, Integer score) {
-            this.rank = rank;
-            this.player = player;
-            this.score = score;
-        }
-
-        public Integer getRank() {
-            return rank;
-        }
-
-        public String getPlayer() {
-            return player;
-        }
-
-        public Integer getScore() {
-            return score;
-        }
+    @FXML
+    private void handleHome() {
+        System.out.println("Home button clicked!");
+        // Add logic to handle the Home button click, like navigating to the home screen
     }
 }

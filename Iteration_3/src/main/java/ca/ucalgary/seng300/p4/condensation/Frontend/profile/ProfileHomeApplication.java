@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.profile;
 
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,18 +9,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ProfileHomeApplication extends Application {
-
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ProfileHome.fxml"));
-        Scene scene = new Scene(loader.load());
-
-        primaryStage.setTitle("Profile Home");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("profileHome.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        stage.setTitle("Home");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }
