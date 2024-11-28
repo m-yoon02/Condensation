@@ -12,7 +12,7 @@ import org.json.simple.JSONObject;
  * provides functionality for retrieving and updating leaderboard information.
  */
 public class Leaderboard {
-    private String DATA_FILE = "/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Leaderboard/Leaderboard.json";
+    private String DATA_FILE;
     private JSONArray users;
 
     /**
