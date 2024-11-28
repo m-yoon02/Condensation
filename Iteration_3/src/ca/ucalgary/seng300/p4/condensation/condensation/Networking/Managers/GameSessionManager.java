@@ -33,12 +33,15 @@ public class GameSessionManager {
     }
 
 
-    public GameSession recieveGameDataFromClient(JSONObject recieveClientPayload){
-        // a method that parses the payload and extracts the sessionID
-        // sessionID -> gameSession from hashmap
-        // return a gameSession Object to networking method
+    /**
+     * Returns a gameSession obbject to
+     * @param SessionID
+     * @return
+     */
+    public GameSession getGameSessionBySessionID(UUID SessionID){
 
-        return null;     // should return the gameSession object
+        GameSession gameSession = sessionsMap.get(SessionID);
+        return gameSession;     // should return the gameSession object
     }
 
     /**

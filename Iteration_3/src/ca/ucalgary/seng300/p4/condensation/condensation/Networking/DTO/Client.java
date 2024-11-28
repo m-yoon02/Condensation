@@ -29,7 +29,7 @@ public class Client implements GameDataListener {
 
         }else{
 
-            // we can call a frontend recieveMethod(JSONObject gameData);
+            // we can call a frontend recieveMethod(JSONObject gameData) that client will directly call
         }
 
     }

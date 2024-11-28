@@ -1,4 +1,5 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.GameHandler;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Player;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
@@ -97,7 +98,7 @@ public class NetworkManager {
         String password = (String) loginPayload.get("password");
 
         // Check the database for username and password
-        JSONObject validatePlayer = validateUserCredentials(username, password);     // do we define this in network manager or something else
+        JSONObject validatePlayer = validateUserCredentials(username, password);
         UUID playerUUID = (UUID) validatePlayer.get("playerUUID");
 
         if (playerUUID == null) {
@@ -114,11 +115,11 @@ public class NetworkManager {
         loggedInClients.put(playerUUID, client);
 
         // The response pay,load that frontEnd will recieve
-        JSONObject response = new JSONObject();
-        response.put("playerID", playerUUID.toString());
-        response.put("username", username);
+        JSONObject loginResponse = new JSONObject();
+        loginResponse.put("playerID", playerUUID.toString());
+        loginResponse.put("username", username);
 
-        return response;   // returns the json payload to client
+        return loginResponse;   // returns the json payload to client
 
     }
 
@@ -148,8 +149,21 @@ public class NetworkManager {
 
         leaderboard.createUser(username, password);
         String responseString = String.format("Successfully created user with username %s", username);
+
+        // we could also add a check to see if the username already exists in our database
         return responseString;
     }
+
+    public String editUsername(UUID Player){
+        // retune some so
+        return null;
+    }
+
+    public String editPassword(UUID Player){
+        return null;
+    }
+
+
 
 
     /**
@@ -202,12 +216,10 @@ public class NetworkManager {
     public void notifyGameSessionClients(UUID sessionID, GameEventType eventType, JSONObject clientResponsePayload) {
 
         // here we are getting the specific list of clients that are subscribed to the session
-
         List<GameDataListener> clientListeners = sessionListeners.get(sessionID);
 
         if (clientListeners != null) {
             for (GameDataListener listener : clientListeners) {
-
                 listener.onGameEvent(eventType, clientResponsePayload);
             }
         } else {
@@ -242,7 +254,9 @@ public class NetworkManager {
         // to do the matchmaking logic, remember to make sure that we add Player1 to the start of the matchmaking pool
         // we need to do the .random for the matchmaking pool
         matchmakingPool.addPlayer(queuedPlayerMemo1, 0);                                // how do we make sure we add this to index 0
-        GameSession matchedGameSession = matchmakingService.findAndMatchPlayers();   // should
+        GameSession matchedGameSession = matchmakingService.findAndMatchPlayers();
+
+        // do we need to gamehandler.startGame*() here not sure what this is lets finalize this sequence
 
         // client listener for the second player should already be instantiated in the constructor
         //
@@ -262,6 +276,16 @@ public class NetworkManager {
         // also everytime client sends network a payload they will need to give sessionID so we can find the gameSession object and update the game handler field in the GameSession's object.
         // This way this.gamehandler recieves a payload and should then notify the frontend using the client listeners.
         return matchedSessionResponse;
+    }
+
+
+    /**
+     * handleChallengedQueuePlayer handles creating a gameSession following a profile lookup and challenging a plauer
+     * @param challengeQueuedPlayer
+     * @return
+     */
+    public JSONObject handleChallengedQueuePlayer(JSONObject challengeQueuedPlayer){
+        return null;
     }
 
     /**
@@ -299,33 +323,29 @@ public class NetworkManager {
      * sendGameDataToClients sends the clientPayload = sessionID + gameState payload to the clients
      * @param clientPayload
      */
-    public void sendGameDataToClients(JSONObject clientPayload){
-        // This remains a stub, but implementation would require having client listeners you implement GamaData Listener
-
-        // Parse sessionID from the payload
-        String sessionIdString = (String) clientPayload.get("sessionId");
-        UUID sessionId = UUID.fromString(sessionIdString);
-        notifyGameSessionClients(sessionId, eventType, clientPayload);          // Notify all subscribed clients
+    public void sendGameDataToClients(JSONObject clientPayload, UUID sessionID, GameEventType gameEventType){
+        // The appropriate gameSession listener will have been notified
+        notifyGameSessionClients(sessionID, gameEventType, clientPayload);          // Notify all subscribed clients
 
     }
 
     /**
-     * recieveGameDataFromClient recieves the gameState json payload (includes sessionID) from client
+     * recieveGameDataFromClient recieves the gameState json payload (includes sessionID) from client which they will directly call via network singleton.
      * - calls GameSessionManager instance partFrontEndPayload method -> returns gameSession object,  gameState json(only gameState data)
      */
-    public void recieveGameDataFromClient(String recieveClientPayload){
+    public void receiveGameDataFromClient(JSONObject receiveClientPayload){
 
-        JSONObject payload = new JSONObject();
+        UUID SessionID = (UUID) receiveClientPayload.get("SessionID");
+        String moveDataPayload  = receiveClientPayload.toJSONString();
 
-        // we get the sessionID, to get the gameSession object
-        // gameSession has a field this.gamehandler
-        // -------------------------------------------------
-        // recieve a payload json formatted String
-        // GameSession gameSession = retured by GSM;
-        // gamehandler = gameSession.getGameHandler()
-        // gamehandler.makeMove(String moveDataJSON)
-        // -- this will notifyTurnEnd or notifyGameEnd
-        // -- which will
+        // this receive the current gameSession from the sessions hashmap which should still be active
+        GameSession gameSession = gameSessionManager.getGameSessionBySessionID(SessionID);
+        // this will retrieve the current state of the board
+        GameHandler gameHandler = gameSession.getGameHandler();
+        // pass frontend state to the gameHandler makeMove
+        // this will notify the appropriate method listener in gameSession
+        gameHandler.makeMove(moveDataPayload);
+
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -337,10 +357,14 @@ public class NetworkManager {
 
     public JSONArray recievePlayerMessage(JSONObject recievePlayerMessage) {
 
-        // P1 - UUID
-        // Message
-        // sendGameDataToClients
-        // which means we will have to subscribe them to some sort of listeners lists
+        // PSEUDOCODE :
+            // we also need the sessionID so we know which clients to notify
+            // so chatService needs a reference to player 2 as well so that it has it's username in the message
+            // P1 - UUID
+            // we can find their username by UUID here which we can the pass into chat messages
+            // Message
+            // sendGameDataToClients
+            // which means we will have to subscribe them to some sort of listeners lists
 
 
 

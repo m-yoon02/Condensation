@@ -1,7 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO;
 
 import java.io.IOException;
-import java.net.http.WebSocket;
 import java.util.UUID;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
@@ -11,7 +10,10 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTyp
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.GameSessionManager;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.NetworkManager;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import javax.swing.text.html.parser.Parser;
 
 
 public class GameSession implements GameEndListener, TurnEndListener {
@@ -73,6 +75,9 @@ public class GameSession implements GameEndListener, TurnEndListener {
         return sessionId;
     }
 
+    public GameHandler getGameHandler() {
+        return gameHandler;
+    }
 
     /**
      * onGameEnd will update leaderboards, remove gameSession object from the sessions hashmap, and will send this information to the frontend.
@@ -85,7 +90,10 @@ public class GameSession implements GameEndListener, TurnEndListener {
     public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
         System.out.println("Game has ended");
         if (winnerPlayer.equals(this.player1ID)) {
-            // update leaderboard for player 1 as winner and player 2 as loser
+            // update leaderboard for player 1 does this mean we have to instantiate our own leader board here how can me manage this in leaderboard 
+
+
+            // as winner and player 2 as loser
         } else {
             // update leaderboard for player 2 winner, and player 1 as loser
         }
@@ -93,6 +101,9 @@ public class GameSession implements GameEndListener, TurnEndListener {
         // we will need to send something to the FrontEnd about the Game being over
 
 
+        NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload, sessionId, gameEventType);
+
+        // remove game from the GameSessionsManager hashmap
         GameSessionManager.getInstance().removeGameSession(this.sessionId);
 
     }
@@ -107,27 +118,63 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
     @Override
     public void onTurnEnd(UUID playersTurnID, String gameStateJson) throws IOException, ParseException {
-        System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
-        String currentPlayerTurn = null;
 
+        UUID sessionId = this.sessionId;
+        // this will be passed in to client listener so it knows what kind of gameEvent the gameSession listener has been notified about
+        GameEventType gameEventType = GameEventType.TURN_END;
 
         // verify if this is how frontend will recieve information from backend
         JSONObject responseClientPayload = new JSONObject();
-        responseClientPayload.put("UpdateType", "StateChange");
-        responseClientPayload.put("SessionID", this.sessionId);
-        responseClientPayload.put("PlayerTurnID", GameEventType.TURN_END);
+        responseClientPayload.put("UpdateType", "TURN_END");
+        responseClientPayload.put("SessionID", sessionId);
+        responseClientPayload.put("PlayerTurnID", playersTurnID);
         responseClientPayload.put("Changes", gameStateJson);
 
-
-        NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload);
+        NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload, sessionId, gameEventType);
 
     }
 
 
-    //************
-    // we will sends to backend "sendGameDataToBackEnd()"
-    // frontEnd data,
-    // im backend recieve method
+    // This is what the backend will send back to the client
+
+    // ```json
+    //{
+    //    "UpdateType": "GAME_END", //(OR StateChange)
+    //    "GameState": "WIN", // (or TIE)
+    //    // IF GameState == WIN:
+    //    "PlayerWon": "UUID of the player who won",
+    //    "PlayerLost": "UUID of the player who lost"
+    //    // if GameState == TIE, above fields will NOT exist
+    //}
+    //```
+    //
+    //```json
+    //{
+    //    "UpdateType": "TURN_END",
+    //    "SessionID": "UUID of the Session",
+    //    "PlayerTurn": "UUID of the next player's turn",
+    //    "Changes": [
+    //        ["EMPTY", "RED", "EMPTY"],
+    //        ["BLUE", "RED", "EMPTY"],
+    //        ["EMPTY", "BLUE", "EMPTY"],
+    //    ] // A 2D array representing the current state of the board on the Back End
+    //    // RED, BLUE are not the only colours, colours differ per game, SEE BELOW
+    //}
+
+
+    // This is what frontend recieves from the backend via recieveGameDataFromClient
+    // we recieve this as a json object from the frontend not as a string
+
+    // {
+    //    "SessionID": "UUID Representing Session",
+    //    "PlayerID": "UUID of the player making the move",
+    //    "NewPosition": [0, 5],
+    //    // If the game is Checkers:
+    //    "OldPosition": [1, 6]
+    //    //NewPosition represents the new position that the player wants to move the piece to
+    //    //IF THE GAME IS CHECKERS, OldPosition will represent the old position of the piece
+    //}
+
 
 
 
