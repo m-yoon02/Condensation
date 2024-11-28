@@ -13,10 +13,17 @@ public class MatchmakingPool {
      * This method adds a player into the matchmaking pool
      * @param player the player being added
      */
+    public void addPlayer(QueuedPlayerMemo player, int index) {
+        pool.add(index, player);
+        System.out.println("Player Added: " + player.PlayerID());
+    }
+
     public void addPlayer(QueuedPlayerMemo player) {
         pool.add(player);
         System.out.println("Player Added: " + player.PlayerID());
     }
+
+
 
     /**
      * This method removes a player from the matchmaking pool
