@@ -140,13 +140,13 @@ public class CheckersHandler extends GameHandler {
      * @return boolean
      */
     private boolean canJump(Vector2 pos){
-        if(pos.x() == 0){
-            if(pos.y() == 1){
+        if(pos.x() == 0 || pos.x() == 1){
+            if(pos.y() == 0 || pos.y() == 1){
                 if (board.getAt(pos.x()+1, pos.y()+1) != null
                         && board.getAt(pos.x()+2, pos.y()+2) == null) {
                     return true;
                 }
-            } else if(pos.y() == 7){
+            } else if(pos.y() == 6 || pos.y() == 7){
                 if (board.getAt(pos.x()+1, pos.y()-1) != null
                         && board.getAt(pos.x()+2, pos.y()-2) == null) {
                     return true;
@@ -174,30 +174,13 @@ public class CheckersHandler extends GameHandler {
                     return true;
                 }
             }
-        } else if(pos.x() == 6){
-            if(pos.y() == 1){
+        } else if(pos.x() == 6 || pos.x() == 7){
+            if(pos.y() == 0 || pos.y() == 1){
                 if (board.getAt(pos.x()-1, pos.y()+1) != null
                         && board.getAt(pos.x()-2, pos.y()+2) == null) {
                     return true;
                 }
-            } else if(pos.y() == 7){
-                if (board.getAt(pos.x()-1, pos.y()-1) != null
-                        && board.getAt(pos.x()-2, pos.y()-2) == null) {
-                    return true;
-                }
-            } else{
-                if((board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)){
-                    return true;
-                }
-            }
-        } else if(pos.x() == 7){
-            if(pos.y() == 0){
-                if (board.getAt(pos.x()-1, pos.y()+1) != null
-                        && board.getAt(pos.x()-2, pos.y()+2) == null) {
-                    return true;
-                }
-            } else if(pos.y() == 6){
+            } else if(pos.y() == 6 || pos.y() == 7){
                 if (board.getAt(pos.x()-1, pos.y()-1) != null
                         && board.getAt(pos.x()-2, pos.y()-2) == null) {
                     return true;
