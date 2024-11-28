@@ -8,6 +8,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class ProfileLeaderBController {
+    @FXML
+    private Label lblLeaderboard;
 
     @FXML
     private Button btnHome;
@@ -48,8 +50,6 @@ public class ProfileLeaderBController {
     @FXML
     private TableColumn<?, ?> colScore3;
 
-    @FXML
-    private Label lblLeaderboard;
 
     @FXML
     private Label lblTicTacToe;
