@@ -72,26 +72,33 @@ public class ProfileLeaderBController {
         checkersScoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 
         // Load sample data
-        loadSampleData();
+        loadSampleData();  //TODO: Should be connected with the networking team
     }
 
+    //this is just the sample data to see how the table looks like  //TODO: connect with networking
     private void loadSampleData() {
         ObservableList<LeaderboardEntry> ticTacToeData = FXCollections.observableArrayList(
-                new LeaderboardEntry(1, "Alice", 100),
-                new LeaderboardEntry(2, "Bob", 80),
-                new LeaderboardEntry(3, "Charlie", 60)
+                new LeaderboardEntry(1, "A", 100),
+                new LeaderboardEntry(2, "B", 80),
+                new LeaderboardEntry(3, "C", 60),
+                new LeaderboardEntry(4, "D", 95),
+                new LeaderboardEntry(5, "E", 85)
         );
 
         ObservableList<LeaderboardEntry> connect4Data = FXCollections.observableArrayList(
-                new LeaderboardEntry(1, "David", 95),
-                new LeaderboardEntry(2, "Eva", 85),
-                new LeaderboardEntry(3, "Frank", 75)
+                new LeaderboardEntry(1, "F", 85),
+                new LeaderboardEntry(2, "G", 75),
+                new LeaderboardEntry(3, "H", 100),
+                new LeaderboardEntry(4, "I", 90),
+                new LeaderboardEntry(5, "J", 85)
         );
 
         ObservableList<LeaderboardEntry> checkersData = FXCollections.observableArrayList(
-                new LeaderboardEntry(1, "Grace", 110),
-                new LeaderboardEntry(2, "Hank", 90),
-                new LeaderboardEntry(3, "Ivy", 70)
+                new LeaderboardEntry(1, "K", 100),
+                new LeaderboardEntry(2, "L", 90),
+                new LeaderboardEntry(3, "M", 70),
+                new LeaderboardEntry(4, "N", 85),
+                new LeaderboardEntry(5, "O", 85)
         );
 
         // Set data to tables
@@ -100,6 +107,7 @@ public class ProfileLeaderBController {
         checkersTable.setItems(checkersData);
     }
 
+    //back to home
     @FXML
     void onHomeButtonClicked(ActionEvent event) throws IOException {
         System.out.println("Home button clicked..redirecting to home.");

@@ -39,7 +39,7 @@ public class ProfileHomeController {
 
     /**When this method is called, it will change the scene back to log in page.*/
     @FXML
-    public void logOutButtonPushed(ActionEvent event) {
+    public void onlogOutButtonClicked(ActionEvent event) {
         System.out.println("Logging out...");
         // Add logout functionality here
     }
@@ -61,7 +61,7 @@ public class ProfileHomeController {
 
     //When this method is called, it will change the scene back to player profile page.
     @FXML
-    void handlePlayerProfiles(ActionEvent event) {
+    void onPlayerProfilesButtonClicked(ActionEvent event) {
         System.out.println("Opening Player Profiles...");
         // Add functionality to open the player profiles page
     }
