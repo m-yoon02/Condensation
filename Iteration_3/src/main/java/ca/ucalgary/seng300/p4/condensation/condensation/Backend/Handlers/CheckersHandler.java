@@ -1,7 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.*;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.GameBoard;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.CheckersMoveData;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.CheckersPiece;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;

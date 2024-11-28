@@ -1,49 +1,67 @@
 # JSON Format in Server-Client communication
 
 ## Frontend to Backend
+
 ```json
 {
     "SessionID": "UUID Representing Session",
     "PlayerID": "UUID of the player making the move",
-    "Positions": [
-        [0, 5],
-        //If the game is checkers:
-        [1, 6]
-    ]
-    //Positions[0] represents the new position that the player wants to move the piece to
-    //IF THE GAME IS CHECKERS, Positions[1] will represent the old position of the piece
+    "NewPosition": [0, 5],
+    // If the game is Checkers:
+    "OldPosition": [1, 6]
+    //NewPosition represents the new position that the player wants to move the piece to
+    //IF THE GAME IS CHECKERS, OldPosition will represent the old position of the piece
 }
 ```
 
 ## Backend to Frontend
+
 One JSON string is sent to frontend to notify state, **make sure to differentiate by checking what UpdateType is** since updates differ by UpdateType
 
 ```json
 {
-    "UpdateType": "GameEnd", //(OR StateChange)
-    "Data": {
-        "GameState": "Win", // (OR Lose, Tie)
-    }
+    "UpdateType": "GAME_END", //(OR StateChange)
+    "GameState": "WIN", // (or TIE)
+    // IF GameState == WIN:
+    "PlayerWon": "UUID of the player who won",
+    "PlayerLost": "UUID of the player who lost"
+    // if GameState == TIE, above fields will NOT exist
 }
 ```
 
 ```json
 {
-    "UpdateType": "StateChange",
-    "Data": {
-        "Changes": [
-            {
-                "Type": "Add", //Can be Add, Move or Remove
-                "Positions": [
-                    [0, 5],
-                    //If the type is Move:
-                    [1, 6]
-                    //Positions[0] represents the new position that the player wants to move the piece to
-                    //IF TYPE IS MOVE, Positions[1] will represent the old position of the piece
-                ]
-            },
-            ... //There can be more than one of these tables
-        ]
-    }
+    "UpdateType": "TURN_END",
+    "SessionID": "UUID of the Session",
+    "PlayerTurn": "UUID of the next player's turn",
+    "Changes": [
+        {
+            "Type": "ADD", //Can be ADD, MOVE or REMOVE
+            "Color": "RED", // IF Type == ADD, Color sent will depend on the game type, else this field will NOT exist
+            "NewPosition": [0, 5],
+            //If the type is Move:
+            "OldPosition": [1, 6]
+            //NewPosition represents the new position that the player wants to move the piece to
+            //IF TYPE IS MOVE, OldPosition will represent the old position of the piece, else this field will NOT exist
+        },
+        ... //There can be more than one of these tables
+    ]
 }
 ```
+
+## COLORS PER GAME
+
+### Connect Four
+
+- BLUE
+- ORANGE
+
+### Checkers
+
+- RED
+- BLACK
+
+### Tic Tac Toe
+
+- WHITE
+- BLACK

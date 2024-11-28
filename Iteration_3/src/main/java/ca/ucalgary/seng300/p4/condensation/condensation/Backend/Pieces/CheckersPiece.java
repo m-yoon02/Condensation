@@ -10,6 +10,10 @@ public class CheckersPiece extends GamePiece {
         super(position, color);
     }
 
+    public CheckersPiece(PieceColor color) {
+        super(color);
+    }
+
     public boolean isKing() {
         return king;
     }
