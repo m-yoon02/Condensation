@@ -1,0 +1,23 @@
+[
+{
+"username": "Samuel",
+"password": "password123",
+"playerUUID": "123e4567-e89b-12d3-a456-426614174000",
+"leaderBoardPosition": 1,
+"elo": 1500
+},
+{
+"username": "Morteza",
+"password": "securepass",
+"playerUUID": "234e5678-e89c-34d4-a567-526725175000",
+"leaderBoardPosition": 2,
+"elo": 1400
+},
+{
+"username": "Tysen",
+"password": "mypassword",
+"playerUUID": "345e6789-e89d-45d5-a678-627836285111",
+"leaderBoardPosition": 3,
+"elo": 1300
+}
+]

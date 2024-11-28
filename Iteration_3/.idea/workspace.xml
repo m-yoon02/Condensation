@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f1f51b2a-01d9-43c9-9b0a-d26b4da29b67" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/seng300-f24-project.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Iteration_2/Echo_Networking/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Iteration_2/Echo_Networking/Networking_Outline.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Iteration_2/Echo_Networking/echo_features.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Iteration_2/Echo_Networking/networkNotes.txt.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Iteration_2/Echo_Networking/networking_structure_diagram_planning.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Iteration_2/Echo_Networking/project_tracker_networking.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Iteration_2/Echo_Networking/supplimentary_networking_notes.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/condensation.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/DTO/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/DTO/GameSession.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/DTO/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/DTO/QueuedPlayerMemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Database.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/DatabaseBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/UserDatabase.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Enums/GameEventType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Enums/GameTypes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Listeners/GameDataListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/GameSessionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Services/ChatService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Services/LeaderboardService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Services/MatchmakingPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Services/MatchmakingService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Leaderboard/Leaderboard.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/UserDatabase.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../NetworkingCodingPlanning.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../out/production/seng300-f24-project/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Database.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../seng300-f24-project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Board/GameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Board/GameBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/CheckersHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/CheckersHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/notes/guide_document.md" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/seng300-f24-project/main/notes/guide_document.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/notes/json_format.md" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/seng300-f24-project/main/notes/json_format.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/notes/planning_notes.md" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/seng300-f24-project/main/notes/planning_notes.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ca/ucalgary/seng300/p4/condensation/condensation/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ca/ucalgary/seng300/p4/condensation/condensation/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ca/ucalgary/seng300/p4/condensation/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/seng300-f24-project/main/resources/ca/ucalgary/seng300/p4/condensation/hello-view.fxml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;project_6104_bot_3a2e84f106400ba9841a79ce44d344e6&quot;,
+      &quot;fullname&quot;: &quot;meow&quot;
+    }
+  }
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;git@csgit.ucalgary.ca:ssafe/seng300-f24-project.git&quot;,
+    &quot;second&quot;: &quot;04d4e59c-ca8e-4db2-9727-4f13bc7e3e16&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2pBcUlU9SiQYSuRrNB8qFC6IfWO" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Merging final__merge",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/abach/Documents/UniversityWork/SENG_300/seng300-f24-project/Iteration_3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Iteration_3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Iteration_3" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f1f51b2a-01d9-43c9-9b0a-d26b4da29b67" name="Changes" comment="" />
+      <created>1732242926494</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732242926494</updated>
+      <workItem from="1732242927563" duration="1903000" />
+      <workItem from="1732838202138" duration="99000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
