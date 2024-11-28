@@ -57,7 +57,7 @@ public class NetworkManager {
     /**
      * Singleton instance getter
      */
-    public static NetworkManager getNetworkInstance() {
+    public static NetworkManager getNetworkInstance() throws IOException, ParseException {
 
         // creates network instance if one doesn't exist
         if (network == null) {
@@ -241,7 +241,7 @@ public class NetworkManager {
 
         // to do the matchmaking logic, remember to make sure that we add Player1 to the start of the matchmaking pool
         // we need to do the .random for the matchmaking pool
-        matchmakingPool.addPlayer(queuedPlayerMemo1);                                // how do we make sure we add this to index 0
+        matchmakingPool.addPlayer(queuedPlayerMemo1, 0);                                // how do we make sure we add this to index 0
         GameSession matchedGameSession = matchmakingService.findAndMatchPlayers();   // should
 
         // client listener for the second player should already be instantiated in the constructor

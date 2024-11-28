@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MatchmakingService {
     private final MatchmakingPool pool;
-    private final int rankThreshold = 100;
+    private final int rankThreshold = 5000;
 
     /**
      * The constructor for MatchmakingService

@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO;
 
+import java.io.IOException;
 import java.net.http.WebSocket;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameTyp
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.GameSessionManager;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers.NetworkManager;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 
 public class GameSession implements GameEndListener, TurnEndListener {
@@ -104,7 +106,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
      */
 
     @Override
-    public void onTurnEnd(UUID playersTurnID, String gameStateJson) {
+    public void onTurnEnd(UUID playersTurnID, String gameStateJson) throws IOException, ParseException {
         System.out.println("Its now " + playersTurnID.toString() + "'s Turn");
         String currentPlayerTurn = null;
 
