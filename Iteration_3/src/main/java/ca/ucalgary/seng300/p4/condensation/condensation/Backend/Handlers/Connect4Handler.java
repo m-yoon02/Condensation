@@ -53,38 +53,34 @@ public class Connect4Handler extends GameHandler {
         int row = getPosition.y();
         int column = getPosition.x();
 
-        // All columns are full.
-        if (allColumnsAreFull()) {
-            // Game ends in a tie, no winner.
-            this.notifyGameEnd(GameResult.TIE, null);
-        }
-        else {
-            // The selected column has an available slot.
-            if (!columnIsFull(column)) {
-                int nextAvailableRow = findAvailableRow(column);
+        // The selected column has an available slot.
+        if (!columnIsFull(column)) {
+            int nextAvailableRow = findAvailableRow(column);
 
-                // Retrieve the piece colour that is assigned to current player making move.
-                ConnectFourPiece droppedPiece = new ConnectFourPiece(getPlayerColorFromUUID(moveData.getPlayerID()));
+            // Retrieve the piece colour that is assigned to current player making move.
+            ConnectFourPiece droppedPiece = new ConnectFourPiece(getPlayerColorFromUUID(moveData.getPlayerID()));
 
-                // Places a piece in the new position.
-                Vector2 newPosition = new Vector2(column, nextAvailableRow);
-                board.placePiece(droppedPiece, newPosition);
+            // Places a piece in the new position.
+            Vector2 newPosition = new Vector2(column, nextAvailableRow);
+            board.placePiece(droppedPiece, newPosition);
 
-                // A connect four has been made, current player wins the game.
-                if (checkForConnectedFour(newPosition)) {
-                    this.notifyGameEnd(GameResult.WIN, playerID);
-                }
-                else {
+            // A connect four has been made, current player wins the game.
+            if (checkForConnectedFour(newPosition)) {
+                this.notifyGameEnd(GameResult.WIN, playerID);
+            } else {
+                // All columns are full.
+                if (allColumnsAreFull()) {
+                    // Game ends in a tie, no winner.
+                    this.notifyGameEnd(GameResult.TIE, null);
+                } else {
                     // The turn switches to the other player.
                     this.notifyTurnEnd(getOtherPlayerUUID(moveData.getPlayerID()), "");
                 }
             }
+        } else {
             // Passes current player's ID back, allowing the current player to retry.
-            else {
-                this.notifyTurnEnd(playerID, "");
-            }
+            this.notifyTurnEnd(playerID, "");
         }
-
     }
 
     /**
