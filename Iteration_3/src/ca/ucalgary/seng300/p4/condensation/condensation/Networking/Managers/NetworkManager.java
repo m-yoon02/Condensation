@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.GameSession;
+import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.Player;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Networking.Enums.GameEventType;
@@ -135,7 +136,7 @@ public class NetworkManager {
         String password = (String) signupPayload.get("password");
 
         leaderboard.createUser(username, password);
-        String responseString = String.format("Successfully created user with username %s and password %s", username, password);
+        String responseString = String.format("Successfully created user with username %s", username);
         return responseString;
     }
 
@@ -225,53 +226,39 @@ public class NetworkManager {
     }
 
     /**
-     * ** Bypasses matchmaking logic in clientQueuePlayer
      * handleQueuePlayer called by the controller to recieve a queuedPlayer
-     * @param queuedPlauerPayload This has playerUUID, gameType, and the elo of the player
+     * @param queuedPlayerPayload This has playerUUID, gameType, and the elo of the player
      */
-    public JSONObject handleQueuePlayer(JSONObject queuedPlauerPayload){
+    public JSONObject handleQueuePlayer(JSONObject queuedPlayerPayload){
 
-        // get the id
-        // get the gameType
-        // we can get the elo from the database by playerID
-        // instantiate a queuedPlayerMemo1
-//        UUID player1UUID = queuedPlayerMemo1.PlayerID();
-//        GameTypes gameType = queuedPlayerMemo1.gameType();
-//        int elo = queuedPlayerMemo1.Elo();
+        // Extracts all neccessary Player1 information from database and payload and instantiates the queuedPlayer
+        String playerIDString = (String) queuedPlayerPayload.get("playerID");
+        UUID player1UUID = UUID.fromString(playerIDString);
+        GameTypes gameType = (GameTypes) queuedPlayerPayload.get("gameType");
+        JSONObject player1 = leaderboard.findUserById(player1UUID);
+        int elo = (int) player1.get("elo");
+        QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo(player1UUID, gameType, elo);           // now can make the queu
 
-        QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo();
+        // to do the matchmaking logic, remember to make sure that we add Player1 to the start of the matchmaking pool
+        // we need to do the .random for the matchmaking pool
+        matchmakingPool.addPlayer(queuedPlayerMemo1);                                // how do we make sure we add this to index 0
+        GameSession matchedGameSession = matchmakingService.findAndMatchPlayers();   // should
 
-        // we are going to mimic the process of a second client signup and matchmaking process.
-        UUID player2UUID = UUID.fromString("345e6789-e89d-45d5-a678-62783628511");
-        QueuedPlayerMemo queuedPlayerMemo2 = new QueuedPlayerMemo(player2UUID, gameType, elo + 20);
-
-        Client client1 = getClient(player1UUID);  // this client1
-        Client client2 = new Client(player2UUID, "Alan");   // a client2
-        loggedInClients.put(player2UUID, client2);                  // so now the second client is logged in and a match has been found
-
-
-        // this instantiates a new gameSession which also holds the state of the gameHandler, so communication should really occur between
-        GameSession matchedGameSession = new GameSession(queuedPlayerMemo1, queuedPlayerMemo2);
+        // client listener for the second player should already be instantiated in the constructor
+        //
+        network.sendCreatedGameSession(matchedGameSession);
         UUID sessionID = matchedGameSession.getSessionId();
-        network.sendCreatedGameSession(matchedGameSession);   // This will match first available player in the list to eligible player2
+        UUID player2UUID = matchedGameSession.getPlayer2ID();
+        UUID getFirstPlayerID = matchedGameSession.getFirstPlayerID();  // waiting on backend to implement this in gameHandler
 
-
-
+        // preparing the json payload to be sent to the frontEnd
         JSONObject matchedSessionResponse = new JSONObject();
-//        {
-//            "sessionId": "abcdef12-3456-7890-abcd-ef1234567890",
-//                "player1": "player1UUID",
-//                "player2": "player2UUID",
-//                "currentPlayerTurn" : "player1UUID",  // default turn to player1 so frontend can now start intra gamelogic
-//                "gameType": "TICTACTOE"
-//        }
-
         matchedSessionResponse.put("sessionID", sessionID);
-        matchedSessionResponse.put("player1", player1UUID);
-        matchedSessionResponse.put("player2", player2UUID);
+        matchedSessionResponse.put("player1ID", player1UUID);
+        matchedSessionResponse.put("player2ID", player2UUID);
+        matchedSessionResponse.put("currentPlayerTurn", getFirstPlayerID);
         matchedSessionResponse.put("gameType", gameType);
 
-        // frontend should save these references to player1 and player2 as part of the client side state,  this is how they will access the client listener which is notified by backend via the network.
         // also everytime client sends network a payload they will need to give sessionID so we can find the gameSession object and update the game handler field in the GameSession's object.
         // This way this.gamehandler recieves a payload and should then notify the frontend using the client listeners.
         return matchedSessionResponse;
@@ -351,7 +338,14 @@ public class NetworkManager {
     // we need to
 
 
-    public JSONArray recievePlayerMessage(String msg) {
+    public JSONArray recievePlayerMessage(JSONObject recievePlayerMessage) {
+
+        // P1 - UUID
+        // Message
+        // sendGameDataToClients
+
+
+
 
         //TODO: Need to get the reference of the user name, client should store UUID information on their following login and after creating a session.
         JSONArray messages = chatService.sendChatMessage(msg, "username");
