@@ -32,7 +32,7 @@ public class NetworkManager {
     // client listener lists mapped to specific to their gameSessions
     private Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
-    private final Leaderboard leaderboard = new Leaderboard();
+    private final Leaderboard leaderboard = new Leaderboard("/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Leaderboard/Leaderboard.json");
     private final ChatService chatService;
 
 

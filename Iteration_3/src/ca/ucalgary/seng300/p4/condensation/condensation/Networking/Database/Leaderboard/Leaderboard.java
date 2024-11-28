@@ -12,7 +12,7 @@ import org.json.simple.JSONObject;
  * provides functionality for retrieving and updating leaderboard information.
  */
 public class Leaderboard {
-    private static final String DATA_FILE = "/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Leaderboard/Leaderboard.json";
+    private String DATA_FILE;
     private JSONArray users;
 
     /**
@@ -21,9 +21,12 @@ public class Leaderboard {
      * @throws IOException    if there is an error reading the file.
      * @throws ParseException if there is an error parsing the JSON data.
      */
-    public Leaderboard() throws IOException, ParseException {
+    public Leaderboard(String DATA_FILE) throws IOException, ParseException {
+        this.DATA_FILE = DATA_FILE;
         loadData();
+
     }
+
 
     /**
      * Loads user data from the JSON file into the leaderboard.
@@ -70,7 +73,9 @@ public class Leaderboard {
         return users;
     }
 
-
+    public void setDATA_FILE(String DATA_FILE) {
+        this.DATA_FILE = DATA_FILE;
+    }
 
     public void createUser(String name, String password) throws IOException {
         JSONObject user = new JSONObject(); //create new object
