@@ -50,6 +50,15 @@ public class CloudManager {
         return isConnected;
     }
 
+    public void disconnect(){
+        if(isConnected) {
+            isConnected = false;
+            currentGameState = null;
+            syncedPlayerIDs.clear();
+            System.out.println("Disconnected from Cloud Service.");
+        }
+    }
+
 
 
 
