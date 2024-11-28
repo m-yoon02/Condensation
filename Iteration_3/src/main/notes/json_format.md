@@ -8,11 +8,9 @@
 {
     "SessionID": "UUID Representing Session",
     "PlayerID": "UUID of the player making the move",
-    "Positions": {
-        "NewPosition": [0, 5],
-        // If the game is Checkers: 
-        "OldPosition": [1, 6],
-    }
+    "NewPosition": [0, 5],
+    // If the game is Checkers:
+    "OldPosition": [1, 6]
     //NewPosition represents the new position that the player wants to move the piece to
     //IF THE GAME IS CHECKERS, OldPosition will represent the old position of the piece
 }
@@ -27,7 +25,7 @@ One JSON string is sent to frontend to notify state, **make sure to differentiat
 {
     "UpdateType": "GAME_END", //(OR StateChange)
     "GameState": "WIN", // (or TIE)
-    // IF GameState == WIN: 
+    // IF GameState == WIN:
     "PlayerWon": "UUID of the player who won",
     "PlayerLost": "UUID of the player who lost"
     // if GameState == TIE, above fields will NOT exist

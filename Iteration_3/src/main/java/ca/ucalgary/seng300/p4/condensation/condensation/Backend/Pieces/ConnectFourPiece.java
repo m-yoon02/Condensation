@@ -7,4 +7,7 @@ public class ConnectFourPiece extends GamePiece {
     public ConnectFourPiece(Vector2 position, PieceColor color) {
         super(position, color);
     }
+    public ConnectFourPiece(PieceColor color) {
+        super(color);
+    }
 }

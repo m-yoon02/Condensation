@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs;
 
 public record Vector2(int x, int y) {
+    public static Vector2 ZERO = new Vector2(0, 0);
 
     /**
      * Creates a Vector2 from an integer array
