@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Board;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.GamePiece;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
@@ -192,5 +193,15 @@ public class GameBoard<T extends GamePiece> {
      */
     public void startRecordingStateChanges() {
         stateChanges.clear();
+    }
+
+    /**
+     * Gets the currently recorded state changes that the board has recorded
+     * @return a JSON string representing the state changes
+     */
+    public String getRecordedStateChanges(){
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.addAll(stateChanges);
+        return jsonArray.toJSONString();
     }
 }
