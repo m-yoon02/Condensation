@@ -55,10 +55,12 @@ public abstract class GameHandler implements IGameHandler{
     /**
      * Notifies all turn end listeners that a turn has ended and which player's turn it is currently
      * @param currentPlayerTurnID the ID of the next player's turn
+     * @param boardStateJSON a JSON string representing changes in
      */
-    protected void notifyTurnEnd(UUID currentPlayerTurnID){
+    protected void notifyTurnEnd(UUID currentPlayerTurnID, String boardStateJSON){
+        gameTimer.setTimerTo(currentPlayerTurnID);
         for (TurnEndListener listener: turnEndListeners){
-            listener.onTurnEnd(currentPlayerTurnID);
+            listener.onTurnEnd(currentPlayerTurnID, boardStateJSON);
         }
     }
 
