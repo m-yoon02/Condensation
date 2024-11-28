@@ -2,6 +2,8 @@
 
 ## Frontend to Backend
 
+**THIS IS WHAT FRONTEND SENDS TO BACKEND**
+
 ```json
 {
     "SessionID": "UUID Representing Session",
@@ -18,6 +20,7 @@
 
 ## Backend to Frontend
 
+**THIS IS WHAT BACKEND SENDS TO FRONTEND**
 One JSON string is sent to frontend to notify state, **make sure to differentiate by checking what UpdateType is** since updates differ by UpdateType
 
 ```json
@@ -37,19 +40,11 @@ One JSON string is sent to frontend to notify state, **make sure to differentiat
     "SessionID": "UUID of the Session",
     "PlayerTurn": "UUID of the next player's turn",
     "Changes": [
-        {
-            "Type": "ADD", //Can be ADD, MOVE or REMOVE
-            "Color": "RED", // IF Type == ADD, Color sent will depend on the game type, else this field will NOT exist
-            "Positions": {
-                "NewPosition": [0, 5],
-                //If the type is Move:
-                "OldPosition": [1, 6]
-                //NewPosition represents the new position that the player wants to move the piece to
-                //IF TYPE IS MOVE, OldPosition will represent the old position of the piece, else this field will NOT exist
-            }
-        },
-        ... //There can be more than one of these tables
-    ]
+        ["EMPTY", "RED", "EMPTY"],
+        ["BLUE", "RED", "EMPTY"],
+        ["EMPTY", "BLUE", "EMPTY"],
+    ] // A 2D array representing the current state of the board on the Back End
+    // RED, BLUE are not the only colours, colours differ per game, SEE BELOW
 }
 ```
 
@@ -57,15 +52,15 @@ One JSON string is sent to frontend to notify state, **make sure to differentiat
 
 ### Connect Four
 
-- BLUE
-- ORANGE
+- **First player:** BLUE
+- **Second player:** ORANGE
 
 ### Checkers
 
-- RED
-- BLACK
+- **First player:** RED
+- **Second player:** BLACK
 
 ### Tic Tac Toe
 
-- WHITE
-- BLACK
+- **First player:** RED
+- **Second player:** BLUE
