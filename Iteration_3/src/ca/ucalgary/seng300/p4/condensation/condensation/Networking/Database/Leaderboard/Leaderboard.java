@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
  * provides functionality for retrieving and updating leaderboard information.
  */
 public class Leaderboard {
+    private static Leaderboard instance; // Singleton instance
     private String DATA_FILE;
     private JSONArray users;
 
@@ -26,6 +27,22 @@ public class Leaderboard {
         loadData();
 
     }
+
+    /**
+     * Provides global access to the single instance of the Leaderboard class.
+     *
+     * @param DATA_FILE the path to the data file (only used during first initialization).
+     * @return the singleton instance of the Leaderboard.
+     * @throws IOException    if there is an error reading the file.
+     * @throws ParseException if there is an error parsing the JSON data.
+     */
+    public static synchronized Leaderboard getInstance(String DATA_FILE) throws IOException, ParseException {
+        if (instance == null) {
+            instance = new Leaderboard(DATA_FILE);
+        }
+        return instance;
+    }
+
 
 
     /**
