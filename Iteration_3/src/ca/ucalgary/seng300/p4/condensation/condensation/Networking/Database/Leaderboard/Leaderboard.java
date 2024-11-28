@@ -21,8 +21,10 @@ public class Leaderboard {
      * @throws IOException    if there is an error reading the file.
      * @throws ParseException if there is an error parsing the JSON data.
      */
-    public Leaderboard() throws IOException, ParseException {
+    public Leaderboard(String DATA_FILE) throws IOException, ParseException {
+        this.DATA_FILE = DATA_FILE;
         loadData();
+
     }
 
 
