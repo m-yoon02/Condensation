@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers;
 
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.MoveData;
@@ -14,6 +15,7 @@ public class TicTacToeHandler extends GameHandler {
     private static final PieceColor[] COLORS = {PieceColor.RED, PieceColor.BLUE};
     private final GameBoard<TicTacToePiece> board = new GameBoard<>(BOARD_SIZE[0], BOARD_SIZE[1]);
 
+
     public TicTacToeHandler(UUID player1ID, UUID player2ID) {
         super(player1ID, player2ID, COLORS);
     }
@@ -27,9 +29,102 @@ public class TicTacToeHandler extends GameHandler {
     public void makeMove(String moveDataJSON) {
         //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
         MoveData moveData = MoveData.fromJSON(moveDataJSON);
+        UUID playerID = moveData.getPlayerID();
+        PieceColor color = getPlayerMemoFromUUID(moveData.getPlayerID()).pieceColor();
+        Vector2 movePosition = moveData.getMovePosition();
+        TicTacToePiece piece = new TicTacToePiece(movePosition, color);
+        this.board.placePiece(piece, movePosition);
+        if (checkForThreeInARow(color)){
+            this.notifyGameEnd(GameResult.WIN, playerID);
+        }else {
+            this.notifyTurnEnd(playerID, moveDataJSON);
+        }
     }
 
-    private void checkForThreeInARow(Vector2 pos){
+    private boolean checkForThreeInARow(PieceColor color){
+    return checkDiagonalWin(color)||checkHorizontalWin(color)||checkVerticalWin(color);
 
+}
+    private boolean checkVerticalWin(PieceColor color){
+        boolean win =false;
+        if (board.getAt(0,0)!=null && board.getAt(1,0)!=null && board.getAt(2,0)!=null){
+            //colours of in first diagonal
+            PieceColor color1 = board.getAt(0, 0).getColor();
+            PieceColor color2 = board.getAt(1, 0).getColor();
+            PieceColor color3 = board.getAt(2, 0).getColor();
+            if (color1==color && color2==color && color3=color){
+                win=true;
+            } else if (board.getAt(0,1)!=null && board.getAt(1,1)!=null && board.getAt(2,1)!=null){
+                //colours of in first diagonal
+                PieceColor color1 = board.getAt(0, 1).getColor();
+                PieceColor color2 = board.getAt(1, 1).getColor();
+                PieceColor color3 = board.getAt(2, 1).getColor();
+                if (color1==color && color2==color && color3=color){
+                    win=true;
+                }} else if (board.getAt(0,2)!=null && board.getAt(1,2)!=null && board.getAt(2,2)!=null){
+                    //colours of in first diagonal
+                    PieceColor color1 = board.getAt(0, 1).getColor();
+                    PieceColor color2 = board.getAt(1, 1).getColor();
+                    PieceColor color3 = board.getAt(2, 1).getColor();
+                    if (color1==color && color2==color && color3=color){
+                        win=true;
+                    }
+            }
+        return win;
+    }
+    }
+
+    private boolean checkHorizontalWin(PieceColor color){
+        boolean win =false;
+        if (board.getAt(0,0)!=null && board.getAt(0,1)!=null && board.getAt(0,2)!=null){
+            //colours of in first diagonal
+            PieceColor color1 = board.getAt(0, 0).getColor();
+            PieceColor color2 = board.getAt(0, 1).getColor();
+            PieceColor color3 = board.getAt(0, 2).getColor();
+            if (color1==color && color2==color && color3=color){
+                win=true;
+            } else if (board.getAt(1,0)!=null && board.getAt(1,1)!=null && board.getAt(1,2)!=null){
+                //colours of in first diagonal
+                PieceColor color1 = board.getAt(1, 0).getColor();
+                PieceColor color2 = board.getAt(1, 1).getColor();
+                PieceColor color3 = board.getAt(1, 2).getColor();
+                if (color1==color && color2==color && color3=color){
+                    win=true;
+                }} else if (board.getAt(2,0)!=null && board.getAt(2,1)!=null && board.getAt(2,2)!=null){
+                //colours of in first diagonal
+                PieceColor color1 = board.getAt(2, 0).getColor();
+                PieceColor color2 = board.getAt(2, 1).getColor();
+                PieceColor color3 = board.getAt(2, 2).getColor();
+                if (color1==color && color2==color && color3=color){
+                    win=true;
+                }
+            }
+            return win;
+        }
+
+    }
+    private boolean checkDiagonalWin(PieceColor color){
+        boolean win =false;
+        if (board.getAt(0,0)!=null && board.getAt(1,1)!=null && board.getAt(2,2)!=null){
+            //colours of in first diagonal
+            PieceColor color1 = board.getAt(0, 0).getColor();
+            PieceColor color2 = board.getAt(1, 1).getColor();
+            PieceColor color3 = board.getAt(2, 2).getColor();
+            if (color1==color && color2==color && color3=color){
+                win=true;
+            } else if (board.getAt(0,2)!=null && board.getAt(1,1)!=null && board.getAt(2,0)!=null){
+                //colours of in first diagonal
+                PieceColor color1 = board.getAt(0, 2).getColor();
+                PieceColor color2 = board.getAt(1, 1).getColor();
+                PieceColor color3 = board.getAt(2, 0).getColor();
+                if (color1==color && color2==color && color3=color){
+                    win=true;
+                }}
+            return win;
     }
 }
+}
+
+
+
+
