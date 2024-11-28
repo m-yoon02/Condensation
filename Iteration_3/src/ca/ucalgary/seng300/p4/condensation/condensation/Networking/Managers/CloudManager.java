@@ -31,6 +31,19 @@ public class CloudManager {
             instance = new CloudManager();
         }
         return instance;
+
+    }
+
+    public boolean initializeConncection(){
+        if(!isConnected){
+            System.out.println("Cloud connection established successfully.");
+            return true;
+        }
+        else{
+            System.err.println("Connection initialization interrupted.");
+            isConnected = false;
+            return false;
+        }
     }
 
 
