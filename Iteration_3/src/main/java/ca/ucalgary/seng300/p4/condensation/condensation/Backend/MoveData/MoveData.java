@@ -21,7 +21,7 @@ public class MoveData {
     public static MoveData fromJSON(String moveDataJSON){
         JSONParseResult jsonParseResult = JSONParseResult.parseJSON(moveDataJSON);
         return new MoveData(jsonParseResult.playerID()
-                , Vector2.fromArray(jsonParseResult.positions()[0]));
+                , Vector2.fromArray(jsonParseResult.newPosition()));
     }
 
     public UUID getPlayerID() {
