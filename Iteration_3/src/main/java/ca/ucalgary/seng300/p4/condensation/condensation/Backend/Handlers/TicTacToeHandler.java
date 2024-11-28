@@ -15,7 +15,6 @@ public class TicTacToeHandler extends GameHandler {
     private static final PieceColor[] COLORS = {PieceColor.RED, PieceColor.BLUE};
     private final GameBoard<TicTacToePiece> board = new GameBoard<>(BOARD_SIZE[0], BOARD_SIZE[1]);
 
-
     public TicTacToeHandler(UUID player1ID, UUID player2ID) {
         super(player1ID, player2ID, COLORS);
     }

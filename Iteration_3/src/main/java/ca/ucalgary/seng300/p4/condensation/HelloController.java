@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation;
 
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.TicTacToeHandler;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.MoveData;
@@ -9,41 +10,74 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import org.json.simple.JSONObject;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class HelloController {
-    @FXML
-    private Label playerLabel;
-    private int playerTurn = 0; // Tracks turn (0 = RED, 1 = BLUE)
 
     @FXML
     private Button btn00, btn01, btn02, btn10, btn11, btn12, btn20, btn21, btn22;
+    public int numberOfPiecesOnBoard = 0;
 
-    private TicTacToeHandler gameHandler;
-    private Button[][] buttons;
-    private UUID player1ID;
-    private UUID player2ID;
+    public static final int NUMBER_OF_ROWS = 3;
+    public static final int NUMBER_OF_COLS = 3;
 
-    @FXML
-    public void initialize() {
+    public static final int MAX_PIECES = 9;
+    Button[][] buttons = new Button[][]{
+            {btn00, btn01, btn02},
+            {btn10, btn11, btn12},
+            {btn20, btn21, btn22}
+    };
+    public GameResult resultOfTicTacToe;
+    public UUID playerOne;
+    public UUID playerTwo;
+    public UUID sessionID;
+    public UUID newTurn;
+    public boolean playerOneMoving = true;
+    public boolean playerTwoMoving = false;
+    public PieceColor playerOnePiece = PieceColor.RED;
+    public PieceColor playerTwoPiece = PieceColor.BLUE;
 
-        player1ID = UUID.randomUUID();
-        player2ID = UUID.randomUUID();
-
-        gameHandler = new TicTacToeHandler(player1ID, player2ID);
-
-        buttons = new Button[][] {
-                {btn00, btn01, btn02},
-                {btn10, btn11, btn12},
-                {btn20, btn21, btn22}
-        };
-
-        playerLabel.setText("Current Player: RED");
+    public void receiveFromBackendTicTacToe(JSONObject backendUpdate) {
+        String win_or_not_win = (String) backendUpdate.get("UpdateType");
+        if (Objects.equals(win_or_not_win, "GAME_END")) {
+            resultOfTicTacToe = (GameResult) backendUpdate.get("GameState");
+            if (resultOfTicTacToe == GameResult.WIN) {
+                disableAllButtons();
+                // Switch to aftermath, send data now????
+                // Notification
+            } else {
+                //Tie -> send data to Aftermath
+            }
+        } else {
+            sessionID = (UUID) backendUpdate.get("SessionID");
+            newTurn = (UUID) backendUpdate.get("PlayerTurn");
+            String[][] connectFourBackendBoard = (String[][]) backendUpdate.get("Changes");
+            int rowIndex = 0;
+            int colIndex;
+            for (String[] strings : connectFourBackendBoard) {
+                colIndex = 0;
+                for (String piece : strings) {
+                    Button buttonForBoard = buttons[rowIndex][colIndex];
+                    if (Objects.equals(piece, "RED")) {
+                        buttonForBoard.setText("X");
+                        buttonForBoard.setTextFill(Color.RED);
+                    } else if (Objects.equals(piece, "BLUE")) {
+                        buttonForBoard.setText("O");
+                        buttonForBoard.setTextFill(Color.BLUE);
+                    } else {
+                        buttonForBoard.setText("");
+                    }
+                }
+                rowIndex += 1;
+            }
+        }
     }
 
-    @FXML
-    public void handleButtonClick(javafx.event.ActionEvent event) {
+    // Activates when a tile is clicked.
+    public JSONObject returnToBackendConnectFour(javafx.event.ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
 
         int row = -1, col = -1;
@@ -57,62 +91,18 @@ public class HelloController {
             }
             if (row != -1) break;
         }
+        Vector2 newPositionOfPlacedPiece = new Vector2(row, col);
 
-        if (row == -1 || col == -1) return;
-
-        Vector2 position = new Vector2(row, col);
-        MoveData moveData = new MoveData(
-                playerTurn == 0 ? player1ID : player2ID,
-                position
-        );
-
-       // if (gameHandler.makeMove(moveData.toJSON())) { //
-            setPlayerSymbol(clickedButton, position);
-            checkGameStatus(); // Check for win or tie
-      //  } else {
-       //     System.out.println("Invalid move at (" + row + ", " + col + ")");
-      //  }
-    }
-
-    private void setPlayerSymbol(Button button, Vector2 position) {
-        System.out.println(position);
-        if (playerTurn == 0) {
-            TicTacToePiece t1 = new TicTacToePiece(position,PieceColor.RED);
-            gameHandler.getBoard().placePiece(t1 ,position); // Place RED piece
-            //gameHandler.makeMoveNOJSON(t1, position);
-            button.setText("X");
-            button.setTextFill(Color.RED);
-            playerLabel.setText("Next Player"+ (1 - playerTurn));
-            } else {
-            TicTacToePiece t2 = new TicTacToePiece(position,PieceColor.BLUE);
-            gameHandler.getBoard().placePiece(t2, position); // Place BLUE piece
-            //gameHandler.makeMoveNOJSON(t2, position);
-            button.setText("O");
-            button.setTextFill(Color.BLUE);
-            playerLabel.setText("Next Player"+(1 - playerTurn));
-        }
-        button.setDisable(true);
-        playerTurn = 1 - playerTurn;
-    }
-
-    private void checkGameStatus() {
-
-        System.out.println("Test");
-        //playerLabel.setText("checking");
-        //PieceColor color1 = gameHandler.getBoard().getAt(0, 0).getColor();
-        if (gameHandler.checkForThreeInARow(PieceColor.RED)) {
-            playerLabel.setText("RED Wins!");
-            disableAllButtons();
-        } else if (gameHandler.checkForThreeInARow(PieceColor.BLUE)) {
-            playerLabel.setText("BLUE Wins!");
-            disableAllButtons();
-        }
-        else if (isBoardFull()) { // Handle ties
-            playerLabel.setText("It's a Tie!");
-            disableAllButtons();
+        JSONObject ticTacToeJSON = new JSONObject();
+        ticTacToeJSON.put("SessionID", sessionID);
+        if (playerOneMoving) {
+            ticTacToeJSON.put("PlayerID", playerOne);
         } else {
-            playerLabel.setText(playerTurn == 0 ? "Current Player: RED" : "Current Player: BLUE");
+            ticTacToeJSON.put("Player ID", playerTwo);
         }
+        ticTacToeJSON.put("New Position", newPositionOfPlacedPiece);
+        numberOfPiecesOnBoard += 1;
+        return ticTacToeJSON;
     }
 
     private void disableAllButtons() { //when game ends
@@ -121,33 +111,5 @@ public class HelloController {
                 button.setDisable(true);
             }
         }
-    }
-
-    @FXML
-    public void resetGame() {
-        player1ID = UUID.randomUUID();
-        player2ID = UUID.randomUUID();
-        gameHandler = new TicTacToeHandler(player1ID, player2ID);
-        playerTurn = 0;
-
-        for (Button[] buttonRow : buttons) {
-            for (Button button : buttonRow) {
-                button.setText("");
-                button.setDisable(false);
-                button.setTextFill(Color.BLACK);
-            }
-        }
-        playerLabel.setText("Current Player: RED");
-    }
-
-    private boolean isBoardFull() {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                if (gameHandler.getBoard().getAt(row, col) == null) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }
