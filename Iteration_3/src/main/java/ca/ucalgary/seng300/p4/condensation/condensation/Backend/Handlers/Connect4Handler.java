@@ -26,6 +26,41 @@ public class Connect4Handler extends GameHandler {
     public void makeMove(String moveDataJSON) {
         //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
         MoveData moveData = MoveData.fromJSON(moveDataJSON);
+
+        UUID playerID = moveData.getPlayerID();
+        Vector getPosition = moveData.getMovePosition();
+
+        int row = getPosition.y();
+        int column = getPosition.x();
+
+        if (allColumnsAreFull()) {
+            this.notifyGameEnd(GameResult.TIE, null);
+        }
+        else {
+            if (!columnIsFull(column)) {
+                int nextAvailableRow = findAvailableRow(column);
+
+                // Retrive the peice colour that is assigned to current player making move
+                ConnectFourPiece droppedPiece;
+
+                Vector newPosition = new Vector(column, nextAvailableRow);
+                board.placePiece(droppedPiece, newPosition);
+
+                if (checkForConnectedFour(newPosition)) {
+                    this.notifyGameEnd(GameResult.WIN, playerID);
+                }
+                else {
+
+                    // Find the other players ID to pass in argument
+                    // This can be found through the GameHandler class
+                    this.notifyTurnEnd(, "");
+                }
+            }
+            else {
+                this.notifyTurnEnd(playerID, "");
+            }
+        }
+
     }
 
     /**
