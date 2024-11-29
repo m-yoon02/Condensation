@@ -124,7 +124,7 @@ public class Connect4Handler extends GameHandler {
     private boolean allColumnsAreFull() {
         int TOP_ROW  = 0;
         // Loop through each column in the top row.
-        for(int i = 0; i < board.getRowSize(); i++ ){
+        for(int i = 0; i < board.getColumnSize(); i++ ){
             // If any spot in the top row is empty, the board is not full.
             if (board.getAt(i, TOP_ROW) == null){
                 return false;
