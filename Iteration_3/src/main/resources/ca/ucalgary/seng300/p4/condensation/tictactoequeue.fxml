@@ -2,35 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.TicTacToeQueueController">
+<Pane prefHeight="407.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="407.0" prefWidth="600.0">
-         <children>
-            <Label layoutX="241.0" layoutY="22.0" prefHeight="17.0" prefWidth="119.0" text="TicTacToe Queue" />
-            <Label layoutX="173.0" layoutY="48.0" text="Number of Players in Queue:" />
-            <Label layoutX="342.0" layoutY="48.0" text="#Number" />
-            <Button layoutX="501.0" layoutY="368.0" mnemonicParsing="false" text="Leave Queue" />
-         </children>
-      </Pane>
-      <ScrollPane layoutX="128.0" layoutY="97.0" prefHeight="236.0" prefWidth="337.0">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="224.0" prefWidth="337.0">
-               <children>
-                  <TableView layoutY="1.0" prefHeight="224.0" prefWidth="320.0">
-                     <columns>
-                        <TableColumn prefWidth="154.5" text="Players" />
-                        <TableColumn prefWidth="176.5" text="Rankings" />
-                     </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
+      <Label layoutX="241.0" layoutY="22.0" prefHeight="17.0" prefWidth="119.0" text="Tic Tac Toe Queue" />
+      <Button layoutX="258.0" layoutY="349.0" mnemonicParsing="false" text="Leave Queue" />
+      <Label layoutX="241.0" layoutY="51.0" prefHeight="17.0" prefWidth="112.0" text="Waiting For Player...." />
    </children>
-</AnchorPane>
+</Pane>
