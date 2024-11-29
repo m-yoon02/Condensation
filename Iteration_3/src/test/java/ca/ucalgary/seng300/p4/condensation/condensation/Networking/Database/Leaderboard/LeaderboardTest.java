@@ -1,10 +1,9 @@
-package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Database.Leaderboard;
+package test.java.ca.ucalgary.seng300.p4.condensation.condensation.Networking.Database.Leaderboard;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.leaderboard.Leaderboard;
 import org.json.simple.parser.ParseException;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Order;
 
 import java.io.*;
 
