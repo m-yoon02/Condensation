@@ -111,7 +111,7 @@ public class SignUpController {
             try {
                 loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/Login.fxml"));
                 root = loader.load();
-                // Switch the scene (example using a Stage and Scene)
+
                 window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 window.setScene(scene);
