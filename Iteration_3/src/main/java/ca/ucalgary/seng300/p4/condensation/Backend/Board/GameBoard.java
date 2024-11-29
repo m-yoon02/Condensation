@@ -1,14 +1,10 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Board;
 
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.GamePiece;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.TicTacToePiece;
+import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.GamePiece;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GameBoard<T extends GamePiece> {
     private final int rowSize;

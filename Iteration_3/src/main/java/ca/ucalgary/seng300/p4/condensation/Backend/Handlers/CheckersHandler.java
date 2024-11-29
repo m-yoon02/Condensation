@@ -1,7 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Handlers;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.*;
 import ca.ucalgary.seng300.p4.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.CheckersMoveData;
 import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.CheckersPiece;
