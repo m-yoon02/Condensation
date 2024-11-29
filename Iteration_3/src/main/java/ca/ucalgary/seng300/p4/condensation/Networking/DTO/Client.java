@@ -19,6 +19,11 @@ public class Client implements GameDataListener {
     }
 
 
+    @Override
+    public void onChatEvent(GameEventType gameEventType, JSONArray clientResponsePayload){
+        
+    }
+
 
 
     @Override
