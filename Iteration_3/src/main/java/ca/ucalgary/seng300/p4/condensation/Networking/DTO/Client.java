@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Networking.DTO;
 
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.Networking.Listeners.GameDataListener;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.UUID;

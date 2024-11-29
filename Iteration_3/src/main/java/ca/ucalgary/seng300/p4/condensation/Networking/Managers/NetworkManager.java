@@ -49,6 +49,7 @@ public class NetworkManager {
     private NetworkManager() throws IOException, ParseException {
         matchmakingPool = new MatchmakingPool();
         matchmakingService = new MatchmakingService(matchmakingPool);   // matchmaking pool is already populated with queuedPlayerMemos.
+        loggedInClients = new HashMap<>();
 
         // loop through the pool list to create clients for all the playerIDs in the matchmaking pool.
         for( QueuedPlayerMemo queuedPlayer : matchmakingPool.getPool()){

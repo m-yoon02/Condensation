@@ -104,7 +104,7 @@ public class Leaderboard {
         user.put("connect4Elo", 1200);
         user.put("checkersElo", 1200);
         user.put("tictactoeElo", 1200);
-
+        users.add(user);
 
         this.saveData();
     }
