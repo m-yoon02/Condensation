@@ -119,8 +119,8 @@ public class NetworkManager {
 
         // The response pay,load that frontEnd will recieve
         JSONObject loginResponse = new JSONObject();
-        loginResponse.put("playerID", playerUUID.toString());
         loginResponse.put("username", username);
+        loginResponse.put("playerID", playerUUID.toString());
 
         return loginResponse;   // returns the json payload to client
 
