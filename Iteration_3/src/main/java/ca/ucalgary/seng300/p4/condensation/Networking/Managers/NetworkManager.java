@@ -231,6 +231,26 @@ public class NetworkManager {
         }
     }
 
+        /**
+     * notifyGameSessionClientsOfMessage 
+     * @param clientResponsePayload
+     * @param sessionID
+     * @param gameEventType
+     */
+    public void notifyGameSessionClientsOfMessage(JSONArray clientResponsePayload, UUID sessionID, GameEventType gameEventType) {
+
+        // here we are getting the specific list of clients that are subscribed to the session
+        List<GameDataListener> clientListeners = sessionListeners.get(sessionID);
+
+        if (clientListeners != null) {
+            for (GameDataListener listener : clientListeners) {
+                listener.onGameEvent(gameEventType, clientResponsePayload);    // we need to implement a client listener method for sending chat messages
+            }
+        } else {
+            System.out.println("No clients found in the gameSession: " + sessionID);
+        }
+    }
+
 
 
     // ---------------------------------------------------------------------------------------------------
@@ -345,6 +365,10 @@ public class NetworkManager {
 
     }
 
+    public void sendChatDataToClients(JSONArray clientResponsePayload,UUID sessionID, GameEventType type){
+        notifyGameSessionClientsOfMessage(clientResponsePayload, sessionID, type);          // Notify all subscribed clients
+    }
+
     /**
      * recieveGameDataFromClient recieves the gameState json payload (includes sessionID) from client which they will directly call via network singleton.
      * - calls GameSessionManager instance partFrontEndPayload method -> returns gameSession object,  gameState json(only gameState data)
@@ -402,6 +426,8 @@ public class NetworkManager {
             String player2Username = (String) player2.get("username");
 
             JSONArray chatResponsePayload = chatService.sendChatMessage(player1Username,player1Message,player2Username);
+            this.sendChatDataToClients(chatResponsePayload, sessionID, GameEventType.CHAT_MESSAGE_RECEIVED);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
