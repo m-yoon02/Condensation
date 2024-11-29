@@ -50,33 +50,33 @@
         </Label>
         <Button alignment="CENTER" layoutX="257.0" layoutY="460.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="79.0" text="Rematch?" />
         <Button alignment="CENTER" layoutX="227.0" layoutY="506.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="141.0" text="Return to Main Menu" />
-        <TextArea editable="false" layoutX="134.0" layoutY="186.0" prefHeight="224.0" prefWidth="346.0" />
+        <TextArea editable="false" layoutX="130.0" layoutY="186.0" prefHeight="224.0" prefWidth="352.0" />
         <Label alignment="CENTER" contentDisplay="TOP" layoutX="154.0" layoutY="211.0" prefHeight="17.0" prefWidth="106.0" text="[Game] W/L Ratio" textAlignment="CENTER">
             <font>
-                <Font size="11.0" />
+                <Font size="14.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="153.0" layoutY="277.0" prefHeight="17.0" prefWidth="106.0" text="Overall W/L Ratio" textAlignment="CENTER">
+        <Label alignment="CENTER" contentDisplay="TOP" layoutX="153.0" layoutY="280.0" prefHeight="17.0" prefWidth="106.0" text="Overall W/L Ratio" textAlignment="CENTER">
             <font>
-                <Font size="11.0" />
+                <Font size="14.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="147.0" layoutY="333.0" prefHeight="17.0" prefWidth="119.0" text="Updated Player Rank" textAlignment="CENTER">
+        <Label alignment="CENTER" contentDisplay="TOP" layoutX="137.0" layoutY="346.0" prefHeight="18.0" prefWidth="141.0" text="Updated Player Rank" textAlignment="CENTER">
             <font>
-                <Font size="11.0" />
+                <Font size="14.0" />
             </font>
         </Label>
-        <TextField alignment="CENTER" editable="false" layoutX="356.0" layoutY="206.0" prefHeight="26.0" prefWidth="73.0" text="X/Y Z%">
+        <TextField alignment="CENTER" editable="false" layoutX="335.0" layoutY="206.0" prefHeight="26.0" prefWidth="94.0" text="X/Y Z%">
             <font>
                 <Font size="11.0" />
             </font>
         </TextField>
-        <TextField alignment="CENTER" editable="false" layoutX="356.0" layoutY="272.0" prefHeight="26.0" prefWidth="73.0" text="X/Y Z%">
+        <TextField alignment="CENTER" editable="false" layoutX="335.0" layoutY="276.0" prefHeight="26.0" prefWidth="94.0" text="X/Y Z%">
             <font>
                 <Font size="11.0" />
             </font>
         </TextField>
-        <TextField alignment="CENTER" editable="false" layoutX="356.0" layoutY="329.0" prefHeight="26.0" prefWidth="73.0" text="Rank">
+        <TextField alignment="CENTER" editable="false" layoutX="335.0" layoutY="342.0" prefHeight="26.0" prefWidth="94.0" text="Rank">
             <font>
                 <Font size="11.0" />
             </font>
