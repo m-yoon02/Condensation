@@ -102,20 +102,31 @@ public class CloudManager {
 
 
     /**
-     * This method retireves the last saved game 
+     * This method retrieves the last saved game 
      * @return JSONOject of the last saved game state
      */
     public JSONObject retrieveGameState() {
         if (!isConnected) {
             System.err.println("Can't retrieve game state. Please check your connection with the cloud.")
             return null; // returning null if there was no game state
-
-
         }
+
+        // if there is a game state and connected to the cloud
+
+        if (currentGameState == null) {
+            return null;
+        }
+
+        return new JSONObject(currentGameState)
 
     }
 
-    
+
+    /**
+     * This method syncs plauer data to the cloud
+     */
+
+
 
 
     
