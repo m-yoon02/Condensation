@@ -79,8 +79,13 @@ public void makeMove(String moveDataJSON) {
  * @param currentPlayerTurnID the ID of the next player's turn
  * @param boardStateJSON a JSON string representing changes in (FOR NOW JUST PASS IN AN EMPTY STRING)
  */
-protected void notifyTurnEnd(UUID currentPlayerTurnID)
+protected void notifyTurnEnd(UUID currentPlayerTurnID, String boardStateJSON)
 ```
+**NOTE:** for notifyTurnEnd whoever’s PlayerID is sent, it becomes that player’s turn
+- So for example, if a player's move turns out to be invalid, you'd just pass in the same player's PlayerID into the function
+- However, if it is valid then it is the other player's turn, so you pass in the other player's PlayerID
+
+
 
 ```java
 /**
@@ -90,6 +95,7 @@ protected void notifyTurnEnd(UUID currentPlayerTurnID)
  */
 protected void notifyGameEnd(GameResult gameResult, UUID winnerID)
 ```
+**NOTE:** for notifyGameEnd, if the result is a tie pass in null for winnerID
 
 ## Game Board
 The class that will represent the actual board and its pieces from our games
