@@ -5,8 +5,6 @@ import java.util.UUID;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Handlers.*;
-import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.*;
-import condensation.Backend.Handlers.*;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.GameSessionManager;
@@ -100,7 +98,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
         // we will need to send something to the FrontEnd about the Game being over
 
 
-        NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload, sessionId, gameEventType);
+        // NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload, sessionId, gameEventType);
 
         // remove game from the GameSessionsManager hashmap
         GameSessionManager.getInstance().removeGameSession(this.sessionId);
@@ -116,7 +114,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
      */
 
     @Override
-    public void onTurnEnd(UUID playersTurnID, String gameStateJson) throws IOException, ParseException {
+    public void onTurnEnd(UUID playersTurnID, String gameStateJson) {
 
         UUID sessionId = this.sessionId;
         // this will be passed in to client listener so it knows what kind of gameEvent the gameSession listener has been notified about
@@ -129,7 +127,11 @@ public class GameSession implements GameEndListener, TurnEndListener {
         responseClientPayload.put("PlayerTurnID", playersTurnID);
         responseClientPayload.put("Changes", gameStateJson);
 
-        NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload, sessionId, gameEventType);
+        try {
+            NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload, sessionId, gameEventType);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

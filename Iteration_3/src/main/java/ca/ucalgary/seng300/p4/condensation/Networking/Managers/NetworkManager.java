@@ -262,7 +262,7 @@ public class NetworkManager {
         network.sendCreatedGameSession(matchedGameSession);
         UUID sessionID = matchedGameSession.getSessionId();
         UUID player2UUID = matchedGameSession.getPlayer2ID();
-        UUID getFirstPlayerID = matchedGameSession.getFirstPlayerID();  // waiting on backend to implement this in gameHandler
+        UUID getFirstPlayerID = matchedGameSession.getGameHandler().getFirstPlayerID();  // waiting on backend to implement this in gameHandler
 
         // preparing the json payload to be sent to the frontEnd
         JSONObject matchedSessionResponse = new JSONObject();
@@ -369,8 +369,9 @@ public class NetworkManager {
 
 
         //TODO: Need to get the reference of the user name, client should store UUID information on their following login and after creating a session.
-        JSONArray messages = chatService.sendChatMessage(msg, "username");
-        return messages;
+        // JSONArray messages = chatService.sendChatMessage(msg, "username");
+        // return messages;
+        return null;
     }
 
 
