@@ -8,6 +8,8 @@ import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 
 import java.util.UUID;
 
+import static java.lang.Math.abs;
+
 public class CheckersHandler extends GameHandler {
     private static final int[] BOARD_SIZE = {8, 8};
     private static final PieceColor[] COLORS = {PieceColor.RED, PieceColor.BLACK};
@@ -69,6 +71,25 @@ public class CheckersHandler extends GameHandler {
         }
     }
 
+    /**
+     * checks if a piece at a given position can move to another position in the board's current state
+     *
+     * @param oldPos, the piece's original position
+     * @param newPos, the target destination position
+     * @return true if the move is valid, false otherwise
+     */
+    private boolean isValidMove(Vector2 oldPos, Vector2 newPos){
+        int distanceX = abs(newPos.x()) - abs(oldPos.x());
+        int distanceY = abs(newPos.y()) - abs(oldPos.y());
+        if(abs(distanceX) > 2 || abs(distanceY) > 2 || abs(distanceX) < 1 || abs(distanceY) < 1
+                || abs(distanceY) != abs(distanceX) || board.getAt(newPos) != null){
+            return false;
+        }
+        if(abs(distanceX) == 2 && board.getAt(oldPos.x()+(distanceX/2), oldPos.y()+(distanceY/2)) == null){
+            return false;
+        }
+        return true;
+    }
     /**
      * Checks if a player is able to make further moves
      *
