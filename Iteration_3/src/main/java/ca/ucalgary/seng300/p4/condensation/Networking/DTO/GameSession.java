@@ -25,6 +25,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
     private final UUID player2ID;
     // field for instantited GameHandler
     private final GameHandler gameHandler;
+    private final GameTypes gameType;
 
     /**
      * When creating GameSession we initialize sessionID field, and player1 and player2 UUIDs which will be passed into some instance of GameHandler
@@ -37,6 +38,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
         this.sessionId = UUID.randomUUID();
         this.player1ID =  playerMemo1.PlayerID();
         this.player2ID =  playerMemo2.PlayerID();
+        this.gameType = playerMemo1.gameType();
 
         GameTypes gameType = playerMemo1.gameType();
             switch (gameType) {
@@ -85,9 +87,10 @@ public class GameSession implements GameEndListener, TurnEndListener {
      */
     @Override
     public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
-        System.out.println("Game has ended");
+
+        // logic to decide which player won or lost
         if (winnerPlayer.equals(this.player1ID)) {
-            // update leaderboard for player 1 does this mean we have to instantiate our own leader board here how can me manage this in leaderboard 
+            
 
 
             // as winner and player 2 as loser
