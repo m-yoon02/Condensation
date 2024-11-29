@@ -2,6 +2,8 @@ package ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard;
 
 import java.io.*;
 import java.util.UUID;
+
+import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -177,18 +179,60 @@ public class Leaderboard {
      *
      * @param playerID the UUID of the winning player.
      */
-    public void updateEloForWinningPlayer(UUID playerID) {
+    public void updateEloForWinningPlayer(UUID playerID, GameTypes gameType) {
+        switch (gameType) {
+            case CHECKERS -> {
+                updateEloForWinningPlayerCheckers(playerID);
+            }
+            case TICTACTOE -> {
+                updateEloForWinningPlayerTictactoe(playerID);
+            }
+            case CONNECT4 -> {
+                updateEloForWinningPlayerConnect4(playerID);
+            }
+        }
+    }
+
+    public void updateEloForWinningPlayerCheckers(UUID playerID) {
         if (findUserById(playerID) == null) {
             return;
         }
 
-        JSONObject winningPlayer = findUserById(playerID);
-        Number currentElo = (Number) winningPlayer.get("elo");
+        JSONObject losingPlayer = findUserById(playerID);
+        Number currentElo = (Number) losingPlayer.get("checkersElo");
         currentElo = currentElo.intValue() + 100;
 
-        winningPlayer.put("elo", currentElo);
+        losingPlayer.put("checkersElo", currentElo);
 
-        System.out.println("Elo has been updated for winning player with PlayerID: " + playerID);
+        System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
+    }
+
+    public void updateEloForWinningPlayerTictactoe(UUID playerID) {
+        if (findUserById(playerID) == null) {
+            return;
+        }
+
+        JSONObject losingPlayer = findUserById(playerID);
+        Number currentElo = (Number) losingPlayer.get("tictactoeElo");
+        currentElo = currentElo.intValue() + 100;
+
+        losingPlayer.put("tictactoeElo", currentElo);
+
+        System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
+    }
+
+    public void updateEloForWinningPlayerConnect4(UUID playerID) {
+        if (findUserById(playerID) == null) {
+            return;
+        }
+
+        JSONObject losingPlayer = findUserById(playerID);
+        Number currentElo = (Number) losingPlayer.get("connect4Elo");
+        currentElo = currentElo.intValue() + 100;
+
+        losingPlayer.put("connect4Elo", currentElo);
+
+        System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
 
     /**
@@ -232,19 +276,63 @@ public class Leaderboard {
      *
      * @param playerID the UUID of the losing player.
      */
-    public void updateEloForLosingPlayer(UUID playerID) {
+    public void updateEloForLosingPlayer(UUID playerID, GameTypes gameType) {
+        switch (gameType) {
+            case CHECKERS -> {
+                updateEloForLosingPlayerCheckers(playerID);
+            }
+            case TICTACTOE -> {
+                updateEloForLosingPlayerTictactoe(playerID);
+            }
+            case CONNECT4 -> {
+                updateEloForLosingPlayerConnect4(playerID);
+            }
+        }
+
+    }
+
+    public void updateEloForLosingPlayerCheckers(UUID playerID) {
         if (findUserById(playerID) == null) {
             return;
         }
 
         JSONObject losingPlayer = findUserById(playerID);
-        Number currentElo = (Number) losingPlayer.get("elo");
-        currentElo = currentElo.intValue() - 3000;
+        Number currentElo = (Number) losingPlayer.get("checkersElo");
+        currentElo = currentElo.intValue() - 100;
 
-        losingPlayer.put("elo", currentElo);
+        losingPlayer.put("checkersElo", currentElo);
 
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
+
+    public void updateEloForLosingPlayerTictactoe(UUID playerID) {
+        if (findUserById(playerID) == null) {
+            return;
+        }
+
+        JSONObject losingPlayer = findUserById(playerID);
+        Number currentElo = (Number) losingPlayer.get("tictactoeElo");
+        currentElo = currentElo.intValue() - 100;
+
+        losingPlayer.put("tictactoeElo", currentElo);
+
+        System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
+    }
+
+    public void updateEloForLosingPlayerConnect4(UUID playerID) {
+        if (findUserById(playerID) == null) {
+            return;
+        }
+
+        JSONObject losingPlayer = findUserById(playerID);
+        Number currentElo = (Number) losingPlayer.get("connect4Elo");
+        currentElo = currentElo.intValue() - 100;
+
+        losingPlayer.put("connect4Elo", currentElo);
+
+        System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
+    }
+
 
     /**
      * Refreshes and sorts the leaderboard based on ELO scores.
