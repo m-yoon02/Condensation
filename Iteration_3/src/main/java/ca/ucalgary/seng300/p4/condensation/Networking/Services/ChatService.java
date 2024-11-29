@@ -35,9 +35,9 @@ public class ChatService {
 
 
                 JSONObject serverResponses = new JSONObject();
-                serverResponses.put("username", "WorldD3story3r80664");
+                serverResponses.put("username", username2);
                 serverResponses.put("date", LocalDateTime.now());
-                serverResponses.put("message", key);
+                serverResponses.put("message", responses.get(key));
 
                 chatMessages.add(clientResponse);
                 chatMessages.add(serverResponses);

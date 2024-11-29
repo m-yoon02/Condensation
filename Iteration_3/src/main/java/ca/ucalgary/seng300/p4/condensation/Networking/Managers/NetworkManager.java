@@ -388,24 +388,24 @@ public class NetworkManager {
 
         try {
             // parse the JASONObject
-            UUID SessionID = (UUID) recievePlayerMessage.get("SessionID");
-            UUID Player1ID = (UUID) recievePlayerMessage.get("Player1D");
-            String Player1Message = (String) recievePlayerMessage.get("Message");
+            UUID sessionID = (UUID) recievePlayerMessage.get("SessionID");
+            UUID player1ID = (UUID) recievePlayerMessage.get("Player1D");
+            String player1Message = (String) recievePlayerMessage.get("Message");
 
             // get the game session along with player 2's UUID associated w that game session
-            GameSession gameSession = gameSessionManager.getGameSessionBySessionID(SessionID);
-            UUID Player2ID = gameSession.getPlayer2ID();
-            JSONObject Player1 = Leaderboard.getInstance(DATA_FILE).findUserById(Player1ID);
-            JSONObject Player2 = Leaderboard.getInstance(DATA_FILE).findUserById(Player2ID);
+            GameSession gameSession = gameSessionManager.getGameSessionBySessionID(sessionID);
+            UUID player2ID = gameSession.getPlayer2ID();
+            JSONObject player1 = Leaderboard.getInstance(DATA_FILE).findUserById(player1ID);
+            JSONObject player2 = Leaderboard.getInstance(DATA_FILE).findUserById(player2ID);
 
-            String player1Username = (String) Player1.get("username");
-            String player2Username = (String) Player2.get("username");
+            String player1Username = (String) player1.get("username");
+            String player2Username = (String) player2.get("username");
 
+            JSONArray chatResponsePayload = chatService.sendChatMessage(player1Username,player1Message,player2Username);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
+        
         //TODO: Need to get the reference of the user name, client should store UUID information on their following login and after creating a session.
         // JSONArray messages = chatService.sendChatMessage(msg, "username");
         // return messages;
