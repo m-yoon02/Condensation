@@ -13,8 +13,7 @@
 
 <AnchorPane prefHeight="578.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.AftermathController">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" height="234.0" layoutX="42.0" layoutY="189.0" stroke="BLACK" strokeType="INSIDE" width="238.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" height="234.0" layoutX="310.0" layoutY="189.0" stroke="BLACK" strokeType="INSIDE" width="238.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" height="232.0" layoutX="126.0" layoutY="182.0" stroke="BLACK" strokeType="INSIDE" width="360.0" />
         <!-- Styled Label for the Game Result -->
         <Label fx:id="gameResultLabel" alignment="CENTER" ellipsisString="" layoutX="191.0" layoutY="38.0" prefHeight="44.0" prefWidth="251.0" style="-fx-font-size: 50px;: 40px; -fx-text-fill: black;" text="Game Result!" textAlignment="CENTER" textOverrun="CLIP">
             <font>
@@ -32,7 +31,7 @@
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor></Label>
-        <Label fx:id="gameResultLabel1" alignment="CENTER" layoutX="350.0" layoutY="141.0" prefHeight="28.0" prefWidth="141.0" style="-fx-font-size: 22px; -fx-text-fill: black;" text="Recent Games" textAlignment="CENTER">
+        <Label fx:id="gameResultLabel2" alignment="CENTER" layoutX="206.0" layoutY="141.0" prefHeight="28.0" prefWidth="202.0" style="-fx-font-size: 22px; -fx-text-fill: black;" text="Player Progression" textAlignment="CENTER">
             <font>
                 <Font size="19.0" />
             </font>
@@ -49,123 +48,35 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Label>
-        <Label fx:id="gameResultLabel2" alignment="CENTER" layoutX="77.0" layoutY="141.0" prefHeight="28.0" prefWidth="173.0" style="-fx-font-size: 22px; -fx-text-fill: black;" text="Player Progression" textAlignment="CENTER">
-            <font>
-                <Font size="19.0" />
-            </font>
-            <effect>
-                <Lighting>
-                    <bumpInput>
-                        <Shadow />
-                    </bumpInput>
-                    <light>
-                    </light>
-                </Lighting>
-            </effect>
-            <cursor>
-                <Cursor fx:constant="DEFAULT" />
-            </cursor>
-        </Label>
-        <TextArea editable="false" layoutX="314.0" layoutY="193.0" prefHeight="226.0" prefWidth="230.0" />
-        <TextField alignment="CENTER" editable="false" layoutX="452.0" layoutY="205.0" prefHeight="26.0" prefWidth="73.0" text="Game Status">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </TextField>
-        <TextField alignment="CENTER" editable="false" layoutX="452.0" layoutY="250.0" prefHeight="26.0" prefWidth="73.0" text="Game Status">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </TextField>
-        <TextField alignment="CENTER" editable="false" layoutX="452.0" layoutY="293.0" prefHeight="26.0" prefWidth="73.0" text="Game Status">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </TextField>
-        <TextField alignment="CENTER" editable="false" layoutX="452.0" layoutY="335.0" prefHeight="26.0" prefWidth="73.0" text="VICTORY">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </TextField>
-        <TextField alignment="CENTER" editable="false" layoutX="452.0" layoutY="380.0" prefHeight="26.0" prefWidth="73.0" text="DEFEAT">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </TextField>
         <Button alignment="CENTER" layoutX="257.0" layoutY="460.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="79.0" text="Rematch?" />
         <Button alignment="CENTER" layoutX="227.0" layoutY="506.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="141.0" text="Return to Main Menu" />
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="210.0" prefHeight="17.0" prefWidth="106.0" text="Rcnt [-1] PlyrNm" textAlignment="CENTER">
+        <TextArea editable="false" layoutX="134.0" layoutY="186.0" prefHeight="224.0" prefWidth="346.0" />
+        <Label alignment="CENTER" contentDisplay="TOP" layoutX="154.0" layoutY="211.0" prefHeight="17.0" prefWidth="106.0" text="[Game] W/L Ratio" textAlignment="CENTER">
             <font>
                 <Font size="11.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="255.0" prefHeight="17.0" prefWidth="106.0" text="Rcnt [-2] PlyrNm" textAlignment="CENTER">
+        <Label alignment="CENTER" contentDisplay="TOP" layoutX="153.0" layoutY="277.0" prefHeight="17.0" prefWidth="106.0" text="Overall W/L Ratio" textAlignment="CENTER">
             <font>
                 <Font size="11.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="298.0" prefHeight="17.0" prefWidth="106.0" text="Rcnt [-3] PlyrNm" textAlignment="CENTER">
+        <Label alignment="CENTER" contentDisplay="TOP" layoutX="147.0" layoutY="333.0" prefHeight="17.0" prefWidth="119.0" text="Updated Player Rank" textAlignment="CENTER">
             <font>
                 <Font size="11.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="385.0" prefHeight="17.0" prefWidth="106.0" text="Rcnt [-5] PlyrNm" textAlignment="CENTER">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </Label>
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="340.0" prefHeight="17.0" prefWidth="106.0" text="Rcnt [-4] PlyrNm" textAlignment="CENTER">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </Label>
-        <TextArea editable="false" layoutX="46.0" layoutY="193.0" prefHeight="226.0" prefWidth="230.0" />
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="56.0" layoutY="210.0" prefHeight="17.0" prefWidth="106.0" text="[Game] W/L Ratio" textAlignment="CENTER">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </Label>
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="56.0" layoutY="255.0" prefHeight="17.0" prefWidth="106.0" text="Overall W/L Ratio" textAlignment="CENTER">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </Label>
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="58.0" layoutY="298.0" prefHeight="17.0" prefWidth="106.0" text="Current Winstreak" textAlignment="CENTER">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </Label>
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="58.0" layoutY="340.0" prefHeight="17.0" prefWidth="119.0" text="Updated Player Rank" textAlignment="CENTER">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </Label>
-        <Label alignment="CENTER" contentDisplay="TOP" layoutX="58.0" layoutY="385.0" prefHeight="17.0" prefWidth="119.0" text="Overall Total Playtime" textAlignment="CENTER">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </Label>
-        <TextField alignment="CENTER" editable="false" layoutX="184.0" layoutY="206.0" prefHeight="26.0" prefWidth="73.0" text="X/Y Z%">
+        <TextField alignment="CENTER" editable="false" layoutX="356.0" layoutY="206.0" prefHeight="26.0" prefWidth="73.0" text="X/Y Z%">
             <font>
                 <Font size="11.0" />
             </font>
         </TextField>
-        <TextField alignment="CENTER" editable="false" layoutX="184.0" layoutY="251.0" prefHeight="26.0" prefWidth="73.0" text="X/Y Z%">
+        <TextField alignment="CENTER" editable="false" layoutX="356.0" layoutY="272.0" prefHeight="26.0" prefWidth="73.0" text="X/Y Z%">
             <font>
                 <Font size="11.0" />
             </font>
         </TextField>
-        <TextField alignment="CENTER" editable="false" layoutX="184.0" layoutY="294.0" prefHeight="26.0" prefWidth="73.0" text="Int">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </TextField>
-        <TextField alignment="CENTER" editable="false" layoutX="184.0" layoutY="335.0" prefHeight="26.0" prefWidth="73.0" text="Rank">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </TextField>
-        <TextField alignment="CENTER" editable="false" layoutX="184.0" layoutY="380.0" prefHeight="26.0" prefWidth="73.0" text="Time">
+        <TextField alignment="CENTER" editable="false" layoutX="356.0" layoutY="329.0" prefHeight="26.0" prefWidth="73.0" text="Rank">
             <font>
                 <Font size="11.0" />
             </font>
