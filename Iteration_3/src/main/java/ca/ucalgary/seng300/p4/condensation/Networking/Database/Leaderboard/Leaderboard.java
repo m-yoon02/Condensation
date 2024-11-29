@@ -156,6 +156,23 @@ public class Leaderboard {
         return null;
     }
 
+    public void changeName(UUID playerID, String newName) {
+        for (Object object : users) {
+            JSONObject user = (JSONObject) object;
+            if (user.get("playerUUID").equals(playerID.toString())) {
+                user.put("username", newName);
+            }
+        }
+    }
+    public void changePassword(UUID playerID, String newPass) {
+        for (Object object : users) {
+            JSONObject user = (JSONObject) object;
+            if (user.get("playerUUID").equals(playerID.toString())) {
+                user.put("username", newPass);
+            }
+        }
+    }
+
     /**
      * Finds a user by their unique UUID.
      *
@@ -193,7 +210,7 @@ public class Leaderboard {
         }
     }
 
-    public void updateEloForWinningPlayerCheckers(UUID playerID) {
+    private void updateEloForWinningPlayerCheckers(UUID playerID) {
         if (findUserById(playerID) == null) {
             return;
         }
@@ -207,7 +224,7 @@ public class Leaderboard {
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
 
-    public void updateEloForWinningPlayerTictactoe(UUID playerID) {
+    private void updateEloForWinningPlayerTictactoe(UUID playerID) {
         if (findUserById(playerID) == null) {
             return;
         }
@@ -221,7 +238,7 @@ public class Leaderboard {
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
 
-    public void updateEloForWinningPlayerConnect4(UUID playerID) {
+    private void updateEloForWinningPlayerConnect4(UUID playerID) {
         if (findUserById(playerID) == null) {
             return;
         }
@@ -291,7 +308,7 @@ public class Leaderboard {
 
     }
 
-    public void updateEloForLosingPlayerCheckers(UUID playerID) {
+    private void updateEloForLosingPlayerCheckers(UUID playerID) {
         if (findUserById(playerID) == null) {
             return;
         }
@@ -305,7 +322,7 @@ public class Leaderboard {
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
 
-    public void updateEloForLosingPlayerTictactoe(UUID playerID) {
+    private void updateEloForLosingPlayerTictactoe(UUID playerID) {
         if (findUserById(playerID) == null) {
             return;
         }
@@ -319,7 +336,7 @@ public class Leaderboard {
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
 
-    public void updateEloForLosingPlayerConnect4(UUID playerID) {
+    private void updateEloForLosingPlayerConnect4(UUID playerID) {
         if (findUserById(playerID) == null) {
             return;
         }
