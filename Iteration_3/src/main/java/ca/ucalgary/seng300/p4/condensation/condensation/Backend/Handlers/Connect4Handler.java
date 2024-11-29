@@ -99,7 +99,7 @@ public class Connect4Handler extends GameHandler {
      */
     private int findAvailableRow(int column) {
         // Iterates through the rows of the specified column from bottom to top.
-        for(int row = board.getColumnSize() - 1; row >= 0 ; row--){
+        for(int row = board.getRowSize() - 1; row >= 0 ; row--){
             if (board.getAt(column, row) == null){
                 return row;
             }
