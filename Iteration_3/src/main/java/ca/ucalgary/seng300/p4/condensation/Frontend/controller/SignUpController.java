@@ -25,6 +25,8 @@ public class SignUpController {
     @FXML
     private TextField usernameField;
 
+    @FXML
+
 
 
     public JSONObject createJSONObject(){
@@ -39,6 +41,7 @@ public class SignUpController {
     public void sendJSONObject() throws IOException, ParseException {
 
         NetworkManager.getNetworkInstance().signUpHandler(createJSONObject());
+
 
     }
 

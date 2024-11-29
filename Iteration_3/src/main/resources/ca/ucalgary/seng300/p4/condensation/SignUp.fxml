@@ -11,7 +11,7 @@
       <Pane layoutX="178.0" layoutY="25.0" prefHeight="349.0" prefWidth="244.0" style="-fx-background-color: Grey; -fx-background-radius: 5px;">
          <children>
             <Text layoutX="77.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an Account" />
-            <TextField fx:id="usernameField" layoutX="22.0" layoutY="119.0" prefHeight="26.0" prefWidth="205.0" promptText="Username" />
+            <TextField fx:id="usernameField" layoutX="22.0" layoutY="119.0" onKeyTyped="#validateUser" prefHeight="26.0" prefWidth="205.0" promptText="Username" />
             <Text layoutX="23.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
                <font>
                   <Font size="7.0" />
@@ -23,8 +23,8 @@
                   <Font size="7.0" />
                </font>
             </Text>
-            <Button fx:id="continueBtn" layoutX="21.0" layoutY="282.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="207.0" text="Continue" />
-            <Text fx:id="errorMessage" layoutX="105.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="45.0081540592613" />
+            <Button fx:id="continueBtn" layoutX="20.0" layoutY="213.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="207.0" text="Continue" />
+            <Text fx:id="errorMessage" layoutX="103.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="45.0081540592613" />
          </children>
       </Pane>
       <Text layoutX="16.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="P4" />

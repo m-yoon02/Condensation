@@ -12,6 +12,7 @@ module ca.ucalgary.seng300.p4.condensation {
     requires com.almasb.fxgl.all;
     requires json.simple;
 
-    opens ca.ucalgary.seng300.p4.condensation to javafx.fxml;
-    exports ca.ucalgary.seng300.p4.condensation;
+    opens ca.ucalgary.seng300.p4.condensation to javafx.fxml, javafx.graphics;
+    opens ca.ucalgary.seng300.p4.condensation.Frontend.controller to javafx.fxml;
+    exports ca.ucalgary.seng300.p4.condensation.Frontend.controller to javafx.fxml, javafx.graphics;
 }
