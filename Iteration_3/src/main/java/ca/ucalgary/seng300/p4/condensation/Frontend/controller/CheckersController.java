@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import javafx.fxml.FXML;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,20 +47,27 @@ public class CheckersController {
 
     final int BOARD_DIM = 8;
     String white = "-fx-background-color: #ffffff;" +
-            "-fx-alignment: center;";
+            "-fx-alignment: center;" +
+            "-fx-background-radius: 0;";
     String black = "-fx-background-color: #000000;" +
-            "-fx-alignment: center;";
+            "-fx-alignment: center;" +
+            "-fx-background-radius: 0;";
 
-    VBox chessboard[][] = new VBox[8][8];
+    Button chessboard[][] = new Button[8][8];
 
-    ImageView blackPieces[] = new ImageView[12];
-    ImageView redPieces[] = new ImageView[12];
+    Button blackPieces[] = new Button[12];
+    Button redPieces[] = new Button[12];
 
     @FXML
     public void onCheckersStart() {
+        int blackCount = 0;
+        int redCount = 0;
         for (int r = 0; r < BOARD_DIM; r++) {
             for (int c = 0; c < BOARD_DIM; c++) {
-                VBox square = new VBox();
+                Button square = new Button();
+                square.setPrefSize(34, 34);
+                square.setPadding(new Insets(1, 1, 1, 1));
+
                 if (r % 2 == 0) {
                     if (c % 2 == 0) {
                         square.setStyle(black);
@@ -74,50 +82,53 @@ public class CheckersController {
                     }
                 }
 
+//                /*
                 if (r <= 2) {
                     Image image = new Image((this.getClass().getResource("/ca/ucalgary/seng300/p4/condensation/black2.png")).toExternalForm());
                     if (r % 2 == 0) { // 0 and 2
                         if (c % 2 == 0) {
-                            ImageView piece = new ImageView();
-                            piece.setFitWidth(32);
-                            piece.setPreserveRatio(true);
-                            piece.setImage(image);
-                            square.getChildren().add(piece);
+                            addPieceToSquare(image, square);
+                            blackPieces[blackCount] = square;
+                            blackCount++;
                         }
                     } else { // 1
                         if (c % 2 != 0) {
-                            ImageView piece = new ImageView();
-                            piece.setFitWidth(32);
-                            piece.setPreserveRatio(true);
-                            piece.setImage(image);
-                            square.getChildren().add(piece);
+                            addPieceToSquare(image, square);
+                            blackPieces[blackCount] = square;
+                            blackCount++;
                         }
                     }
                 }
                 if (r >= 5) {
                     Image image = new Image((this.getClass().getResource("/ca/ucalgary/seng300/p4/condensation/red.png")).toExternalForm());                    if (r % 2 == 0) { // 6
                         if (c % 2 == 0) {
-                            ImageView piece = new ImageView();
-                            piece.setFitWidth(32);
-                            piece.setPreserveRatio(true);
-                            piece.setImage(image);
-                            square.getChildren().add(piece);
+                            addPieceToSquare(image, square);
+                            redPieces[redCount] = square;
+                            redCount++;
                         }
                     } else { // 5 and 7
                         if (c % 2 != 0) {
-                            ImageView piece = new ImageView();
-                            piece.setFitWidth(32);
-                            piece.setPreserveRatio(true);
-                            piece.setImage(image);
-                            square.getChildren().add(piece);
+                            addPieceToSquare(image, square);
+                            redPieces[redCount] = square;
+                            redCount++;
                         }
                     }
                 }
+//                 */
 
                 chessboard[c][r] = square;
                 chessboardGrid.add(square, c, r, 1, 1);
             }
         }
+    }
+
+    private void addPieceToSquare(Image image, Button square) {
+        ImageView piece = new ImageView();
+        piece.setFitWidth(32);
+        piece.setPreserveRatio(true);
+        piece.setImage(image);
+//      square.getChildren().add(piece);
+        square.setGraphic(piece);
     }
 
     @FXML
