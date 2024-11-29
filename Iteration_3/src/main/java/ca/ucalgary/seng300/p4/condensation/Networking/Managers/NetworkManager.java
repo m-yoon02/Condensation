@@ -11,6 +11,7 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingPool;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingService;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Client;
+import org.controlsfx.control.tableview2.filter.parser.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -48,6 +49,7 @@ public class NetworkManager {
     private NetworkManager() throws IOException, ParseException {
         matchmakingPool = new MatchmakingPool();
         matchmakingService = new MatchmakingService(matchmakingPool);   // matchmaking pool is already populated with queuedPlayerMemos.
+        loggedInClients = new HashMap<>();
 
         // loop through the pool list to create clients for all the playerIDs in the matchmaking pool.
         for( QueuedPlayerMemo queuedPlayer : matchmakingPool.getPool()){
@@ -117,8 +119,8 @@ public class NetworkManager {
 
         // The response pay,load that frontEnd will recieve
         JSONObject loginResponse = new JSONObject();
-        loginResponse.put("playerID", playerUUID.toString());
         loginResponse.put("username", username);
+        loginResponse.put("playerID", playerUUID.toString());
 
         return loginResponse;   // returns the json payload to client
 
@@ -230,6 +232,26 @@ public class NetworkManager {
         }
     }
 
+        /**
+     * notifyGameSessionClientsOfMessage 
+     * @param clientResponsePayload
+     * @param sessionID
+     * @param gameEventType
+     */
+    public void notifyGameSessionClientsOfMessage(JSONArray clientResponsePayload, UUID sessionID, GameEventType gameEventType) {
+
+        // here we are getting the specific list of clients that are subscribed to the session
+        List<GameDataListener> clientListeners = sessionListeners.get(sessionID);
+
+        if (clientListeners != null) {
+            for (GameDataListener listener : clientListeners) {
+                listener.onChatEvent(gameEventType, clientResponsePayload);    // we need to implement a client listener method for sending chat messages
+            }
+        } else {
+            System.out.println("No clients found in the gameSession: " + sessionID);
+        }
+    }
+
 
 
     // ---------------------------------------------------------------------------------------------------
@@ -251,7 +273,19 @@ public class NetworkManager {
         UUID player1UUID = UUID.fromString(playerIDString);
         GameTypes gameType = (GameTypes) queuedPlayerPayload.get("gameType");
         JSONObject player1 = Leaderboard.getInstance(DATA_FILE).findUserById(player1UUID);
-        int elo = (int) player1.get("elo");
+
+        int elo = 0;
+        switch(gameType){
+            case CHECKERS -> {
+                 elo = (int) player1.get("checkersElo");
+            }
+            case TICTACTOE -> {
+                elo = (int) player1.get("tictactoeElo");
+            }
+            case CONNECT4 -> {
+                elo = (int) player1.get("connect4Elo");
+            }
+        }
         QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo(player1UUID, gameType, elo);           // now can make the queu
 
         // to do the matchmaking logic, remember to make sure that we add Player1 to the start of the matchmaking pool
@@ -332,6 +366,10 @@ public class NetworkManager {
 
     }
 
+    public void sendChatDataToClients(JSONArray clientResponsePayload,UUID sessionID, GameEventType type){
+        notifyGameSessionClientsOfMessage(clientResponsePayload, sessionID, type);          // Notify all subscribed clients
+    }
+
     /**
      * recieveGameDataFromClient recieves the gameState json payload (includes sessionID) from client which they will directly call via network singleton.
      * - calls GameSessionManager instance partFrontEndPayload method -> returns gameSession object,  gameState json(only gameState data)
@@ -362,16 +400,39 @@ public class NetworkManager {
 
         // PSEUDOCODE :
             // we also need the sessionID so we know which clients to notify
+            // you would get the message
+            // we need to get the username of player 1 from the database
             // so chatService needs a reference to player 2 as well so that it has it's username in the message
-            // P1 - UUID
+            // so we will pass into chatService method username 1, message1, username2
+            // clients
+            //
             // we can find their username by UUID here which we can the pass into chat messages
             // Message
             // sendGameDataToClients
-            // which means we will have to subscribe them to some sort of listeners lists
+            // which means we will have to subscribe them to some sort of listeners lists\
 
+        try {
+            // parse the JASONObject
+            UUID sessionID = (UUID) recievePlayerMessage.get("SessionID");
+            UUID player1ID = (UUID) recievePlayerMessage.get("Player1D");
+            String player1Message = (String) recievePlayerMessage.get("Message");
 
+            // get the game session along with player 2's UUID associated w that game session
+            GameSession gameSession = gameSessionManager.getGameSessionBySessionID(sessionID);
+            UUID player2ID = gameSession.getPlayer2ID();
+            JSONObject player1 = Leaderboard.getInstance(DATA_FILE).findUserById(player1ID);
+            JSONObject player2 = Leaderboard.getInstance(DATA_FILE).findUserById(player2ID);
 
+            String player1Username = (String) player1.get("username");
+            String player2Username = (String) player2.get("username");
 
+            JSONArray chatResponsePayload = chatService.sendChatMessage(player1Username,player1Message,player2Username);
+            this.sendChatDataToClients(chatResponsePayload, sessionID, GameEventType.CHAT_MESSAGE_RECEIVED);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
         //TODO: Need to get the reference of the user name, client should store UUID information on their following login and after creating a session.
         // JSONArray messages = chatService.sendChatMessage(msg, "username");
         // return messages;
