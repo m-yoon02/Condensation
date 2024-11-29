@@ -26,10 +26,10 @@ public class ChatService {
     public JSONArray sendChatMessage(String username1, String message1, String username2 ) {
         JSONArray chatMessages = new JSONArray();
         for (String key : responses.keySet()) {
-            if (msg.equals(key)) {
+            if (message1.equals(key)) {
 
                 JSONObject clientResponse = new JSONObject();
-                clientResponse.put("username", username);
+                clientResponse.put("username", username1);
                 clientResponse.put("date", LocalDateTime.now());
                 clientResponse.put("message", key);
 

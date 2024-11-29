@@ -99,7 +99,10 @@ public class Leaderboard {
         user.put("id", UUID.randomUUID().toString()); //assign random uuid
         user.put("name", name);
         user.put("passowrd", password);
-        user.put("elo", 0);
+        user.put("connect4Elo", 1200);
+        user.put("checkersElo", 1200);
+        user.put("tictactoeElo", 1200);
+
 
         this.saveData();
     }
