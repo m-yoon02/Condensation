@@ -36,7 +36,7 @@
 .detail-container TextArea {
     -fx-alignment: left;
     -fx-pref-width: 200;
-    -fx-pref-height: 200;
+    -fx-pref-height: 150;
     -fx-border-color: transparent;
     -fx-background-color: #ffffff;
     -fx-font-size: 16;
@@ -48,4 +48,12 @@
 #rulesArea {
     -fx-pref-height: 200;
     -fx-font-size: 16;
+}
+#citationArea {
+    -fx-pref-height: 50;
+    -fx-font-size: 12;
+}
+#citationArea .scroll-bar:vertical:disabled {
+    -fx-pref-width: 1;
+    -fx-opacity: 0;
 }
