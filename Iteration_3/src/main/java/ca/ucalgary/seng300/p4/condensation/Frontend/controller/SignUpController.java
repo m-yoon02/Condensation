@@ -1,35 +1,46 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import org.json.simple.JSONObject;
+import javafx.scene.text.Text;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 
 public class SignUpController {
 
     @FXML
-    private Button ContinueBtn;
+    private Button continueBtn;
 
     @FXML
-    private TextField DayField;
+    private Text errorMessage;
 
     @FXML
-    private TextField DisplayField;
+    private TextField passwordField;
 
     @FXML
-    private TextField MonthField;
+    private TextField usernameField;
 
-    @FXML
-    private TextField PasswordField;
 
-    @FXML
-    private TextField UsernameField;
 
-    @FXML
-    private TextField YearField;
+    public JSONObject createJSONObject(){
+        JSONObject obj = new JSONObject();
+        obj.put("username", usernameField.getText());
+        obj.put("password", passwordField.getText());
 
-    @FXML
-    private TextField emailFlield;
+        return obj;
 
+    }
+
+    public void sendJSONObject() throws IOException, ParseException {
+
+        NetworkManager.getNetworkInstance().signUpHandler(createJSONObject());
+
+    }
 
 
 }
