@@ -244,7 +244,7 @@ public class NetworkManager {
 
         if (clientListeners != null) {
             for (GameDataListener listener : clientListeners) {
-                listener.onGameEvent(gameEventType, clientResponsePayload);    // we need to implement a client listener method for sending chat messages
+                listener.onChatEvent(gameEventType, clientResponsePayload);    // we need to implement a client listener method for sending chat messages
             }
         } else {
             System.out.println("No clients found in the gameSession: " + sessionID);
