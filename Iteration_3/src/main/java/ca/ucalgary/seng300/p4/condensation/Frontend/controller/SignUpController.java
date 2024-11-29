@@ -12,7 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.json.simple.JSONObject;
@@ -28,7 +30,7 @@ public class SignUpController {
     private Button continueBtn;
 
     @FXML
-    private Text errorMessage;
+    private Label errorMessage;
 
     @FXML
     private TextField passwordField;
@@ -43,7 +45,10 @@ public class SignUpController {
     private Label usernameLabel;
 
     @FXML
-    private Parent root;
+    private FXMLLoader loader;
+
+    @FXML
+    private Pane root;
 
     @FXML
     private Stage window;
@@ -52,42 +57,47 @@ public class SignUpController {
     private Scene scene;
 
     @FXML
-    void validateUser(KeyEvent event) {
+    boolean validateUser() {
 
         if(usernameField.getText().isBlank()){
 
             usernameLabel.setTextFill(Color.RED);
+            return false;
 
         }
         else if (usernameField.getText().length() < 3){
 
             usernameLabel.setTextFill(Color.RED);
+            return false;
 
         }
         else{
 
             usernameLabel.setTextFill(Color.GREEN);
-
+            return true;
         }
 
     }
 
     @FXML
-    void validatePass(KeyEvent event) {
+    boolean validatePass() {
 
         if(passwordField.getText().isBlank()){
 
             passwordLabel.setTextFill(Color.RED);
+            return false;
 
         }
         else if (passwordField.getText().length() < 3){
 
             passwordLabel.setTextFill(Color.RED);
+            return false;
 
         }
         else{
 
             passwordLabel.setTextFill(Color.GREEN);
+            return true;
 
         }
 
@@ -96,14 +106,27 @@ public class SignUpController {
     @FXML
     void continueToLogin(MouseEvent event) throws IOException {
 
-        try {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login.fxml")));
-            window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            window.setScene(scene);
-            window.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(validateUser() && validatePass()) {
+            errorMessage.setTextFill(Color.BLACK);
+            try {
+                loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/Login.fxml"));
+                root = loader.load();
+                // Switch the scene (example using a Stage and Scene)
+                window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                window.setScene(scene);
+                window.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+
+            errorMessage.setText("Invalid Sign Up Credentials!");
+            errorMessage.setTextAlignment(TextAlignment.CENTER);
+            errorMessage.setTextFill(Color.RED);
+
         }
 
     }
