@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXML;
@@ -7,6 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 
 
 public class LogInController {
@@ -33,6 +37,11 @@ public class LogInController {
         obj.put("username", usernameField.getText());
         obj.put("password", passwordField.getText());
         return obj;
+    }
+
+    public void sendJSONObject() throws IOException, ParseException {
+        JSONObject obj = createJSONObject();
+        NetworkManager.getNetworkInstance().signUpHandler(createJSONObject());
     }
 
 

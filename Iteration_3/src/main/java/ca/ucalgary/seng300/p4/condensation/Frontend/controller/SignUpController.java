@@ -56,6 +56,7 @@ public class SignUpController {
     @FXML
     private Scene scene;
 
+
     @FXML
     boolean validateUser() {
 
@@ -104,10 +105,11 @@ public class SignUpController {
     }
 
     @FXML
-    void continueToLogin(MouseEvent event) throws IOException {
+    void continueToLogin(MouseEvent event) throws IOException, ParseException {
 
         if(validateUser() && validatePass()) {
             errorMessage.setTextFill(Color.BLACK);
+            sendJSONObject();
             try {
                 loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/Login.fxml"));
                 root = loader.load();
@@ -132,10 +134,6 @@ public class SignUpController {
     }
 
 
-
-
-
-
     public JSONObject createJSONObject(){
         JSONObject obj = new JSONObject();
         obj.put("username", usernameField.getText());
@@ -148,7 +146,6 @@ public class SignUpController {
     public void sendJSONObject() throws IOException, ParseException {
 
         NetworkManager.getNetworkInstance().signUpHandler(createJSONObject());
-
 
     }
 

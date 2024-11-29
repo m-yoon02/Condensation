@@ -95,11 +95,12 @@ public class Leaderboard {
 
     public void createUser(String name, String password) throws IOException {
         JSONObject user = new JSONObject(); //create new object
-
+        users.add(user);
         user.put("id", UUID.randomUUID().toString()); //assign random uuid
         user.put("name", name);
-        user.put("passowrd", password);
+        user.put("password", password);
         user.put("elo", 0);
+
 
         this.saveData();
     }
