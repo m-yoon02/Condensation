@@ -25,7 +25,6 @@ public class Leaderboard {
     public Leaderboard(String DATA_FILE) throws IOException, ParseException {
         this.DATA_FILE = DATA_FILE;
         loadData();
-
     }
 
     /**

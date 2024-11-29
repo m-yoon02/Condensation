@@ -14,21 +14,13 @@ import java.util.UUID;
 
 public class MatchmakingPool {
     private static List<QueuedPlayerMemo> pool = new ArrayList<>();
-
-    private static Leaderboard leaderboard;
-
-    static {
-        try {
-            leaderboard = new Leaderboard("/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Leaderboard/Leaderboard.json");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private final String DATA_FILE = "/Users/samuelergando/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
 
 
-    public MatchmakingPool() {
+
+
+
+    public MatchmakingPool() throws IOException, ParseException {
         this.fetch4RandomPlayers();
     }
 
@@ -66,9 +58,9 @@ public class MatchmakingPool {
 
     }
 
-    public void fetch4RandomPlayers() {
+    public void fetch4RandomPlayers() throws IOException, ParseException {
         ArrayList<JSONObject> UUIDarrayList = new ArrayList<>();
-        for (Object object : leaderboard.getAllUsers()) {
+        for (Object object : Leaderboard.getInstance(DATA_FILE).getAllUsers()) {
             JSONObject jsonObject = (JSONObject) object;
             jsonObject.get("playerUUID");
             UUIDarrayList.add(jsonObject);

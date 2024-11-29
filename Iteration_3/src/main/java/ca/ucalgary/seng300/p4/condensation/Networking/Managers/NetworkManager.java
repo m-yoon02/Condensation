@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
 import ca.ucalgary.seng300.p4.condensation.Backend.Handlers.GameHandler;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
+import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.DatabaseBuilder;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
@@ -31,9 +32,10 @@ public class NetworkManager {
     private final MatchmakingPool matchmakingPool;
 
     // client listener lists mapped to specific to their gameSessions
+
+    private final String DATA_FILE = "/Users/samuelergando/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
     private Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
-    private final Leaderboard leaderboard = new Leaderboard("/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Leaderboard/Leaderboard.json");
     private final ChatService chatService;
 
 
@@ -90,7 +92,7 @@ public class NetworkManager {
      * PostCondition : the method verfies login information, adds client to logged in list, and returns a playerID json string back to client
      *
      */
-    public JSONObject playerLoginHandler(JSONObject loginPayload) throws IllegalArgumentException {
+    public JSONObject playerLoginHandler(JSONObject loginPayload) throws IllegalArgumentException, IOException, ParseException {
 
         // Extract username and password
         String username = (String) loginPayload.get("username");
@@ -122,13 +124,16 @@ public class NetworkManager {
 
     }
 
-    public JSONObject validateUserCredentials(String username, String password) {
-        JSONObject JSONusername = leaderboard.findUserByName(username);
-        JSONObject JSONpassword =leaderboard.findUserByPassword(password);
+    public JSONObject validateUserCredentials(String username, String password) throws IOException, ParseException {
 
-        if (JSONusername.equals(JSONpassword)) {
-            return JSONpassword;
+        JSONObject jsonUsername = Leaderboard.getInstance(DATA_FILE).findUserByName(username);
+
+        JSONObject jsonPassword =Leaderboard.getInstance(DATA_FILE).findUserByPassword(password);
+
+        if (jsonUsername.equals(jsonPassword)) {
+            return jsonPassword;
         }
+        // return null because user does not exist, probably a better way to handle but we need to iterate fas
         return null;
 
     }
@@ -142,15 +147,14 @@ public class NetworkManager {
      * */
 
 
-    public String signUpHandler (JSONObject signupPayload) throws IOException {
+    public String signUpHandler (JSONObject signupPayload) throws IOException, ParseException {
         String username = (String) signupPayload.get("username");
         String password = (String) signupPayload.get("password");
 
-        leaderboard.createUser(username, password);
-        String responseString = String.format("Successfully created user with username %s", username);
+        Leaderboard.getInstance(DATA_FILE).createUser(username, password);
 
         // we could also add a check to see if the username already exists in our database
-        return responseString;
+        return String.format("Successfully created user with username %s", username);
     }
 
     public String editUsername(UUID Player){
@@ -240,13 +244,13 @@ public class NetworkManager {
      * PostCondition: able to verify the client is logged in, and them to pool and returns a matchedGameSession object, which eventually sends created
      *               gameSession information to the GameSessionManager and finally uuids to the backend via (sendCreatedGameSession)
      */
-    public JSONObject handleQueuePlayer(JSONObject queuedPlayerPayload){
+    public JSONObject handleQueuePlayer(JSONObject queuedPlayerPayload) throws IOException, ParseException {
 
         // Extracts all neccessary Player1 information from database and payload and instantiates the queuedPlayer
         String playerIDString = (String) queuedPlayerPayload.get("playerID");
         UUID player1UUID = UUID.fromString(playerIDString);
         GameTypes gameType = (GameTypes) queuedPlayerPayload.get("gameType");
-        JSONObject player1 = leaderboard.findUserById(player1UUID);
+        JSONObject player1 = Leaderboard.getInstance(DATA_FILE).findUserById(player1UUID);
         int elo = (int) player1.get("elo");
         QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo(player1UUID, gameType, elo);           // now can make the queu
 
