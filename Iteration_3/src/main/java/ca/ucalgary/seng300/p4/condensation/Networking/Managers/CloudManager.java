@@ -82,6 +82,24 @@ public class CloudManager {
     }
 
 
+    /**
+     * we want to simulate the cloud saving the game state of a game session
+     * @param gameState is a JSONObject that represents the current game
+     * @return a boolean flag that will indicate whether the cloud has saved the game state of a game session
+     */
+
+    public boolean saveGameState(JSONObject gameState) {
+        if (!isConnected) {
+            System.err.println("Game could not be saved. Please check your connection again");
+        }
+        // if it is connected, then continue with saving game state
+        this.currentGameState = new JSONObject(gameState);
+        System.out.println("Game state has been saved successfully.");
+        return true;
+
+    }
+
+
     
     
 }
