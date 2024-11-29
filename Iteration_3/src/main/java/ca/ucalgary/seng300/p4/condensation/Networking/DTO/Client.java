@@ -24,6 +24,7 @@ public class Client implements GameDataListener {
     @Override
     public void onGameEvent(GameEventType eventType, JSONObject payload) {
         if(eventType == GameEventType.CHAT_MESSAGE_RECEIVED){
+
             // will recieve message information from the frontend
 
         }else{

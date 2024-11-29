@@ -23,7 +23,7 @@ public class ChatService {
 
 
 
-    public JSONArray sendChatMessage(String msg, String username) {
+    public JSONArray sendChatMessage(String username1, String message1, String username2 ) {
         JSONArray chatMessages = new JSONArray();
         for (String key : responses.keySet()) {
             if (msg.equals(key)) {

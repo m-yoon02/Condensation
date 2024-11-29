@@ -362,8 +362,12 @@ public class NetworkManager {
 
         // PSEUDOCODE :
             // we also need the sessionID so we know which clients to notify
+            // you would get the message
+            // we need to get the username of player 1 from the database
             // so chatService needs a reference to player 2 as well so that it has it's username in the message
-            // P1 - UUID
+            // so we will pass into chatService method username 1, message1, username2
+            // clients
+            //
             // we can find their username by UUID here which we can the pass into chat messages
             // Message
             // sendGameDataToClients
