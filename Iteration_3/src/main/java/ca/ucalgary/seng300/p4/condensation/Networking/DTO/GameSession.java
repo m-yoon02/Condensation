@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Handlers.*;
+import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.GameSessionManager;
@@ -26,6 +27,8 @@ public class GameSession implements GameEndListener, TurnEndListener {
     // field for instantited GameHandler
     private final GameHandler gameHandler;
     private final GameTypes gameType;
+    private final String DATA_FILE = "/Users/samuelergando/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
+
 
     /**
      * When creating GameSession we initialize sessionID field, and player1 and player2 UUIDs which will be passed into some instance of GameHandler
@@ -86,23 +89,42 @@ public class GameSession implements GameEndListener, TurnEndListener {
      * @PostCondiiton update leaderboards, remove gameSession object from the sessions hashmap, and will send this information to the frontend as JSON Payload
      */
     @Override
-    public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
+    public void onGameEnd(GameResult gameResult, UUID winnerPlayer) throws IOException, ParseException {
 
-        // logic to decide which player won or lost
-        if (winnerPlayer.equals(this.player1ID)) {
-            
+        GameEventType gameEventType = GameEventType.GAME_END;
+        // we need to make the response payload here as well
+        JSONObject gameEndPayload = new JSONObject();
+        gameEndPayload.put("UpdateType", gameEventType);
+
+        // This handles the payload information of if some player wins
+        // I can use ternary to make this cleaner lol.
+        if(gameResult == GameResult.WIN){
+            gameEndPayload.put("GameState", GameResult.WIN);
+            if (winnerPlayer.equals(this.player1ID)) {
+                Leaderboard.getInstance(DATA_FILE).updateEloForWinningPlayer(this.player1ID, this.gameType);
+                Leaderboard.getInstance(DATA_FILE).updateEloForLosingPlayer(this.player2ID, this.gameType);
+                gameEndPayload.put("PlayerWon", this.player1ID);
+                gameEndPayload.put("PlayerLost", this.player2ID);
 
 
-            // as winner and player 2 as loser
-        } else {
-            // update leaderboard for player 2 winner, and player 1 as loser
+                // as winner and player 2 as loser
+            } else {
+                // update leaderboard for player 2 winner, and player 1 as loser
+                Leaderboard.getInstance(DATA_FILE).updateEloForWinningPlayer(this.player2ID, this.gameType);
+                Leaderboard.getInstance(DATA_FILE).updateEloForLosingPlayer(this.player1ID, this.gameType);
+                gameEndPayload.put("PlayerWon", this.player2ID);
+                gameEndPayload.put("PlayerLost", this.player1ID);
+            }
+        }else{
+            gameEndPayload.put("GameState", GameResult.TIE);
+            // Player fields will not exist and elo's will not change.
+
         }
 
-        // we will need to send something to the FrontEnd about the Game being over
-
-
-        // NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload, sessionId, gameEventType);
-
+        // we will also need to store some kind of game history
+        // sends the payload to frontend client listeners.
+        NetworkManager.getNetworkInstance().sendGameDataToClients(gameEndPayload, this.sessionId, gameEventType);
+        
         // remove game from the GameSessionsManager hashmap
         GameSessionManager.getInstance().removeGameSession(this.sessionId);
 
@@ -118,6 +140,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
     @Override
     public void onTurnEnd(UUID playersTurnID, String gameStateJson) {
+
 
         UUID sessionId = this.sessionId;
         // this will be passed in to client listener so it knows what kind of gameEvent the gameSession listener has been notified about
