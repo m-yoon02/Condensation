@@ -62,10 +62,10 @@ public class CheckersHandler extends GameHandler {
         }
         // Assuming red is on the bottom and black is on the top
         else if (piece.getColor() == PieceColor.RED){
-            return new int[][]{{1, -1}, {-1, -1}};
+            return new int[][]{{-1, -1}, {-1, 1}};
         }
         else{
-            return new int[][]{{1, 1}, {-1, 1}};
+            return new int[][]{{1, 1}, {1, -1}};
         }
     }
 
