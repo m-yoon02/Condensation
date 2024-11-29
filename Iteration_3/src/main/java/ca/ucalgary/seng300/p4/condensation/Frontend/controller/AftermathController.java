@@ -11,10 +11,6 @@ public class AftermathController {
     private Button rematchButton;
 
     @FXML
-    public void initialize() {
-        gameResultLabel.setText("Game Over!");
-    }
-    @FXML
     public void handleRematch() {
         System.out.println("Rematch button clicked!");
     }

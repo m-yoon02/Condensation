@@ -15,8 +15,8 @@ public class HelloApplication extends Application {
         Parent root = loader.load();
 
         // Set up the stage
-        primaryStage.setTitle("Aftermath Screen");
-        primaryStage.setScene(new Scene(root, 600, 400)); // Set dimensions
+        primaryStage.setTitle("Game Over!");
+        primaryStage.setScene(new Scene(root, 600, 600)); // Set dimensions
         primaryStage.show();
     }
 
