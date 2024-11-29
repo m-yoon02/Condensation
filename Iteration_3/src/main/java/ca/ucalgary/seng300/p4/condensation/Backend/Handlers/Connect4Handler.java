@@ -18,12 +18,16 @@ public class Connect4Handler extends GameHandler {
         super(player1ID, player2ID, COLORS);
     }
 
+    @Override
+    public void makeMove(String moveDataJSON) {
+        makeMove(MoveData.fromJSON(moveDataJSON));
+    }
+
     // This is the main driver of your game logic.
     // Assume that this method is called whenever a player makes a move
     // You are to use the move data and translate it to the GameBoard
     // You are also required to check for game winning scenarios here
     // This will also notify when the game has ended, and which player's turn it is after the move
-
     /**
      * Main driver of game logic
      * Pre-condition:
@@ -41,12 +45,9 @@ public class Connect4Handler extends GameHandler {
      *      -pass gameResult.WIN and current players id (winning player)
      * 4. if the move is just a standard move (none of the conditions above apply)
      *      -pass other players ID and leave board state unchanged
-     * @param moveDataJSON
+     * @param moveData
      */
-    @Override
-    public void makeMove(String moveDataJSON) {
-        MoveData moveData = MoveData.fromJSON(moveDataJSON);
-
+    public void makeMove(MoveData moveData) {
         UUID playerID = moveData.getPlayerID();
         Vector2 getPosition = moveData.getMovePosition();
 
