@@ -1,4 +1,4 @@
-module ca.ucalgary.seng300.p4.condensation.condensation {
+module ca.ucalgary.seng300.p4.condensation {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
