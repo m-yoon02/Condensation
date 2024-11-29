@@ -43,7 +43,7 @@ public class TicTacToeHandler extends GameHandler {
         if (checkForThreeInARow(color)){
             this.notifyGameEnd(GameResult.WIN, playerID);
         }else if (board.isBoardFull()){
-            this.notifyGameEnd(GameResult.TIE,null)
+            this.notifyGameEnd(GameResult.TIE,null);
         }
         else {
             this.notifyTurnEnd(playerID, moveDataJSON);
