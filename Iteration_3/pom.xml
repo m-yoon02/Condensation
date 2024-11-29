@@ -139,7 +139,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                ca.ucalgary.seng300.p4.condensation.condensation/ca.ucalgary.seng300.p4.condensation.condensation.HelloApplication
+                                ca.ucalgary.seng300.p4.condensation.condensation/ca.ucalgary.seng300.p4.condensation.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
