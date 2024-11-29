@@ -32,7 +32,10 @@ public class CloudManager {
         return instance;
 
     }
-
+    /**
+     * Initialize connection to the Cloud Service
+     * @return boolean indicating successful connection
+     */
     public boolean initializeConncection(){
         if(!isConnected){
             System.out.println("Cloud connection established successfully.");
@@ -45,11 +48,18 @@ public class CloudManager {
         }
 
     }
+    /**
+     * Checks if currently connected to the cloud service
+     * @return boolean indicating connection status
+     */
 
     public boolean isConnected(){
         return isConnected;
     }
 
+    /**
+     * Method to disconnect from the cloud service
+     */
     public void disconnect(){
         if(isConnected) {
             isConnected = false;
