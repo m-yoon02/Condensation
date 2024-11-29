@@ -11,6 +11,7 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingPool;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.MatchmakingService;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Client;
+import org.controlsfx.control.tableview2.filter.parser.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -383,9 +384,26 @@ public class NetworkManager {
             // we can find their username by UUID here which we can the pass into chat messages
             // Message
             // sendGameDataToClients
-            // which means we will have to subscribe them to some sort of listeners lists
+            // which means we will have to subscribe them to some sort of listeners lists\
 
+        try {
+            // parse the JASONObject
+            UUID SessionID = (UUID) recievePlayerMessage.get("SessionID");
+            UUID Player1ID = (UUID) recievePlayerMessage.get("Player1D");
+            String Player1Message = (String) recievePlayerMessage.get("Message");
 
+            // get the game session along with player 2's UUID associated w that game session
+            GameSession gameSession = gameSessionManager.getGameSessionBySessionID(SessionID);
+            UUID Player2ID = gameSession.getPlayer2ID();
+            JSONObject Player1 = Leaderboard.getInstance(DATA_FILE).findUserById(Player1ID);
+            JSONObject Player2 = Leaderboard.getInstance(DATA_FILE).findUserById(Player2ID);
+
+            String player1Username = (String) Player1.get("username");
+            String player2Username = (String) Player2.get("username");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
 
         //TODO: Need to get the reference of the user name, client should store UUID information on their following login and after creating a session.
