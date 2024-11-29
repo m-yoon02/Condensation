@@ -36,7 +36,7 @@
 .game-container {
     -fx-alignment: top-center;
     -fx-pref-width: 300;
-    -fx-pref-height: 344;
+    -fx-pref-height: 370;
 }
 #nameLabel {
     -fx-alignment: left;
@@ -52,50 +52,12 @@
     -fx-font-size: 20;
 }
 #leaderboardBtn {
-    -fx-pref-width: 180;
-    -fx-pref-height: 30;
+    /*-fx-pref-width: 180;*/
+    /*-fx-pref-height: 30;*/
     -fx-font-size: 16;
 }
-
-
-
-.detail-scroll-container {
-    -fx-border-color: transparent;
-    -fx-background-color: #ffffff;
-    -fx-pref-width: 300;
-    -fx-pref-height: 370;
-    -fx-fit-to-height: true;
-    -fx-fit-to-width: true;
-}
-.detail-container {
-    -fx-background-color: #ffffff;
-    -fx-pref-width: 370;
-}
-.detail-container Label {
-    -fx-alignment: left;
-    -fx-font-size: 20;
-    -fx-font-weight: bold;
-}
-.detail-container TextArea {
-    -fx-alignment: left;
-    -fx-pref-width: 200;
-    -fx-pref-height: 200;
-    -fx-border-color: transparent;
-    -fx-background-color: #ffffff;
+#howToPlayBtn {
+    /*-fx-pref-width: 180;*/
+    /*-fx-pref-height: 30;*/
     -fx-font-size: 16;
-}
-.detail-container TextArea .content {
-    -fx-background-color: #ffffff;
-    -fx-cursor: default;
-}
-#rulesArea {
-    -fx-pref-height: 200;
-    -fx-font-size: 16;
-}
-.detail-buttons-container {
-    -fx-alignment: top-center;
-}
-.detail-container Button {
-    -fx-pref-width: 120;
-    -fx-pref-height: 30;
 }
