@@ -69,18 +69,6 @@ public class CloudManager {
         }
     }
 
-    public boolean initializeConnection(){
-        if(!isConnected){
-            System.out.println("Cloud connection established successfully.");
-            return true;
-        }
-        else{
-            System.err.println("Connection initialization interrupted.");
-            isConnected = false;
-            return false;
-        }
-    }
-
 
     /**
      * we want to simulate the cloud saving the game state of a game session
