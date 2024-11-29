@@ -7,11 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="condensation" />
-        <module name="Iteration_3" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="condensation" target="22" />
-    </bytecodeTargetLevel>
   </component>
 </project>
