@@ -1,15 +1,23 @@
 package ca.ucalgary.seng300.p4.condensation;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.controller.CheckersController;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Handlers.TicTacToeHandler;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.MoveData.MoveData;
 import ca.ucalgary.seng300.p4.condensation.condensation.Backend.Pieces.TicTacToePiece;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
+
+import java.io.IOException;
 import java.util.UUID;
 
 public class HelloController {
@@ -42,6 +50,24 @@ public class HelloController {
         playerLabel.setText("Current Player: RED");
     }
 
+    Stage stage;
+
+    public HelloController(Stage stage) {
+        this.stage = stage;
+    }
+    @FXML
+    void onLeaderboardBtnClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("TicTacToeLeaderboard.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        HelloController controller = new HelloController(stage);
+        fxmlLoader.setController(controller);
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage.setTitle("Checkers Leaderboard");
+        stage.setScene(scene);
+        stage.setMinWidth(600);
+        stage.setMinHeight(430);
+        stage.show();
+    }
     @FXML
     public void handleButtonClick(javafx.event.ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
