@@ -13,7 +13,7 @@ public class CloudManager {
     // simulate the connection status to the cloud
     private boolean isConnected;
 
-    // these variables will hel[ simulate cloud storage for game state and the player's data
+    // these variables will help simulate cloud storage for game state and the player's data
     private JSONObject currentGameState;
     private List<UUID> syncedPlayerIDs;
 
@@ -145,6 +145,21 @@ public class CloudManager {
     System.out.println("Syncrhonized " + playerIDS.size() + "player(s) to the cloud");
     return true;
 
+
+    }
+
+    /**
+     * retrieves the list of synchronized player IDs
+     * @return List of synchronized player UUIDS
+     */
+    public List<UUID> getSyncedPlayers() {
+
+        if (!isConnected) {
+            System.err.println("Can't retrieve synced players. Please check your connection with the cloud");
+            return new ArrayList<>();
+        }
+        
+        return new ArrayList<>(syncedPlayerIDs);
 
     }
 
