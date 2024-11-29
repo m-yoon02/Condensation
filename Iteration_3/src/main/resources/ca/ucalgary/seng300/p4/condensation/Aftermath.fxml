@@ -11,12 +11,12 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="578.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.AftermathController">
+<AnchorPane prefHeight="578.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.AftermathController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" height="234.0" layoutX="42.0" layoutY="189.0" stroke="BLACK" strokeType="INSIDE" width="238.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" height="234.0" layoutX="310.0" layoutY="189.0" stroke="BLACK" strokeType="INSIDE" width="238.0" />
         <!-- Styled Label for the Game Result -->
-        <Label fx:id="gameResultLabel" alignment="CENTER" layoutX="190.0" layoutY="38.0" prefHeight="44.0" prefWidth="217.0" style="-fx-font-size: 50px;: 40px; -fx-text-fill: black;" text="Game Result" textAlignment="CENTER">
+        <Label fx:id="gameResultLabel" alignment="CENTER" ellipsisString="" layoutX="191.0" layoutY="38.0" prefHeight="44.0" prefWidth="251.0" style="-fx-font-size: 50px;: 40px; -fx-text-fill: black;" text="Game Result!" textAlignment="CENTER" textOverrun="CLIP">
             <font>
                 <Font size="36.0" />
             </font>

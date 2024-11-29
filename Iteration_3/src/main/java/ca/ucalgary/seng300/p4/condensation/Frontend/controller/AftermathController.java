@@ -12,7 +12,7 @@ public class AftermathController {
 
     @FXML
     public void initialize() {
-        gameResultLabel.setText("Game Over! {Status}");
+        gameResultLabel.setText("Game Over!");
     }
     @FXML
     public void handleRematch() {
