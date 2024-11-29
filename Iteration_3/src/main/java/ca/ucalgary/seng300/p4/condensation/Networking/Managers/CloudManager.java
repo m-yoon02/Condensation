@@ -107,7 +107,7 @@ public class CloudManager {
      */
     public JSONObject retrieveGameState() {
         if (!isConnected) {
-            System.err.println("Can't retrieve game state. Please check your connection with the cloud.")
+            System.err.println("Can't retrieve game state. Please check your connection with the cloud.");
             return null; // returning null if there was no game state
         }
 
@@ -117,17 +117,36 @@ public class CloudManager {
             return null;
         }
 
-        return new JSONObject(currentGameState)
+        return new JSONObject(currentGameState);
 
     }
 
 
     /**
      * This method syncs plauer data to the cloud
+     * @param playerIDS List and player UUIDS to sync
+     * @return boolean indicating successful sync
      */
 
+    public boolean syncPLayerData(List<UUID> playerIDS) {
 
 
+    if (!isConnected) {
+        System.err.println("Cannot sync player data. Please check your connection with the cloud");
+        return false;
+    }
+
+    // if it is connected to the cloud
+
+    // want to clear previously synced players and add the new ones
+
+    syncedPlayerIDs.clear();
+    syncedPlayerIDs.addAll(playerIDS);
+    System.out.println("Syncrhonized " + playerIDS.size() + "player(s) to the cloud");
+    return true;
+
+
+    }
 
     
     
