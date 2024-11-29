@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -12,19 +13,19 @@
          <children>
             <Text layoutX="77.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an Account" />
             <TextField fx:id="usernameField" layoutX="22.0" layoutY="119.0" onKeyTyped="#validateUser" prefHeight="26.0" prefWidth="205.0" promptText="Username" />
-            <Text layoutX="23.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
-               <font>
-                  <Font size="7.0" />
-               </font>
-            </Text>
-            <TextField fx:id="passwordField" layoutX="22.0" layoutY="168.0" prefHeight="26.0" prefWidth="205.0" promptText="Password" />
-            <Text layoutX="23.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
-               <font>
-                  <Font size="7.0" />
-               </font>
-            </Text>
+            <TextField fx:id="passwordField" layoutX="22.0" layoutY="168.0" onKeyTyped="#validatePass" prefHeight="26.0" prefWidth="205.0" promptText="Password" />
             <Button fx:id="continueBtn" layoutX="20.0" layoutY="213.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="207.0" text="Continue" />
             <Text fx:id="errorMessage" layoutX="103.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="45.0081540592613" />
+            <Label fx:id="usernameLabel" layoutX="24.0" layoutY="105.0" text="Username">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="passwordLabel" layoutX="23.0" layoutY="153.0" text="Password">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Text layoutX="16.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="P4" />

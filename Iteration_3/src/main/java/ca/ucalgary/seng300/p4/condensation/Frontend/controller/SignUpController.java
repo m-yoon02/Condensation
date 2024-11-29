@@ -4,7 +4,10 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import org.json.simple.JSONObject;
 import javafx.scene.text.Text;
 import org.json.simple.parser.ParseException;
@@ -23,9 +26,58 @@ public class SignUpController {
     private TextField passwordField;
 
     @FXML
+    private Label passwordLabel;
+
+    @FXML
     private TextField usernameField;
 
     @FXML
+    private Label usernameLabel;
+
+    @FXML
+    void validateUser(KeyEvent event) {
+
+        if(usernameField.getText().isBlank()){
+
+            usernameLabel.setTextFill(Color.RED);
+
+        }
+        else if (usernameField.getText().length() < 3){
+
+            usernameLabel.setTextFill(Color.RED);
+
+        }
+        else{
+
+            usernameLabel.setTextFill(Color.GREEN);
+
+        }
+
+    }
+
+    @FXML
+    void validatePass(KeyEvent event) {
+
+        if(passwordField.getText().isBlank()){
+
+            passwordLabel.setTextFill(Color.RED);
+
+        }
+        else if (passwordField.getText().length() < 3){
+
+            passwordLabel.setTextFill(Color.RED);
+
+        }
+        else{
+
+            passwordLabel.setTextFill(Color.GREEN);
+
+        }
+
+    }
+
+
+
 
 
 
