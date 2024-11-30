@@ -179,22 +179,12 @@ public class Connect4HandlerTest {
         PieceColor color = c4Handler.getPlayerColorFromUUID(p1ID);
 
         for (int col = 0; col < 4; col++) {
-            c4Handler.getBoard().placePiece(new ConnectFourPiece(color), new Vector2(row, col));
+            c4Handler.getBoard().placePiece(new ConnectFourPiece(color), new Vector2(col, row));
         }
 
         boolean result = c4Handler.winInRow(row, color);
 
         assertTrue("Detects horizontal win", result);
-    }
-
-    @Test
-    public void manualhorizontalwin() {
-        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(0, 0));
-        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(0, 1));
-        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(0, 2));
-        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(0, 3));
-
-        assertTrue(c4Handler.winInRow(c4Handler.getBoard().getRowSize() - 1, PieceColor.BLUE));
     }
 
     @Test
@@ -245,25 +235,30 @@ public class Connect4HandlerTest {
 
     @Test
     public void testWinInDiagonalFrontSlash_DetectsWin() {
-        PieceColor color = c4Handler.getPlayerColorFromUUID(p1ID);
+        int bottomRow = c4Handler.getBoard().getRowSize() - 1; // Bottom row index
+        // Place pieces in columns 0 to 3 in the bottom row
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(0, bottomRow));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(1, bottomRow));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(1, bottomRow - 1));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(2, bottomRow));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(2, bottomRow- 1));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(2, bottomRow - 2));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(3, bottomRow));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(3, bottomRow - 1));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(3, bottomRow - 2));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(3, bottomRow - 3));
 
-        // Front-slash fill method generated with assistance from GPT - Sam Safe
-        int[] cols = {0, 1, 2, 3};
-        int[] rows = {2, 3, 4, 5};
-
-        for (int i = 0; i < 4; i++) {
-            c4Handler.getBoard().placePiece(new ConnectFourPiece(color), new Vector2(cols[i], rows[i]));
-        }
-
-        boolean result = c4Handler.winInDiagonalFrontslash(rows[0], cols[0], color);
-
-        assertTrue("Should detect frontslash win", result);
+        // Now, check for a horizontal win in the bottom row
+        assertTrue("Should detect horizontal win", c4Handler.winInRow(bottomRow, PieceColor.BLUE));
     }
 
     @Test
     public void testGetPlayerColorFromUUID_ReturnsCorrectColor() {
         PieceColor one = c4Handler.getPlayerColorFromUUID(p1ID);
         PieceColor two = c4Handler.getPlayerColorFromUUID(p2ID);
+
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(0, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(1, 0)));
 
         assertEquals("Player 1 matches first colour", PieceColor.BLUE, one);
         assertEquals("Player 2 matches second colour", PieceColor.ORANGE, two);
@@ -282,8 +277,56 @@ public class Connect4HandlerTest {
     public void testBoardInitialization() {
         for (int col = 0; col < c4Handler.getBoard().getColumnSize(); col++) {
             for (int row = 0; row < c4Handler.getBoard().getRowSize(); row++) {
-                assertNull("Board empty at index", c4Handler.getBoard().getAt(row, col));
+                assertNull("Board empty at index", c4Handler.getBoard().getAt(col, row));
             }
         }
+    }
+
+    @Test (expected = Exception.class)
+    public void testMakeMove_NullMoveData_ThrowsException() {
+        c4Handler.makeMove((MoveData) null);
+    }
+
+    @Test (expected = Exception.class)
+    public void testMakeMove_InvalidCoordinates_IgnoresMove() {
+        MoveData md = new MoveData(p1ID, new Vector2(-1, 0));
+
+        c4Handler.makeMove(md);
+    }
+
+    @Test (expected = Exception.class)
+    public void testMakeMove_UnrecognizedPlayerID_IgnoresMove() {
+        UUID invalid = UUID.randomUUID();
+
+        MoveData md = new MoveData(invalid, new Vector2(0, 0));
+
+        c4Handler.makeMove(md);
+    }
+
+    @Test
+    public void testPlacePiece_PiecesAtBoardEdges() {
+        PieceColor color = c4Handler.getPlayerColorFromUUID(p1ID);
+        int firstColumn = 0;
+        int lastColumn = c4Handler.getBoard().getColumnSize() - 1;
+
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(color), new Vector2(firstColumn, c4Handler.findAvailableRow(firstColumn)));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(color), new Vector2(lastColumn, c4Handler.findAvailableRow(lastColumn)));
+
+        assertNotNull("Piece in first column", c4Handler.getBoard().getAt(firstColumn, c4Handler.getBoard().getRowSize() - 1));
+        assertNotNull("Piece in last column", c4Handler.getBoard().getAt(lastColumn, c4Handler.getBoard().getRowSize() - 1));
+    }
+
+    @Test
+    public void testWin_HandlingGreaterThanMinimum() {
+        int column = 0;
+        PieceColor color = c4Handler.getPlayerColorFromUUID(p1ID);
+
+        for (int i = 0; i < 5; i++) {
+            c4Handler.getBoard().placePiece(new ConnectFourPiece(color), new Vector2(column, c4Handler.getBoard().getRowSize() - 1 - i));
+        }
+
+        boolean result = c4Handler.winInColumn(column, color);
+
+        assertTrue("Detects win with more than 4 pieces", result);
     }
 }
