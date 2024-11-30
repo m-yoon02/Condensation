@@ -33,7 +33,7 @@ public class ProfileHomeApplication extends Application {
 
         // Set up the stage with the scene
         stage.setScene(scene);
-        stage.setTitle("Profile Home"); // Set the window title
+        //stage.setTitle("Profile Home"); // Set the window title
         stage.show();
     }
 }

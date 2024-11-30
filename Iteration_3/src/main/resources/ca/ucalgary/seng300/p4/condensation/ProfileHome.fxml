@@ -28,9 +28,9 @@
                 <Font size="21.0" />
             </font>
         </Label>
-        <Button fx:id="leaderboardButton" layoutX="36.0" layoutY="162.0" mnemonicParsing="false" onAction="#onLeaderboardButtonClicked" prefHeight="30.0" prefWidth="96.0" text="Leaderboard" />
-        <Button fx:id="gamesButton" layoutX="34.0" layoutY="289.0" mnemonicParsing="false" onAction="#onGamesButtonClicked" prefHeight="30.0" prefWidth="96.0" text="Games" />
-        <Button fx:id="playerProfilesButton" layoutX="35.0" layoutY="225.0" mnemonicParsing="false" onAction="#onPlayerProfilesButtonClicked" prefHeight="30.0" prefWidth="96.0" text="Player Profile" />
-        <Button fx:id="logoutButton" layoutX="583.0" layoutY="462.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Log out" />
+        <Button fx:id="leaderboardButton" layoutX="36.0" layoutY="162.0" mnemonicParsing="false" onAction="#onLeaderboardButtonClicked" prefHeight="30.0" prefWidth="106.0" text="Leaderboard" />
+        <Button fx:id="gamesButton" layoutX="34.0" layoutY="289.0" mnemonicParsing="false" onAction="#onGamesButtonClicked" prefHeight="30.0" prefWidth="106.0" text="Games" />
+        <Button fx:id="playerProfilesButton" layoutX="35.0" layoutY="225.0" mnemonicParsing="false" onAction="#onPlayerProfilesButtonClicked" prefHeight="30.0" prefWidth="106.0" text="Player Lookup" />
+        <Button fx:id="logoutButton" layoutX="34.0" layoutY="354.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Log out" />
     </children>
 </AnchorPane>
