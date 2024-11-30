@@ -34,7 +34,7 @@ public class NetworkManager {
 
     // client listener lists mapped to specific to their gameSessions
 
-    private final String DATA_FILE = "/Users/samuelergando/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
+    private final String DATA_FILE = "/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
     private Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final ChatService chatService;
@@ -46,7 +46,7 @@ public class NetworkManager {
     /**
      * constructor for network manager instance, when creating a new one
      */
-    private NetworkManager() throws IOException, ParseException {
+    public NetworkManager() throws IOException, ParseException {
         matchmakingPool = new MatchmakingPool();
         matchmakingService = new MatchmakingService(matchmakingPool);   // matchmaking pool is already populated with queuedPlayerMemos.
         loggedInClients = new HashMap<>();
@@ -65,7 +65,6 @@ public class NetworkManager {
 
         chatService = new ChatService();
         sessionListeners = new HashMap<>();
-        loggedInClients = new HashMap<>();
 
     }
 
@@ -437,6 +436,10 @@ public class NetworkManager {
         // JSONArray messages = chatService.sendChatMessage(msg, "username");
         // return messages;
         return null;
+    }
+
+    public String getDATA_FILE(){
+        return DATA_FILE;
     }
 
 
