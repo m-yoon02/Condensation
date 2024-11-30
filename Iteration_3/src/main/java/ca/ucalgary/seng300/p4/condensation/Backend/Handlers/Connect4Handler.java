@@ -217,7 +217,7 @@ public class Connect4Handler extends GameHandler {
      *         `false` otherwise.
      */
 
-    private boolean winInRow(int rowIndex, PieceColor pieceColor) {
+    public boolean winInRow(int rowIndex, PieceColor pieceColor) {
         // Variable to track consecutive pieces of the same color in a row
         int chain = 0;
 
@@ -260,7 +260,7 @@ public class Connect4Handler extends GameHandler {
      *         `false` otherwise.
      */
 
-    private boolean winInColumn(int columnIndex, PieceColor pieceColor) {
+    public boolean winInColumn(int columnIndex, PieceColor pieceColor) {
         // Variable to track consecutive pieces of the same color in a column.
         int chain = 0;
 
