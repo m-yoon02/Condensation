@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
@@ -16,13 +17,13 @@ import java.io.IOException;
 public class ProfileGameController {
 
     @FXML
-    private TextArea ticTacToeArea;
+    private Label ticTacToeArea;
 
     @FXML
-    private TextArea connect4Area;
+    private Label connect4Area;
 
     @FXML
-    private TextArea checkersArea;
+    private Label checkersArea;
 
     @FXML
     private Button ticTacToePlayButton;
