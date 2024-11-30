@@ -40,14 +40,16 @@ public class TicTacToeHandler extends GameHandler {
         PieceColor color = getPlayerMemoFromUUID(moveData.getPlayerID()).pieceColor();
         Vector2 movePosition = moveData.getMovePosition();
         TicTacToePiece piece = new TicTacToePiece(movePosition, color);
-        this.board.placePiece(piece, movePosition);
+        if (!this.board.placePiece(piece, movePosition)){
+            this.notifyTurnEnd(playerID, board.toJSONString());
+            return;
+        }
         if (checkForThreeInARow(color)){
             this.notifyGameEnd(GameResult.WIN, playerID);
-        }else if (board.isBoardFull()){
+        } else if (board.isBoardFull()){
             this.notifyGameEnd(GameResult.TIE,null);
-        }
-        else {
-            this.notifyTurnEnd(playerID, "");
+        } else {
+            this.notifyTurnEnd(getOtherPlayerUUID(playerID), board.toJSONString());
         }
     }
 
