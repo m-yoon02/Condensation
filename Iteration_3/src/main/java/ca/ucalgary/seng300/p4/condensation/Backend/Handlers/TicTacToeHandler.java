@@ -132,9 +132,4 @@ public class TicTacToeHandler extends GameHandler {
         }
         return win;
     }
-
-    public GameBoard getBoard() {
-        return board;
-    }
-
 }
