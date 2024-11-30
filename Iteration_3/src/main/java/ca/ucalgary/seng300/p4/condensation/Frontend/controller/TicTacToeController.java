@@ -2,17 +2,21 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
+import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
 public class TicTacToeController {
+    @FXML
     private Button btn00, btn01, btn02, btn10, btn11, btn12, btn20, btn21, btn22;
     public int numberOfPiecesOnBoard = 0;
     Button[][] buttons = new Button[][] {
@@ -68,8 +72,16 @@ public class TicTacToeController {
         }
     }
 
-    // Activates when a tile is clicked.
-    public void returnToBackendConnectFour(javafx.event.ActionEvent event) throws IOException, ParseException {
+    private void disableAllButtons() { //when game ends
+        for (Button[] buttonRow : buttons) {
+            for (Button button : buttonRow) {
+                button.setDisable(true);
+            }
+        }
+    }
+
+    @FXML
+    public void returnToBackendTicTacToe(javafx.event.ActionEvent event) throws IOException, ParseException {
         Button clickedButton = (Button) event.getSource();
 
         int row = -1;
@@ -81,7 +93,8 @@ public class TicTacToeController {
                 break;
             }
             for (int j = 0; j < NUMBER_OF_COLS; j++) {
-                if (buttons[i][j] == clickedButton) {
+                System.out.println(buttons[i][j]);
+                if (buttons[i][j].equals(clickedButton)) {
                     row = i;
                     col = j;
                     buttonFound = true;
@@ -89,6 +102,9 @@ public class TicTacToeController {
                 }
             }
         }
+
+        System.out.println(row);
+        System.out.println(col);
 
         if (row > 0 && col > 0){
 
@@ -101,18 +117,11 @@ public class TicTacToeController {
                 ticTacToeJSON.put("Player ID", playerTwo);
             }
             ticTacToeJSON.put("New Position", new Vector2(row, col));
+            ticTacToeJSON.put("GameType", GameTypes.TICTACTOE);
             numberOfPiecesOnBoard += 1;
             JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(ticTacToeJSON);
             receiveFromBackendTicTacToe(results);
         }
     }
-
-    private void disableAllButtons() { //when game ends
-        for (Button[] buttonRow : buttons) {
-            for (Button button : buttonRow) {
-                button.setDisable(true);
-            }
-        }
-    }
-
 }
+
