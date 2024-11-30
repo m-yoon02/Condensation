@@ -32,6 +32,21 @@ public class TicTacToeController {
     public UUID playerTwo;
     public UUID sessionID;
     public UUID newTurn;
+
+    @FXML
+    public void initialize() {
+
+        buttons = new Button[][] {
+                {btn00, btn01, btn02},
+                {btn10, btn11, btn12},
+                {btn20, btn21, btn22}
+        };
+
+        playerOne = UUID.fromString("234e5678-e89c-34d4-a567-526725175000");
+        playerTwo = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
+        newTurn = playerOne;
+
+    }
     public void receiveFromBackendTicTacToe(JSONObject backendUpdate){
         String win_or_not_win = (String) backendUpdate.get("UpdateType");
         if (Objects.equals(win_or_not_win, "GAME_END")){
@@ -103,10 +118,7 @@ public class TicTacToeController {
             }
         }
 
-        System.out.println(row);
-        System.out.println(col);
-
-        if (row > 0 && col > 0){
+        if (row >= 0 && col >= 0){
 
             JSONObject ticTacToeJSON = new JSONObject();
             ticTacToeJSON.put("SessionID", sessionID);
@@ -119,6 +131,7 @@ public class TicTacToeController {
             ticTacToeJSON.put("New Position", new Vector2(row, col));
             ticTacToeJSON.put("GameType", GameTypes.TICTACTOE);
             numberOfPiecesOnBoard += 1;
+            System.out.println(ticTacToeJSON);
             JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(ticTacToeJSON);
             receiveFromBackendTicTacToe(results);
         }
