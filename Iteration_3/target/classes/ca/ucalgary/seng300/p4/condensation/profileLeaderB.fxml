@@ -4,41 +4,40 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileLeaderBController">
    <children>
-      <TableView layoutX="14.0" layoutY="80.0" prefHeight="280.0" prefWidth="188.0">
-        <columns>
-          <TableColumn editable="false" minWidth="5.0" prefWidth="40.0" text="Rank" />
-          <TableColumn prefWidth="75.0" text="Player" />
-            <TableColumn prefWidth="75.0" text="Score" />
-        </columns>
-      </TableView>
-      <TableView layoutX="208.0" layoutY="80.0" prefHeight="280.0" prefWidth="188.0">
-         <columns>
-            <TableColumn editable="false" minWidth="5.0" prefWidth="40.0" text="Rank" />
-            <TableColumn prefWidth="75.0" text="Player" />
-            <TableColumn prefWidth="75.0" text="Score" />
-         </columns>
-      </TableView>
-      <TableView layoutX="403.0" layoutY="80.0" prefHeight="280.0" prefWidth="188.0">
-         <columns>
-            <TableColumn editable="false" minWidth="5.0" prefWidth="40.0" text="Rank" />
-            <TableColumn prefWidth="75.0" text="Player" />
-            <TableColumn prefWidth="75.0" text="Score" />
-         </columns>
-      </TableView>
-      <Label alignment="CENTER" layoutX="171.0" layoutY="4.0" prefHeight="30.0" prefWidth="257.0" text="Leaderboard">
+      <Label layoutX="236.0" layoutY="14.0" text="Leaderboard">
          <font>
-            <Font size="22.0" />
+            <Font size="23.0" />
          </font>
       </Label>
-      <Button layoutX="535.0" layoutY="366.0" mnemonicParsing="false" text="Home" />
-      <Label alignment="CENTER" layoutX="21.0" layoutY="50.0" prefHeight="30.0" prefWidth="173.0" text="Tic Tac Toe" />
-      <Label alignment="CENTER" layoutX="410.0" layoutY="50.0" prefHeight="30.0" prefWidth="173.0" text="Checkers" />
-      <Label alignment="CENTER" layoutX="214.0" layoutY="50.0" prefHeight="30.0" prefWidth="173.0" text="Connect 4" />
+      <Button fx:id="homeButton" layoutX="527.0" layoutY="356.0" mnemonicParsing="false" text="Home" onAction="#onHomeButtonClicked"/>
+      <TableView fx:id="ticTacToeTable" layoutX="3.0" layoutY="100.0" prefHeight="242.0" prefWidth="194.0">
+         <columns>
+            <TableColumn fx:id="ticTacToeRankColumn" prefWidth="45.0" text="Rank" />
+            <TableColumn fx:id="ticTacToePlayerColumn" prefWidth="75.0" text="Player" />
+            <TableColumn  fx:id="ticTacToeScoreColumn" prefWidth="75.0" text="Score" />
+         </columns>
+      </TableView>
+      <TableView fx:id="connect4Table" layoutX="203.0" layoutY="100.0" prefHeight="242.0" prefWidth="194.0">
+         <columns>
+            <TableColumn fx:id="connect4RankColumn" prefWidth="45.0" text="Rank" />
+            <TableColumn fx:id="connect4PlayerColumn" prefWidth="75.0" text="Player" />
+            <TableColumn fx:id="connect4ScoreColumn" prefWidth="75.0" text="Score" />
+         </columns>
+      </TableView>
+      <TableView fx:id="checkersTable" layoutX="404.0" layoutY="100.0" prefHeight="242.0" prefWidth="194.0">
+         <columns>
+            <TableColumn fx:id="checkersRankColumn" prefWidth="45.0" text="Rank" />
+            <TableColumn fx:id="checkersPlayerColumn" prefWidth="75.0" text="Player" />
+            <TableColumn fx:id="checkersScoreColumn" prefWidth="75.0" text="Score" />
+         </columns>
+      </TableView>
+      <Label layoutX="66.0" layoutY="73.0" text="TIC TAC TOE" />
+      <Label layoutX="463.0" layoutY="73.0" text="CHECKERS" />
+      <Label layoutX="262.0" layoutY="73.0" text="CONNECT 4" />
    </children>
-</Pane>
+</AnchorPane>
