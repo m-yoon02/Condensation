@@ -19,7 +19,7 @@ public class HowToPlayConnect4Controller {
     private void goBack(ActionEvent event) throws IOException {
         Stage stage;
         Scene scene;
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/ca/ucalgary/seng300/p4/condensation/connect4-home.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/ConnectFourHomeMenu.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("Connect 4 - Menu");

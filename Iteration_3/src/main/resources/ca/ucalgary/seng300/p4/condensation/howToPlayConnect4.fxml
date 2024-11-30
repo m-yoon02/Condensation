@@ -7,7 +7,7 @@
 
 <?import javafx.scene.image.Image?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22.0.1"
-            stylesheets="@connect4-howtoplay.css"
+            stylesheets="@howToPlayConnect4.css"
             fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.HowToPlayConnect4Controller">
 
     <top>
