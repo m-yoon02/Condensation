@@ -19,4 +19,8 @@ public class CheckersHandlerTest {
     @Test
     public void makeMove() {
     }
+
+    @Test
+    public void testMakeMove() {
+    }
 }

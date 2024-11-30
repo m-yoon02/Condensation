@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-
 public class Connect4HandlerTest {
 
     @Before
@@ -18,5 +17,9 @@ public class Connect4HandlerTest {
 
     @Test
     public void makeMove() {
+    }
+
+    @Test
+    public void testMakeMove() {
     }
 }

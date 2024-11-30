@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-
 public class TicTacToeHandlerTest {
 
     @Before
@@ -18,5 +17,13 @@ public class TicTacToeHandlerTest {
 
     @Test
     public void makeMove() {
+    }
+
+    @Test
+    public void testMakeMove() {
+    }
+
+    @Test
+    public void checkForThreeInARow() {
     }
 }
