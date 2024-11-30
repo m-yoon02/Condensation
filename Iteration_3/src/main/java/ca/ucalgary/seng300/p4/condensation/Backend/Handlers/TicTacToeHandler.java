@@ -57,24 +57,34 @@ public class TicTacToeHandler extends GameHandler {
         }
     }
 
+    /**
+     * Checks if a given color has a three-in-a-row win (horizontal, vertical, or diagonal).
+     *
+     * @param color The {@link PieceColor} to check for a winning condition.
+     * @return {@code true} if the color has a three-in-a-row win; {@code false} otherwise.
+     */
     public boolean checkForThreeInARow(PieceColor color){
         return checkDiagonalWin(color)||checkHorizontalWin(color)||checkVerticalWin(color);
-
     }
+    /**
+     * Checks if a given color has a vertical three-in-a-row win.
+     *
+     * @param color The {@link PieceColor} to check for a vertical win.
+     * @return {@code true} if the color has a vertical three-in-a-row win; {@code false} otherwise.
+     */
     public boolean checkVerticalWin(PieceColor color){
         boolean win =false;
-        if (board.getAt(0,0)!=null && board.getAt(1,0)!=null && board.getAt(2,0)!=null) {
-            //colours of in first column
+        if (board.getAt(0,0)!=null && board.getAt(1,0)!=null && board.getAt(2,0)!=null){
+            //colours of in first diagonal
             PieceColor color1 = board.getAt(0, 0).getColor();
             PieceColor color2 = board.getAt(1, 0).getColor();
             PieceColor color3 = board.getAt(2, 0).getColor();
-            if (color1 == color && color2 == color && color3 == color) {
-                win = true;
+            if (color1==color && color2==color && color3==color){
+                win=true;
             }
-
         }
         if (board.getAt(0,1)!=null && board.getAt(1,1)!=null && board.getAt(2,1)!=null){
-            //colours of in second column
+            //colours of in first diagonal
             PieceColor color1 = board.getAt(0, 1).getColor();
             PieceColor color2 = board.getAt(1, 1).getColor();
             PieceColor color3 = board.getAt(2, 1).getColor();
@@ -82,9 +92,8 @@ public class TicTacToeHandler extends GameHandler {
                 win=true;
             }
         }
-
         if (board.getAt(0,2)!=null && board.getAt(1,2)!=null && board.getAt(2,2)!=null){
-            //colours of in third column
+            //colours of in first diagonal
             PieceColor color1 = board.getAt(0, 2).getColor();
             PieceColor color2 = board.getAt(1, 2).getColor();
             PieceColor color3 = board.getAt(2, 2).getColor();
@@ -92,10 +101,14 @@ public class TicTacToeHandler extends GameHandler {
                 win=true;
             }
         }
-
         return win;
     }
-
+    /**
+     * Checks if a given color has a horizontal three-in-a-row win.
+     *
+     * @param color The {@link PieceColor} to check for a horizontal win.
+     * @return {@code true} if the color has a horizontal three-in-a-row win; {@code false} otherwise.
+     */
     public boolean checkHorizontalWin(PieceColor color){
         boolean win =false;
         if (board.getAt(0,0)!=null && board.getAt(0,1)!=null && board.getAt(0,2)!=null){
@@ -105,26 +118,36 @@ public class TicTacToeHandler extends GameHandler {
             PieceColor color3 = board.getAt(0, 2).getColor();
             if (color1==color && color2==color && color3==color){
                 win=true;
-            } else if (board.getAt(1,0)!=null && board.getAt(1,1)!=null && board.getAt(1,2)!=null){
-                //colours of in first diagonal
-                color1 = board.getAt(1, 0).getColor();
-                color2 = board.getAt(1, 1).getColor();
-                color3 = board.getAt(1, 2).getColor();
-                if (color1==color && color2==color && color3==color){
-                    win=true;
-                }} else if (board.getAt(2,0)!=null && board.getAt(2,1)!=null && board.getAt(2,2)!=null){
-                //colours of in first diagonal
-                color1 = board.getAt(2, 0).getColor();
-                color2 = board.getAt(2, 1).getColor();
-                color3 = board.getAt(2, 2).getColor();
-                if (color1==color && color2==color && color3==color){
-                    win=true;
-                }
+            }
+        }
+        if (board.getAt(1,0)!=null && board.getAt(1,1)!=null && board.getAt(1,2)!=null){
+            //colours of in first diagonal
+            PieceColor color1 = board.getAt(1, 0).getColor();
+            PieceColor color2 = board.getAt(1, 1).getColor();
+            PieceColor color3 = board.getAt(1, 2).getColor();
+            if (color1==color && color2==color && color3==color){
+                win=true;
+            }
+        }
+        if (board.getAt(2,0)!=null && board.getAt(2,1)!=null && board.getAt(2,2)!=null){
+            //colours of in first diagonal
+            PieceColor color1 = board.getAt(2, 0).getColor();
+            PieceColor color2 = board.getAt(2, 1).getColor();
+            PieceColor color3 = board.getAt(2, 2).getColor();
+            if (color1==color && color2==color && color3==color){
+                win=true;
             }
         }
         return win;
     }
-    private boolean checkDiagonalWin(PieceColor color) {
+
+    /**
+     * Checks if a given color has a diagonal three-in-a-row win.
+     *
+     * @param color The {@link PieceColor} to check for a diagonal win.
+     * @return {@code true} if the color has a diagonal three-in-a-row win; {@code false} otherwise.
+     */
+    public boolean checkDiagonalWin(PieceColor color) {
         boolean win = false;
         if (board.getAt(0, 0) != null && board.getAt(1, 1) != null && board.getAt(2, 2) != null) {
             //colours of in first diagonal
@@ -133,14 +156,15 @@ public class TicTacToeHandler extends GameHandler {
             PieceColor color3 = board.getAt(2, 2).getColor();
             if (color1 == color && color2 == color && color3 == color) {
                 win = true;
-            } else if (board.getAt(0, 2) != null && board.getAt(1, 1) != null && board.getAt(2, 0) != null) {
-                //colours of in first diagonal
-                color1 = board.getAt(0, 2).getColor();
-                color2 = board.getAt(1, 1).getColor();
-                color3 = board.getAt(2, 0).getColor();
-                if (color1 == color && color2 == color && color3 == color) {
-                    win = true;
-                }
+            }
+        }
+        if (board.getAt(0, 2) != null && board.getAt(1, 1) != null && board.getAt(2, 0) != null) {
+            //colours of in first diagonal
+           PieceColor color1 = board.getAt(0, 2).getColor();
+           PieceColor color2 = board.getAt(1, 1).getColor();
+           PieceColor color3 = board.getAt(2, 0).getColor();
+            if (color1 == color && color2 == color && color3 == color) {
+                win = true;
             }
         }
         return win;
