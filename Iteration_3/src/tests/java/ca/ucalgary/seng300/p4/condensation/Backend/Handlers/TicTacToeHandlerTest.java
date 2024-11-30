@@ -1,19 +1,159 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Handlers;
 
+import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
+import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.MoveData;
+import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.ConnectFourPiece;
+import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.TicTacToePiece;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 public class TicTacToeHandlerTest {
 
+    private UUID p1ID;
+    private UUID p2ID;
+    private TicTacToeHandler ticTacToeHandler;
+
     @Before
     public void setUp() throws Exception {
+        p1ID = UUID.randomUUID();
+        p2ID = UUID.randomUUID();
+        ticTacToeHandler = new TicTacToeHandler(p1ID, p2ID);
     }
 
     @After
     public void tearDown() throws Exception {
+        p1ID = UUID.randomUUID();
+        p2ID = UUID.randomUUID();
+        ticTacToeHandler = new TicTacToeHandler(p1ID, p2ID);
     }
+
+
+    @Test
+    public void testMakeMove_ValidP1Move_UpdatesBoard() {
+        MoveData md = new MoveData(p1ID, new Vector2(0, 0));
+
+        ticTacToeHandler.makeMove(md);
+
+        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0,0);
+        assertNotNull("Piece should be played at the move coordinates", piece);
+        assertEquals("Piece colour is player colour", ticTacToeHandler.getPlayerColorFromUUID(p1ID), piece.getColor());
+    }
+
+
+    @Test
+    public void testMakeMove_ValidP2Move_UpdatesBoard() {
+        MoveData md = new MoveData(p2ID, new Vector2(0, 1));
+
+        ticTacToeHandler.makeMove(md);
+
+        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0,1);
+        assertNotNull("Piece should be played at the move coordinates", piece);
+        assertEquals("Piece colour is player colour", ticTacToeHandler.getPlayerColorFromUUID(p2ID), piece.getColor());
+    }
+
+
+    @Test
+    public void testMakeMove_InvalidP1Move_DoesNotUpdateBoard() {
+        MoveData md = new MoveData(p1ID, new Vector2(0, 0));
+        ticTacToeHandler.makeMove(md);
+
+        md = new MoveData(p2ID, new Vector2(0, 1));
+        ticTacToeHandler.makeMove(md);
+
+
+        md = new MoveData(p1ID, new Vector2(0, 1));
+        ticTacToeHandler.makeMove(md);
+
+        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0,1);
+
+        assertEquals("Player 1 cannot move in location that P2 occupies", ticTacToeHandler.getPlayerColorFromUUID(p2ID), piece.getColor());
+    }
+
+    @Test
+    public void testMakeMove_InvalidP2Move_DoesNotUpdateBoard() {
+        MoveData md = new MoveData(p1ID, new Vector2(0, 0));
+        ticTacToeHandler.makeMove(md);
+
+        md = new MoveData(p2ID, new Vector2(0, 1));
+        ticTacToeHandler.makeMove(md);
+
+
+        md = new MoveData(p1ID, new Vector2(0, 2));
+        ticTacToeHandler.makeMove(md);
+
+        md = new MoveData(p2ID, new Vector2(0, 2));
+        ticTacToeHandler.makeMove(md);
+
+        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0,2);
+
+        assertEquals("Player 2 cannot move in location that P1 occupies",ticTacToeHandler.getPlayerColorFromUUID(p1ID), piece.getColor());
+    }
+
+
+
+    @Test
+    public void testMakeMove_VerticalWinFirstColumn_DoesUpdateBoard() {
+        MoveData md = new MoveData(p1ID, new Vector2(0, 0));
+        ticTacToeHandler.makeMove(md);
+
+        md = new MoveData(p1ID, new Vector2(1, 0));
+        ticTacToeHandler.makeMove(md);
+
+
+        md = new MoveData(p1ID, new Vector2(2, 0));
+        ticTacToeHandler.makeMove(md);
+
+        //Player 1 should win in first column
+        assertTrue("Player 1 should win as all values in column 0 are the same", ticTacToeHandler.checkVerticalWin(ticTacToeHandler.getPlayerColorFromUUID(p1ID)));
+    }
+
+
+    @Test
+    public void testMakeMove_VerticalWinSecondColumn_DoesUpdateBoard() {
+        MoveData md = new MoveData(p1ID, new Vector2(0, 1));
+        ticTacToeHandler.makeMove(md);
+
+        md = new MoveData(p1ID, new Vector2(1, 1));
+        ticTacToeHandler.makeMove(md);
+
+
+        md = new MoveData(p1ID, new Vector2(2, 1));
+        ticTacToeHandler.makeMove(md);
+
+        PieceColor color = ticTacToeHandler.getPlayerColorFromUUID(p1ID);
+
+        //Player 1 should win in second column
+        assertTrue("Player 1 should win as all values in column 1 are the same", ticTacToeHandler.checkVerticalWin(color));
+    }
+
+    @Test
+    public void testMakeMove_VerticalWinThirdColumn_DoesUpdateBoard() {
+        MoveData md = new MoveData(p1ID, new Vector2(0, 2));
+        ticTacToeHandler.makeMove(md);
+
+        md = new MoveData(p1ID, new Vector2(1, 2));
+        ticTacToeHandler.makeMove(md);
+
+
+        md = new MoveData(p1ID, new Vector2(2, 2));
+        ticTacToeHandler.makeMove(md);
+
+//        System.out.printf("%s %s %s\n", ticTacToeHandler.getBoard().getAt(0,2).getColor(), ticTacToeHandler.getBoard().getAt(1,2).getColor(), ticTacToeHandler.getBoard().getAt(2,2).getColor());
+
+        PieceColor color = ticTacToeHandler.getPlayerColorFromUUID(p1ID);
+
+        //Player 1 should win in third column
+        assertTrue("Player 1 should win as all values in column 2 are the same", ticTacToeHandler.checkVerticalWin(color));
+    }
+
+
+
 
     @Test
     public void makeMove() {
