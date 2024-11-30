@@ -1,5 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.GameTimer;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -36,7 +39,7 @@ public class GameTimer {
      * Notifies all listeners that one of the player's timers has run out, passes the winning player ID
      * @param loserPlayerID the ID of the player whose timer has run out
      */
-    private void notifyTimerEnded(UUID loserPlayerID){
+    private void notifyTimerEnded(UUID loserPlayerID) throws IOException, ParseException {
         UUID winnerPlayerID = getOtherPlayerID(loserPlayerID);
         for (TimerEndListener listener: timerEndListeners){
             listener.onTimerEnd(winnerPlayerID);

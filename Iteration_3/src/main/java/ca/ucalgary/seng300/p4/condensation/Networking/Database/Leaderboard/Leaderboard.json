@@ -15,27 +15,7 @@
     "lossInTicTacToe": 10,
     "connect4Elo": 1902,
     "checkersElo": 1580,
-    "tictactoeElo": 1999,
-    "recentMatches": [
-      {
-        "matchID": "match_1",
-        "gameType": "TICTACTOE",
-        "outcome": "L",
-        "currentElo": 1057
-      },
-      {
-        "matchID": "match_2",
-        "gameType": "CONNECT4",
-        "outcome": "L",
-        "currentElo": 1424
-      },
-      {
-        "matchID": "match_3",
-        "gameType": "CONNECT4",
-        "outcome": "W",
-        "currentElo": 1003
-      }
-    ]
+    "tictactoeElo": 1999
   },
   {
     "username": "Morteza",
@@ -53,27 +33,7 @@
     "lossInTicTacToe": 8,
     "connect4Elo": 1911,
     "checkersElo": 1909,
-    "tictactoeElo": 1662,
-    "recentMatches": [
-      {
-        "matchID": "match_1",
-        "gameType": "TICTACTOE",
-        "outcome": "L",
-        "currentElo": 1080
-      },
-      {
-        "matchID": "match_2",
-        "gameType": "CONNECT4",
-        "outcome": "L",
-        "currentElo": 1489
-      },
-      {
-        "matchID": "match_3",
-        "gameType": "TICTACTOE",
-        "outcome": "L",
-        "currentElo": 1639
-      }
-    ]
+    "tictactoeElo": 1662
   },
   {
     "username": "Tysen",
@@ -91,27 +51,7 @@
     "lossInTicTacToe": 12,
     "connect4Elo": 1548,
     "checkersElo": 1854,
-    "tictactoeElo": 1764,
-    "recentMatches": [
-      {
-        "matchID": "match_1",
-        "gameType": "CONNECT4",
-        "outcome": "W",
-        "currentElo": 1593
-      },
-      {
-        "matchID": "match_2",
-        "gameType": "CONNECT4",
-        "outcome": "W",
-        "currentElo": 1757
-      },
-      {
-        "matchID": "match_3",
-        "gameType": "CONNECT4",
-        "outcome": "L",
-        "currentElo": 1499
-      }
-    ]
+    "tictactoeElo": 1764
   },
   {
     "username": "Hannah",
@@ -129,27 +69,7 @@
     "lossInTicTacToe": 5,
     "connect4Elo": 1952,
     "checkersElo": 1206,
-    "tictactoeElo": 1326,
-    "recentMatches": [
-      {
-        "matchID": "match_1",
-        "gameType": "CONNECT4",
-        "outcome": "L",
-        "currentElo": 1063
-      },
-      {
-        "matchID": "match_2",
-        "gameType": "CHECKERS",
-        "outcome": "L",
-        "currentElo": 1856
-      },
-      {
-        "matchID": "match_3",
-        "gameType": "TICTACTOE",
-        "outcome": "L",
-        "currentElo": 1038
-      }
-    ]
+    "tictactoeElo": 1326
   },
   {
     "username": "Richard",
@@ -167,32 +87,12 @@
     "lossInTicTacToe": 8,
     "connect4Elo": 1381,
     "checkersElo": 1725,
-    "tictactoeElo": 1089,
-    "recentMatches": [
-      {
-        "matchID": "match_1",
-        "gameType": "TICTACTOE",
-        "outcome": "W",
-        "currentElo": 1690
-      },
-      {
-        "matchID": "match_2",
-        "gameType": "CONNECT4",
-        "outcome": "W",
-        "currentElo": 1214
-      },
-      {
-        "matchID": "match_3",
-        "gameType": "TICTACTOE",
-        "outcome": "L",
-        "currentElo": 1876
-      }
-    ]
+    "tictactoeElo": 1089
   },
   {
     "username": "Alan",
     "password": "mypassword",
-    "playerUUID": "345e6789-e89d-45d5-a678-627836285538",
+    "playerUUID": "345e6789-e89d-45d5-a678-627836285111",
     "leaderBoardPosition": 3,
     "gamesPlayedCheckers": 40,
     "winsInCheckers": 20,
@@ -205,27 +105,7 @@
     "lossInTicTacToe": 7,
     "connect4Elo": 1665,
     "checkersElo": 1561,
-    "tictactoeElo": 1853,
-    "recentMatches": [
-      {
-        "matchID": "match_1",
-        "gameType": "TICTACTOE",
-        "outcome": "W",
-        "currentElo": 1759
-      },
-      {
-        "matchID": "match_2",
-        "gameType": "CONNECT4",
-        "outcome": "L",
-        "currentElo": 3499999
-      },
-      {
-        "matchID": "match_3",
-        "gameType": "CHECKERS",
-        "outcome": "W",
-        "currentElo": 1108
-      }
-    ]
+    "tictactoeElo": 1853
   },
   {
     "username": "Michelle",
@@ -243,27 +123,7 @@
     "lossInTicTacToe": 5,
     "connect4Elo": 1207,
     "checkersElo": 1749,
-    "tictactoeElo": 1916,
-    "recentMatches": [
-      {
-        "matchID": "match_1",
-        "gameType": "TICTACTOE",
-        "outcome": "L",
-        "currentElo": 1515
-      },
-      {
-        "matchID": "match_2",
-        "gameType": "CHECKERS",
-        "outcome": "L",
-        "currentElo": 1687
-      },
-      {
-        "matchID": "match_3",
-        "gameType": "CHECKERS",
-        "outcome": "L",
-        "currentElo": 1249
-      }
-    ]
+    "tictactoeElo": 1916
   },
   {
     "username": "cat",
@@ -281,26 +141,6 @@
     "lossInTicTacToe": 7,
     "connect4Elo": 1423,
     "checkersElo": 1227,
-    "tictactoeElo": 1324,
-    "recentMatches": [
-      {
-        "matchID": "match_1",
-        "gameType": "CHECKERS",
-        "outcome": "L",
-        "currentElo": 1600
-      },
-      {
-        "matchID": "match_2",
-        "gameType": "CHECKERS",
-        "outcome": "L",
-        "currentElo": 1794
-      },
-      {
-        "matchID": "match_3",
-        "gameType": "CONNECT4",
-        "outcome": "L",
-        "currentElo": 1199
-      }
-    ]
+    "tictactoeElo": 1324
   }
 ]
