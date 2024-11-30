@@ -23,6 +23,14 @@ public class Connect4Handler extends GameHandler {
         makeMove(MoveData.fromJSON(moveDataJSON));
     }
 
+    /**
+     * Simple board getter for testing purposes
+     * @return board
+     */
+    public GameBoard<ConnectFourPiece> getBoard() {
+        return board;
+    }
+
     // This is the main driver of your game logic.
     // Assume that this method is called whenever a player makes a move
     // You are to use the move data and translate it to the GameBoard
@@ -98,7 +106,7 @@ public class Connect4Handler extends GameHandler {
      * @param column, index of target column
      * @return the index of the lowest available row for specified column
      */
-    private int findAvailableRow(int column) {
+    public int findAvailableRow(int column) {
         // Iterates through the rows of the specified column from bottom to top.
         for(int row = board.getRowSize() - 1; row >= 0 ; row--){
             if (board.getAt(column, row) == null){
@@ -122,7 +130,7 @@ public class Connect4Handler extends GameHandler {
      * @return true if all cells in the top row are occupied (non-null);
      *         false if at least one cell in the top row is empty (null)
      */
-    private boolean allColumnsAreFull() {
+    public boolean allColumnsAreFull() {
         int TOP_ROW  = 0;
         // Loop through each column in the top row.
         for(int i = 0; i < board.getColumnSize(); i++ ){
@@ -149,7 +157,7 @@ public class Connect4Handler extends GameHandler {
      * @return true if the cell at the top row of the specified column is occupied (non-null);
      *         false if the cell is empty (null).
      */
-    private boolean columnIsFull(int column) {
+    public boolean columnIsFull(int column) {
         int TOP_ROW  = 0;
         // Check if the top row cell at the given column is empty.
         if (board.getAt(column, TOP_ROW) == null){
@@ -177,7 +185,7 @@ public class Connect4Handler extends GameHandler {
      * @return `true` if there are 4 consecutive pieces of the same color in any direction (vertical,
      *         horizontal, or diagonal), `false` otherwise.
      */
-    private boolean checkForConnectedFour(Vector2 piecePos){
+    public boolean checkForConnectedFour(Vector2 piecePos){
         // Extract row and column indices from the piece's position.
         int row = piecePos.y();
         int column = piecePos.x();
@@ -217,7 +225,7 @@ public class Connect4Handler extends GameHandler {
      *         `false` otherwise.
      */
 
-    private boolean winInRow(int rowIndex, PieceColor pieceColor) {
+    public boolean winInRow(int rowIndex, PieceColor pieceColor) {
         // Variable to track consecutive pieces of the same color in a row
         int chain = 0;
 
@@ -260,7 +268,7 @@ public class Connect4Handler extends GameHandler {
      *         `false` otherwise.
      */
 
-    private boolean winInColumn(int columnIndex, PieceColor pieceColor) {
+    public boolean winInColumn(int columnIndex, PieceColor pieceColor) {
         // Variable to track consecutive pieces of the same color in a column.
         int chain = 0;
 
@@ -304,7 +312,7 @@ public class Connect4Handler extends GameHandler {
      * @return `true` if there are 4 consecutive pieces of the given color along the diagonal,
      *         `false` otherwise.
      */
-    private boolean winInDiagonalBackslash(int rowIndex, int columnIndex, PieceColor pieceColor) {
+    public boolean winInDiagonalBackslash(int rowIndex, int columnIndex, PieceColor pieceColor) {
         int topRow;
         int leftCol;
 
@@ -361,7 +369,7 @@ public class Connect4Handler extends GameHandler {
      * @return `true` if there are 4 consecutive pieces of the given color along the diagonal,
      *         `false` otherwise.
      */
-    private boolean winInDiagonalFrontslash(int rowIndex, int columnIndex, PieceColor pieceColor) {
+    public boolean winInDiagonalFrontslash(int rowIndex, int columnIndex, PieceColor pieceColor) {
         // Variables to track the starting point of the diagonal traversal.
         int bottomRow;
         int leftCol;
