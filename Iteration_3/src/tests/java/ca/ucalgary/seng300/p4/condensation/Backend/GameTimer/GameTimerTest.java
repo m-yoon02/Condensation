@@ -1,6 +1,5 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.GameTimer;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -67,5 +66,4 @@ public class GameTimerTest {
         gameTimer.stopTimer();
         assertFalse("Timer should not be active", gameTimer.isActive());
     }
-
 }
