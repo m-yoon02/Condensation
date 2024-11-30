@@ -11,11 +11,11 @@
     <children>
         <TableView fx:id="tableView" layoutX="157.0" layoutY="90.0" prefHeight="365.0" prefWidth="484.0">
             <columns>
-                <TableColumn fx:id="gameColumn" prefWidth="60.0" text="Game" />
-                <TableColumn fx:id="outcomeColumn" prefWidth="98.4000244140625" text="Outcome" />
-                <TableColumn fx:id="currentEloColumn" prefWidth="102.39996337890625" text="Current Elo" />
-                <TableColumn fx:id="totalWinsColumn" prefWidth="103.19998168945312" text="Total Wins" />
-                <TableColumn fx:id="gamesPlayedColumn" prefWidth="118.4000244140625" text="Games Played" />
+                <TableColumn fx:id="gameColumn" prefWidth="96.800048828125" text="Game" />
+                <TableColumn fx:id="outcomeColumn" prefWidth="82.4000244140625" text="Outcome" />
+                <TableColumn fx:id="currentEloColumn" prefWidth="93.5999755859375" text="Current Elo" />
+                <TableColumn fx:id="totalWinsColumn" prefWidth="110.39993286132812" text="Total Wins" />
+                <TableColumn fx:id="gamesPlayedColumn" prefWidth="102.4000244140625" text="Games Played" />
             </columns>
         </TableView>
         <Label layoutX="229.0" layoutY="14.0" text="HOME-My Profile">
