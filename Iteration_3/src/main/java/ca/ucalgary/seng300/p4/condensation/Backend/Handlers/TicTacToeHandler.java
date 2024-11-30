@@ -20,21 +20,22 @@ public class TicTacToeHandler extends GameHandler {
         super(player1ID, player2ID, COLORS);
     }
 
+    @Override
+    public void makeMove(String moveDataJSON) {
+        makeMove(MoveData.fromJSON(moveDataJSON));
+    }
+
     // This is the main driver of your game logic.
     // Assume that this method is called whenever a player makes a move
     // You are to use the move data and translate it to the GameBoard
     // You are also required to check for game winning scenarios here
     // This will also notify when the game has ended, and which player's turn it is after the move
-
     /**
-     *  This is the main driver of your game logic. Allows player to make move
-     * @param moveDataJSON
-     * parses the data from the JSON string and uses it to place a piece accordingly.
+     * This is the main driver of your game logic. Allows player to make move
+     * @param moveData the Move data of the move made
      */
-    @Override
-    public void makeMove(String moveDataJSON) {
+    public void makeMove(MoveData moveData) {
         //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
-        MoveData moveData = MoveData.fromJSON(moveDataJSON);
         UUID playerID = moveData.getPlayerID();
         PieceColor color = getPlayerMemoFromUUID(moveData.getPlayerID()).pieceColor();
         Vector2 movePosition = moveData.getMovePosition();
@@ -46,7 +47,7 @@ public class TicTacToeHandler extends GameHandler {
             this.notifyGameEnd(GameResult.TIE,null);
         }
         else {
-            this.notifyTurnEnd(playerID, moveDataJSON);
+            this.notifyTurnEnd(playerID, "");
         }
     }
 
