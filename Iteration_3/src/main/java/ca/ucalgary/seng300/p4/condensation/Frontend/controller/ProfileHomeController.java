@@ -99,7 +99,16 @@ public class ProfileHomeController {
 
     //When this method is called, it will change the scene back to player profile page.
     @FXML
-    void onPlayerProfilesButtonClicked(ActionEvent event) {
+    void onPlayerProfilesButtonClicked(ActionEvent event) throws IOException {
+        System.out.println("opening player profile look up page");
+        // Add functionality to open the player profiles look up page
+        Parent gamesParent = FXMLLoader.load(HelloApplication.class.getResource("otherprofile.fxml"));
+        Scene gamesScene = new Scene(gamesParent);
+
+        //This line gets the Stage information
+        Stage window= (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(gamesScene);
+        window.show();
 
     }
 

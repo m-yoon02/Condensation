@@ -16,14 +16,8 @@ public class ProfileHomeApplication extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        /*FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("profileHome.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Home");
-        stage.setScene(scene);
-        stage.show();*/
+
     }
 
-    /*public static void main(String[] args) {
-        launch();
-    }*/
+
 }
