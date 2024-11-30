@@ -14,15 +14,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.awt.event.MouseEvent;
+import javafx.scene.input.MouseEvent;
+
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 
 public class LoginController {
 
-    public static final String DEFAULT_PLAYER_ID_FILE = "playerID.txt";
+    public static final String DEFAULT_PLAYER_ID_FILE = "playerID.json";
 
     @FXML
     private Button loginBtn;
@@ -92,8 +96,6 @@ public class LoginController {
     void continueToMain(MouseEvent event) throws IOException, ParseException {
         if(validateUser() && validatePass()) {
             errorMessage.setTextFill(Color.BLACK);
-            sendJSONObject();
-
             try {
                 loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/profileHome.fxml"));
                 root = loader.load();
@@ -122,8 +124,22 @@ public class LoginController {
     }
 
     public void sendJSONObject() throws IOException, ParseException {
-        JSONObject obj = createJSONObject();
-        NetworkManager.getNetworkInstance().signUpHandler(createJSONObject());
+        try {
+            JSONObject returnPayload = NetworkManager.getNetworkInstance().playerLoginHandler(createJSONObject());
+
+            JSONParser parser = new JSONParser();
+            FileWriter fileWriter = new FileWriter(DEFAULT_PLAYER_ID_FILE);
+            fileWriter.write(returnPayload.toJSONString());
+            fileWriter.flush();
+            fileWriter.close();
+        }
+        catch (Exception e){
+            String errorString = e.getMessage();
+            errorMessage.setTextFill(Color.RED);
+            errorMessage.setText(errorString);
+        }
+
+
     }
 
 
