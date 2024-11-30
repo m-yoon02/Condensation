@@ -1,7 +1,9 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import ca.ucalgary.seng300.p4.condensation.Frontend.leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,103 +13,143 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
 
 public class ProfileLeaderBController {
 
     @FXML
-    private TableView<LeaderboardEntry> ticTacToeTable;
+    private TableView<org.json.simple.JSONObject> ticTacToeTable;
 
     @FXML
-    private TableView<LeaderboardEntry> connect4Table;
+    private TableView<org.json.simple.JSONObject> connect4Table;
 
     @FXML
-    private TableView<LeaderboardEntry> checkersTable;
+    private TableView<org.json.simple.JSONObject> checkersTable;
 
     @FXML
-    private TableColumn<LeaderboardEntry, Integer> ticTacToeRankColumn;
+    private TableColumn<JSONObject, Integer> ticTacToeRankColumn;
 
     @FXML
-    private TableColumn<LeaderboardEntry, String> ticTacToePlayerColumn;
+    private TableColumn<JSONObject, String> ticTacToePlayerColumn;
 
     @FXML
-    private TableColumn<LeaderboardEntry, Integer> ticTacToeScoreColumn;
+    private TableColumn<JSONObject, Integer> ticTacToeScoreColumn;
 
     @FXML
-    private TableColumn<LeaderboardEntry, Integer> connect4RankColumn;
+    private TableColumn<JSONObject, Integer> connect4RankColumn;
 
     @FXML
-    private TableColumn<LeaderboardEntry, String> connect4PlayerColumn;
+    private TableColumn<JSONObject, String> connect4PlayerColumn;
 
     @FXML
-    private TableColumn<LeaderboardEntry, Integer> connect4ScoreColumn;
+    private TableColumn<JSONObject, Integer> connect4ScoreColumn;
 
     @FXML
-    private TableColumn<LeaderboardEntry, Integer> checkersRankColumn;
+    private TableColumn<JSONObject, Integer> checkersRankColumn;
 
     @FXML
-    private TableColumn<LeaderboardEntry, String> checkersPlayerColumn;
+    private TableColumn<JSONObject, String> checkersPlayerColumn;
 
     @FXML
-    private TableColumn<LeaderboardEntry, Integer> checkersScoreColumn;
+    private TableColumn<JSONObject, Integer> checkersScoreColumn;
 
 
     // Initialize method for setting up the leaderboard data
     @FXML
     public void initialize() {
-        // Set up table columns
-        ticTacToeRankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        ticTacToePlayerColumn.setCellValueFactory(new PropertyValueFactory<>("player"));
-        ticTacToeScoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+        // Configure Tic Tac Toe columns
+        ticTacToeRankColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Integer) cellData.getValue().get("rank")).intValue()).asObject());
+        ticTacToePlayerColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("username")));
+        ticTacToeScoreColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Long) cellData.getValue().get("tictactoeElo")).intValue()).asObject());
 
-        connect4RankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        connect4PlayerColumn.setCellValueFactory(new PropertyValueFactory<>("player"));
-        connect4ScoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+        // Configure Connect 4 columns
+        connect4RankColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Integer) cellData.getValue().get("rank")).intValue()).asObject());
+        connect4PlayerColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("username")));
+        connect4ScoreColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Long) cellData.getValue().get("connect4Elo")).intValue()).asObject());
 
-        checkersRankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        checkersPlayerColumn.setCellValueFactory(new PropertyValueFactory<>("player"));
-        checkersScoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+        // Configure Checkers columns
+        checkersRankColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Integer) cellData.getValue().get("rank")).intValue()).asObject());
+        checkersPlayerColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("username")));
+        checkersScoreColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Long) cellData.getValue().get("checkersElo")).intValue()).asObject());
 
-        // Load sample data
-        loadSampleData();  //TODO: Should be connected with the networking team
+        // Load leaderboard data dynamically
+        loadLeaderboardData();
     }
+
 
     //this is just the sample data to see how the table looks like  //TODO: connect with networking
-    private void loadSampleData() {
-        ObservableList<LeaderboardEntry> ticTacToeData = FXCollections.observableArrayList(
-                new LeaderboardEntry(1, "A", 100),
-                new LeaderboardEntry(2, "B", 80),
-                new LeaderboardEntry(3, "C", 60),
-                new LeaderboardEntry(4, "D", 95),
-                new LeaderboardEntry(5, "E", 85)
-        );
+    private void loadLeaderboardData() {
+        try {
+            // Get the leaderboard instance
+            Leaderboard leaderboard = Leaderboard.getInstance("path_to_your_data_file.json");
 
-        ObservableList<LeaderboardEntry> connect4Data = FXCollections.observableArrayList(
-                new LeaderboardEntry(1, "F", 85),
-                new LeaderboardEntry(2, "G", 75),
-                new LeaderboardEntry(3, "H", 100),
-                new LeaderboardEntry(4, "I", 90),
-                new LeaderboardEntry(5, "J", 85)
-        );
+            // Create observable lists for each game
+            ObservableList<org.json.simple.JSONObject> ticTacToeData = FXCollections.observableArrayList();
+            ObservableList<org.json.simple.JSONObject> connect4Data = FXCollections.observableArrayList();
+            ObservableList<org.json.simple.JSONObject> checkersData = FXCollections.observableArrayList();
 
-        ObservableList<LeaderboardEntry> checkersData = FXCollections.observableArrayList(
-                new LeaderboardEntry(1, "K", 100),
-                new LeaderboardEntry(2, "L", 90),
-                new LeaderboardEntry(3, "M", 70),
-                new LeaderboardEntry(4, "N", 85),
-                new LeaderboardEntry(5, "O", 85)
-        );
+            // Populate the data
+            leaderboard.getAllUsers().forEach(user -> {
+                org.json.simple.JSONObject userObject = (org.json.simple.JSONObject) user;
 
-        // Set data to tables
-        ticTacToeTable.setItems(ticTacToeData);
-        connect4Table.setItems(connect4Data);
-        checkersTable.setItems(checkersData);
+                // Add the user to each game's leaderboard
+                ticTacToeData.add(userObject);
+                connect4Data.add(userObject);
+                checkersData.add(userObject);
+            });
+
+            // Sort the data by score for each game
+            ticTacToeData.sort((o1, o2) -> Long.compare((Long) o2.get("tictactoeElo"), (Long) o1.get("tictactoeElo")));
+            connect4Data.sort((o1, o2) -> Long.compare((Long) o2.get("connect4Elo"), (Long) o1.get("connect4Elo")));
+            checkersData.sort((o1, o2) -> Long.compare((Long) o2.get("checkersElo"), (Long) o1.get("checkersElo")));
+
+            // Assign ranks AFTER sorting
+            for (int i = 0; i < ticTacToeData.size(); i++) {
+                ticTacToeData.get(i).put("rank", i + 1); // Rank starts at 1
+            }
+            for (int i = 0; i < connect4Data.size(); i++) {
+                connect4Data.get(i).put("rank", i + 1); // Rank starts at 1
+            }
+            for (int i = 0; i < checkersData.size(); i++) {
+                checkersData.get(i).put("rank", i + 1); // Rank starts at 1
+            }
+
+            // Debug: Print sorted data with ranks
+            System.out.println("Tic Tac Toe Data After Sorting:");
+            ticTacToeData.forEach(data -> System.out.println(data));
+
+            System.out.println("Connect 4 Data After Sorting:");
+            connect4Data.forEach(data -> System.out.println(data));
+
+            System.out.println("Checkers Data After Sorting:");
+            checkersData.forEach(data -> System.out.println(data));
+
+            // Set the data to the tables
+            ticTacToeTable.setItems(ticTacToeData);
+            connect4Table.setItems(connect4Data);
+            checkersTable.setItems(checkersData);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading leaderboard data.");
+        }
     }
+
+
+
 
     //back to home
     @FXML
@@ -119,112 +161,8 @@ public class ProfileLeaderBController {
         Scene gamesScene = new Scene(gamesParent);
 
         //This line gets the Stage information
-        Stage window= (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(gamesScene);
         window.show();
     }
-
-    // Helper class for leaderboard entries
-    public static class LeaderboardEntry {
-        private final int rank;
-        private final String player;
-        private final int score;
-
-        public LeaderboardEntry(int rank, String player, int score) {
-            this.rank = rank;
-            this.player = player;
-            this.score = score;
-        }
-
-        public int getRank() {
-            return rank;
-        }
-
-        public String getPlayer() {
-            return player;
-        }
-
-        public int getScore() {
-            return score;
-        }
-    }
 }
-
-/*package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
-
-
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-
-public class ProfileLeaderBController {
-
-    @FXML
-    private Button btnHome;
-
-    @FXML
-    private TableView<?> tableView1;
-
-    @FXML
-    private TableView<?> tableView2;
-
-    @FXML
-    private TableView<?> tableView3;
-
-    @FXML
-    private TableColumn<?, ?> colRank1;
-
-    @FXML
-    private TableColumn<?, ?> colPlayer1;
-
-    @FXML
-    private TableColumn<?, ?> colScore1;
-
-    @FXML
-    private TableColumn<?, ?> colRank2;
-
-    @FXML
-    private TableColumn<?, ?> colPlayer2;
-
-    @FXML
-    private TableColumn<?, ?> colScore2;
-
-    @FXML
-    private TableColumn<?, ?> colRank3;
-
-    @FXML
-    private TableColumn<?, ?> colPlayer3;
-
-    @FXML
-    private TableColumn<?, ?> colScore3;
-
-    @FXML
-    private Label lblLeaderboard;
-
-    @FXML
-    private Label lblTicTacToe;
-
-    @FXML
-    private Label lblCheckers;
-
-    @FXML
-    private Label lblConnect4;
-
-    @FXML
-    private void initialize() {
-        // Initialization logic here
-        lblLeaderboard.setText("Leaderboard");
-        lblTicTacToe.setText("TIC TAC TOE");
-        lblCheckers.setText("CHECKERS");
-        lblConnect4.setText("CONNECT 4");
-    }
-
-    @FXML
-    private void handleHome() {
-        System.out.println("Home button clicked!");
-        // Add logic to handle the Home button click, like navigating to the home screen
-    }
-}
-*/

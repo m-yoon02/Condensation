@@ -8,13 +8,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileHomeController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileHomeController">
     <children>
-        <TableView fx:id="tableView" layoutX="157.0" layoutY="90.0" prefHeight="265.0" prefWidth="384.0">
+        <TableView fx:id="tableView" layoutX="157.0" layoutY="90.0" prefHeight="365.0" prefWidth="484.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="Date" />
-                <TableColumn prefWidth="75.0" text="Game" />
-                <TableColumn prefWidth="75.0" text="Score" />
+                <TableColumn fx:id="gameColumn" prefWidth="60.0" text="Game" />
+                <TableColumn fx:id="outcomeColumn" prefWidth="75.0" text="Outcome" />
+                <TableColumn fx:id="currentEloColumn" prefWidth="75.0" text="Current Elo" />
+                <TableColumn fx:id="totalWinsColumn" prefWidth="75.0" text="Total Wins" />
+                <TableColumn fx:id="gamesPlayedColumn" prefWidth="90.0" text="Games Played" />
             </columns>
         </TableView>
         <Label layoutX="229.0" layoutY="14.0" text="HOME-My Profile">
@@ -22,10 +24,13 @@
                 <Font size="21.0" />
             </font>
         </Label>
-        <TextField fx:id="usernameField" layoutX="158.0" layoutY="52.0" prefHeight="30.0" prefWidth="326.0" promptText="username" />
-        <Button fx:id="leaderboardButton" layoutX="36.0" layoutY="167.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Leaderboard"  onAction="#onLeaderboardButtonClicked" />
+        <Label fx:id="usernameField" layoutX="158.0" layoutY="52.0" text="PlayerOne">
+            <font>
+                <Font size="21.0" />
+            </font>
+        </Label>        <Button fx:id="leaderboardButton" layoutX="36.0" layoutY="167.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Leaderboard"  onAction="#onLeaderboardButtonClicked" />
         <Button fx:id="gamesButton" layoutX="34.0" layoutY="273.0" mnemonicParsing="false"  prefHeight="30.0" prefWidth="96.0" text="Games" onAction="#onGamesButtonClicked"/>
         <Button fx:id="playerProfilesButton" layoutX="35.0" layoutY="219.0" mnemonicParsing="false" text="Player Profile" />
-        <Button fx:id="logoutButton" layoutX="489.0" layoutY="363.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Log out" />
+        <Button fx:id="logoutButton" layoutX="489.0" layoutY="463.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Log out" />
     </children>
 </AnchorPane>
