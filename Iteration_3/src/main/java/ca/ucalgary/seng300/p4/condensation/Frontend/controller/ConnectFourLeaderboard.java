@@ -116,6 +116,7 @@ public class ConnectFourLeaderboard {
 
     private Scene scene;
 
+    /*
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/ca/ucalgary/seng300/p4/condensation/ConnectFourHomeMenu.fxml"));
@@ -125,4 +126,5 @@ public class ConnectFourLeaderboard {
         stage.setScene(scene);
         stage.show();
     }
+     */
 }
