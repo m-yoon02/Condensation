@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class MatchmakingPool {
     private static List<QueuedPlayerMemo> pool = new ArrayList<>();
-    private final String DATA_FILE = "/Users/nateshoad/Desktop/University /Java_Files/SENG300F24P/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
+    private final String DATA_FILE = "/Users/samuelergando/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
 
 
 
@@ -60,8 +60,6 @@ public class MatchmakingPool {
 
     public void fetch4RandomPlayers() throws IOException, ParseException {
         ArrayList<JSONObject> UUIDarrayList = new ArrayList<>();
-
-
         for (Object object : Leaderboard.getInstance(DATA_FILE).getAllUsers()) {
             JSONObject jsonObject = (JSONObject) object;
             jsonObject.get("playerUUID");
@@ -83,11 +81,8 @@ public class MatchmakingPool {
 
         int index = 0;
         for (JSONObject jsonObject : UUIDarrayList) {
-
-            UUID playerID = UUID.fromString(new String((String) jsonObject.get("playerUUID")));
-
-            // Convert elo from Long to int
-            int elo = ((Long) jsonObject.get("elo")).intValue();
+            UUID playerID = UUID.fromString((String) jsonObject.get("playerUUID"));
+            int elo = (Integer) jsonObject.get("checkersElo");
 
             // Get the game type based on the current index
             GameTypes currentGameType = gameTypes[index];
