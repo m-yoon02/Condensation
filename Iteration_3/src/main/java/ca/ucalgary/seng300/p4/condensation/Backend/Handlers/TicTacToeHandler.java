@@ -160,9 +160,9 @@ public class TicTacToeHandler extends GameHandler {
         }
         if (board.getAt(0, 2) != null && board.getAt(1, 1) != null && board.getAt(2, 0) != null) {
             //colours of in first diagonal
-           PieceColor color1 = board.getAt(0, 2).getColor();
-           PieceColor color2 = board.getAt(1, 1).getColor();
-           PieceColor color3 = board.getAt(2, 0).getColor();
+            PieceColor color1 = board.getAt(0, 2).getColor();
+            PieceColor color2 = board.getAt(1, 1).getColor();
+            PieceColor color3 = board.getAt(2, 0).getColor();
             if (color1 == color && color2 == color && color3 == color) {
                 win = true;
             }
