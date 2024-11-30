@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane stylesheets="@connect4-board.css" xmlns="http://javafx.com/javafx/22.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ConnectFourController">
+
+    <!-- Title -->
+    <top>
+        <Text styleClass="title-text" text="Connect 4" BorderPane.alignment="CENTER"/>
+    </top>
+
+    <!-- Game Layout -->
+    <center>
+        <HBox spacing="10" prefHeight="600" prefWidth="800">
+            <GridPane fx:id="connectFourGrid" alignment="CENTER" HBox.hgrow="ALWAYS" styleClass="game-board">
+                <rowConstraints>
+                    <RowConstraints percentHeight="16.67"/>
+                    <RowConstraints percentHeight="16.67"/>
+                    <RowConstraints percentHeight="16.67"/>
+                    <RowConstraints percentHeight="16.67"/>
+                    <RowConstraints percentHeight="16.67"/>
+                    <RowConstraints percentHeight="16.67"/>
+                </rowConstraints>
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="14.29"/>
+                    <ColumnConstraints percentWidth="14.29"/>
+                    <ColumnConstraints percentWidth="14.29"/>
+                    <ColumnConstraints percentWidth="14.29"/>
+                    <ColumnConstraints percentWidth="14.29"/>
+                    <ColumnConstraints percentWidth="14.29"/>
+                    <ColumnConstraints percentWidth="14.29"/>
+                </columnConstraints>
+
+                <!-- Buttons for Connect 4 Slots -->
+                <Button fx:id="btn00" styleClass="game-button" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <Button fx:id="btn01" styleClass="game-button" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <Button fx:id="btn02" styleClass="game-button" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                <Button fx:id="btn03" styleClass="game-button" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                <Button fx:id="btn04" styleClass="game-button" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+                <Button fx:id="btn05" styleClass="game-button" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
+                <Button fx:id="btn06" styleClass="game-button" GridPane.columnIndex="6" GridPane.rowIndex="0"/>
+
+                <Button fx:id="btn10" styleClass="game-button" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <Button fx:id="btn11" styleClass="game-button" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Button fx:id="btn12" styleClass="game-button" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                <Button fx:id="btn13" styleClass="game-button" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                <Button fx:id="btn14" styleClass="game-button" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                <Button fx:id="btn15" styleClass="game-button" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
+                <Button fx:id="btn16" styleClass="game-button" GridPane.columnIndex="6" GridPane.rowIndex="1"/>
+
+                <Button fx:id="btn20" styleClass="game-button" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <Button fx:id="btn21" styleClass="game-button" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Button fx:id="btn22" styleClass="game-button" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                <Button fx:id="btn23" styleClass="game-button" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+                <Button fx:id="btn24" styleClass="game-button" GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+                <Button fx:id="btn25" styleClass="game-button" GridPane.columnIndex="5" GridPane.rowIndex="2"/>
+                <Button fx:id="btn26" styleClass="game-button" GridPane.columnIndex="6" GridPane.rowIndex="2"/>
+
+                <Button fx:id="btn30" styleClass="game-button" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <Button fx:id="btn31" styleClass="game-button" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Button fx:id="btn32" styleClass="game-button" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                <Button fx:id="btn33" styleClass="game-button" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+                <Button fx:id="btn34" styleClass="game-button" GridPane.columnIndex="4" GridPane.rowIndex="3"/>
+                <Button fx:id="btn35" styleClass="game-button" GridPane.columnIndex="5" GridPane.rowIndex="3"/>
+                <Button fx:id="btn36" styleClass="game-button" GridPane.columnIndex="6" GridPane.rowIndex="3"/>
+
+                <Button fx:id="btn40" styleClass="game-button" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <Button fx:id="btn41" styleClass="game-button" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Button fx:id="btn42" styleClass="game-button" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+                <Button fx:id="btn43" styleClass="game-button" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+                <Button fx:id="btn44" styleClass="game-button" GridPane.columnIndex="4" GridPane.rowIndex="4"/>
+                <Button fx:id="btn45" styleClass="game-button" GridPane.columnIndex="5" GridPane.rowIndex="4"/>
+                <Button fx:id="btn46" styleClass="game-button" GridPane.columnIndex="6" GridPane.rowIndex="4"/>
+
+                <Button fx:id="btn50" styleClass="game-button" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <Button fx:id="btn51" styleClass="game-button" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                <Button fx:id="btn52" styleClass="game-button" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+                <Button fx:id="btn53" styleClass="game-button" GridPane.columnIndex="3" GridPane.rowIndex="5"/>
+                <Button fx:id="btn54" styleClass="game-button" GridPane.columnIndex="4" GridPane.rowIndex="5"/>
+                <Button fx:id="btn55" styleClass="game-button" GridPane.columnIndex="5" GridPane.rowIndex="5"/>
+                <Button fx:id="btn56" styleClass="game-button" GridPane.columnIndex="6" GridPane.rowIndex="5"/>
+            </GridPane>
+
+
+            <!-- Left Section: Chatbox and Player Turn -->
+            <VBox minWidth="-Infinity" prefHeight="423.0" prefWidth="102.0" spacing="20" styleClass="chat-container">
+                <Label fx:id="playerTurnLabel" prefHeight="27.0" prefWidth="73.0" styleClass="turn-label"
+                       text="Player 1's Turn"/>
+                <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="chat-box">
+                    <TextArea fx:id="chatArea" editable="false" wrapText="true"/>
+                </ScrollPane>
+                <HBox alignment="CENTER_LEFT" spacing="5">
+                    <TextField fx:id="chatInput" promptText="message..." HBox.hgrow="ALWAYS"/>
+                    <Button onAction="#sendMessage" text="Send"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+    <!-- Bottom Section: Forfeit Button -->
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Button fx:id="forfeitButton" onAction="#handleForfeit" styleClass="forfeit-button" text="Forfeit"/>
+        </HBox>
+    </bottom>
+</BorderPane>

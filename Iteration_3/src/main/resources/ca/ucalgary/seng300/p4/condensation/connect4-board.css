@@ -1,0 +1,95 @@
+/* Title */
+.title-text {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 20 0 20 0;
+}
+
+/* GridPane styling */
+.game-board {
+    -fx-padding: 15px;
+    -fx-border-color: #34495e;
+    -fx-border-width: 4px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+/* Chatbox Styling */
+.chat-container {
+    -fx-padding: 10px;
+    -fx-background-color: #ecf0f1;
+}
+
+.chat-box {
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#chatArea {
+    -fx-font-size: 14px;
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 5px;
+}
+
+#chatInput {
+    -fx-font-size: 14px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+}
+
+/* Turn label */
+.turn-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* Forfeit Button */
+.forfeit-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Style for game buttons */
+.game-button {
+    -fx-background-color: #ecf0f1; /* Light gray for empty slots */
+    -fx-border-color: #7f8c8d;
+    -fx-border-width: 2px;
+    -fx-min-width: 60px;
+    -fx-min-height: 60px;
+    -fx-max-width: 60px;
+    -fx-max-height: 60px;
+    -fx-shape: "M0,30a30,30 0 1,1 60,0a30,30 0 1,1 -60,0"; /* Circular button */
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 8, 0.5, 0, 2);
+}
+
+/* Hover effect for game buttons */
+.game-button:hover {
+    -fx-background-color: #bdc3c7; /* Slightly darker gray on hover */
+}
+
+/* Style for red player */
+.game-button.red {
+    -fx-background-color: #e74c3c; /* Red player color */
+    -fx-border-color: #c0392b;
+}
+
+/* Style for blue player */
+.game-button.blue {
+    -fx-background-color: #3498db; /* Blue player color */
+    -fx-border-color: #2980b9;
+}
+
+/* Disable buttons when the game ends */
+.game-button:disabled {
+    -fx-opacity: 0.6;
+    -fx-cursor: not-allowed;
+}
