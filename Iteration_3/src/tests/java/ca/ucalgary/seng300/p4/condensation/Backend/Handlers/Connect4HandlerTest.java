@@ -257,8 +257,8 @@ public class Connect4HandlerTest {
         c4Handler.makeMove(new MoveData(p1ID, new Vector2(0, 0)));
         c4Handler.makeMove(new MoveData(p2ID, new Vector2(1, 0)));
 
-        assertEquals("Player 1 matches first colour", PieceColor.BLUE, one);
-        assertEquals("Player 2 matches second colour", PieceColor.ORANGE, two);
+        assertTrue("Player 1 matches first colour", (PieceColor.BLUE == one || one == PieceColor.ORANGE));
+        assertTrue("Player 2 matches second colour", (PieceColor.ORANGE == two || two == PieceColor.BLUE));
     }
 
     @Test

@@ -5,40 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40287579-ba61-419b-92f4-2ad90cf1a329" name="Changes" comment="Merge backend into CheckersHandler">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/DTOs/PlayerMemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Enums/GameResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/GameEndListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/TicTacToePiece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iteration_3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Board/GameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Board/GameBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Board/StateChange.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Board/TypeChange.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/DTOs/PlayerMemo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/DTOs/Vector2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/DTOs/Vector2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Enums/GameResult.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Enums/PieceColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Enums/PieceColor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/GameTimer/GameTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/GameTimer/GameTimer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/GameTimer/TimerEndListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/GameTimer/TimerEndListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/CheckersHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/CheckersHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/Connect4Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/Connect4Handler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/GameEndListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/GameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/IGameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/IGameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/TicTacToeHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/TicTacToeHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/TurnEndListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/TurnEndListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/MoveData/CheckersMoveData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/MoveData/CheckersMoveData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/MoveData/JSONParseResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/MoveData/JSONParseResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/MoveData/MoveData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/MoveData/MoveData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Pieces/CheckersPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/CheckersPiece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Pieces/ConnectFourPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/ConnectFourPiece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Pieces/GamePiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/GamePiece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Pieces/TicTacToePiece.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/condensation/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/notes/json_format.md" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/notes/json_format.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/condensation/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/DTOs/PlayerMemo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/DTOs/Vector2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Enums/GameResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Enums/PieceColor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/GameBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/GameTimer/GameTimer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/GameTimer/TimerEndListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/CheckersHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/Connect4Handler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/GameEndListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/GameHandler$EndGameOnTimerEndListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/GameHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/IGameHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/TicTacToeHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Handlers/TurnEndListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/MoveData/CheckersMoveData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/MoveData/MoveData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Pieces/CheckersPiece.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Pieces/ConnectFourPiece.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Pieces/GamePiece.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/Backend/Pieces/TicTacToePiece.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/HelloApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/HelloController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/condensation/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/target/classes/module-info.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Board/GameBoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Board/GameBoardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/DTOs/PlayerMemoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/DTOs/PlayerMemoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/DTOs/Vector2Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/DTOs/Vector2Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/GameTimer/GameTimerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/GameTimer/GameTimerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/CheckersHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/CheckersHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/Connect4HandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/Connect4HandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/GameEndListenerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/GameEndListenerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/GameHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/GameHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/IGameHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/IGameHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/TicTacToeHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/TicTacToeHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/TurnEndListenerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/TurnEndListenerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/MoveData/CheckersMoveDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/MoveData/CheckersMoveDataTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/MoveData/JSONParseResultTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/MoveData/JSONParseResultTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/MoveData/MoveDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/MoveData/MoveDataTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/CheckersPieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/CheckersPieceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/ConnectFourPieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/ConnectFourPieceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/GamePieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/GamePieceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tests/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/TicTacToePieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Pieces/TicTacToePieceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,9 +77,22 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.HelloApplication.executor": "Run",
+    "JUnit.All in condensation.executor": "Run",
+    "JUnit.Backend in condensation.executor": "Coverage",
+    "JUnit.Connect4HandlerTest.executor": "Coverage",
+    "JUnit.Connect4HandlerTest.testMakeMove_InvalidCoordinates_IgnoresMove.executor": "Run",
+    "JUnit.Connect4HandlerTest.testPlacePiece_PiecesAtBoardEdges.executor": "Run",
+    "JUnit.GameBoardTest.executor": "Coverage",
+    "JUnit.GameTimerTest.executor": "Coverage",
+    "JUnit.Handlers in condensation.executor": "Run",
+    "JUnit.ca.ucalgary.seng300.p4.condensation in condensation.executor": "Run",
+    "JUnit.ca.ucalgary.seng300.p4.condensation.Backend in condensation.executor": "Run",
+    "JUnit.ca.ucalgary.seng300.p4.condensation.Backend.Handlers in condensation.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging Connect4Handler",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "sam__test",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/abach/Documents/UniversityWork/SENG_300/seng300-f24-project",
     "node.js.detected.package.eslint": "true",
@@ -76,17 +100,84 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "advanced.settings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\king-\Documents\fall2024\seng300p\seng300-f24-project\Iteration_3\src\tests\java" />
+      <recent name="C:\Users\king-\Documents\fall2024\seng300p\seng300-f24-project\Iteration_3\temp" />
+      <recent name="C:\Users\king-\Documents\fall2024\seng300p\seng300-f24-project\Iteration_3\src" />
+      <recent name="C:\Users\king-\Documents\fall2024\seng300p\seng300-f24-project\Iteration_3\src\main\java" />
       <recent name="$PROJECT_DIR$/Iteration_3/src/main/java" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="ca.ucalgary.seng300.p4.condensation.Backend.Handlers" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.java in condensation">
+    <configuration name="All in condensation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Backend in condensation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Handlers in condensation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ca.ucalgary.seng300.p4.condensation.Backend in condensation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Backend" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in condensation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/Iteration_3/src/tests/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.java in condensation" />
+        <item itemvalue="JUnit.Backend in condensation" />
+        <item itemvalue="JUnit.Handlers in condensation" />
+        <item itemvalue="JUnit.All in condensation" />
+        <item itemvalue="JUnit.ca.ucalgary.seng300.p4.condensation.Backend in condensation" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -108,6 +199,7 @@
       <workItem from="1732837430764" duration="733000" />
       <workItem from="1732838181499" duration="19000" />
       <workItem from="1732839024227" duration="1889000" />
+      <workItem from="1732973966237" duration="6645000" />
     </task>
     <task id="LOCAL-00001" summary="Restructure networking project">
       <option name="closed" value="true" />
@@ -158,5 +250,18 @@
     <MESSAGE value="Restructure networking project" />
     <MESSAGE value="Merge backend into CheckersHandler" />
     <option name="LAST_COMMIT_MESSAGE" value="Merge backend into CheckersHandler" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/seng300_f24_project$Connect4HandlerTest.ic" NAME="Connect4HandlerTest Coverage Results" MODIFIED="1732978774582" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Backend.Handlers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$GameBoardTest.ic" NAME="GameBoardTest Coverage Results" MODIFIED="1732978738329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Backend.Board.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$GameTimerTest.ic" NAME="GameTimerTest Coverage Results" MODIFIED="1732978752578" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Backend.GameTimer.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$Backend_in_condensation.ic" NAME="Backend in condensation Coverage Results" MODIFIED="1732980353235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/seng300_f24_project$All_in_condensation.ic" NAME="All in condensation Coverage Results" MODIFIED="1732975770472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>
