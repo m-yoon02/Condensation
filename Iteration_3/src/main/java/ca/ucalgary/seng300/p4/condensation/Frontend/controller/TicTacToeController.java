@@ -2,6 +2,8 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
+import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
+import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
@@ -9,7 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+import javafx.scene.control.Label;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.Objects;
@@ -34,7 +38,10 @@ public class TicTacToeController {
     public UUID newTurn;
 
     @FXML
-    public void initialize() {
+    public Label playerStatus;
+
+    @FXML
+    public void initialize() throws IOException, ParseException {
 
         buttons = new Button[][] {
                 {btn00, btn01, btn02},
@@ -46,6 +53,13 @@ public class TicTacToeController {
         playerTwo = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
         newTurn = playerOne;
 
+        QueuedPlayerMemo queuePlayerOneMemo = new QueuedPlayerMemo(playerOne, GameTypes.TICTACTOE, 1662);
+        QueuedPlayerMemo queuedPlayerTwoMemo = new QueuedPlayerMemo(playerTwo,GameTypes.TICTACTOE, 1999);
+        GameSession newGameSession = new GameSession(queuePlayerOneMemo, queuedPlayerTwoMemo);
+        sessionID = newGameSession.getSessionId();
+
+        playerStatus.setText("RED TURN - YOUR TURN");
+        playerStatus.setTextFill(Color.RED);
     }
     public void receiveFromBackendTicTacToe(JSONObject backendUpdate){
         String win_or_not_win = (String) backendUpdate.get("UpdateType");
@@ -83,6 +97,14 @@ public class TicTacToeController {
                     }
                 }
                 rowIndex += 1;
+            }
+            if (newTurn.equals(playerTwo)){
+                playerStatus.setText("BLUE TURN - OPPONENT'S TURN");
+                playerStatus.setTextFill(Color.BLUE);
+            }
+            else{
+                playerStatus.setText("RED TURN - YOUR TURN");
+                playerStatus.setTextFill(Color.RED);
             }
         }
     }
@@ -123,13 +145,13 @@ public class TicTacToeController {
             JSONObject ticTacToeJSON = new JSONObject();
             ticTacToeJSON.put("SessionID", sessionID);
             if (newTurn == playerOne){
-                ticTacToeJSON.put("PlayerID", playerOne);
+                ticTacToeJSON.put("playerID", playerOne.toString());
             }
             else{
-                ticTacToeJSON.put("Player ID", playerTwo);
+                ticTacToeJSON.put("playerID", playerTwo.toString());
             }
             ticTacToeJSON.put("New Position", new Vector2(row, col));
-            ticTacToeJSON.put("GameType", GameTypes.TICTACTOE);
+            ticTacToeJSON.put("gameType", GameTypes.TICTACTOE);
             numberOfPiecesOnBoard += 1;
             System.out.println(ticTacToeJSON);
             JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(ticTacToeJSON);

@@ -287,19 +287,19 @@ public class NetworkManager {
         GameTypes gameType = (GameTypes) queuedPlayerPayload.get("gameType");
         JSONObject player1 = Leaderboard.getInstance(DATA_FILE).findUserById(player1UUID);
 
-        int elo = 0;
+        Number elo = 0;
         switch(gameType){
             case CHECKERS -> {
-                 elo = (int) player1.get("checkersElo");
+                 elo = (Number) player1.get("checkersElo");
             }
             case TICTACTOE -> {
-                elo = (int) player1.get("tictactoeElo");
+                elo = (Number) player1.get("tictactoeElo");
             }
             case CONNECT4 -> {
-                elo = (int) player1.get("connect4Elo");
+                elo = (Number) player1.get("connect4Elo");
             }
         }
-        QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo(player1UUID, gameType, elo);           // now can make the queu
+        QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo(player1UUID, gameType, elo.intValue());           // now can make the queu
 
         // to do the matchmaking logic, remember to make sure that we add Player1 to the start of the matchmaking pool
         // we need to do the .random for the matchmaking pool
