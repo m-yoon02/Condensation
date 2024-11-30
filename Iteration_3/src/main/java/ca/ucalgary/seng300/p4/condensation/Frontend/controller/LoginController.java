@@ -4,6 +4,7 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -26,7 +27,7 @@ import java.io.IOException;
 
 public class LoginController {
 
-    public static final String DEFAULT_PLAYER_ID_FILE = "playerID.json";
+    public static final String DEFAULT_PLAYER_ID_FILE = "/Users/nateshoad/Desktop/University /Java_Files/SENG300F24P/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json";
 
     @FXML
     private Button loginBtn;
@@ -95,17 +96,19 @@ public class LoginController {
     @FXML
     void continueToMain(MouseEvent event) throws IOException, ParseException {
         if(validateUser() && validatePass()) {
-            errorMessage.setTextFill(Color.BLACK);
-            try {
-                loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/profileHome.fxml"));
-                root = loader.load();
+            if(sendJSONObject()) {
+                errorMessage.setTextFill(Color.BLACK);
+                try {
+                    loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/profileHome.fxml"));
+                    root = loader.load();
 
-                window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                window.setScene(scene);
-                window.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    scene = new Scene(root);
+                    window.setScene(scene);
+                    window.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         else{
@@ -123,7 +126,7 @@ public class LoginController {
         return obj;
     }
 
-    public void sendJSONObject() throws IOException, ParseException {
+    public boolean sendJSONObject() throws IOException, ParseException {
         try {
             JSONObject returnPayload = NetworkManager.getNetworkInstance().playerLoginHandler(createJSONObject());
 
@@ -132,11 +135,15 @@ public class LoginController {
             fileWriter.write(returnPayload.toJSONString());
             fileWriter.flush();
             fileWriter.close();
+            return true;
         }
         catch (Exception e){
             String errorString = e.getMessage();
             errorMessage.setTextFill(Color.RED);
+            errorMessage.setAlignment(Pos.CENTER);
+            errorMessage.setTextAlignment(TextAlignment.CENTER);
             errorMessage.setText(errorString);
+            return false;
         }
 
 

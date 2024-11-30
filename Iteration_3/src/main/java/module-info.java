@@ -11,6 +11,7 @@ module ca.ucalgary.seng300.p4.condensation {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires json.simple;
+    requires java.desktop;
 
     opens ca.ucalgary.seng300.p4.condensation to javafx.fxml, javafx.graphics;
     opens ca.ucalgary.seng300.p4.condensation.Frontend.controller to javafx.fxml;
