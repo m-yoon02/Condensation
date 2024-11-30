@@ -56,7 +56,7 @@ public class GameTimerTest {
     }
 
     @Test
-    public void startTimer() {
+    public void startTimer() throws InterruptedException {
         gameTimer.startTimer();
         assertTrue("Timer should be active", gameTimer.isActive());
     }

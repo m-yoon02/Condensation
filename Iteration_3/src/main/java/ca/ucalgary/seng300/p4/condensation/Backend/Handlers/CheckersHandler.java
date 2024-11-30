@@ -19,6 +19,14 @@ public class CheckersHandler extends GameHandler {
         super(player1ID, player2ID, COLORS);
     }
 
+    /**
+     * For testing purposes
+     * @return the board
+     */
+    public GameBoard<CheckersPiece> getBoard() {
+        return this.board;
+    }
+
     @Override
     public void makeMove(String moveDataJSON) {
         makeMove(CheckersMoveData.fromJSON(moveDataJSON));
@@ -33,7 +41,7 @@ public class CheckersHandler extends GameHandler {
         //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
     }
 
-    private boolean captureIsPossible(PieceColor color) {
+    public boolean captureIsPossible(PieceColor color) {
         for (int x = 0; x < BOARD_SIZE[0]; x++) {
             for (int y = 0; y < BOARD_SIZE[1]; y ++) {
                 CheckersPiece piece = board.getAt(x, y);
@@ -45,7 +53,7 @@ public class CheckersHandler extends GameHandler {
         return false;
     }
 
-    private boolean canCapture(CheckersPiece piece) {
+    public boolean canCapture(CheckersPiece piece) {
         int[][] directions = getDirections(piece);
         for (int[] dir: directions){
             Vector2 adjacentPos = new Vector2(piece.getX() + dir[0], piece.getY() + dir[1]);
@@ -61,7 +69,7 @@ public class CheckersHandler extends GameHandler {
         return false;
     }
 
-    private int[][] getDirections(CheckersPiece piece){
+    public int[][] getDirections(CheckersPiece piece){
         if (piece.isKing()){
             return new int[][]{{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
         }
@@ -81,7 +89,7 @@ public class CheckersHandler extends GameHandler {
      * @param newPos, the target destination position
      * @return true if the move is valid, false otherwise
      */
-    private boolean isValidMove(Vector2 oldPos, Vector2 newPos){
+    public boolean isValidMove(Vector2 oldPos, Vector2 newPos){
         int distanceX = abs(newPos.x()) - abs(oldPos.x());
         int distanceY = abs(newPos.y()) - abs(oldPos.y());
         if(abs(distanceX) > 2 || abs(distanceY) > 2 || abs(distanceX) < 1 || abs(distanceY) < 1
@@ -99,7 +107,7 @@ public class CheckersHandler extends GameHandler {
      * @param color of pieces of the player to check
      * @return true if game cannot continue, false otherwise
      */
-    private boolean checkForGameEnd(PieceColor color){
+    public boolean checkForGameEnd(PieceColor color){
         for(int i = 0; i < BOARD_SIZE[0]; i++){
             for(int j = 0; j < BOARD_SIZE[1]; j++){
                 Vector2 pos = new Vector2(i, j);
@@ -118,7 +126,7 @@ public class CheckersHandler extends GameHandler {
      * @param pos of the piece that is being checked
      * @return true if piece is able to move
      */
-    private boolean canMove(Vector2 pos){
+    public boolean canMove(Vector2 pos){
         if(pos.x() == 0){
             if(pos.y() == 7){
                 if(board.getAt(pos.x()+1, pos.y()-1) == null){
@@ -168,7 +176,7 @@ public class CheckersHandler extends GameHandler {
      * @param pos
      * @return boolean
      */
-    private boolean canJump(Vector2 pos){
+    public boolean canJump(Vector2 pos){
         if(pos.x() == 0 || pos.x() == 1){
             if(pos.y() == 0 || pos.y() == 1){
                 if (board.getAt(pos.x()+1, pos.y()+1) != null
@@ -249,7 +257,7 @@ public class CheckersHandler extends GameHandler {
      *
      * @param pos the position of the piece to check for promotion.
      */
-    private void checkForPromotion(Vector2 pos){
+    public void checkForPromotion(Vector2 pos){
         CheckersPiece piece = board.getAt(pos);
         if (piece == null){
             return;
@@ -272,7 +280,7 @@ public class CheckersHandler extends GameHandler {
      * @param oldPos the old position of the capturing piece
      * @param newPos the new position of the capturing piece
      */
-    private void processCaptureOnMove(Vector2 oldPos, Vector2 newPos) {
+    public void processCaptureOnMove(Vector2 oldPos, Vector2 newPos) {
         // Calculated by using midpoint, and assuming kings capture with finite range
         int capturedPieceRow = (oldPos.x() + newPos.x()) / 2;
         int capturedPieceCol = (oldPos.y() + newPos.y()) / 2;
