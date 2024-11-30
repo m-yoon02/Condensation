@@ -75,12 +75,12 @@ public class Connect4Handler extends GameHandler {
                     this.notifyGameEnd(GameResult.TIE, null);
                 } else {
                     // The turn switches to the other player.
-                    this.notifyTurnEnd(getOtherPlayerUUID(moveData.getPlayerID()), "");
+                    this.notifyTurnEnd(getOtherPlayerUUID(moveData.getPlayerID()), board.toJSONString());
                 }
             }
         } else {
             // Passes current player's ID back, allowing the current player to retry.
-            this.notifyTurnEnd(playerID, "");
+            this.notifyTurnEnd(playerID, board.toJSONString());
         }
     }
 
