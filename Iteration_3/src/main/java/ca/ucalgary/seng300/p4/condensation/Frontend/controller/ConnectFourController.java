@@ -59,28 +59,26 @@ public class ConnectFourController {
             }
         }
 
-        // Simulated backend update JSON
-        String jsonUpdate = "{ " +
-                "\"UpdateType\": \"TURN_END\", " +
-                "\"SessionID\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\", " +
-                "\"PlayerTurn\": \"345e6789-e89d-45d5-a678-627836285111\", " +
-                "\"Changes\": [ " +
-                "[\"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
-                "[\"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
-                "[\"EMPTY\", \"EMPTY\", \"EMPTY\", \"RED\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
-                "[\"EMPTY\", \"EMPTY\", \"BLUE\", \"RED\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
-                "[\"EMPTY\", \"RED\", \"BLUE\", \"BLUE\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
-                "[\"RED\", \"BLUE\", \"RED\", \"RED\", \"BLUE\", \"EMPTY\", \"EMPTY\"] " +
-                "]" +
-                "}";
-
-        receiveConnectFour(jsonUpdate);
+//        // Simulated backend update JSON
+//        String jsonUpdate = "{ " +
+//                "\"UpdateType\": \"TURN_END\", " +
+//                "\"SessionID\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\", " +
+//                "\"PlayerTurn\": \"345e6789-e89d-45d5-a678-627836285111\", " +
+//                "\"Changes\": [ " +
+//                "[\"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
+//                "[\"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
+//                "[\"EMPTY\", \"EMPTY\", \"EMPTY\", \"RED\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
+//                "[\"EMPTY\", \"EMPTY\", \"BLUE\", \"RED\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
+//                "[\"EMPTY\", \"RED\", \"BLUE\", \"BLUE\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
+//                "[\"RED\", \"BLUE\", \"RED\", \"RED\", \"BLUE\", \"EMPTY\", \"EMPTY\"] " +
+//                "]" +
+//                "}";
+//
+//        receiveConnectFour(jsonUpdate);
     }
 
-    public void receiveConnectFour(String jsonString) {
+    public void receiveConnectFour(JSONObject update) {
         try {
-            JSONParser parser = new JSONParser();
-            JSONObject update = (JSONObject) parser.parse(jsonString);
             String updateType = (String) update.get("UpdateType");
 
             switch (updateType) {
@@ -190,7 +188,7 @@ public class ConnectFourController {
         JSONObject backendResponse = NetworkManager.getNetworkInstance().handleQueuePlayer(move);
 
         // Process the backend response
-        receiveConnectFour(backendResponse.toJSONString());
+        receiveConnectFour(backendResponse);
     }
 
     private void disableAllButtons() {
