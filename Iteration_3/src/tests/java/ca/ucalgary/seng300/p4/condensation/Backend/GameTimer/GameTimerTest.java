@@ -11,15 +11,24 @@ import static org.junit.Assert.*;
 
 public class GameTimerTest {
 
+    private static class MockTimerEndListener implements TimerEndListener {
+        public UUID winnerPlayerID;
+
+        @Override
+        public void onTimerEnd(UUID winnerPlayerID) {
+            this.winnerPlayerID = winnerPlayerID;
+        }
+    }
+
     private UUID p1ID;
     private UUID p2ID;
     private int timeInSeconds;
-
     private GameTimer gameTimer;
-
+    private MockTimerEndListener mockListener;
 
     @Before
     public void setUp() throws Exception {
+
         p1ID = UUID.randomUUID();
         p2ID = UUID.randomUUID();
 
@@ -28,6 +37,8 @@ public class GameTimerTest {
         timeInSeconds = rand.nextInt(100);
 
         gameTimer = new GameTimer(p1ID, p2ID, timeInSeconds);
+        mockListener = new MockTimerEndListener();
+        gameTimer.addTimerEndListener(mockListener);
     }
 
     @Test
@@ -59,11 +70,61 @@ public class GameTimerTest {
     public void startTimer() throws InterruptedException {
         gameTimer.startTimer();
         assertTrue("Timer should be active", gameTimer.isActive());
+        gameTimer.stopTimer();
+        assertFalse("Timer ends after", gameTimer.isActive());
     }
 
     @Test
     public void stopTimer() {
         gameTimer.stopTimer();
         assertFalse("Timer should not be active", gameTimer.isActive());
+    }
+
+    @Test
+    public void testSwitchTimer_ValidPlayer() {
+        gameTimer.switchTimer(p1ID);
+        UUID currentPlayerID = gameTimer.getCurrentPlayerID();
+        assertEquals(p2ID, currentPlayerID);
+    }
+
+    @Test
+    public void testSwitchTimer_InvalidPlayer() {
+        UUID invalidPlayerID = UUID.randomUUID();
+        gameTimer.switchTimer(invalidPlayerID);
+        UUID currentPlayerID = gameTimer.getCurrentPlayerID();
+        assertEquals(p1ID, currentPlayerID);
+    }
+
+    @Test
+    public void testSetTimerTo_ValidPlayer() {
+        gameTimer.setTimerTo(p2ID);
+        UUID currentPlayerID = gameTimer.getCurrentPlayerID();
+        assertEquals(p2ID, currentPlayerID);
+    }
+
+    @Test
+    public void testSetTimerTo_InvalidPlayer() {
+        UUID invalidPlayerID = UUID.randomUUID();
+        gameTimer.setTimerTo(invalidPlayerID);
+        UUID currentPlayerID = gameTimer.getCurrentPlayerID();
+        assertEquals(p1ID, currentPlayerID);
+    }
+
+    @Test
+    public void testAddTimerEndListener() {
+        assertTrue(gameTimer.getTimerEndListeners().contains(mockListener));
+    }
+
+    @Test
+    public void testStopTimer() throws InterruptedException {
+        gameTimer.startTimer();
+        gameTimer.stopTimer();
+        assertFalse(gameTimer.isActive());
+    }
+
+    @Test
+    public void testGetOtherPlayerID() {
+        UUID otherPlayer = gameTimer.getOtherPlayerID(p1ID);
+        assertEquals(p2ID, otherPlayer);
     }
 }
