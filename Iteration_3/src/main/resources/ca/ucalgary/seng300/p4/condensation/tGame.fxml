@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main-pane" stylesheets="@tGame.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main-pane" stylesheets="@tGame.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.tGameController">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -59,21 +59,21 @@
                                     </rowConstraints>
                            <children>
                               <Button fx:id="btn00" mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" />
-                              <Button mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" GridPane.rowIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Button fx:id="btn01" mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="1" />
+                              <Button fx:id="btn02" mnemonicParsing="false" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="2" />
+                              <Button fx:id="btn10" mnemonicParsing="false" onAction="#initialize" prefHeight="92.0" prefWidth="97.0" GridPane.rowIndex="1" />
+                              <Button fx:id="btn11" mnemonicParsing="false" onAction="#initialize" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button fx:id="btn12" mnemonicParsing="false" onAction="#initialize" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="btn20" mnemonicParsing="false" onAction="#initialize" prefHeight="92.0" prefWidth="97.0" GridPane.rowIndex="2" />
+                              <Button fx:id="btn21" mnemonicParsing="false" onAction="#initialize" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="btn22" mnemonicParsing="false" onAction="#initialize" prefHeight="92.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                            </children>
                                 </GridPane>
                             </children>
                         </VBox>
                     </children>
                 </HBox>
-                <Button mnemonicParsing="false" text="Forfeit" VBox.vgrow="ALWAYS">
+                <Button fx:id="forfeitBtn" mnemonicParsing="false" onAction="#onForfeitBtnClick" text="Forfeit" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets bottom="10.0" top="15.0" />
                     </VBox.margin>

@@ -1,11 +1,18 @@
 package ca.ucalgary.seng300.p4.condensation;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 
-public class tGameController{
+import java.util.Optional;
+
+public class tGameController
+{
     @FXML
     private Button btn00, btn01, btn02, btn10, btn11, btn12, btn20, btn21, btn22;
-    public int numberOfPiecesOnBoard = 0;
+    @FXML
+    //public int numberOfPiecesOnBoard = 0;
     Button[][] buttons = new Button[][] {
             {btn00, btn01, btn02},
             {btn10, btn11, btn12},
@@ -14,8 +21,49 @@ public class tGameController{
 
     @FXML
     public void initialize() {
-
+        //backbutton.setOnAction(event -> navigateTo("tMenu.fxml"));
     }
+
+    private void navigateTo(String s) {
+    }
+
+    @FXML
+    Button forfeitBtn;
+
+    @FXML
+    Button forfeitYesBtn;
+
+    @FXML
+    Button forfeitNoBtn;
+
+    @FXML
+    public void onForfeitBtnClick() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
+        alert.setTitle("Forfeit");
+
+        Optional<ButtonType> choice = alert.showAndWait();
+        if (choice.isPresent() && choice.get() == ButtonType.OK) {
+            onForfeitYesClick();
+        } else if (choice.isPresent() && choice.get() == ButtonType.CANCEL) {
+            System.out.println("No");
+        }
+    }
+    @FXML
+    public void onForfeitYesClick() {
+        System.out.println("Forfeit confirmed. Closing the application window...");
+
+        // Close the current window
+        Stage stage = (Stage) forfeitBtn.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void onForfeitNoClick() {
+        System.out.println("Forfeit canceled. The window remains open.");
+    }
+
+
+
 
 }
 
