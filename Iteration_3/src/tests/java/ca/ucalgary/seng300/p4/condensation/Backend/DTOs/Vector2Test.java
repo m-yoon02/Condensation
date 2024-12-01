@@ -1,9 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.DTOs;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.*;
 
 public class Vector2Test {
@@ -109,7 +108,7 @@ public class Vector2Test {
         Vector2 v2 = new Vector2(1, 2);
         Vector2 v3 = new Vector2(2, 1);
         assertEquals(v1, v2);
-        assertNotEquals(v1, v3);
+        assertThat(v1, not(equals(v3)));
     }
 
     @Test
