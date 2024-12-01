@@ -194,7 +194,11 @@ public class Leaderboard {
     }
 
     /**
-     * Update the Leaderboard following a tie game by routing to the specific gameType method
+     * Updates the leaderboard and game data to reflect a tied game result for the specified players and game type.
+     * @param player1ID  The UUID of the first player in the tie.
+     * @param player2ID  The UUID of the second player in the tie.
+     * @param sessionID  The UUID of the game session where the tie occurred.
+     * @param gameType   The type of game that ended in a tie.
      */
 
     public void updateForTieGame(UUID player1ID, UUID player2ID, UUID sessionID, GameTypes gameType ){
@@ -211,8 +215,15 @@ public class Leaderboard {
             }
         }
 
-
     }
+
+    /**
+     * Updates the game data for a tied game of Checkers, modifying the recent matches
+     * and Elo ratings of both players involved.
+     * @param player1ID  The UUID of the first player in the tie.
+     * @param player2ID  The UUID of the second player in the tie.
+     * @param sessionID  The UUID of the game session where the tie occurred.
+     */
     public void updateForTieGameCheckers(UUID player1ID, UUID player2ID, UUID sessionID){
 
         // I need to the player 1 json object then I need to simply add a tied update\
@@ -239,13 +250,18 @@ public class Leaderboard {
         player2CurrentMatch.put("outcome", "T");
         player2CurrentMatch.put("currentElo", player1Elo);
         player2RecentMatches.add(player2CurrentMatch);
-        player1.put("recentMatches", player2RecentMatches);
-
-
-
+        player2.put("recentMatches", player2RecentMatches);
 
     }
 
+
+    /**
+     * Updates the game data for a tied game of Tic-Tac-Toe, modifying the recent matches
+     * and Elo ratings of both players involved.
+     * @param player1ID  The UUID of the first player in the tie.
+     * @param player2ID  The UUID of the second player in the tie.
+     * @param sessionID  The UUID of the game session where the tie occurred.
+     */
     public void updateForTieGameTicTacToe(UUID player1ID, UUID player2ID, UUID sessionID){
 
         // I need to the player 1 json object then I need to simply add a tied update\
@@ -279,6 +295,15 @@ public class Leaderboard {
 
     }
 
+
+
+    /**
+     * Updates the game data for a tied game of Connect 4, modifying the recent matches
+     * and Elo ratings of both players involved.
+     * @param player1ID  The UUID of the first player in the tie.
+     * @param player2ID  The UUID of the second player in the tie.
+     * @param sessionID  The UUID of the game session where the tie occurred.
+     */
     public void updateForTieGameConnect4(UUID player1ID, UUID player2ID, UUID sessionID){
 
         // I need to the player 1 json object then I need to simply add a tied update\
@@ -314,9 +339,10 @@ public class Leaderboard {
 
 
     /**
-     * Updates the ELO of a player who won a match by increasing it by 100.
-     *
-     * @param playerID the UUID of the winning player.
+     * Updates the Elo rating for a winning player based on the game type and session.
+     * @param playerID  The UUID of the player who won the game.
+     * @param gameType  The type of game played (e.g., CHECKERS, TICTACTOE, CONNECT4).
+     * @param sessionID The UUID of the game session where the win occurred.
      */
     public void updateEloForWinningPlayer(UUID playerID, GameTypes gameType, UUID sessionID) {
         switch (gameType) {
@@ -332,6 +358,11 @@ public class Leaderboard {
         }
     }
 
+    /**
+     * Updates the Elo rating, win count, and game history for a player who won a game of Checkers.
+     * @param playerID  The UUID of the player who won the game.
+     * @param sessionID The UUID of the game session where the win occurred.
+     */
     private void updateEloForWinningPlayerCheckers(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
@@ -362,6 +393,12 @@ public class Leaderboard {
         System.out.println("Elo has been updated for winning player with PlayerID: " + playerID);
     }
 
+
+    /**
+     * Updates the Elo rating, win count, and game history for a player who won a game of Tic-Tac-Toe.
+     * @param playerID  The UUID of the player who won the game.
+     * @param sessionID The UUID of the game session where the win occurred.
+     */
     private void updateEloForWinningPlayerTictactoe(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
@@ -391,6 +428,12 @@ public class Leaderboard {
         System.out.println("Elo has been updated for winning player with PlayerID: " + playerID);
     }
 
+
+    /**
+     * Updates the Elo rating, win count, and game history for a player who won a game of Connect 4.
+     * @param playerID  The UUID of the player who won the game.
+     * @param sessionID The UUID of the game session where the win occurred.
+     */
     private void updateEloForWinningPlayerConnect4(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
@@ -421,9 +464,9 @@ public class Leaderboard {
     }
 
     /**
-     * Retrieves the top 5 players based on their ELO scores.
-     *
-     * @return a JSONArray containing the top 5 players.
+     * Fetches the top 5 players based on their Elo ratings.
+     * @return A {@link JSONArray} containing the top 5 players, each represented as a {@link JSONObject}.
+     * @throws IllegalArgumentException If any user is missing the "elo" field.
      */
     public JSONArray fetchTop5Players() {
         users.sort((user1, user2) -> {
@@ -457,10 +500,10 @@ public class Leaderboard {
     }
 
     /**
-     * Updates the ELO of a player who lost a match by decreasing it by 3000.
-     *
-     * @param playerID  the UUID of the losing player.
-     * @param sessionId
+     * Updates the Elo rating for a player who lost a game, based on the game type and session ID.
+     * @param playerID  The UUID of the player who lost the game.
+     * @param gameType  The type of game played (e.g., CHECKERS, TICTACTOE, CONNECT4).
+     * @param sessionId The UUID of the game session where the loss occurred.
      */
     public void updateEloForLosingPlayer(UUID playerID, GameTypes gameType, UUID sessionId) {
         switch (gameType) {
@@ -477,6 +520,12 @@ public class Leaderboard {
 
     }
 
+
+    /**
+     * Updates the Elo rating, loss count, and game history for a player who lost a game of Checkers.
+     * @param playerID  The UUID of the player who lost the game.
+     * @param sessionID The UUID of the game session where the loss occurred.
+     */
     private void updateEloForLosingPlayerCheckers(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
@@ -506,6 +555,12 @@ public class Leaderboard {
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
 
+
+    /**
+     * Updates the Elo rating, loss count, and game history for a player who lost a game of Checkers.
+     * @param playerID  The UUID of the player who lost the game.
+     * @param sessionID The UUID of the game session where the loss occurred.
+     */
     private void updateEloForLosingPlayerTictactoe(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
@@ -534,6 +589,11 @@ public class Leaderboard {
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
 
+    /**
+     * Updates the Elo rating, loss count, and game history for a player who lost a game of Connect 4.
+     * @param playerID  The UUID of the player who lost the game.
+     * @param sessionID The UUID of the game session where the loss occurred.
+     */
     private void updateEloForLosingPlayerConnect4(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
@@ -564,10 +624,11 @@ public class Leaderboard {
     }
 
 
+
     /**
-     * Refreshes and sorts the leaderboard based on ELO scores.
-     *
-     * @return a JSONArray of sorted users.
+     * Refreshes the leaderboard by sorting users based on their Elo ratings in descending order.
+     * @return A {@link JSONArray} containing the sorted leaderboard.
+     * @throws IllegalArgumentException If any user is missing the "elo" field.
      */
     public JSONArray refreshLeaderboard() {
         users.sort((user1, user2) -> {
