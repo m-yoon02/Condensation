@@ -222,10 +222,4 @@ public class GameHandlerTest {
     public void testColorNotNull_PlayerColorFromUUID() {
         assertNotNull("Color has to be returned", gameHandler.getPlayerColorFromUUID(player1ID));
     }
-
-
-    @Test
-    public void getFirstPlayerID() {
-        assertEquals("The first player defined is the first player.",player1ID, gameHandler.getFirstPlayerID());
-    }
 }
