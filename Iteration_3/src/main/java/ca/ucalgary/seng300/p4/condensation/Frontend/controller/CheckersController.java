@@ -3,10 +3,13 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -65,7 +68,7 @@ public class CheckersController {
     }
 
     // Activates when a tile is clicked.
-    public void returnCheckers(javafx.event.ActionEvent event){
+    public void returnCheckers(javafx.event.ActionEvent event) throws IOException, ParseException {
         Button clickedButton = (Button) event.getSource();
 
         int row = -1;
@@ -98,8 +101,8 @@ public class CheckersController {
             }
             checkersJSON.put("New Position", new Vector2(row, col));
             numberOfPiecesOnBoard += 1;
-            //results = ticTacToeHandler.makeMove(String(ticTacToeJSON));
-            // returnToBackendConnectFour(results);
+            JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(checkersJSON);
+            receiveCheckers(results);
         }
     }
 

@@ -5,7 +5,6 @@ import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.GamePiece;
 import org.json.simple.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GameBoard<T extends GamePiece> {
     private final int rowSize;

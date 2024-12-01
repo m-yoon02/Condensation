@@ -34,7 +34,7 @@ public class NetworkManager {
 
     // client listener lists mapped to specific to their gameSessions
 
-    private final String DATA_FILE = "/Users/nateshoad/Desktop/University /Java_Files/SENG300F24P/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
+    private final String DATA_FILE = "\\C:\\Users\\Richa\\IdeaProjects\\demo6\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json\\";
     private Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final ChatService chatService;
@@ -239,7 +239,7 @@ public class NetworkManager {
      * @param eventType
      * @param clientResponsePayload
      */
-    public void notifyGameSessionClients(UUID sessionID, GameEventType eventType, JSONObject clientResponsePayload, GameTypes gameType) {
+    public void notifyGameSessionClients(UUID sessionID, GameEventType eventType, JSONObject clientResponsePayload, GameTypes gameType) throws IOException {
 
         // here we are getting the specific list of clients that are subscribed to the session
         List<GameDataListener> clientListeners = sessionListeners.get(sessionID);
@@ -302,25 +302,26 @@ public class NetworkManager {
      */
     public JSONObject handleQueuePlayer(JSONObject queuedPlayerPayload) throws IOException, ParseException {
 
+        System.out.println(queuedPlayerPayload);
         // Extracts all neccessary Player1 information from database and payload and instantiates the queuedPlayer
         String playerIDString = (String) queuedPlayerPayload.get("playerID");
         UUID player1UUID = UUID.fromString(playerIDString);
         GameTypes gameType = (GameTypes) queuedPlayerPayload.get("gameType");
         JSONObject player1 = Leaderboard.getInstance().findUserById(player1UUID);
 
-        int elo = 0;
+        Number elo = 0;
         switch(gameType){
             case CHECKERS -> {
-                 elo = (int) player1.get("checkersElo");
+                 elo = (Number) player1.get("checkersElo");
             }
             case TICTACTOE -> {
-                elo = (int) player1.get("tictactoeElo");
+                elo = (Number) player1.get("tictactoeElo");
             }
             case CONNECT4 -> {
-                elo = (int) player1.get("connect4Elo");
+                elo = (Number) player1.get("connect4Elo");
             }
         }
-        QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo(player1UUID, gameType, elo);           // now can make the queu
+        QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo(player1UUID, gameType, elo.intValue());           // now can make the queu
 
         // to do the matchmaking logic, remember to make sure that we add Player1 to the start of the matchmaking pool
         // we need to do the .random for the matchmaking pool
@@ -394,7 +395,7 @@ public class NetworkManager {
      * sendGameDataToClients sends the clientPayload = sessionID + gameState payload to the clients
      * @param clientPayload
      */
-    public void sendGameDataToClients(JSONObject clientPayload, UUID sessionID, GameEventType gameEventType, GameTypes gameType){
+    public void sendGameDataToClients(JSONObject clientPayload, UUID sessionID, GameEventType gameEventType, GameTypes gameType) throws IOException {
         // The appropriate gameSession listener will have been notified
         notifyGameSessionClients(sessionID, gameEventType, clientPayload, gameType);          // Notify all subscribed clients
 
