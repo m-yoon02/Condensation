@@ -1,0 +1,77 @@
+/* Root AnchorPane background styling */
+.main-pane {
+    -fx-background-color: #091856; /* Dark blue background */
+}
+
+/* Style for all Labels */
+.label {
+    -fx-text-fill: #cfc9c9; /* Light gray text */
+    -fx-font-size: 18px; /* Default font size for labels */
+    -fx-font-family: "Arial"; /* Font family for consistency */
+}
+
+#Title {
+    -fx-text-fill: #cfc9c9; /* Title text color */
+    -fx-font-size: 22px; /* Title font size */
+    -fx-font-weight: bold; /* Bold title */
+}
+
+#ticTacToeArea, #connect4Area, #checkersArea {
+    -fx-text-fill: white; /* White text for game labels */
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+#intro {
+    -fx-text-fill: #c4bdbd; /* Slightly lighter gray for intro text */
+    -fx-font-size: 15px;
+}
+
+/* Styling for Buttons */
+.button {
+    -fx-background-color: #2415E2; /* Blue button background */
+    -fx-text-fill: white; /* White text for buttons */
+    -fx-font-size: 14px; /* Font size for buttons */
+    -fx-border-radius: 5px; /* Rounded corners */
+    -fx-padding: 5px; /* Padding inside the button */
+}
+
+#ticTacToePlayButton, #connect4PlayButton, #checkersPlayButton, #homeButton {
+    -fx-background-color: #2415E2; /* Purple-blue button background */
+    -fx-text-fill: white; /* White button text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand; /* Cursor changes to pointer on hover */
+}
+
+#homeButton {
+    -fx-font-size: 14px; /* Slightly smaller text for Home button */
+}
+
+/* TextArea styling */
+.text-area {
+    -fx-control-inner-background: #ffffff; /* White background for text areas */
+    -fx-text-fill: #000000; /* Black text */
+    -fx-font-size: 14px; /* Font size for text areas */
+    -fx-padding: 10px; /* Padding inside text area */
+    -fx-border-color: black; /* Black border */
+    -fx-border-radius: 5px; /* Rounded corners */
+}
+
+#tictactoeDes, #connect4Des, #checkersDes {
+    -fx-control-inner-background: #ffffff; /* White background for descriptions */
+    -fx-text-fill: #000000; /* Black text color */
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-color: black;
+    -fx-border-radius: 5px;
+}
+
+/* Rectangle styling for game areas */
+.rectangle {
+    -fx-fill: #41609e; /* Default blue fill */
+    -fx-stroke: black; /* Black stroke */
+    -fx-arc-width: 5; /* Rounded corners */
+    -fx-arc-height: 5;
+}
