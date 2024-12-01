@@ -86,16 +86,22 @@ public class CheckersController {
     // leaderboard
     @FXML
     public void onLeaderboardBtnClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        CheckersController controller = new CheckersController(stage);
-        fxmlLoader.setController(controller);
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Checkers Leaderboard");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
+//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
+//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        CheckersController controller = new CheckersController(stage);
+//        fxmlLoader.setController(controller);
+//        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+//        stage.setTitle("Checkers Leaderboard");
+//        stage.setScene(scene);
+//        stage.setMinWidth(700);
+//        stage.setMinHeight(530);
+//        stage.show();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/CheckersLeaderboard.fxml"));
+            Stage stage = (Stage) leaderboardBtn.getScene().getWindow();
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            stage.setTitle("Checkers - Leaderboard");
+            stage.setScene(scene);
+            stage.show();
     }
     @FXML
     public void onLeaderboardBackBtnClick(ActionEvent event) throws IOException {
