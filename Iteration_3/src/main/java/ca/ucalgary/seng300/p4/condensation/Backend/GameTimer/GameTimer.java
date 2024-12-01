@@ -170,7 +170,6 @@ public class GameTimer{
 
 
     // getters used in testing
-
     public HashMap<UUID, Integer> getTimerHashMap() {
         return timerHashMap;
     }
