@@ -24,6 +24,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class ConnectFourQueueController {
+    @FXML
     private Button leaveQueue;
 
     @FXML
@@ -46,9 +47,10 @@ public class ConnectFourQueueController {
     }
 
 
-    protected void returnToProfile(Event event) throws IOException
+    @FXML
+    protected void returnToConnectFourPage(Event event) throws IOException
     {
-        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Profile.fxml")));
+        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ConnectFourHomeMenu.fxml")));
         createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         createScene = new Scene(origin);
         createWindow.setScene(createScene);
@@ -75,9 +77,9 @@ public class ConnectFourQueueController {
         fileWriter.flush();
         fileWriter.close();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ticTacToeGame.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("TicTacToe");
+        stage.setTitle("Condensation Appliance - Connect Four");
         stage.setScene(scene);
         stage.show();
     }

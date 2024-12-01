@@ -52,7 +52,7 @@ public class TicTacToeQueueController {
 
 
     @FXML
-    protected void returnToProfile(Event event) throws IOException
+    protected void returnToTicTacToeMenu(Event event) throws IOException
     {
         origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("tMenu.fxml")));
         createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -83,7 +83,7 @@ public class TicTacToeQueueController {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Tic Tac Toe");
+        stage.setTitle("Condensation Application - Tic Tac Toe");
         stage.setScene(scene);
         stage.show();
     }

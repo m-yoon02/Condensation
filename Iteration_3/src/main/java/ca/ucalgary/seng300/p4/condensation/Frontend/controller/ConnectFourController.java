@@ -2,18 +2,23 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
@@ -129,55 +134,29 @@ public class ConnectFourController {
     private Text forfeitButton;
 
     @FXML
-    private Text playerTurnText;
+    private static Text playerTurnText;
 
-    private Button[][] buttons = new Button[6][7];
+    public static UUID playerOne;
+    public static UUID playerTwo;
+    public static UUID sessionID;
+    public static UUID newTurn;
+
+    private static Stage stage;
+
+    private static Button[][] buttons = new Button[6][7];
 
     private String jsonUpdate;
 
     public static void receiveConnectFour(JSONObject payload) {
-    }
-
-    @FXML
-    public void initialize() {
-        for (int row = 0; row < 6; row++) {
-            for (int col = 0; col < 7; col++) {
-                String buttonId = "btn" + row + col;
-                Button button = (Button) connectFourGrid.lookup("#" + buttonId);
-                buttons[row][col] = button;
-            }
-        }
-
-        // Example JSON string (simulate backend update)
-        jsonUpdate = "{ " +
-                "\"UpdateType\": \"TURN_END\", " +
-                "\"SessionID\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\", " +
-                "\"PlayerTurn\": \"345e6789-e89d-45d5-a678-627836285111\", " +
-                "\"Changes\": [ " +
-                "[\"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
-                "[\"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
-                "[\"EMPTY\", \"EMPTY\", \"EMPTY\", \"RED\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
-                "[\"EMPTY\", \"EMPTY\", \"BLUE\", \"RED\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
-                "[\"EMPTY\", \"RED\", \"BLUE\", \"BLUE\", \"EMPTY\", \"EMPTY\", \"EMPTY\"], " +
-                "[\"RED\", \"BLUE\", \"RED\", \"RED\", \"BLUE\", \"EMPTY\", \"EMPTY\"] " +
-                "]" +
-                "}";
-
-        processUpdate(jsonUpdate);
-    }
-
-    public void processUpdate(String jsonString) {
         try {
-            JSONParser parser = new JSONParser();
-            JSONObject update = (JSONObject) parser.parse(jsonString);
-            String updateType = (String) update.get("UpdateType");
+            String updateType = (String) payload.get("UpdateType");
 
             switch (updateType) {
                 case "GAME_END":
-                    handleGameEnd(update);
+                    handleGameEnd(payload);
                     break;
                 case "TURN_END":
-                    handleTurnEnd(update);
+                    handleTurnEnd(payload);
                     break;
                 default:
                     System.out.println("Unknown UpdateType: " + updateType);
@@ -187,27 +166,51 @@ public class ConnectFourController {
         }
     }
 
-    private void handleGameEnd(JSONObject update) {
+    @FXML
+    public void initialize() throws IOException, ParseException {
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 7; col++) {
+                String buttonId = "btn" + row + col;
+                Button button = (Button) connectFourGrid.lookup("#" + buttonId);
+                buttons[row][col] = button;
+            }
+        }
+
+        Object newPlayerJSONFileObject = new JSONParser().parse(new FileReader("newplayer.json"));
+        JSONObject newPlayerJSONFile = (JSONObject) newPlayerJSONFileObject;
+
+        playerOne = (UUID) newPlayerJSONFile.get("Player1ID");
+        playerTwo = (UUID) newPlayerJSONFile.get("player2ID");
+        newTurn =  (UUID) newPlayerJSONFile.get("currentPlayerTurn");
+        sessionID = (UUID) newPlayerJSONFile.get("sessionID");
+    }
+
+    private static void handleGameEnd(JSONObject update) throws IOException {
         String gameState = (String) update.get("GameState");
         if ("WIN".equals(gameState)) {
             String playerWon = (String) update.get("PlayerWon");
-            playerTurnText.setText("Player " + playerWon + " won the game!");
+            playerTurnText.setText(STR."Player \{playerWon} won the game!");
         } else if ("TIE".equals(gameState)) {
             playerTurnText.setText("The game ended in a tie!");
         }
         disableAllButtons();
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Aftermath.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage.setTitle("Condensation Application - Aftermath");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    private void handleTurnEnd(JSONObject update) {
+    private static void handleTurnEnd(JSONObject update) {
         String playerTurnUUID = (String) update.get("PlayerTurn");
         String playerTurnName = getUsernameFromUUID(playerTurnUUID);
-        playerTurnText.setText("It's " + playerTurnName + "'s turn!");
+        playerTurnText.setText(STR."It's \{playerTurnName}'s turn!");
 
         JSONArray changes = (JSONArray) update.get("Changes");
         updateBoard(changes);
     }
 
-    private String getUsernameFromUUID(String playerUUID) {
+    private static String getUsernameFromUUID(String playerUUID) {
         try {
             File file = new File("src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
             JSONParser parser = new JSONParser();
@@ -225,7 +228,7 @@ public class ConnectFourController {
         return null;
     }
 
-    private void updateBoard(JSONArray changes) {
+    private static void updateBoard(JSONArray changes) {
         for (int row = 0; row < changes.size(); row++) {
             JSONArray rowArray = (JSONArray) changes.get(row);
             for (int col = 0; col < rowArray.size(); col++) {
@@ -235,14 +238,14 @@ public class ConnectFourController {
         }
     }
 
-    private void updateButtonState(Button button, String state) {
+    private static void updateButtonState(Button button, String state) {
         switch (state) {
             case "EMPTY":
                 button.setStyle("-fx-background-color: white;");
                 button.setDisable(false);
                 break;
-            case "RED":
-                button.setStyle("-fx-background-color: red;");
+            case "ORANGE":
+                button.setStyle("-fx-background-color: orange;");
                 button.setDisable(true);
                 break;
             case "BLUE":
@@ -256,7 +259,7 @@ public class ConnectFourController {
         }
     }
 
-    private void disableAllButtons() {
+    private static void disableAllButtons() {
         for (Button[] row : buttons) {
             for (Button button : row) {
                 button.setDisable(true);

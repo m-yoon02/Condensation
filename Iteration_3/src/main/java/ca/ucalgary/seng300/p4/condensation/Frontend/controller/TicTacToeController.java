@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -20,6 +21,7 @@ import javafx.scene.control.Label;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
@@ -82,17 +84,17 @@ public class TicTacToeController {
             resultOfTicTacToe = (GameResult) backendUpdate.get("GameState");
             if (resultOfTicTacToe == GameResult.WIN){
                 UUID winningPlayer = (UUID) backendUpdate.get("PlayerWon");
+                String nameOfWinningPlayer = getUsernameFromUUID(String.valueOf(winningPlayer));
+                playerStatus.setText(STR."Player \{nameOfWinningPlayer} won the game!");
                 if (winningPlayer.equals(playerOne)){
-                    playerStatus.setText("YOU WIN!");
                     playerStatus.setTextFill(Color.GREEN);
                 }
                 else{
-                    playerStatus.setText("YOU LOSE!");
-                    playerStatus.setTextFill(Color.GREEN);
+                    playerStatus.setTextFill(Color.RED);
                 }
             }
             else{
-                playerStatus.setText("TIE.");
+                playerStatus.setText("The game ended in a tie!");
                 playerStatus.setTextFill(Color.BLACK);
             }
             disableAllButtons();
@@ -127,11 +129,13 @@ public class TicTacToeController {
                 rowIndex += 1;
             }
             if (newTurn.equals(playerTwo)){
-                playerStatus.setText("BLUE TURN - OPPONENT'S TURN");
+                String nameOfOpponentPlayer = getUsernameFromUUID(String.valueOf(newTurn));
+                playerStatus.setText(STR."It's \{nameOfOpponentPlayer}'s turn!");
                 playerStatus.setTextFill(Color.BLUE);
             }
             else{
-                playerStatus.setText("RED TURN - YOUR TURN");
+                String nameOfMainPlayer = getUsernameFromUUID(String.valueOf(newTurn));
+                playerStatus.setText(STR."It's \{nameOfMainPlayer}'s turn!");
                 playerStatus.setTextFill(Color.RED);
             }
         }
@@ -185,6 +189,24 @@ public class TicTacToeController {
             JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(ticTacToeJSON);
             // NetworkManager.getNetworkInstance().receiveGameDataFromClient();
         }
+    }
+
+    private static String getUsernameFromUUID(String playerUUID) {
+        try {
+            File file = new File("src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+            JSONParser parser = new JSONParser();
+            JSONArray leaderboard = (JSONArray) parser.parse(new FileReader(file));
+
+            for (Object obj : leaderboard) {
+                JSONObject player = (JSONObject) obj;
+                if (playerUUID.equals(player.get("playerUUID"))) {
+                    return (String) player.get("username");
+                }
+            }
+        } catch (Exception e) {
+            System.err.println(STR."Error reading leaderboard.json: \{e.getMessage()}");
+        }
+        return null;
     }
 }
 
