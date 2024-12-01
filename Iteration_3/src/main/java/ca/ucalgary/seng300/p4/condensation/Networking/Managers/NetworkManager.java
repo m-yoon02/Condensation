@@ -388,6 +388,11 @@ public class NetworkManager {
      * @return
      */
     public JSONObject handleChallengedQueuePlayer(JSONObject challengeQueuedPlayer){
+
+        // Pseudocode :
+        // 1. The frontend will have a button in the player lookup which essentially allows you to challenge a player if they are online.
+        //
+        //
         return null;
     }
 
