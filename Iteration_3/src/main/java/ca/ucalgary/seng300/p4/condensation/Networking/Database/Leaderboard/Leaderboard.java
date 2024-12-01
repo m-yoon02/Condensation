@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
  */
 public class Leaderboard {
     private static Leaderboard instance; // Singleton instance
-    private String DATA_FILE;
+    private String DATA_FILE = "Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
     private JSONArray users;
 
     /**
@@ -24,8 +24,7 @@ public class Leaderboard {
      * @throws IOException    if there is an error reading the file.
      * @throws ParseException if there is an error parsing the JSON data.
      */
-    public Leaderboard(String DATA_FILE) throws IOException, ParseException {
-        this.DATA_FILE = DATA_FILE;
+    public Leaderboard() throws IOException, ParseException {
         loadData();
     }
 
@@ -37,9 +36,9 @@ public class Leaderboard {
      * @throws IOException    if there is an error reading the file.
      * @throws ParseException if there is an error parsing the JSON data.
      */
-    public static synchronized Leaderboard getInstance(String DATA_FILE) throws IOException, ParseException {
+    public static synchronized Leaderboard getInstance() throws IOException, ParseException {
         if (instance == null) {
-            instance = new Leaderboard(DATA_FILE);
+            instance = new Leaderboard();
         }
         return instance;
     }
@@ -53,17 +52,20 @@ public class Leaderboard {
      * @throws ParseException if there is an error parsing the JSON data.
      */
     public void loadData() throws IOException, ParseException {
-        try {
-            JSONParser parser = new JSONParser();
-            FileReader reader = new FileReader(DATA_FILE);
+        File file = new File(DATA_FILE);
+        if (!file.exists()) {
+            throw new FileNotFoundException("Leaderboard.json not found in the working directory: " + file.getAbsolutePath());
+        }
 
+        try (FileReader reader = new FileReader(file)) {
+            JSONParser parser = new JSONParser();
             users = (JSONArray) parser.parse(reader);
             printLeaderboard();
-            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     /**
      * Saves the current leaderboard data to the JSON file.

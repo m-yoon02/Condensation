@@ -93,7 +93,7 @@ public class OtherProfileController {
 
         // Initialize the leaderboard instance
         try {
-            leaderboard = Leaderboard.getInstance("/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+            leaderboard = Leaderboard.getInstance();
         } catch (IOException | org.json.simple.parser.ParseException e) {
             e.printStackTrace();
             statusMessage.setText("Error initializing leaderboard.");
@@ -150,7 +150,7 @@ public class OtherProfileController {
     public void displayRecentMatches(String username) {
         try {
             // Fetch the user from the Leaderboard
-            Leaderboard leaderboard = Leaderboard.getInstance("/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+            Leaderboard leaderboard = Leaderboard.getInstance();
             JSONObject user = leaderboard.findUserByName(username);
 
             if (user != null) {

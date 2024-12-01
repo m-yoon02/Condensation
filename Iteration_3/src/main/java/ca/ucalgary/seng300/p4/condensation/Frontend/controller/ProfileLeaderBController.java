@@ -100,7 +100,7 @@ public class ProfileLeaderBController {
     private void loadLeaderboardData() {
         try {
             // Get the leaderboard instance
-            Leaderboard leaderboard = Leaderboard.getInstance("/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+            Leaderboard leaderboard = Leaderboard.getInstance();
 
             // Create observable lists for each game
             ObservableList<org.json.simple.JSONObject> ticTacToeData = FXCollections.observableArrayList();
