@@ -60,7 +60,7 @@ public class MatchmakingPool {
 
     public void fetch4RandomPlayers() throws IOException, ParseException {
         ArrayList<JSONObject> UUIDarrayList = new ArrayList<>();
-        for (Object object : Leaderboard.getInstance(DATA_FILE).getAllUsers()) {
+        for (Object object : Leaderboard.getInstance().getAllUsers()) {
             JSONObject jsonObject = (JSONObject) object;
             jsonObject.get("playerUUID");
             UUIDarrayList.add(jsonObject);
