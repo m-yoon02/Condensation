@@ -159,6 +159,10 @@ public class CloudManager {
      * @return boolean value indicating if the user has been authenticated
      */
     public boolean authenticateUser(String username, String password) {
+
+        if (!isConnected) {
+            System.err.println("Can't authenticate user. Please check your connection with the cloud");
+        }
         // simulate user authentication
         return true;        // since it is a stub, just return true
     }
