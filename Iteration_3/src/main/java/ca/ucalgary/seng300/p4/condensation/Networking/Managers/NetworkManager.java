@@ -171,13 +171,22 @@ public class NetworkManager {
         return String.format("Successfully created user with username %s", username);
     }
 
-    public String editUsername(UUID Player){
-        // retune some so
-        return null;
+    public String editUsername(JSONObject editUsernamePayload) throws IOException, ParseException {
+        UUID playedID = UUID.fromString((String) editUsernamePayload.get("playerID"));
+        String newUsername = (String) editUsernamePayload.get("NewUsername");
+
+        Leaderboard.getInstance().changeName(playedID, newUsername);
+
+        return String.format("You have successfully changed your username to %s", newUsername);
     }
 
-    public String editPassword(UUID Player){
-        return null;
+    public String editPassword(JSONObject editPasswordPayload) throws IOException, ParseException {
+        UUID playedID = UUID.fromString((String) editPasswordPayload.get("playerID"));
+        String newPassword = (String) editPasswordPayload.get("NewUsername");
+
+        Leaderboard.getInstance().changeName(playedID, newPassword);
+
+        return String.format("You have successfully changed your username to %s", newPassword);
     }
 
 
