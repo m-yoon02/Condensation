@@ -1,5 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.GameTimer;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -40,7 +43,13 @@ public class GameTimer{
     public void notifyTimerEnded(UUID loserPlayerID){
         UUID winnerPlayerID = getOtherPlayerID(loserPlayerID);
         for (TimerEndListener listener: timerEndListeners){
-            listener.onTimerEnd(winnerPlayerID);
+            try {
+                listener.onTimerEnd(winnerPlayerID);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     /**
@@ -73,7 +82,7 @@ public class GameTimer{
 
     /**
      * Starts the game timer countdown
-     * @exception Throws InterruptedException if the thread is interupted while sleeping
+     * @exception throws InterruptedException if the thread is interupted while sleeping
      */
     public void startTimer() throws InterruptedException {
         UUID backupCurrentPlayer;

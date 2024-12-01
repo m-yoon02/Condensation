@@ -4,10 +4,12 @@ import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.PlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.GameTimer.GameTimer;
+import org.json.simple.parser.ParseException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.not;
@@ -129,7 +131,7 @@ public class GameHandlerTest {
     }
 
     @Test
-    public void testAddGameEndListener() {
+    public void testAddGameEndListener() throws IOException, ParseException {
         // Create a mock listener
         final boolean[] listenerCalled = {false};
         GameEndListener mockListener = (gameResult, winnerID) -> listenerCalled[0] = true;

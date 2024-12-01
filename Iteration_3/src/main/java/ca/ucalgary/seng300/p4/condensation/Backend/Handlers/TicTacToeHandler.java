@@ -6,7 +6,9 @@ import ca.ucalgary.seng300.p4.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.MoveData;
 import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.TicTacToePiece;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.UUID;
 
 public class TicTacToeHandler extends GameHandler {
@@ -22,7 +24,13 @@ public class TicTacToeHandler extends GameHandler {
 
     @Override
     public void makeMove(String moveDataJSON) {
-        makeMove(MoveData.fromJSON(moveDataJSON));
+        try {
+            makeMove(MoveData.fromJSON(moveDataJSON));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public GameBoard<TicTacToePiece> getBoard() {
@@ -38,7 +46,7 @@ public class TicTacToeHandler extends GameHandler {
      * This is the main driver of your game logic. Allows player to make move
      * @param moveData the Move data of the move made
      */
-    public void makeMove(MoveData moveData) {
+    public void makeMove(MoveData moveData) throws IOException, ParseException {
         //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
         UUID playerID = moveData.getPlayerID();
         PieceColor color = getPlayerMemoFromUUID(moveData.getPlayerID()).pieceColor();

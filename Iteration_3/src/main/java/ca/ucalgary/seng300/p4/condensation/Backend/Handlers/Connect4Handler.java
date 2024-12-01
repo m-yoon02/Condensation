@@ -6,7 +6,9 @@ import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.MoveData;
 import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.ConnectFourPiece;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.UUID;
 
 public class Connect4Handler extends GameHandler {
@@ -20,7 +22,13 @@ public class Connect4Handler extends GameHandler {
 
     @Override
     public void makeMove(String moveDataJSON) {
-        makeMove(MoveData.fromJSON(moveDataJSON));
+        try {
+            makeMove(MoveData.fromJSON(moveDataJSON));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -55,7 +63,7 @@ public class Connect4Handler extends GameHandler {
      *      -pass other players ID and leave board state unchanged
      * @param moveData
      */
-    public void makeMove(MoveData moveData) {
+    public void makeMove(MoveData moveData) throws IOException, ParseException {
         UUID playerID = moveData.getPlayerID();
         Vector2 getPosition = moveData.getMovePosition();
 
