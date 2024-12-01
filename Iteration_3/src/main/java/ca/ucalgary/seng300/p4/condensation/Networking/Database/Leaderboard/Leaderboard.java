@@ -196,60 +196,105 @@ public class Leaderboard {
      *
      * @param playerID the UUID of the winning player.
      */
-    public void updateEloForWinningPlayer(UUID playerID, GameTypes gameType) {
+    public void updateEloForWinningPlayer(UUID playerID, GameTypes gameType, UUID sessionID) {
         switch (gameType) {
             case CHECKERS -> {
-                updateEloForWinningPlayerCheckers(playerID);
+                updateEloForWinningPlayerCheckers(playerID, sessionID);
             }
             case TICTACTOE -> {
-                updateEloForWinningPlayerTictactoe(playerID);
+                updateEloForWinningPlayerTictactoe(playerID, sessionID);
             }
             case CONNECT4 -> {
-                updateEloForWinningPlayerConnect4(playerID);
+                updateEloForWinningPlayerConnect4(playerID, sessionID);
             }
         }
     }
 
-    private void updateEloForWinningPlayerCheckers(UUID playerID) {
+    private void updateEloForWinningPlayerCheckers(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
         }
 
-        JSONObject losingPlayer = findUserById(playerID);
-        Number currentElo = (Number) losingPlayer.get("checkersElo");
+        JSONObject winningPlayer = findUserById(playerID);
+        Number winsInCheckers = (Number) winningPlayer.get("winsInCheckers") ; // update wins in gamet
+        winsInCheckers = winsInCheckers.intValue() + 1;
+        Number currentElo = (Number) winningPlayer.get("checkersElo");
         currentElo = currentElo.intValue() + 100;
 
-        losingPlayer.put("checkersElo", currentElo);
+        // update the game history
+        JSONArray recentMatches = (JSONArray) winningPlayer.get("recentMatches");
+        JSONObject currentMatch = new JSONObject();
+        currentMatch.put("matchID",sessionID);
+        currentMatch.put("gameType", GameTypes.CHECKERS);
+        currentMatch.put("outcome", "W");
+        currentMatch.put("currentElo", currentElo);
+        recentMatches.add(currentMatch);
 
-        System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
+
+        winningPlayer.put("checkersElo", currentElo);
+        winningPlayer.put("winsInCheckers", winsInCheckers);
+        winningPlayer.put("recentMatches", recentMatches);
+
+
+        System.out.println("Elo has been updated for winning player with PlayerID: " + playerID);
     }
 
-    private void updateEloForWinningPlayerTictactoe(UUID playerID) {
+    private void updateEloForWinningPlayerTictactoe(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
         }
 
-        JSONObject losingPlayer = findUserById(playerID);
-        Number currentElo = (Number) losingPlayer.get("tictactoeElo");
+        JSONObject winningPlayer = findUserById(playerID);
+        Number winsInTicTacToe = (Number) winningPlayer.get("winsInTicTacToe") ; // update wins in gamet
+        winsInTicTacToe = winsInTicTacToe.intValue() + 1;
+        Number currentElo = (Number) winningPlayer.get("tictactoeElo");
         currentElo = currentElo.intValue() + 100;
 
-        losingPlayer.put("tictactoeElo", currentElo);
+        // update the game history
+        JSONArray recentMatches = (JSONArray) winningPlayer.get("recentMatches");
+        JSONObject currentMatch = new JSONObject();
+        currentMatch.put("matchID",sessionID);
+        currentMatch.put("gameType", GameTypes.TICTACTOE);
+        currentMatch.put("outcome", "W");
+        currentMatch.put("currentElo", currentElo);
+        recentMatches.add(currentMatch);
 
-        System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
+
+        winningPlayer.put("tictactoeElo", currentElo);
+        winningPlayer.put("winsInTicTacToe", winsInTicTacToe);
+        winningPlayer.put("recentMatches", recentMatches);
+
+
+        System.out.println("Elo has been updated for winning player with PlayerID: " + playerID);
     }
 
-    private void updateEloForWinningPlayerConnect4(UUID playerID) {
+    private void updateEloForWinningPlayerConnect4(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
         }
 
-        JSONObject losingPlayer = findUserById(playerID);
-        Number currentElo = (Number) losingPlayer.get("connect4Elo");
+        JSONObject winningPlayer = findUserById(playerID);
+        Number winsInConnect4 = (Number) winningPlayer.get("winsInConnect4") ; // update wins in gamet
+        winsInConnect4 = winsInConnect4.intValue() + 1;
+        Number currentElo = (Number) winningPlayer.get("connect4Elo");
         currentElo = currentElo.intValue() + 100;
 
-        losingPlayer.put("connect4Elo", currentElo);
+        // update the game history
+        JSONArray recentMatches = (JSONArray) winningPlayer.get("recentMatches");
+        JSONObject currentMatch = new JSONObject();
+        currentMatch.put("matchID",sessionID);
+        currentMatch.put("gameType", GameTypes.CONNECT4);
+        currentMatch.put("outcome", "W");
+        currentMatch.put("currentElo", currentElo);
+        recentMatches.add(currentMatch);
 
-        System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
+
+        winningPlayer.put("connect4Elo", currentElo);
+        winningPlayer.put("winsInConnect4", winsInConnect4);
+        winningPlayer.put("recentMatches", recentMatches);
+
+
+        System.out.println("Elo has been updated for winning player with PlayerID: " + playerID);
     }
 
     /**
@@ -291,61 +336,106 @@ public class Leaderboard {
     /**
      * Updates the ELO of a player who lost a match by decreasing it by 3000.
      *
-     * @param playerID the UUID of the losing player.
+     * @param playerID  the UUID of the losing player.
+     * @param sessionId
      */
-    public void updateEloForLosingPlayer(UUID playerID, GameTypes gameType) {
+    public void updateEloForLosingPlayer(UUID playerID, GameTypes gameType, UUID sessionId) {
         switch (gameType) {
             case CHECKERS -> {
-                updateEloForLosingPlayerCheckers(playerID);
+                updateEloForLosingPlayerCheckers(playerID, sessionId);
             }
             case TICTACTOE -> {
-                updateEloForLosingPlayerTictactoe(playerID);
+                updateEloForLosingPlayerTictactoe(playerID, sessionId);
             }
             case CONNECT4 -> {
-                updateEloForLosingPlayerConnect4(playerID);
+                updateEloForLosingPlayerConnect4(playerID, sessionId);
             }
         }
 
     }
 
-    private void updateEloForLosingPlayerCheckers(UUID playerID) {
+    private void updateEloForLosingPlayerCheckers(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
         }
 
         JSONObject losingPlayer = findUserById(playerID);
+        Number lossInCheckers = (Number) losingPlayer.get("lossInCheckers") ; // update losses in game
+        lossInCheckers = lossInCheckers.intValue() - 1;
         Number currentElo = (Number) losingPlayer.get("checkersElo");
         currentElo = currentElo.intValue() - 100;
 
+        // update the game history
+        JSONArray recentMatches = (JSONArray) losingPlayer.get("recentMatches");
+        JSONObject currentMatch = new JSONObject();
+        currentMatch.put("matchID",sessionID);
+        currentMatch.put("gameType", GameTypes.CHECKERS);
+        currentMatch.put("outcome", "L");
+        currentMatch.put("currentElo", currentElo);
+        recentMatches.add(currentMatch);    // adds new game to the game history
+
+
         losingPlayer.put("checkersElo", currentElo);
+        losingPlayer.put("lossInCheckers", lossInCheckers);
+        losingPlayer.put("recentMatches", recentMatches);
+
 
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
 
-    private void updateEloForLosingPlayerTictactoe(UUID playerID) {
+    private void updateEloForLosingPlayerTictactoe(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
         }
-
         JSONObject losingPlayer = findUserById(playerID);
+        Number lossInTicTacToe = (Number) losingPlayer.get("lossInTicTacToe") ; // update losses in game
+        lossInTicTacToe = lossInTicTacToe.intValue() - 1;
         Number currentElo = (Number) losingPlayer.get("tictactoeElo");
         currentElo = currentElo.intValue() - 100;
 
+        // update the game history
+        JSONArray recentMatches = (JSONArray) losingPlayer.get("recentMatches");
+        JSONObject currentMatch = new JSONObject();
+        currentMatch.put("matchID",sessionID);
+        currentMatch.put("gameType", GameTypes.TICTACTOE);
+        currentMatch.put("outcome", "L");
+        currentMatch.put("currentElo", currentElo);
+        recentMatches.add(currentMatch);    // adds new game to the game history
+
+
         losingPlayer.put("tictactoeElo", currentElo);
+        losingPlayer.put("lossInTicTacToe", lossInTicTacToe);
+        losingPlayer.put("recentMatches", recentMatches);
+
 
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
 
-    private void updateEloForLosingPlayerConnect4(UUID playerID) {
+    private void updateEloForLosingPlayerConnect4(UUID playerID, UUID sessionID) {
         if (findUserById(playerID) == null) {
             return;
         }
 
         JSONObject losingPlayer = findUserById(playerID);
+        Number lossInConnect4 = (Number) losingPlayer.get("lossInConnect4") ; // update losses in game
+        lossInConnect4 = lossInConnect4.intValue() - 1;
         Number currentElo = (Number) losingPlayer.get("connect4Elo");
         currentElo = currentElo.intValue() - 100;
 
+        // update the game history
+        JSONArray recentMatches = (JSONArray) losingPlayer.get("recentMatches");
+        JSONObject currentMatch = new JSONObject();
+        currentMatch.put("matchID",sessionID);
+        currentMatch.put("gameType", GameTypes.CONNECT4);
+        currentMatch.put("outcome", "L");
+        currentMatch.put("currentElo", currentElo);
+        recentMatches.add(currentMatch);    // adds new game to the game history
+
+
         losingPlayer.put("connect4Elo", currentElo);
+        losingPlayer.put("lossInConnect4", lossInConnect4);
+        losingPlayer.put("recentMatches", recentMatches);
+
 
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
     }
