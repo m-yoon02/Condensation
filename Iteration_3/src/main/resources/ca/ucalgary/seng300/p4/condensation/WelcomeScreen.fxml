@@ -40,8 +40,8 @@
       <Label layoutX="400.0" layoutY="50.0" prefHeight="21.0" prefWidth="95.0" styleClass="logo" stylesheets="@WelcomeScreenStyle.css" text="CONDENSATION" />
       <Label layoutX="213.0" layoutY="181.0" prefHeight="90.0" prefWidth="423.0" styleClass="title" stylesheets="@WelcomeScreenStyle.css" text="WELCOME TO CONDENSATION" />
       <Label layoutX="340.0" layoutY="247.0" prefHeight="24.0" prefWidth="173.0" styleClass="logo" stylesheets="@WelcomeScreenStyle.css" text="YOUR ULTIMATE GAMING HUB" />
-      <Button layoutX="257.0" layoutY="281.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" stylesheets="@WelcomeScreenStyle.css" text="LOGIN" />
-      <Button layoutX="435.0" layoutY="281.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" text="SIGNUP" />
+      <Button layoutX="257.0" layoutY="281.0" mnemonicParsing="false" onMouseClicked="#moveToLogin" prefHeight="26.0" prefWidth="171.0" stylesheets="@WelcomeScreenStyle.css" text="LOGIN" />
+      <Button layoutX="435.0" layoutY="281.0" mnemonicParsing="false" onMouseClicked="#moveToSignup" prefHeight="26.0" prefWidth="171.0" text="SIGNUP" />
       <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="489.0" layoutY="46.0">
          <image>
             <Image url="@aroma.png" />
