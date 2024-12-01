@@ -223,6 +223,8 @@ public class Leaderboard {
         player1CurrentMatch.put("outcome", "T");
         player1CurrentMatch.put("currentElo", player1Elo);
         player1RecentMatches.add(player1CurrentMatch);
+        player1.put("recentMatches", player1RecentMatches);
+
 
         // add user to the database
 
@@ -235,6 +237,8 @@ public class Leaderboard {
         player2CurrentMatch.put("outcome", "T");
         player2CurrentMatch.put("currentElo", player1Elo);
         player2RecentMatches.add(player2CurrentMatch);
+        player1.put("recentMatches", player2RecentMatches);
+
 
 
 
@@ -252,6 +256,8 @@ public class Leaderboard {
         player1CurrentMatch.put("outcome", "T");
         player1CurrentMatch.put("currentElo", player1Elo);
         player1RecentMatches.add(player1CurrentMatch);
+        player1.put("recentMatches", player1RecentMatches);
+
 
         // add user to the database
 
@@ -264,6 +270,8 @@ public class Leaderboard {
         player2CurrentMatch.put("outcome", "T");
         player2CurrentMatch.put("currentElo", player1Elo);
         player2RecentMatches.add(player2CurrentMatch);
+        player1.put("recentMatches", player2RecentMatches);
+
 
 
 
@@ -281,6 +289,7 @@ public class Leaderboard {
         player1CurrentMatch.put("outcome", "T");
         player1CurrentMatch.put("currentElo", player1Elo);
         player1RecentMatches.add(player1CurrentMatch);
+        player1.put("recentMatches", player1RecentMatches);
 
         // add user to the database
 
@@ -293,6 +302,8 @@ public class Leaderboard {
         player2CurrentMatch.put("outcome", "T");
         player2CurrentMatch.put("currentElo", player1Elo);
         player2RecentMatches.add(player2CurrentMatch);
+        player2.put("recentMatches", player2RecentMatches);
+
 
 
     }
