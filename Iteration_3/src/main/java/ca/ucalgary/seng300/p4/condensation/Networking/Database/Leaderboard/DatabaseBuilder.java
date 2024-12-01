@@ -12,7 +12,7 @@ public class DatabaseBuilder {
 
             System.out.println(leaderboard.findUserByName("Michelle"));
             UUID id = UUID.fromString("345e6789-e89d-45d5-a678-627836485231");
-            leaderboard.updateEloForLosingPlayer(id, GameTypes.CONNECT4);
+//            leaderboard.updateEloForLosingPlayer(id, GameTypes.CONNECT4, );
             leaderboard.refreshLeaderboard();
 
 

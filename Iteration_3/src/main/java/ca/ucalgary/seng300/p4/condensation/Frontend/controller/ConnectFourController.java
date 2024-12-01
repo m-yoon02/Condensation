@@ -21,7 +21,7 @@ public class ConnectFourController {
     public UUID playerTwo;
     public UUID sessionID;
     public UUID newTurn;
-    public void receiveConnectFour(JSONObject backendUpdate){
+    public static void receiveConnectFour(JSONObject backendUpdate){
         String win_or_not_win = (String) backendUpdate.get("UpdateType");
         if (Objects.equals(win_or_not_win, "GAME_END")){
             resultOfTicTacToe = (GameResult) backendUpdate.get("GameState");
