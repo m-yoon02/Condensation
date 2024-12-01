@@ -98,9 +98,9 @@ public class Leaderboard {
     public void createUser(String name, String password) throws IOException {
         JSONObject user = new JSONObject(); //create new object
 
-        user.put("id", UUID.randomUUID().toString()); //assign random uuid
-        user.put("name", name);
-        user.put("passowrd", password);
+        user.put("playerUUID", UUID.randomUUID().toString()); //assign random uuid
+        user.put("username", name);
+        user.put("password", password);
         user.put("connect4Elo", 1200);
         user.put("checkersElo", 1200);
         user.put("tictactoeElo", 1200);
