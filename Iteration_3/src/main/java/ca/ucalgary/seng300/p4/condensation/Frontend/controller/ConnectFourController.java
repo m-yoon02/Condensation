@@ -3,6 +3,7 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -136,6 +137,9 @@ public class ConnectFourController {
     @FXML
     private static Text playerTurnText;
 
+    private static final int NUMBER_OF_ROWS = 6;
+    private static final int NUMBER_OF_COLS = 7;
+
     public static UUID playerOne;
     public static UUID playerTwo;
     public static UUID sessionID;
@@ -144,27 +148,6 @@ public class ConnectFourController {
     private static Stage stage;
 
     private static Button[][] buttons = new Button[6][7];
-
-    private String jsonUpdate;
-
-    public static void receiveConnectFour(JSONObject payload) {
-        try {
-            String updateType = (String) payload.get("UpdateType");
-
-            switch (updateType) {
-                case "GAME_END":
-                    handleGameEnd(payload);
-                    break;
-                case "TURN_END":
-                    handleTurnEnd(payload);
-                    break;
-                default:
-                    System.out.println("Unknown UpdateType: " + updateType);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     public void initialize() throws IOException, ParseException {
@@ -183,6 +166,65 @@ public class ConnectFourController {
         playerTwo = (UUID) newPlayerJSONFile.get("player2ID");
         newTurn =  (UUID) newPlayerJSONFile.get("currentPlayerTurn");
         sessionID = (UUID) newPlayerJSONFile.get("sessionID");
+    }
+
+    @FXML
+    public void returnToBackendConnectFour(javafx.event.ActionEvent event) throws IOException, ParseException {
+        Button clickedButton = (Button) event.getSource();
+
+        int row = -1;
+        int col = -1;
+
+        boolean buttonFound = false;
+        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+            if (buttonFound){
+                break;
+            }
+            for (int j = 0; j < NUMBER_OF_COLS; j++) {
+                System.out.println(buttons[i][j]);
+                if (buttons[i][j].equals(clickedButton)) {
+                    row = i;
+                    col = j;
+                    buttonFound = true;
+                    break;
+                }
+            }
+        }
+
+        if (row >= 0 && col >= 0){
+
+            JSONObject connectFourJSON = new JSONObject();
+            connectFourJSON.put("SessionID", sessionID);
+            if (newTurn == playerOne){
+                connectFourJSON.put("playerID", playerOne.toString());
+            }
+            else{
+                connectFourJSON.put("playerID", playerTwo.toString());
+            }
+            connectFourJSON.put("New Position", new Vector2(row, col));
+            connectFourJSON.put("gameType", GameTypes.CONNECT4);
+            JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(connectFourJSON);
+            // NetworkManager.getNetworkInstance().receiveGameDataFromClient();
+        }
+    }
+
+    public static void receiveConnectFour(JSONObject payload) {
+        try {
+            String updateType = (String) payload.get("UpdateType");
+
+            switch (updateType) {
+                case "GAME_END":
+                    handleGameEnd(payload);
+                    break;
+                case "TURN_END":
+                    handleTurnEnd(payload);
+                    break;
+                default:
+                    System.out.println("Unknown UpdateType: " + updateType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void handleGameEnd(JSONObject update) throws IOException {
@@ -236,6 +278,15 @@ public class ConnectFourController {
                 updateButtonState(buttons[row][col], state);
             }
         }
+    }
+
+    private static void handleForfeit() throws IOException {
+        disableAllButtons();
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Aftermath.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage.setTitle("Condensation Application - Aftermath");
+        stage.setScene(scene);
+        stage.show();
     }
 
     private static void updateButtonState(Button button, String state) {
