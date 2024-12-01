@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * Controller class for the "Other Profile" screen.
@@ -37,8 +39,8 @@ public class OtherProfileController {
     private TableColumn<PlayerProfile, String> playerColumn;
     @FXML
     private TableColumn<PlayerProfile, String> gameColumn;
-    @FXML
-    private TableColumn<PlayerProfile, String> outcomeColumn;
+//    @FXML
+//    private TableColumn<PlayerProfile, String> outcomeColumn;
     @FXML
     private TableColumn<PlayerProfile, String> currentEloColumn;
     @FXML
@@ -50,15 +52,17 @@ public class OtherProfileController {
 
     // Lower Table for recent matches
     @FXML
-    private TableView<PlayerMatch> playerRecentTableView;
+    private TableView<JSONObject> playerRecentTableView;
     @FXML
-    private TableColumn<PlayerMatch, String> playerColumn1;
+    private TableColumn<JSONObject, String> playerRecentgameColumn; // Column for game type
     @FXML
-    private TableColumn<PlayerMatch, String> gameColumn1;
+    private TableColumn<JSONObject, String> playerRecentoutcomeColumn; // Column for match outcome
     @FXML
-    private TableColumn<PlayerMatch, String> outcomeColumn1;
+    private TableColumn<JSONObject, Number> playerRecentcurrentEloColumn; // Column for player's ELO after the match
     @FXML
-    private TableColumn<PlayerMatch, String> currentEloColumn1;
+    private TableColumn<JSONObject, Number> playerRecenttotalWinsColumn; // Placeholder column for total wins
+    @FXML
+    private TableColumn<JSONObject, Number> playerRecentgamesPlayedColumn; // Placeholder column for games played
 
     @FXML
     private TextField usernameTextField; // Input field for username
@@ -75,22 +79,21 @@ public class OtherProfileController {
     @FXML
     public void initialize() {
         // Bind overall stats columns to PlayerProfile properties
-        playerColumn.setCellValueFactory(data -> data.getValue().playerNameProperty());
         gameColumn.setCellValueFactory(data -> data.getValue().gameNameProperty());
         currentEloColumn.setCellValueFactory(data -> data.getValue().currentEloProperty());
         totalWinsColumn.setCellValueFactory(data -> data.getValue().totalWinsProperty());
-        gamesPlayedColumn.setCellValueFactory(data -> data.getValue().gamesPlayedProperty());
         statusColumn.setCellValueFactory(data -> data.getValue().statusProperty());
 
         // Bind recent matches columns to PlayerMatch properties
-        playerColumn1.setCellValueFactory(data -> data.getValue().playerNameProperty());
-        gameColumn1.setCellValueFactory(data -> data.getValue().gameNameProperty());
-        outcomeColumn1.setCellValueFactory(data -> data.getValue().outcomeProperty());
-        currentEloColumn1.setCellValueFactory(data -> data.getValue().currentEloProperty());
+        playerRecentgameColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("gameType")));
+        playerRecentoutcomeColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("outcome")));
+        playerRecentcurrentEloColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(((Long) cellData.getValue().get("currentElo")).intValue()));
+        playerRecenttotalWinsColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(0)); // Placeholder if not in matches
+        playerRecentgamesPlayedColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(0)); // Placeholder if not in matches
 
         // Initialize the leaderboard instance
         try {
-            leaderboard = Leaderboard.getInstance("C:/Users/M.Y/OneDrive - University of Calgary/Documents/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+            leaderboard = Leaderboard.getInstance("/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
         } catch (IOException | org.json.simple.parser.ParseException e) {
             e.printStackTrace();
             statusMessage.setText("Error initializing leaderboard.");
@@ -106,18 +109,9 @@ public class OtherProfileController {
     @FXML
     void onSearchButtonClicked(ActionEvent event) {
         String username = usernameTextField.getText().trim();
+        JSONObject user = leaderboard.findUserByName(username);
         if (username.isEmpty()) {
             statusMessage.setText("Please enter a username to search.");
-            return;
-        }
-
-        JSONObject user = leaderboard.findUserByName(username);
-        if (user == null) {
-            statusMessage.setText("User not found.");
-            overallStatsData.clear();
-            recentMatchesData.clear();
-            playerTableView.setItems(overallStatsData);
-            playerRecentTableView.setItems(recentMatchesData);
             return;
         }
 
@@ -127,19 +121,13 @@ public class OtherProfileController {
 
         // Populate overall stats
         overallStatsData.add(parsePlayer(user, "Connect4"));
+
         overallStatsData.add(parsePlayer(user, "Checkers"));
         overallStatsData.add(parsePlayer(user, "TicTacToe"));
 
-        // Populate recent matches
-        JSONArray recentMatches = (JSONArray) user.get("recentMatches");
-        if (recentMatches != null) {
-            for (Object match : recentMatches) {
-                recentMatchesData.add(parseRecentMatch(user, (JSONObject) match));
-            }
-        }
-
         playerTableView.setItems(overallStatsData);
-        playerRecentTableView.setItems(recentMatchesData);
+        displayRecentMatches(username);
+
     }
 
     /**
@@ -158,6 +146,31 @@ public class OtherProfileController {
 
         return new PlayerProfile(playerName, gameName, currentElo, totalWins, gamesPlayed, status);
     }
+
+    public void displayRecentMatches(String username) {
+        try {
+            // Fetch the user from the Leaderboard
+            Leaderboard leaderboard = Leaderboard.getInstance("/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+            JSONObject user = leaderboard.findUserByName(username);
+
+            if (user != null) {
+                // Extract recent matches and populate the TableView
+                JSONArray recentMatches = (JSONArray) user.get("recentMatches");
+                playerRecentTableView.getItems().clear();
+                for (Object match : recentMatches) {
+                    playerRecentTableView.getItems().add((JSONObject) match);
+                }
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error displaying recent matches.");
+        }
+    }
+
+
+
 
     /**
      * Parses recent match data and creates a PlayerMatch object.
@@ -215,7 +228,7 @@ public class OtherProfileController {
         }
 
         public SimpleStringProperty gameNameProperty() {
-            return gameName;
+            return new SimpleStringProperty(gameName.get().toUpperCase());
         }
 
         public SimpleStringProperty currentEloProperty() {

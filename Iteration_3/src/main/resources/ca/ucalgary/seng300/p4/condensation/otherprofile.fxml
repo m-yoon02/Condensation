@@ -23,12 +23,11 @@
                 <Button fx:id="searchButton" layoutX="594.0" layoutY="81.0" mnemonicParsing="false" onAction="#onSearchButtonClicked" text="Search" />
                 <TableView fx:id="playerTableView" layoutX="12.0" layoutY="135.0" prefHeight="142.0" prefWidth="676.0">
                     <columns>
-                        <TableColumn fx:id="playerColumn" prefWidth="94.40002250671387" text="Player" />
-                        <TableColumn fx:id="gameColumn" prefWidth="74.39997100830078" text="Game" />
-                        <TableColumn fx:id="outcomeColumn" prefWidth="111.20001220703125" text="Outcome" />
-                        <TableColumn fx:id="currentEloColumn" prefWidth="94.4000244140625" text="Current E lo" />
+<!--                        <TableColumn fx:id="playerColumn" prefWidth="94.40002250671387" text="Player" />-->
+                        <TableColumn fx:id="gameColumn" prefWidth="85.0" text="Game" />
+                        <TableColumn fx:id="currentEloColumn" prefWidth="94.4000244140625" text="Current Elo" />
                         <TableColumn fx:id="totalWinsColumn" prefWidth="86.39996337890625" text="Total Wins" />
-                        <TableColumn fx:id="gamesPlayedColumn" prefWidth="111.99996948242188" text="Games Played" />
+<!--                        <TableColumn fx:id="gamesPlayedColumn" prefWidth="111.99996948242188" text="Games Played" />-->
                         <TableColumn fx:id="statusColumn" prefWidth="104.800048828125" text="Status" />
 
                     </columns>
@@ -36,11 +35,11 @@
                 <Text fx:id="statusMessage" layoutX="14.0" layoutY="472.0" wrappingWidth="566.2894115447998" />
                 <TableView fx:id="playerRecentTableView" layoutX="12.0" layoutY="306.0" prefHeight="142.0" prefWidth="676.0">
                     <columns>
-                        <TableColumn fx:id="playerColumn1" prefWidth="94.40002250671387" text="Player" />
-                        <TableColumn fx:id="gameColumn1" prefWidth="91.20001983642578" text="Game" />
-                        <TableColumn fx:id="outcomeColumn1" prefWidth="95.199951171875" text="Outcome" />
-                        <TableColumn fx:id="currentEloColumn1" prefWidth="94.4000244140625" text="Current E lo" />
-                        <TableColumn fx:id="statusColumn1" prefWidth="104.800048828125" text="Ranks" />
+                        <TableColumn fx:id="playerRecentgameColumn" prefWidth="91.20001983642578" text="Game" />
+                        <TableColumn fx:id="playerRecentoutcomeColumn" prefWidth="95.199951171875" text="Outcome" />
+                        <TableColumn fx:id="playerRecentcurrentEloColumn" prefWidth="94.4000244140625" text="CurrentElo" />
+                        <TableColumn fx:id="playerRecenttotalWinsColumn" prefWidth="104.800048828125" text="Total Wins" />
+                        <TableColumn fx:id="playerRecentgamesPlayedColumn" prefWidth="104.800048828125" text="Games Played" />
                     </columns>
                 </TableView>
                 <Label layoutX="14.0" layoutY="115.0" text="Player overall stats" />
