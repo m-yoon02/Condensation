@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main-pane" stylesheets="@ticTacToeGame.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.TicTacToeController">
+    <children>
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label fx:id="titleLabel" text="Tic Tac Toe" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Label>
+                <HBox alignment="CENTER" prefHeight="497.0" prefWidth="316.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <VBox alignment="CENTER" prefHeight="308.0" prefWidth="340.0" styleClass="chat-v-box" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Chat" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets bottom="30.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="185.0" prefWidth="250.0" styleClass="chat-scroll-pane" VBox.vgrow="ALWAYS">
+                                    <content>
+                                        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="215.0" prefWidth="198.0" />
+                                    </content>
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                </ScrollPane>
+                        <TextField prefHeight="26.0" prefWidth="205.0" />
+                            </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="game-v-box" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label fx:id="playerStatus" text="Label" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <GridPane fx:id="chessboardGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="560.0" styleClass="chessboard">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                           <children>
+                              <Button id="btn00" fx:id="btn00" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="124.0" prefWidth="91.0" />
+                              <Button id="btn01" fx:id="btn01" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="131.0" prefWidth="159.0" GridPane.columnIndex="1" />
+                              <Button id="btn02" fx:id="btn02" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="113.0" prefWidth="113.0" GridPane.columnIndex="2" />
+                              <Button id="btn10" fx:id="btn10" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="114.0" prefWidth="163.0" GridPane.rowIndex="1" />
+                              <Button fx:id="btn11" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="124.0" prefWidth="138.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button fx:id="btn12" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="124.0" prefWidth="109.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="btn20" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="130.0" prefWidth="138.0" GridPane.rowIndex="2" />
+                              <Button fx:id="btn21" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="127.0" prefWidth="153.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="btn22" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="150.0" prefWidth="206.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                           </children>
+                                </GridPane>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <Button mnemonicParsing="false" text="Forfeit" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="15.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

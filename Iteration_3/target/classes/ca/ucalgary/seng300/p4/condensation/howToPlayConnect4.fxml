@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.ImageView?>
+
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22.0.1"
+            stylesheets="@howToPlayConnect4.css"
+            fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.HowToPlayConnect4Controller">
+
+    <top>
+        <VBox alignment="CENTER" spacing="10" BorderPane.alignment="CENTER">
+            <Label text="Connect 4 - How to Play" styleClass="title"/>
+            <ImageView fitWidth="200" preserveRatio="true" pickOnBounds="true">
+                <image>
+                    <Image url="@connect4.png"/>
+                </image>
+            </ImageView>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" spacing="20" styleClass="rules-container">
+                <Text text="Game Objective:" styleClass="heading"/>
+                <Text text="Be the first player to form a horizontal, vertical, or diagonal line of four of your own discs." styleClass="rule-text"/>
+
+                <Text text="Rules:" styleClass="heading"/>
+                <Text text="1. Players take turns dropping one disc into any of the seven columns." styleClass="rule-text"/>
+                <Text text="2. Discs fall to the lowest available row in the chosen column." styleClass="rule-text"/>
+                <Text text="3. The first player to align four of their discs wins." styleClass="rule-text"/>
+                <Text text="4. If the grid is filled without a winner, the game is a draw." styleClass="rule-text"/>
+
+                <Text text="Tips:" styleClass="heading"/>
+                <Text text="• Plan your moves strategically to block your opponent." styleClass="rule-text"/>
+                <Text text="• Keep an eye on possible diagonal connections." styleClass="rule-text"/>
+                <Text text="• Use the center column for higher chances of winning." styleClass="rule-text"/>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="20" BorderPane.alignment="CENTER_LEFT" styleClass="bottom-bar">
+            <Button text="Back" onAction="#goBack" styleClass="nav-button"/>
+        </HBox>
+    </bottom>
+</BorderPane>
