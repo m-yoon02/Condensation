@@ -1,30 +1,59 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Handlers;
 
+import ca.ucalgary.seng300.p4.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.MoveData;
 import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.ConnectFourPiece;
-
-import java.io.IOException;
-import java.util.UUID;
-
 import org.json.simple.parser.ParseException;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
 public class Connect4HandlerTest {
 
+    private class MockTurnEndListener implements TurnEndListener {
+        public UUID nextPlayerID;
+        public String boardState;
+
+        @Override
+        public void onTurnEnd(UUID nextPlayerID, String boardState) {
+            this.nextPlayerID = nextPlayerID;
+            this.boardState = boardState;
+        }
+    }
+
+    private class MockGameEndListener implements GameEndListener {
+        public GameResult gameResult;
+        public UUID winningPlayerID;
+
+        @Override
+        public void onGameEnd(GameResult gameResult, UUID winningPlayerID) {
+            this.gameResult = gameResult;
+            this.winningPlayerID = winningPlayerID;
+        }
+    }
+
     private UUID p1ID;
     private UUID p2ID;
     private Connect4Handler c4Handler;
+    private MockGameEndListener gameEndListener;
+    private MockTurnEndListener turnEndListener;
 
     @Before
     public void setUp() {
         p1ID = UUID.randomUUID();
         p2ID = UUID.randomUUID();
         c4Handler = new Connect4Handler(p1ID, p2ID);
+        gameEndListener = new MockGameEndListener();
+        turnEndListener = new MockTurnEndListener();
+        c4Handler.addGameEndListener(gameEndListener);
+        c4Handler.addTurnEndListener(turnEndListener);
     }
 
     @Test
@@ -39,7 +68,7 @@ public class Connect4HandlerTest {
             throw new RuntimeException(e);
         }
 
-        ConnectFourPiece piece = c4Handler.getBoard().getAt(0,5);
+        ConnectFourPiece piece = c4Handler.getBoard().getAt(0, 5);
         assertNotNull("Piece should be placed at bottom of column", piece);
         assertEquals("Piece colour is player colour", c4Handler.getPlayerColorFromUUID(p1ID), piece.getColor());
     }
@@ -56,7 +85,7 @@ public class Connect4HandlerTest {
             throw new RuntimeException(e);
         }
 
-        ConnectFourPiece piece = c4Handler.getBoard().getAt(0,5);
+        ConnectFourPiece piece = c4Handler.getBoard().getAt(0, 5);
         assertNotNull("Piece should be placed at bottom of column", piece);
         assertEquals("Piece colour is player colour", c4Handler.getPlayerColorFromUUID(p2ID), piece.getColor());
     }
@@ -65,7 +94,7 @@ public class Connect4HandlerTest {
     public void testMakeMove_ColumnFull_DoesNotUpdateBoard() {
         int column = 0;
 
-        for(int i = 0; i < c4Handler.getBoard().getRowSize(); i++) {
+        for (int i = 0; i < c4Handler.getBoard().getRowSize(); i++) {
             c4Handler.getBoard().placePiece(new ConnectFourPiece(c4Handler.getPlayerColorFromUUID(p1ID)), new Vector2(column, i));
         }
 
@@ -80,7 +109,7 @@ public class Connect4HandlerTest {
         }
 
         int filledCells = 0;
-        for(int row = 0; row < c4Handler.getBoard().getRowSize(); row++) {
+        for (int row = 0; row < c4Handler.getBoard().getRowSize(); row++) {
             if (c4Handler.getBoard().getAt(column, row) != null) {
                 filledCells++;
             }
@@ -258,7 +287,7 @@ public class Connect4HandlerTest {
         c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(1, bottomRow));
         c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(1, bottomRow - 1));
         c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(2, bottomRow));
-        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(2, bottomRow- 1));
+        c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(2, bottomRow - 1));
         c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(2, bottomRow - 2));
         c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(3, bottomRow));
         c4Handler.getBoard().placePiece(new ConnectFourPiece(PieceColor.BLUE), new Vector2(3, bottomRow - 1));
@@ -311,7 +340,7 @@ public class Connect4HandlerTest {
         }
     }
 
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void testMakeMove_NullMoveData_ThrowsException() {
         try {
             c4Handler.makeMove((MoveData) null);
@@ -322,7 +351,7 @@ public class Connect4HandlerTest {
         }
     }
 
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void testMakeMove_InvalidCoordinates_IgnoresMove() {
         MoveData md = new MoveData(p1ID, new Vector2(-1, 0));
 
@@ -335,7 +364,7 @@ public class Connect4HandlerTest {
         }
     }
 
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void testMakeMove_UnrecognizedPlayerID_IgnoresMove() {
         UUID invalid = UUID.randomUUID();
 
@@ -375,5 +404,83 @@ public class Connect4HandlerTest {
         boolean result = c4Handler.winInColumn(column, color);
 
         assertTrue("Detects win with more than 4 pieces", result);
+    }
+
+    @Test
+    public void testMakeMove_WithMoveData_ValidMove() throws IOException, ParseException {
+        MoveData moveData = new MoveData(p1ID, new Vector2(0, 0));
+        c4Handler.makeMove(moveData);
+
+        GameBoard<ConnectFourPiece> board = c4Handler.getBoard();
+        ConnectFourPiece piece = board.getAt(0, board.getRowSize() - 1);
+        assertNotNull(piece);
+        assertEquals(c4Handler.getPlayerColorFromUUID(p1ID), piece.getColor());
+
+        assertEquals(p2ID, turnEndListener.nextPlayerID);
+        assertNotNull(turnEndListener.boardState);
+    }
+
+    @Test
+    public void testMakeMove_WithMoveData_WinCondition() throws IOException, ParseException {
+        int column = 0;
+
+        for (int i = 0; i < 3; i++) {
+            MoveData moveData = new MoveData(p1ID, new Vector2(column, 0));
+            c4Handler.makeMove(moveData);
+            moveData = new MoveData(p2ID, new Vector2(column + 1, 0));
+            c4Handler.makeMove(moveData);
+        }
+
+        MoveData moveData = new MoveData(p1ID, new Vector2(column, 0));
+        c4Handler.makeMove(moveData);
+
+        assertEquals(GameResult.WIN, gameEndListener.gameResult);
+        assertEquals(p1ID, gameEndListener.winningPlayerID);
+    }
+
+    @Test
+    public void testMakeMove_WithMoveData_ColumnFull() throws IOException, ParseException {
+        int column = 0;
+
+        for (int i = 0; i < c4Handler.getBoard().getRowSize(); i++) {
+            UUID currentPlayer = (i % 2 == 0) ? p1ID : p2ID;
+            MoveData moveData = new MoveData(currentPlayer, new Vector2(column, 0));
+            c4Handler.makeMove(moveData);
+        }
+
+        MoveData moveData = new MoveData(p1ID, new Vector2(column, 0));
+        c4Handler.makeMove(moveData);
+
+        assertEquals(p1ID, turnEndListener.nextPlayerID);
+    }
+
+    @Test
+    public void testMakeMove_WithJSON_InvalidJSON() {
+        String invalidJSON = "Invalid JSON String";
+
+        try {
+            c4Handler.makeMove(invalidJSON);
+            fail("Expected RuntimeException due to invalid JSON");
+        } catch (RuntimeException _) {}
+    }
+
+    @Test
+    public void testWinInDiagonalFrontslash_NoWin() {
+        boolean result = c4Handler.winInDiagonalFrontslash(0, 0, PieceColor.BLUE);
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void testWinInDiagonalFrontslash_PartialDiagonal() {
+        GameBoard<ConnectFourPiece> board = c4Handler.getBoard();
+        PieceColor color = PieceColor.BLUE;
+
+        board.placePiece(new ConnectFourPiece(color), new Vector2(0, 3));
+        board.placePiece(new ConnectFourPiece(color), new Vector2(1, 2));
+        board.placePiece(new ConnectFourPiece(color), new Vector2(2, 1));
+
+        boolean result = c4Handler.winInDiagonalFrontslash(1, 2, color);
+        assertFalse(result);
     }
 }

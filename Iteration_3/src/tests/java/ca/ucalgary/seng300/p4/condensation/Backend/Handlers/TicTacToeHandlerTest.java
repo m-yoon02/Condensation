@@ -1,6 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Handlers;
 
+import ca.ucalgary.seng300.p4.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.MoveData;
 import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.TicTacToePiece;
@@ -16,15 +18,43 @@ import static org.junit.Assert.*;
 
 public class TicTacToeHandlerTest {
 
+    private class MockGameEndListener implements GameEndListener {
+        public GameResult gameResult;
+        public UUID winningPlayerID;
+
+        @Override
+        public void onGameEnd(GameResult gameResult, UUID winningPlayerID) {
+            this.gameResult = gameResult;
+            this.winningPlayerID = winningPlayerID;
+        }
+    }
+
+    private class MockTurnEndListener implements TurnEndListener {
+        public UUID nextPlayerID;
+        public String boardState;
+
+        @Override
+        public void onTurnEnd(UUID nextPlayerID, String boardState) {
+            this.nextPlayerID = nextPlayerID;
+            this.boardState = boardState;
+        }
+    }
+
     private UUID p1ID;
     private UUID p2ID;
     private TicTacToeHandler ticTacToeHandler;
+    private MockGameEndListener gameEndListener;
+    private MockTurnEndListener turnEndListener;
 
     @Before
     public void setUp() throws Exception {
         p1ID = UUID.randomUUID();
         p2ID = UUID.randomUUID();
         ticTacToeHandler = new TicTacToeHandler(p1ID, p2ID);
+        gameEndListener = new MockGameEndListener();
+        turnEndListener = new MockTurnEndListener();
+        ticTacToeHandler.addGameEndListener(gameEndListener);
+        ticTacToeHandler.addTurnEndListener(turnEndListener);
     }
 
     @After
@@ -541,4 +571,43 @@ public class TicTacToeHandlerTest {
         assertFalse("Player 1 should not win as not all values in diagonal 2 are the same", ticTacToeHandler.checkDiagonalWin(color));
     }
 
+    @Test
+    public void testMakeMove_MoveOnOccupiedSpot() throws IOException, ParseException {
+        MoveData initialMove = new MoveData(p1ID, new Vector2(0, 0));
+        ticTacToeHandler.makeMove(initialMove);
+
+        MoveData invalidMove = new MoveData(p2ID, new Vector2(0, 0));
+        ticTacToeHandler.makeMove(invalidMove);
+
+        assertEquals(p2ID, turnEndListener.nextPlayerID);
+        assertNull(gameEndListener.gameResult);
+    }
+
+    @Test
+    public void testMakeMove_PlayerWins() throws IOException, ParseException {
+        ticTacToeHandler.makeMove(new MoveData(p1ID, new Vector2(0, 0)));
+        ticTacToeHandler.makeMove(new MoveData(p2ID, new Vector2(1, 0)));
+        ticTacToeHandler.makeMove(new MoveData(p1ID, new Vector2(0, 1)));
+        ticTacToeHandler.makeMove(new MoveData(p2ID, new Vector2(1, 1)));
+        ticTacToeHandler.makeMove(new MoveData(p1ID, new Vector2(0, 2)));
+
+        assertEquals(GameResult.WIN, gameEndListener.gameResult);
+        assertEquals(p1ID, gameEndListener.winningPlayerID);
+    }
+
+    @Test
+    public void testMakeMove_NormalMove() throws IOException, ParseException {
+        MoveData moveData = new MoveData(p1ID, new Vector2(0, 0));
+        ticTacToeHandler.makeMove(moveData);
+
+        assertEquals(p2ID, turnEndListener.nextPlayerID);
+        assertNull(gameEndListener.gameResult);
+    }
+
+    @Test(expected = Exception.class)
+    public void testMakeMove_WithJSON_InvalidJSON() {
+        String invalidJSON = "Invalid JSON";
+
+        ticTacToeHandler.makeMove(invalidJSON);
+    }
 }

@@ -1,11 +1,11 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Handlers;
 
-import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.Board.GameBoard;
-import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.MoveData;
-import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.ConnectFourPiece;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
+import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.MoveData;
+import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.ConnectFourPiece;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -33,6 +33,7 @@ public class Connect4Handler extends GameHandler {
 
     /**
      * Simple board getter for testing purposes
+     *
      * @return board
      */
     public GameBoard<ConnectFourPiece> getBoard() {
@@ -44,23 +45,25 @@ public class Connect4Handler extends GameHandler {
     // You are to use the move data and translate it to the GameBoard
     // You are also required to check for game winning scenarios here
     // This will also notify when the game has ended, and which player's turn it is after the move
+
     /**
      * Main driver of game logic
      * Pre-condition:
      * 1. Valid moveDataJson variable
-     *      - valid UUID playerID
-     *      - valid Vector2 position
+     * - valid UUID playerID
+     * - valid Vector2 position
      * 2. Board is initialized
-     *
+     * <p>
      * Post-condition:
      * 1. If all columns are full
-     *      - pass gameResult.TIE and null to notifyGameEnd
+     * - pass gameResult.TIE and null to notifyGameEnd
      * 2. if chosen column is full
-     *      - pass the current players ID and leave board state unchanged
+     * - pass the current players ID and leave board state unchanged
      * 3. if a connect four has been made
-     *      -pass gameResult.WIN and current players id (winning player)
+     * -pass gameResult.WIN and current players id (winning player)
      * 4. if the move is just a standard move (none of the conditions above apply)
-     *      -pass other players ID and leave board state unchanged
+     * -pass other players ID and leave board state unchanged
+     *
      * @param moveData
      */
     public void makeMove(MoveData moveData) throws IOException, ParseException {
@@ -105,19 +108,20 @@ public class Connect4Handler extends GameHandler {
      * 1. Board is initialized
      * 2. valid column index,
      * 3. non-negative column size
-     *
+     * <p>
      * post-conditions:
      * 1. If an empty (null) row exists in the specified column:
-     *      The method returns the index of the lowest empty row in the column.
+     * The method returns the index of the lowest empty row in the column.
      * 2. If no empty row exists in the specified column:
-     *      The method returns -1
+     * The method returns -1
+     *
      * @param column, index of target column
      * @return the index of the lowest available row for specified column
      */
     public int findAvailableRow(int column) {
         // Iterates through the rows of the specified column from bottom to top.
-        for(int row = board.getRowSize() - 1; row >= 0 ; row--){
-            if (board.getAt(column, row) == null){
+        for (int row = board.getRowSize() - 1; row >= 0; row--) {
+            if (board.getAt(column, row) == null) {
                 return row;
             }
         }
@@ -128,22 +132,22 @@ public class Connect4Handler extends GameHandler {
     /**
      * pre-conditions:
      * 1. Board is initialized
-     *
+     * <p>
      * post-conditions:
      * 1. Returns false:
-     *      If any position in the top row (row TOP_ROW) is empty (null).
+     * If any position in the top row (row TOP_ROW) is empty (null).
      * 2. Returns true:
-     *      If all positions in the top row (row TOP_ROW) are occupied (non-null).
+     * If all positions in the top row (row TOP_ROW) are occupied (non-null).
      *
      * @return true if all cells in the top row are occupied (non-null);
-     *         false if at least one cell in the top row is empty (null)
+     * false if at least one cell in the top row is empty (null)
      */
     public boolean allColumnsAreFull() {
-        int TOP_ROW  = 0;
+        int TOP_ROW = 0;
         // Loop through each column in the top row.
-        for(int i = 0; i < board.getColumnSize(); i++ ){
+        for (int i = 0; i < board.getColumnSize(); i++) {
             // If any spot in the top row is empty, the board is not full.
-            if (board.getAt(i, TOP_ROW) == null){
+            if (board.getAt(i, TOP_ROW) == null) {
                 return false;
             }
         }
@@ -155,20 +159,21 @@ public class Connect4Handler extends GameHandler {
      * pre-conditions:
      * 1. Board is initialized
      * 2. Valid column index
-     *
+     * <p>
      * post-conditions:
      * 1. Returns false:
-     *      If the cell at the top row (TOP_ROW) of the specified column is empty (null).
+     * If the cell at the top row (TOP_ROW) of the specified column is empty (null).
      * 2. Returns true:
-     *      If the cell at the top row (TOP_ROW) of the specified column is occupied (non-null).
+     * If the cell at the top row (TOP_ROW) of the specified column is occupied (non-null).
+     *
      * @param column, index of target column
      * @return true if the cell at the top row of the specified column is occupied (non-null);
-     *         false if the cell is empty (null).
+     * false if the cell is empty (null).
      */
     public boolean columnIsFull(int column) {
-        int TOP_ROW  = 0;
+        int TOP_ROW = 0;
         // Check if the top row cell at the given column is empty.
-        if (board.getAt(column, TOP_ROW) == null){
+        if (board.getAt(column, TOP_ROW) == null) {
             // If the cell is empty, return false.
             return false;
         }
@@ -179,11 +184,11 @@ public class Connect4Handler extends GameHandler {
     /**
      * Checks if a player has achieved a "Connect Four" by examining the given piece's position
      * for a sequence of 4 consecutive pieces of the same color in any direction.
-     *
+     * <p>
      * Preconditions:
      * - `piecePos` must be a valid position on the board, with both `x` and `y` coordinates within bounds.
      * - The piece at the specified position must exist and have a valid color.
-     *
+     * <p>
      * Postconditions:
      * - Returns `true` if a "Connect Four" condition is found in any direction (vertical, horizontal, or diagonal).
      * - Returns `false` if no such sequence of 4 pieces is found.
@@ -191,9 +196,9 @@ public class Connect4Handler extends GameHandler {
      * @param piecePos A `Vector2` representing the position of the most recently placed piece on the board.
      *                 `piecePos.x()` represents the column index, and `piecePos.y()` represents the row index.
      * @return `true` if there are 4 consecutive pieces of the same color in any direction (vertical,
-     *         horizontal, or diagonal), `false` otherwise.
+     * horizontal, or diagonal), `false` otherwise.
      */
-    public boolean checkForConnectedFour(Vector2 piecePos){
+    public boolean checkForConnectedFour(Vector2 piecePos) {
         // Extract row and column indices from the piece's position.
         int row = piecePos.y();
         int column = piecePos.x();
@@ -206,31 +211,26 @@ public class Connect4Handler extends GameHandler {
         // 2. Horizontal win (row check).
         // 3. Backslash diagonal (`\`) win (top-left to bottom-right).
         // 4. Frontslash diagonal (`/`) win (bottom-left to top-right).
-        if (winInColumn(column, pieceColor) || winInRow(column, pieceColor) || winInDiagonalBackslash(row, column, pieceColor) || winInDiagonalFrontslash(row, column, pieceColor)) {
-            // Return true if any win condition is satisfied.
-            return true;
-        }
-        else {
-            // Return false if no win condition is satisfied.
-            return false;
-        }
+        // Return true if any win condition is satisfied.
+        // Return false if no win condition is satisfied.
+        return winInColumn(column, pieceColor) || winInRow(column, pieceColor) || winInDiagonalBackslash(row, column, pieceColor) || winInDiagonalFrontslash(row, column, pieceColor);
     }
 
     /**
      * Checks if a player has won by having 4 consecutive pieces in a given row.
-     *
+     * <p>
      * Preconditions:
-     *  - The `rowIndex` must be a valid row within the bounds of the board.
-     *  - The `pieceColor` must not be `null`.
-     *
+     * - The `rowIndex` must be a valid row within the bounds of the board.
+     * - The `pieceColor` must not be `null`.
+     * <p>
      * Postconditions:
-     *  - Returns `true` if exactly 4 consecutive pieces of the specified color exist in the row.
-     *  - Returns `false` if no such sequence of 4 pieces exists in the row.
+     * - Returns `true` if exactly 4 consecutive pieces of the specified color exist in the row.
+     * - Returns `false` if no such sequence of 4 pieces exists in the row.
      *
-     * @param rowIndex The index of the row to check for a win.
+     * @param rowIndex   The index of the row to check for a win.
      * @param pieceColor The color of the piece to check for consecutive alignment.
      * @return `true` if there are 4 consecutive pieces of the given color in the row,
-     *         `false` otherwise.
+     * `false` otherwise.
      */
 
     public boolean winInRow(int rowIndex, PieceColor pieceColor) {
@@ -249,8 +249,7 @@ public class Connect4Handler extends GameHandler {
                 if (chain == 4) {
                     return true;
                 }
-            }
-            else {
+            } else {
                 // If the piece is null or the color doesn't match, reset the chain count.
                 chain = 0;
             }
@@ -261,19 +260,19 @@ public class Connect4Handler extends GameHandler {
 
     /**
      * Checks if a player has won by having 4 consecutive pieces of a specified color in a given column.
-     *
+     * <p>
      * Preconditions:
      * - The `columnIndex` must be a valid column within the bounds of the board.
      * - The `pieceColor` must not be `null`.
-     *
+     * <p>
      * Postconditions:
      * - Returns `true` if exactly 4 consecutive pieces of the specified color exist in the column.
      * - Returns `false` if no such sequence of 4 pieces exists in the column.
      *
      * @param columnIndex The index of the column to check for a win. Must be within board boundaries.
-     * @param pieceColor The color of the piece to check for consecutive alignment. Must not be null.
+     * @param pieceColor  The color of the piece to check for consecutive alignment. Must not be null.
      * @return `true` if there are 4 consecutive pieces of the given color in the column,
-     *         `false` otherwise.
+     * `false` otherwise.
      */
 
     public boolean winInColumn(int columnIndex, PieceColor pieceColor) {
@@ -292,8 +291,7 @@ public class Connect4Handler extends GameHandler {
                 if (chain == 4) {
                     return true;
                 }
-            }
-            else {
+            } else {
                 // If the piece is null or the color doesn't match, reset the chain count.
                 chain = 0;
             }
@@ -305,20 +303,20 @@ public class Connect4Handler extends GameHandler {
     /**
      * Checks if a player has won by having 4 consecutive pieces of a specified color along a
      * backslash (`\`) diagonal starting from the specified position.
-     *
+     * <p>
      * Preconditions:
      * - The `rowIndex` and `columnIndex` must be valid indices within the bounds of the board.
      * - The `pieceColor` must not be `null`.
-     *
+     * <p>
      * Postconditions:
      * - Returns `true` if exactly 4 consecutive pieces of the specified color exist along the diagonal.
      * - Returns `false` if no such sequence of 4 pieces exists along the diagonal.
      *
-     * @param rowIndex The row index of the starting position to check for a win.
+     * @param rowIndex    The row index of the starting position to check for a win.
      * @param columnIndex The column index of the starting position to check for a win.
-     * @param pieceColor The color of the piece to check for consecutive alignment. Must not be null.
+     * @param pieceColor  The color of the piece to check for consecutive alignment. Must not be null.
      * @return `true` if there are 4 consecutive pieces of the given color along the diagonal,
-     *         `false` otherwise.
+     * `false` otherwise.
      */
     public boolean winInDiagonalBackslash(int rowIndex, int columnIndex, PieceColor pieceColor) {
         int topRow;
@@ -349,8 +347,7 @@ public class Connect4Handler extends GameHandler {
                 if (chain == 4) {
                     return true;
                 }
-            }
-            else {
+            } else {
                 // If the piece is null or the color doesn't match, reset the chain count.
                 chain = 0;
             }
@@ -362,20 +359,20 @@ public class Connect4Handler extends GameHandler {
     /**
      * Checks if a player has won by having 4 consecutive pieces of a specified color along a
      * frontslash (`/`) diagonal starting from the specified position.
-     *
+     * <p>
      * Preconditions:
      * - The `rowIndex` and `columnIndex` must be valid indices within the bounds of the board.
      * - The `pieceColor` must not be `null`.
-     *
+     * <p>
      * Postconditions:
      * - Returns `true` if exactly 4 consecutive pieces of the specified color exist along the diagonal.
      * - Returns `false` if no such sequence of 4 pieces exists along the diagonal.
      *
-     * @param rowIndex The row index of the starting position to check for a win.
+     * @param rowIndex    The row index of the starting position to check for a win.
      * @param columnIndex The column index of the starting position to check for a win.
-     * @param pieceColor The color of the piece to check for consecutive alignment. Must not be null.
+     * @param pieceColor  The color of the piece to check for consecutive alignment. Must not be null.
      * @return `true` if there are 4 consecutive pieces of the given color along the diagonal,
-     *         `false` otherwise.
+     * `false` otherwise.
      */
     public boolean winInDiagonalFrontslash(int rowIndex, int columnIndex, PieceColor pieceColor) {
         // Variables to track the starting point of the diagonal traversal.
@@ -407,8 +404,7 @@ public class Connect4Handler extends GameHandler {
                 if (chain == 4) {
                     return true;
                 }
-            }
-            else {
+            } else {
                 // If the piece is null or the color doesn't match, reset the chain count.
                 chain = 0;
             }
@@ -416,5 +412,4 @@ public class Connect4Handler extends GameHandler {
         // Return false if no 4 consecutive pieces of the same color were found along the diagonal.
         return false;
     }
-
 }
