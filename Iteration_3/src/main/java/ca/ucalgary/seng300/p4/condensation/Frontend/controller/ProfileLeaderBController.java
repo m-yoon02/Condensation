@@ -102,47 +102,36 @@ public class ProfileLeaderBController {
             // Get the leaderboard instance
             Leaderboard leaderboard = Leaderboard.getInstance("/Users/mortezafaraji/Desktop/school/SENG300/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
 
-
             // Create observable lists for each game
             ObservableList<org.json.simple.JSONObject> ticTacToeData = FXCollections.observableArrayList();
             ObservableList<org.json.simple.JSONObject> connect4Data = FXCollections.observableArrayList();
             ObservableList<org.json.simple.JSONObject> checkersData = FXCollections.observableArrayList();
 
-            // Populate the data
+            // Populate the data with deep copies
             leaderboard.getAllUsers().forEach(user -> {
-                org.json.simple.JSONObject userObject = (org.json.simple.JSONObject) user;
+                JSONObject userObject = (JSONObject) user;
 
-                // Add the user to each game's leaderboard
-                ticTacToeData.add(userObject);
-                connect4Data.add(userObject);
-                checkersData.add(userObject);
+                // Create deep copies for each list
+                ticTacToeData.add(new JSONObject(userObject));
+                connect4Data.add(new JSONObject(userObject));
+                checkersData.add(new JSONObject(userObject));
             });
 
             // Sort the data by score for each game
             ticTacToeData.sort((o1, o2) -> Long.compare((Long) o2.get("tictactoeElo"), (Long) o1.get("tictactoeElo")));
-            connect4Data.sort((o1, o2) -> Long.compare((Long) o2.get("connect4Elo"), (Long) o1.get("connect4Elo")));
-            checkersData.sort((o1, o2) -> Long.compare((Long) o2.get("checkersElo"), (Long) o1.get("checkersElo")));
-
-            // Assign ranks AFTER sorting
             for (int i = 0; i < ticTacToeData.size(); i++) {
                 ticTacToeData.get(i).put("rank", i + 1); // Rank starts at 1
             }
+
+            connect4Data.sort((o1, o2) -> Long.compare((Long) o2.get("connect4Elo"), (Long) o1.get("connect4Elo")));
             for (int i = 0; i < connect4Data.size(); i++) {
                 connect4Data.get(i).put("rank", i + 1); // Rank starts at 1
             }
+
+            checkersData.sort((o1, o2) -> Long.compare((Long) o2.get("checkersElo"), (Long) o1.get("checkersElo")));
             for (int i = 0; i < checkersData.size(); i++) {
                 checkersData.get(i).put("rank", i + 1); // Rank starts at 1
             }
-
-            // Debug: Print sorted data with ranks
-            System.out.println("Tic Tac Toe Data After Sorting:");
-            ticTacToeData.forEach(data -> System.out.println(data));
-
-            System.out.println("Connect 4 Data After Sorting:");
-            connect4Data.forEach(data -> System.out.println(data));
-
-            System.out.println("Checkers Data After Sorting:");
-            checkersData.forEach(data -> System.out.println(data));
 
             // Set the data to the tables
             ticTacToeTable.setItems(ticTacToeData);
@@ -154,6 +143,7 @@ public class ProfileLeaderBController {
             System.out.println("Error loading leaderboard data.");
         }
     }
+
 
     /**
      * Handles the "Home" button click event.
