@@ -14,7 +14,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#44539c" height="338.0" layoutX="235.0" layoutY="63.0" stroke="BLACK" strokeType="INSIDE" width="231.0" />
       <Label fx:id="Title" layoutX="313.0" layoutY="5.0" text="Games" textFill="#cfc9c9">
          <font>
-            <Font size="22.0" />
+            <Font name="Oswald Regular" size="22.0" />
          </font>
       </Label>
       <Button fx:id="ticTacToePlayButton" layoutX="95.0" layoutY="410.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="46.0" text="Play" />
@@ -24,28 +24,28 @@
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Label fx:id="ticTacToeArea" layoutX="65.0" layoutY="66.0" prefHeight="27.0" prefWidth="116.0" text="TIC TAC TOE" textFill="#ffffffb8">
+      <Label fx:id="ticTacToeArea" layoutX="61.0" layoutY="69.0" prefHeight="27.0" prefWidth="116.0" text="TIC TAC TOE" textFill="#ffffffb8">
+         <font>
+            <Font name="Oswald Regular" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="connect4Area" layoutX="308.0" layoutY="69.0" text="CONNECT 4 " textFill="#0d0d0dbd">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="connect4Area" layoutX="301.0" layoutY="69.0" text="CONNECT 4 " textFill="#0d0d0dbd">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="checkersArea" layoutX="531.0" layoutY="69.0" text="CHECKERS">
+      <Label fx:id="checkersArea" layoutX="544.0" layoutY="69.0" text="CHECKERS">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <Label fx:id="intro" layoutX="15.0" layoutY="25.0" prefHeight="32.0" prefWidth="327.0" text="Pick a game and press the &quot;play&quot; button!!" textFill="#c4bdbd">
          <font>
-            <Font size="15.0" />
+            <Font name="Oswald Regular" size="15.0" />
          </font>
       </Label>
       <TextArea fx:id="tictactoeDes" layoutX="7.0" layoutY="100.0" prefHeight="295.0" prefWidth="223.0" text="Players take turns marking &#10;Xs and Os on a 3x3 grid.&#10;&#10;Goal:&#10;align three of your&#10;marks horizontally, vertically,&#10;or diagonally.&#10;" wrapText="true" />
       <TextArea fx:id="connect4Des" layoutX="239.0" layoutY="99.0" prefHeight="295.0" prefWidth="223.0" text="Players take turns dropping &#10;colored discs into a 7-column, 6-row grid. &#10;&#10;Goal:&#10;connect four discs in a row &#10;(horizontally, vertically, or&#10; diagonally).&#10;" wrapText="true" />
-      <TextArea fx:id="checkersDes" layoutX="471.0" layoutY="100.0" prefHeight="295.0" prefWidth="223.0" text="Players  movie their&#10;pieces diagonally on an &#10;8x8 board, aiming to capture &#10;all opponent pieces by &#10;jumping over them. &quot;King&quot; &#10;pieces gain additional &#10;movement capabilities &#10;when reaching the opposite &#10;end.&#10;&#10;Goal:&#10;Capture all opponent &#10;pieces!" />
+      <TextArea fx:id="checkersDes" layoutX="471.0" layoutY="100.0" prefHeight="295.0" prefWidth="223.0" text="Players  move their&#10;pieces diagonally on an &#10;8x8 board, aiming to capture &#10;all opponent pieces by &#10;jumping over them. &quot;King&quot; &#10;pieces gain additional &#10;movement capabilities &#10;when reaching the opposite &#10;end.&#10;&#10;Goal:&#10;Capture all the opponent &#10;pieces!" />
    </children>
 </AnchorPane>
