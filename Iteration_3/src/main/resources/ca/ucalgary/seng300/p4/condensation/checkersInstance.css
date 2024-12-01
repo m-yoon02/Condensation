@@ -1,8 +1,8 @@
 .main-pane {
     -fx-font-family: Arial;
     -fx-background-color: #ffffff;
-    -fx-pref-width: 600;
-    -fx-pref-height: 400;
+    -fx-pref-width: 700;
+    -fx-pref-height: 500;
 }
 .main-pane Button {
     -fx-font-family: Arial;
@@ -39,6 +39,6 @@
     -fx-alignment: center;
     -fx-border-color: black;
     -fx-border-width: 2;
-    -fx-pref-width: 272;
-    -fx-pref-height: 272;
+    -fx-pref-width: 320;
+    -fx-pref-height: 320;
 }

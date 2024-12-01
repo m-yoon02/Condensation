@@ -1,8 +1,8 @@
 .main-pane {
     -fx-font-family: Arial;
     -fx-background-color: #ffffff;
-    -fx-pref-width: 600;
-    -fx-pref-height: 400;
+    -fx-pref-width: 700;
+    -fx-pref-height: 500;
 }
 .main-pane Button {
     -fx-font-family: Arial;
@@ -10,21 +10,21 @@
 }
 
 .v-box {
-    -fx-pref-width: 600;
-    -fx-pref-height: 400;
+    -fx-pref-width: 700;
+    -fx-pref-height: 500;
     -fx-background-color: #ffffff;
 }
 
 .h-box {
-    -fx-pref-width: 600;
-    -fx-pref-height: 370;
+    -fx-pref-width: 700;
+    -fx-pref-height: 470;
     -fx-background-color: #ffffff;
 }
 
 
 .menu-container {
     -fx-background-color: #000000;
-    -fx-pref-width: 600;
+    -fx-pref-width: 700;
     -fx-pref-height: 30;
 }
 .menu-container Button{
@@ -36,7 +36,7 @@
 .game-container {
     -fx-alignment: top-center;
     -fx-pref-width: 300;
-    -fx-pref-height: 370;
+    -fx-pref-height: 470;
 }
 #nameLabel {
     -fx-alignment: left;

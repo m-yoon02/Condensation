@@ -94,9 +94,9 @@
                   </VBox>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" text="Forfeit" VBox.vgrow="ALWAYS">
+            <Button fx:id="forfeitBtn" mnemonicParsing="false" onAction="#onForfeitBtnClick" text="Forfeit" VBox.vgrow="ALWAYS">
                <VBox.margin>
-                  <Insets bottom="10.0" top="15.0" />
+                  <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
             </Button>
          </children>
