@@ -25,8 +25,8 @@ public abstract class GameHandler implements IGameHandler{
 
     private class EndGameOnTimerEndListener implements TimerEndListener {
         @Override
-        public void onTimerEnd(UUID winnerPlayerID) {
-//            notifyGameEnd(GameResult.WIN, winnerPlayerID);
+        public void onTimerEnd(UUID winnerPlayerID) throws IOException, ParseException {
+            notifyGameEnd(GameResult.WIN, winnerPlayerID);
         }
     }
 
