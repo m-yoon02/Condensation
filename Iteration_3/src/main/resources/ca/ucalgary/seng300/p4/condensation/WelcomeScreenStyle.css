@@ -47,6 +47,11 @@
     -fx-font-family: "Oswald", sans-serif;
     -fx-text-fill: White;
     -fx-border-radius: 0px;
+}
 
-
+.slidingText{
+    -fx-background-color: transparent;
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: white;
+    -fx-font-size: 10px;
 }

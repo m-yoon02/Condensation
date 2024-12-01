@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="781.0" styleClass="pane-background" stylesheets="@WelcomeScreenStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.WelcomeScreenController">
@@ -32,13 +34,23 @@
             <Insets />
          </opaqueInsets>
          <padding>
-            <Insets left="160.0" top="10.0" />
+            <Insets left="170.0" top="10.0" />
          </padding>
       </MenuBar>
-      <Label layoutX="403.0" layoutY="49.0" prefHeight="21.0" prefWidth="95.0" styleClass="logo" stylesheets="@WelcomeScreenStyle.css" text="CONDENSATION" />
-      <Label layoutX="219.0" layoutY="181.0" prefHeight="90.0" prefWidth="423.0" styleClass="title" stylesheets="@WelcomeScreenStyle.css" text="WELCOME TO CONDENSATION" />
+      <Label layoutX="400.0" layoutY="50.0" prefHeight="21.0" prefWidth="95.0" styleClass="logo" stylesheets="@WelcomeScreenStyle.css" text="CONDENSATION" />
+      <Label layoutX="213.0" layoutY="181.0" prefHeight="90.0" prefWidth="423.0" styleClass="title" stylesheets="@WelcomeScreenStyle.css" text="WELCOME TO CONDENSATION" />
       <Label layoutX="340.0" layoutY="247.0" prefHeight="24.0" prefWidth="173.0" styleClass="logo" stylesheets="@WelcomeScreenStyle.css" text="YOUR ULTIMATE GAMING HUB" />
-      <Button layoutX="261.0" layoutY="281.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" stylesheets="@WelcomeScreenStyle.css" text="LOGIN" />
-      <Button layoutX="445.0" layoutY="281.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" text="SIGNUP" />
+      <Button layoutX="257.0" layoutY="281.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" stylesheets="@WelcomeScreenStyle.css" text="LOGIN" />
+      <Button layoutX="435.0" layoutY="281.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" text="SIGNUP" />
+      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="489.0" layoutY="46.0">
+         <image>
+            <Image url="@aroma.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="486.0" layoutY="44.0">
+         <image>
+            <Image url="@logo.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
