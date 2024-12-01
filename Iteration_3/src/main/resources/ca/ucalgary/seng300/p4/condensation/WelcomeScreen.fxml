@@ -2,18 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.WelcomeScreenController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="781.0" styleClass="pane-background" stylesheets="@WelcomeScreenStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.WelcomeScreenController">
    <children>
-      <Separator layoutX="310.0" orientation="VERTICAL" prefHeight="433.0" prefWidth="1.0" />
-      <MenuBar id="menuBar" layoutX="311.0" layoutY="-2.0" prefHeight="56.0" prefWidth="392.0" styleClass="menuBar" stylesheets="@WelcomeScreenStyle.css">
+      <MenuBar id="menuBar" layoutX="389.0" layoutY="38.0" prefHeight="45.0" prefWidth="392.0" styleClass="menuBar" stylesheets="@WelcomeScreenStyle.css">
          <menus>
             <Menu id="menu" mnemonicParsing="false" styleClass="menu" text="TEAM">
                <items>
@@ -30,25 +27,18 @@
                   <MenuItem mnemonicParsing="false" text="About" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="CONTACT US">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-               </items>
-            </Menu>
          </menus>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <padding>
-            <Insets left="100.0" top="14.0" />
+            <Insets left="160.0" top="10.0" />
          </padding>
       </MenuBar>
-      <Text id="logo" fill="WHITE" layoutX="349.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="LOGO">
-         <font>
-            <Font name="Apple Braille" size="13.0" />
-         </font>
-      </Text>
-      <Button fx:id="loginBtn" layoutX="411.0" layoutY="155.0" mnemonicParsing="false" onAction="#initialize" prefHeight="26.0" prefWidth="175.0" text="LOGIN" />
-      <Button fx:id="SignupBtn" layoutX="411.0" layoutY="205.0" mnemonicParsing="false" onAction="#initialize" prefHeight="26.0" prefWidth="175.0" text="SIGNUP" />
+      <Label layoutX="403.0" layoutY="49.0" prefHeight="21.0" prefWidth="95.0" styleClass="logo" stylesheets="@WelcomeScreenStyle.css" text="CONDENSATION" />
+      <Label layoutX="219.0" layoutY="181.0" prefHeight="90.0" prefWidth="423.0" styleClass="title" stylesheets="@WelcomeScreenStyle.css" text="WELCOME TO CONDENSATION" />
+      <Label layoutX="340.0" layoutY="247.0" prefHeight="24.0" prefWidth="173.0" styleClass="logo" stylesheets="@WelcomeScreenStyle.css" text="YOUR ULTIMATE GAMING HUB" />
+      <Button layoutX="261.0" layoutY="281.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" stylesheets="@WelcomeScreenStyle.css" text="LOGIN" />
+      <Button layoutX="445.0" layoutY="281.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" text="SIGNUP" />
    </children>
 </Pane>

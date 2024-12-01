@@ -130,7 +130,6 @@ public class LoginController {
         try {
             JSONObject returnPayload = NetworkManager.getNetworkInstance().playerLoginHandler(createJSONObject());
 
-            JSONParser parser = new JSONParser();
             FileWriter fileWriter = new FileWriter(DEFAULT_PLAYER_ID_FILE);
             fileWriter.write(returnPayload.toJSONString());
             fileWriter.flush();

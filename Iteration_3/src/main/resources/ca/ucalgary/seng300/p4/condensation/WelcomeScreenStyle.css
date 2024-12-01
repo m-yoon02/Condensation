@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
 
 .menuBar {
-    -fx-background-color: "#020b9c";
+    -fx-background-color: "#2415E2";
     -fx-font-family: "Oswald", sans-serif;
     -fx-font-weight: 500;
     -fx-font-size: 11px;
@@ -11,9 +12,41 @@
 .menu .label
 {
     -fx-text-fill: white;
-    -fx-font: "Oswald", sans-serif;
+    -fx-font-family: "Oswald", sans-serif;
 }
 
-.menuBar .logo {
-    -fx-font: "Oswald", sans-serif;
+.logo{
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: "ffffff";
+    -fx-font-size: 15px;
+}
+
+.right-section{
+    -fx-background-color: black;
+}
+
+.pane-background{
+    -fx-background-image: url("welcomeBackground.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+.title{
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-font-weight: 700;
+    -fx-font-size: 30px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-text-fill: "#ffffff";
+
+}
+
+.button{
+
+    -fx-background-color: "#2415E2";
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: White;
+    -fx-border-radius: 0px;
+
+
 }
