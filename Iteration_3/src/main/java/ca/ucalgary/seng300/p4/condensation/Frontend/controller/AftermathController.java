@@ -12,6 +12,7 @@ public class AftermathController {
 
     @FXML
     public void handleRematch() {
+        // get info from newgame.json
         System.out.println("Rematch button clicked!");
     }
 }
