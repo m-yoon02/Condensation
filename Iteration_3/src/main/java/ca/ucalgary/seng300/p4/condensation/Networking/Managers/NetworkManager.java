@@ -239,7 +239,7 @@ public class NetworkManager {
      * @param eventType
      * @param clientResponsePayload
      */
-    public void notifyGameSessionClients(UUID sessionID, GameEventType eventType, JSONObject clientResponsePayload, GameTypes gameType) {
+    public void notifyGameSessionClients(UUID sessionID, GameEventType eventType, JSONObject clientResponsePayload, GameTypes gameType) throws IOException {
 
         // here we are getting the specific list of clients that are subscribed to the session
         List<GameDataListener> clientListeners = sessionListeners.get(sessionID);
@@ -395,7 +395,7 @@ public class NetworkManager {
      * sendGameDataToClients sends the clientPayload = sessionID + gameState payload to the clients
      * @param clientPayload
      */
-    public void sendGameDataToClients(JSONObject clientPayload, UUID sessionID, GameEventType gameEventType, GameTypes gameType){
+    public void sendGameDataToClients(JSONObject clientPayload, UUID sessionID, GameEventType gameEventType, GameTypes gameType) throws IOException {
         // The appropriate gameSession listener will have been notified
         notifyGameSessionClients(sessionID, gameEventType, clientPayload, gameType);          // Notify all subscribed clients
 

@@ -51,9 +51,10 @@ public class TicTacToeQueueController {
     }
 
 
+    @FXML
     protected void returnToProfile(Event event) throws IOException
     {
-        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Profile.fxml")));
+        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("tMenu.fxml")));
         createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         createScene = new Scene(origin);
         createWindow.setScene(createScene);
