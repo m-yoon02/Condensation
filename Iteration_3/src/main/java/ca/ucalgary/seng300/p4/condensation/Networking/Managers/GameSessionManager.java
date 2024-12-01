@@ -50,6 +50,7 @@ public class GameSessionManager {
     public void addGameSession(GameSession gameSession){
         // add gameSession object to the hashmap
         UUID sessionID = gameSession.getSessionId();
+        System.out.println(gameSessionManager);
         gameSessionManager.sessionsMap.put(sessionID, gameSession);
 
     }

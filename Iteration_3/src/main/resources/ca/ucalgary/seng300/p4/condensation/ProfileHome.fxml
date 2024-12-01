@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileHomeController">
+    <children>
+        <TableView fx:id="tableView" layoutX="157.0" layoutY="90.0" prefHeight="365.0" prefWidth="484.0">
+            <columns>
+                <TableColumn fx:id="gameColumn" prefWidth="60.0" text="Game" />
+                <TableColumn fx:id="outcomeColumn" prefWidth="98.4000244140625" text="Outcome" />
+                <TableColumn fx:id="currentEloColumn" prefWidth="102.39996337890625" text="Current Elo" />
+                <TableColumn fx:id="totalWinsColumn" prefWidth="103.19998168945312" text="Total Wins" />
+                <TableColumn fx:id="gamesPlayedColumn" prefWidth="118.4000244140625" text="Games Played" />
+            </columns>
+        </TableView>
+        <Label layoutX="229.0" layoutY="14.0" text="HOME-My Profile">
+            <font>
+                <Font size="21.0" />
+            </font>
+        </Label>
+        <Label fx:id="usernameField" layoutX="158.0" layoutY="52.0" text="PlayerOne">
+            <font>
+                <Font size="21.0" />
+            </font>
+        </Label>
+        <Button fx:id="leaderboardButton" layoutX="36.0" layoutY="162.0" mnemonicParsing="false" onAction="#onLeaderboardButtonClicked" prefHeight="30.0" prefWidth="96.0" text="Leaderboard" />
+        <Button fx:id="gamesButton" layoutX="34.0" layoutY="289.0" mnemonicParsing="false" onAction="#onGamesButtonClicked" prefHeight="30.0" prefWidth="96.0" text="Games" />
+        <Button fx:id="playerProfilesButton" layoutX="35.0" layoutY="225.0" mnemonicParsing="false" onAction="#onPlayerProfilesButtonClicked" prefHeight="30.0" prefWidth="96.0" text="Player Profile" />
+        <Button fx:id="logoutButton" layoutX="583.0" layoutY="462.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Log out" />
+    </children>
+</AnchorPane>

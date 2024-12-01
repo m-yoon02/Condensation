@@ -44,7 +44,11 @@ public abstract class GameHandler implements IGameHandler{
 
     @Override
     public void startGame() {
-        gameTimer.startTimer();
+        try {
+            gameTimer.startTimer();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
