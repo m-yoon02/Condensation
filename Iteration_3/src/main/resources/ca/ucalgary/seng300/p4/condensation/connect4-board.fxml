@@ -27,7 +27,7 @@
                     <children>
                   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="50.0" prefWidth="4000.0">
                      <children>
-                              <Text layoutX="12.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player's Turn" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="158.13671875">
+                              <Text fx:id="playerTurnText" layoutX="12.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player's Turn" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="158.13671875">
                                   <font>
                                       <Font size="15.0" />
                                   </font>
@@ -141,7 +141,7 @@
     <bottom>
         <HBox alignment="CENTER_LEFT">
             <children>
-                <Button fx:id="forfeitButton" prefHeight="40.0" prefWidth="100.0" styleClass="forfeit-button" text="Forfeit" />
+                <Button prefHeight="40.0" prefWidth="100.0" styleClass="forfeit-button" text="Forfeit" />
             </children>
         </HBox>
     </bottom>
