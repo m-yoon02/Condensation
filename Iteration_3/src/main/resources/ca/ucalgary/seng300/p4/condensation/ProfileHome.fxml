@@ -4,19 +4,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileHomeController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileHomeController">
     <children>
         <TableView fx:id="tableView" layoutX="157.0" layoutY="90.0" prefHeight="365.0" prefWidth="484.0">
             <columns>
-                <TableColumn fx:id="gameColumn" prefWidth="60.0" text="Game" />
-                <TableColumn fx:id="outcomeColumn" prefWidth="75.0" text="Outcome" />
-                <TableColumn fx:id="currentEloColumn" prefWidth="75.0" text="Current Elo" />
-                <TableColumn fx:id="totalWinsColumn" prefWidth="75.0" text="Total Wins" />
-                <TableColumn fx:id="gamesPlayedColumn" prefWidth="90.0" text="Games Played" />
+                <TableColumn fx:id="gameColumn" prefWidth="96.800048828125" text="Game" />
+                <TableColumn fx:id="outcomeColumn" prefWidth="82.4000244140625" text="Outcome" />
+                <TableColumn fx:id="currentEloColumn" prefWidth="93.5999755859375" text="Current Elo" />
+                <TableColumn fx:id="totalWinsColumn" prefWidth="110.39993286132812" text="Total Wins" />
+                <TableColumn fx:id="gamesPlayedColumn" prefWidth="102.4000244140625" text="Games Played" />
             </columns>
         </TableView>
         <Label layoutX="229.0" layoutY="14.0" text="HOME-My Profile">
@@ -28,9 +27,10 @@
             <font>
                 <Font size="21.0" />
             </font>
-        </Label>        <Button fx:id="leaderboardButton" layoutX="36.0" layoutY="167.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Leaderboard"  onAction="#onLeaderboardButtonClicked" />
-        <Button fx:id="gamesButton" layoutX="34.0" layoutY="273.0" mnemonicParsing="false"  prefHeight="30.0" prefWidth="96.0" text="Games" onAction="#onGamesButtonClicked"/>
-        <Button fx:id="playerProfilesButton" layoutX="35.0" layoutY="219.0" mnemonicParsing="false" text="Player Profile" />
-        <Button fx:id="logoutButton" layoutX="489.0" layoutY="463.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Log out" />
+        </Label>
+        <Button fx:id="leaderboardButton" layoutX="36.0" layoutY="162.0" mnemonicParsing="false" onAction="#onLeaderboardButtonClicked" prefHeight="30.0" prefWidth="106.0" text="Leaderboard" />
+        <Button fx:id="gamesButton" layoutX="34.0" layoutY="289.0" mnemonicParsing="false" onAction="#onGamesButtonClicked" prefHeight="30.0" prefWidth="106.0" text="Games" />
+        <Button fx:id="playerProfilesButton" layoutX="35.0" layoutY="225.0" mnemonicParsing="false" onAction="#onPlayerProfilesButtonClicked" prefHeight="30.0" prefWidth="106.0" text="Player Lookup" />
+        <Button fx:id="logoutButton" layoutX="34.0" layoutY="354.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Log out" />
     </children>
 </AnchorPane>

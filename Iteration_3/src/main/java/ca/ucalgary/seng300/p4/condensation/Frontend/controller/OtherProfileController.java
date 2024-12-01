@@ -1,50 +1,268 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import javafx.event.Event;
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
-import java.util.Objects;
 
+/**
+ * Controller class for the "Other Profile" screen.
+ * This screen allows users to search for a player's profile by username.
+ * Displays two tables:
+ * 1. Player overall stats for games like Connect4, Checkers, and TicTacToe.
+ * 2. Player's recent matches for any game.
+ */
 public class OtherProfileController {
 
+    // Upper Table for overall stats
     @FXML
-    private TextField playerUser;
+    private TableView<PlayerProfile> playerTableView;
     @FXML
-    private Label titleOfScreen;
+    private TableColumn<PlayerProfile, String> playerColumn;
+    @FXML
+    private TableColumn<PlayerProfile, String> gameColumn;
+    @FXML
+    private TableColumn<PlayerProfile, String> outcomeColumn;
+    @FXML
+    private TableColumn<PlayerProfile, String> currentEloColumn;
+    @FXML
+    private TableColumn<PlayerProfile, String> totalWinsColumn;
+    @FXML
+    private TableColumn<PlayerProfile, String> gamesPlayedColumn;
+    @FXML
+    private TableColumn<PlayerProfile, String> statusColumn;
+
+    // Lower Table for recent matches
+    @FXML
+    private TableView<PlayerMatch> playerRecentTableView;
+    @FXML
+    private TableColumn<PlayerMatch, String> playerColumn1;
+    @FXML
+    private TableColumn<PlayerMatch, String> gameColumn1;
+    @FXML
+    private TableColumn<PlayerMatch, String> outcomeColumn1;
+    @FXML
+    private TableColumn<PlayerMatch, String> currentEloColumn1;
 
     @FXML
-    private Label instructions;
+    private TextField usernameTextField; // Input field for username
+    @FXML
+    private Text statusMessage; // Text field to display search status
 
-    @FXML
-    private Button returnToHome;
+    private final ObservableList<PlayerProfile> overallStatsData = FXCollections.observableArrayList(); // Data for overall stats table
+    private final ObservableList<PlayerMatch> recentMatchesData = FXCollections.observableArrayList(); // Data for recent matches table
+    private Leaderboard leaderboard; // Leaderboard instance for fetching data
 
+    /**
+     * Initializes the controller. Sets up column bindings and loads the leaderboard data.
+     */
     @FXML
-    private Parent origin;
+    public void initialize() {
+        // Bind overall stats columns to PlayerProfile properties
+        playerColumn.setCellValueFactory(data -> data.getValue().playerNameProperty());
+        gameColumn.setCellValueFactory(data -> data.getValue().gameNameProperty());
+        currentEloColumn.setCellValueFactory(data -> data.getValue().currentEloProperty());
+        totalWinsColumn.setCellValueFactory(data -> data.getValue().totalWinsProperty());
+        gamesPlayedColumn.setCellValueFactory(data -> data.getValue().gamesPlayedProperty());
+        statusColumn.setCellValueFactory(data -> data.getValue().statusProperty());
 
-    @FXML
-    private Stage createWindow;
-    @FXML
-    private Scene createScene;
+        // Bind recent matches columns to PlayerMatch properties
+        playerColumn1.setCellValueFactory(data -> data.getValue().playerNameProperty());
+        gameColumn1.setCellValueFactory(data -> data.getValue().gameNameProperty());
+        outcomeColumn1.setCellValueFactory(data -> data.getValue().outcomeProperty());
+        currentEloColumn1.setCellValueFactory(data -> data.getValue().currentEloProperty());
 
-    @FXML
-    private Label playerFound;
+        // Initialize the leaderboard instance
+        try {
+            leaderboard = Leaderboard.getInstance("C:/Users/M.Y/OneDrive - University of Calgary/Documents/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+        } catch (IOException | org.json.simple.parser.ParseException e) {
+            e.printStackTrace();
+            statusMessage.setText("Error initializing leaderboard.");
+        }
+    }
 
+    /**
+     * Handles the "Search" button click event.
+     * Searches for a player by username and populates both tables with their data.
+     *
+     * @param event ActionEvent triggered by the "Search" button.
+     */
     @FXML
-    protected void returnToProfile(Event event) throws IOException
-    {
-        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Profile.fxml")));
-        createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        createScene = new Scene(origin);
-        createWindow.setScene(createScene);
-        createWindow.show();
+    void onSearchButtonClicked(ActionEvent event) {
+        String username = usernameTextField.getText().trim();
+        if (username.isEmpty()) {
+            statusMessage.setText("Please enter a username to search.");
+            return;
+        }
+
+        JSONObject user = leaderboard.findUserByName(username);
+        if (user == null) {
+            statusMessage.setText("User not found.");
+            overallStatsData.clear();
+            recentMatchesData.clear();
+            playerTableView.setItems(overallStatsData);
+            playerRecentTableView.setItems(recentMatchesData);
+            return;
+        }
+
+        statusMessage.setText("User found!");
+        overallStatsData.clear();
+        recentMatchesData.clear();
+
+        // Populate overall stats
+        overallStatsData.add(parsePlayer(user, "Connect4"));
+        overallStatsData.add(parsePlayer(user, "Checkers"));
+        overallStatsData.add(parsePlayer(user, "TicTacToe"));
+
+        // Populate recent matches
+        JSONArray recentMatches = (JSONArray) user.get("recentMatches");
+        if (recentMatches != null) {
+            for (Object match : recentMatches) {
+                recentMatchesData.add(parseRecentMatch(user, (JSONObject) match));
+            }
+        }
+
+        playerTableView.setItems(overallStatsData);
+        playerRecentTableView.setItems(recentMatchesData);
+    }
+
+    /**
+     * Parses the player data for a specific game and creates a PlayerProfile object.
+     *
+     * @param user     JSONObject containing player data.
+     * @param gameName Name of the game (e.g., Connect4, Checkers).
+     * @return PlayerProfile object containing game-specific stats.
+     */
+    private PlayerProfile parsePlayer(JSONObject user, String gameName) {
+        String playerName = (String) user.get("username");
+        String currentElo = user.get(gameName.toLowerCase() + "Elo").toString();
+        String totalWins = user.get("winsIn" + gameName).toString();
+        String gamesPlayed = user.get("gamesPlayed" + gameName).toString();
+        String status = Integer.parseInt(currentElo) > 1500 ? "Online" : "Offline";
+
+        return new PlayerProfile(playerName, gameName, currentElo, totalWins, gamesPlayed, status);
+    }
+
+    /**
+     * Parses recent match data and creates a PlayerMatch object.
+     *
+     * @param user  JSONObject containing player data.
+     * @param match JSONObject representing a single match.
+     * @return PlayerMatch object containing match details.
+     */
+    private PlayerMatch parseRecentMatch(JSONObject user, JSONObject match) {
+        String playerName = (String) user.get("username");
+        String gameName = (String) match.get("gameType");
+        String outcome = (String) match.get("outcome");
+        String currentElo = match.get("currentElo").toString();
+
+        return new PlayerMatch(playerName, gameName, outcome, currentElo);
+    }
+
+    /**
+     * Handles the "Home" button click event.
+     * Navigates back to the home screen.
+     *
+     * @param event ActionEvent triggered by the "Home" button.
+     * @throws IOException if the FXML file for the home screen cannot be loaded.
+     */
+    @FXML
+    void onHomeButtonClicked(ActionEvent event) throws IOException {
+        Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileHome.fxml"));
+        Scene homeScene = new Scene(homeParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(homeScene);
+        window.show();
+    }
+
+    // PlayerProfile class represents a player's overall stats for a specific game.
+    public static class PlayerProfile {
+        private final SimpleStringProperty playerName;
+        private final SimpleStringProperty gameName;
+        private final SimpleStringProperty currentElo;
+        private final SimpleStringProperty totalWins;
+        private final SimpleStringProperty gamesPlayed;
+        private final SimpleStringProperty status;
+
+        public PlayerProfile(String playerName, String gameName, String currentElo, String totalWins, String gamesPlayed, String status) {
+            this.playerName = new SimpleStringProperty(playerName);
+            this.gameName = new SimpleStringProperty(gameName);
+            this.currentElo = new SimpleStringProperty(currentElo);
+            this.totalWins = new SimpleStringProperty(totalWins);
+            this.gamesPlayed = new SimpleStringProperty(gamesPlayed);
+            this.status = new SimpleStringProperty(status);
+        }
+
+        public SimpleStringProperty playerNameProperty() {
+            return playerName;
+        }
+
+        public SimpleStringProperty gameNameProperty() {
+            return gameName;
+        }
+
+        public SimpleStringProperty currentEloProperty() {
+            return currentElo;
+        }
+
+        public SimpleStringProperty totalWinsProperty() {
+            return totalWins;
+        }
+
+        public SimpleStringProperty gamesPlayedProperty() {
+            return gamesPlayed;
+        }
+
+        public SimpleStringProperty statusProperty() {
+            return status;
+        }
+    }
+
+    // PlayerMatch class represents a single recent match.
+    public static class PlayerMatch {
+        private final SimpleStringProperty playerName;
+        private final SimpleStringProperty gameName;
+        private final SimpleStringProperty outcome;
+        private final SimpleStringProperty currentElo;
+
+        public PlayerMatch(String playerName, String gameName, String outcome, String currentElo) {
+            this.playerName = new SimpleStringProperty(playerName);
+            this.gameName = new SimpleStringProperty(gameName);
+            this.outcome = new SimpleStringProperty(outcome);
+            this.currentElo = new SimpleStringProperty(currentElo);
+        }
+
+        public SimpleStringProperty playerNameProperty() {
+            return playerName;
+        }
+
+        public SimpleStringProperty gameNameProperty() {
+            return gameName;
+        }
+
+        public SimpleStringProperty outcomeProperty() {
+            return outcome;
+        }
+
+        public SimpleStringProperty currentEloProperty() {
+            return currentElo;
+        }
     }
 }

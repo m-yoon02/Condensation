@@ -19,46 +19,49 @@ import org.json.simple.JSONObject;
 
 import java.io.IOException;
 
+/**
+ * Controller for the Leaderboard screen.
+ * Displays leaderboards for Tic Tac Toe, Connect 4, and Checkers.
+ * Each leaderboard includes player rankings, usernames, and scores (ELO).
+ */
 public class ProfileLeaderBController {
 
+    // Leaderboards for each game
     @FXML
     private TableView<org.json.simple.JSONObject> ticTacToeTable;
-
     @FXML
     private TableView<org.json.simple.JSONObject> connect4Table;
-
     @FXML
     private TableView<org.json.simple.JSONObject> checkersTable;
 
+    // Columns for Tic Tac Toe leaderboard
     @FXML
     private TableColumn<JSONObject, Integer> ticTacToeRankColumn;
-
     @FXML
     private TableColumn<JSONObject, String> ticTacToePlayerColumn;
-
     @FXML
     private TableColumn<JSONObject, Integer> ticTacToeScoreColumn;
 
+    // Columns for Connect 4 leaderboard
     @FXML
     private TableColumn<JSONObject, Integer> connect4RankColumn;
-
     @FXML
     private TableColumn<JSONObject, String> connect4PlayerColumn;
-
     @FXML
     private TableColumn<JSONObject, Integer> connect4ScoreColumn;
 
+    // Columns for Checkers leaderboard
     @FXML
     private TableColumn<JSONObject, Integer> checkersRankColumn;
-
     @FXML
     private TableColumn<JSONObject, String> checkersPlayerColumn;
-
     @FXML
     private TableColumn<JSONObject, Integer> checkersScoreColumn;
 
-
-    // Initialize method for setting up the leaderboard data
+    /**
+     * Initializes the controller and sets up leaderboard data.
+     * Configures column bindings for all three leaderboards and loads data.
+     */
     @FXML
     public void initialize() {
         // Configure Tic Tac Toe columns
@@ -89,12 +92,15 @@ public class ProfileLeaderBController {
         loadLeaderboardData();
     }
 
-
-    //this is just the sample data to see how the table looks like  //TODO: connect with networking
+    /**
+     * Loads and populates leaderboard data for Tic Tac Toe, Connect 4, and Checkers.
+     * Data is fetched from the Leaderboard JSON file and sorted by ELO.
+     * Ranks are assigned dynamically after sorting.
+     */
     private void loadLeaderboardData() {
         try {
             // Get the leaderboard instance
-            Leaderboard leaderboard = Leaderboard.getInstance("path_to_your_data_file.json");
+            Leaderboard leaderboard = Leaderboard.getInstance("C:/Users/M.Y/OneDrive - University of Calgary/Documents/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
 
             // Create observable lists for each game
             ObservableList<org.json.simple.JSONObject> ticTacToeData = FXCollections.observableArrayList();
@@ -148,21 +154,22 @@ public class ProfileLeaderBController {
         }
     }
 
-
-
-
-    //back to home
+    /**
+     * Handles the "Home" button click event.
+     * Navigates back to the Profile Home screen.
+     *
+     * @param event ActionEvent triggered by the "Home" button.
+     * @throws IOException if the FXML file for the Profile Home screen cannot be loaded.
+     */
     @FXML
     void onHomeButtonClicked(ActionEvent event) throws IOException {
-        System.out.println("Home button clicked..redirecting to home.");
-        // Navigate back to the Home screen
-        // Add functionality to go back to home
-        Parent gamesParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileHome.fxml"));
-        Scene gamesScene = new Scene(gamesParent);
+        System.out.println("Home button clicked...redirecting to home.");
+        Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileHome.fxml"));
+        Scene homeScene = new Scene(homeParent);
 
-        //This line gets the Stage information
+        // Get the current stage and set the new scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(gamesScene);
+        window.setScene(homeScene);
         window.show();
     }
 }
