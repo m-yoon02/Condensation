@@ -117,6 +117,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
                 gameEndPayload.put("PlayerLost", this.player1ID);
             }
         }else{
+            Leaderboard.getInstance(DATA_FILE).updateForTieGame(this.player1ID, this.player2ID, this.sessionId, this.gameType);
             gameEndPayload.put("GameState", GameResult.TIE);
             // Player fields will not exist and elo's will not change.
 

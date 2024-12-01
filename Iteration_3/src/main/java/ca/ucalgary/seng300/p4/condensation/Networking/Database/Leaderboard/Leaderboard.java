@@ -192,6 +192,115 @@ public class Leaderboard {
     }
 
     /**
+     * Update the Leaderboard following a tie game by routing to the specific gameType method
+     */
+
+    public void updateForTieGame(UUID player1ID, UUID player2ID, UUID sessionID, GameTypes gameType ){
+
+        switch (gameType) {
+            case CHECKERS -> {
+                updateForTieGameCheckers(player1ID, player2ID, sessionID);
+            }
+            case TICTACTOE -> {
+                updateForTieGameTicTacToe(player1ID, player2ID, sessionID);
+            }
+            case CONNECT4 -> {
+                updateForTieGameConnect4(player1ID, player2ID, sessionID);
+            }
+        }
+
+
+    }
+    public void updateForTieGameCheckers(UUID player1ID, UUID player2ID, UUID sessionID){
+
+        // I need to the player 1 json object then I need to simply add a tied update\
+        JSONObject player1 = findUserById(player1ID);
+        JSONArray player1RecentMatches = (JSONArray) player1.get("recentMatches");
+        String player1Elo = (String) player1.get("checkersElo");
+        JSONObject player1CurrentMatch = new JSONObject();
+        player1CurrentMatch.put("matchID", sessionID);
+        player1CurrentMatch.put("gameType", GameTypes.CHECKERS);
+        player1CurrentMatch.put("outcome", "T");
+        player1CurrentMatch.put("currentElo", player1Elo);
+        player1RecentMatches.add(player1CurrentMatch);
+
+        // add user to the database
+
+        JSONObject player2 = findUserById(player1ID);
+        JSONArray player2RecentMatches = (JSONArray) player1.get("recentMatches");
+        String player2Elo = (String) player1.get("checkersElo");
+        JSONObject player2CurrentMatch = new JSONObject();
+        player2CurrentMatch.put("matchID", sessionID);
+        player2CurrentMatch.put("gameType", GameTypes.CHECKERS);
+        player2CurrentMatch.put("outcome", "T");
+        player2CurrentMatch.put("currentElo", player1Elo);
+        player2RecentMatches.add(player2CurrentMatch);
+
+
+
+    }
+
+    public void updateForTieGameTicTacToe(UUID player1ID, UUID player2ID, UUID sessionID){
+
+        // I need to the player 1 json object then I need to simply add a tied update\
+        JSONObject player1 = findUserById(player1ID);
+        JSONArray player1RecentMatches = (JSONArray) player1.get("recentMatches");
+        String player1Elo = (String) player1.get("tictactoeElo");
+        JSONObject player1CurrentMatch = new JSONObject();
+        player1CurrentMatch.put("matchID", sessionID);
+        player1CurrentMatch.put("gameType", GameTypes.TICTACTOE);
+        player1CurrentMatch.put("outcome", "T");
+        player1CurrentMatch.put("currentElo", player1Elo);
+        player1RecentMatches.add(player1CurrentMatch);
+
+        // add user to the database
+
+        JSONObject player2 = findUserById(player1ID);
+        JSONArray player2RecentMatches = (JSONArray) player1.get("recentMatches");
+        String player2Elo = (String) player1.get("tictactoeElo");
+        JSONObject player2CurrentMatch = new JSONObject();
+        player2CurrentMatch.put("matchID", sessionID);
+        player2CurrentMatch.put("gameType", GameTypes.TICTACTOE);
+        player2CurrentMatch.put("outcome", "T");
+        player2CurrentMatch.put("currentElo", player1Elo);
+        player2RecentMatches.add(player2CurrentMatch);
+
+
+
+    }
+
+    public void updateForTieGameConnect4(UUID player1ID, UUID player2ID, UUID sessionID){
+
+        // I need to the player 1 json object then I need to simply add a tied update\
+        JSONObject player1 = findUserById(player1ID);
+        JSONArray player1RecentMatches = (JSONArray) player1.get("recentMatches");
+        String player1Elo = (String) player1.get("connect4Elo");
+        JSONObject player1CurrentMatch = new JSONObject();
+        player1CurrentMatch.put("matchID", sessionID);
+        player1CurrentMatch.put("gameType", GameTypes.CONNECT4);
+        player1CurrentMatch.put("outcome", "T");
+        player1CurrentMatch.put("currentElo", player1Elo);
+        player1RecentMatches.add(player1CurrentMatch);
+
+        // add user to the database
+
+        JSONObject player2 = findUserById(player1ID);
+        JSONArray player2RecentMatches = (JSONArray) player1.get("recentMatches");
+        String player2Elo = (String) player1.get("connect4Elo");
+        JSONObject player2CurrentMatch = new JSONObject();
+        player2CurrentMatch.put("matchID", sessionID);
+        player2CurrentMatch.put("gameType", GameTypes.CONNECT4);
+        player2CurrentMatch.put("outcome", "T");
+        player2CurrentMatch.put("currentElo", player1Elo);
+        player2RecentMatches.add(player2CurrentMatch);
+
+
+    }
+
+
+
+
+    /**
      * Updates the ELO of a player who won a match by increasing it by 100.
      *
      * @param playerID the UUID of the winning player.
@@ -234,6 +343,7 @@ public class Leaderboard {
         winningPlayer.put("checkersElo", currentElo);
         winningPlayer.put("winsInCheckers", winsInCheckers);
         winningPlayer.put("recentMatches", recentMatches);
+
 
 
         System.out.println("Elo has been updated for winning player with PlayerID: " + playerID);
