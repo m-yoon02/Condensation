@@ -31,21 +31,21 @@ public class TicTacToeController {
     private static Button btn22;
     public int numberOfPiecesOnBoard = 0;
     static Button[][] buttons = new Button[][] {
-        {btn00, btn01, btn02},
-        {btn10, btn11, btn12},
-        {btn20, btn21, btn22}
+            {btn00, btn01, btn02},
+            {btn10, btn11, btn12},
+            {btn20, btn21, btn22}
     };
 
     public static final int NUMBER_OF_ROWS = 3;
     public static final int NUMBER_OF_COLS = 3;
     public static GameResult resultOfTicTacToe;
     public UUID playerOne;
-    public UUID playerTwo;
+    public static UUID playerTwo;
     public static UUID sessionID;
     public static UUID newTurn;
 
     @FXML
-    public Label playerStatus;
+    public static Label playerStatus;
 
     @FXML
     public void initialize() throws IOException, ParseException {
@@ -117,14 +117,6 @@ public class TicTacToeController {
         }
     }
 
-    private void disableAllButtons() { //when game ends
-        for (Button[] buttonRow : buttons) {
-            for (Button button : buttonRow) {
-                button.setDisable(true);
-            }
-        }
-    }
-
     @FXML
     public void returnToBackendTicTacToe(javafx.event.ActionEvent event) throws IOException, ParseException {
         Button clickedButton = (Button) event.getSource();
@@ -166,7 +158,6 @@ public class TicTacToeController {
             receiveFromBackendTicTacToe(results);
         }
     }
-}
 
     private static void disableAllButtons() { //when game ends
         for (Button[] buttonRow : buttons) {
@@ -175,4 +166,8 @@ public class TicTacToeController {
             }
         }
     }
+}
+
+
+
 
