@@ -57,9 +57,17 @@ public class ProfileGameController {
      * @param event ActionEvent triggered by the "Play Tic Tac Toe" button.
      */
     @FXML
-    void onTicTacToePlayClicked(ActionEvent event) {
+    void onTicTacToePlayClicked(ActionEvent event) throws IOException {
         System.out.println("Tic Tac Toe Play button clicked");
-        // TODO: Add navigation logic to the Tic Tac Toe game
+
+        // Load the TicTacToe FXML file
+        Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("tMenu.fxml"));
+        Scene homeScene = new Scene(homeParent);
+
+        // Get the current stage and set the new scene
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(homeScene);
+        window.show();
     }
 
     /**
@@ -68,9 +76,17 @@ public class ProfileGameController {
      * @param event ActionEvent triggered by the "Play Connect 4" button.
      */
     @FXML
-    void onConnect4PlayClicked(ActionEvent event) {
+    void onConnect4PlayClicked(ActionEvent event) throws IOException {
         System.out.println("Connect 4 Play button clicked");
-        // TODO: Add navigation logic to the Connect 4 game
+
+        // Load the Connect 4 FXML file
+        Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("connect4HomeMenu.fxml"));
+        Scene homeScene = new Scene(homeParent);
+
+        // Get the current stage and set the new scene
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(homeScene);
+        window.show();
     }
 
     /**
@@ -79,9 +95,17 @@ public class ProfileGameController {
      * @param event ActionEvent triggered by the "Play Checkers" button.
      */
     @FXML
-    void onCheckersPlayClicked(ActionEvent event) {
+    void onCheckersPlayClicked(ActionEvent event) throws IOException {
         System.out.println("Checkers Play button clicked");
-        // TODO: Add navigation logic to the Checkers game
+
+        // Load the Checkers FXML file
+        Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
+        Scene homeScene = new Scene(homeParent);
+
+        // Get the current stage and set the new scene
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(homeScene);
+        window.show();
     }
 
     /**
