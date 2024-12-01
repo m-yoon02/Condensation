@@ -1,55 +1,72 @@
-/* General Styling */
-.root {
-    -fx-font-family: "Arial", sans-serif;
-    -fx-background-color: #f4f4f9;
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+.main-pane {
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-background-color: #091856;
+    -fx-pref-width: 700;
+    -fx-pref-height: 500;
 }
 
-/* Title Styling */
-.title {
-    -fx-font-size: 32px;
-    -fx-text-fill: #333333;
+
+.menu-container {
+    -fx-background-color: #2415E2;
+    -fx-pref-width: 700;
+    -fx-pref-height: 30;
+}
+.menu-container Button{
+    -fx-font-size: 12;
+    -fx-background-color: #2415E2;
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: White;
+    -fx-border-radius: 0;
+}
+
+
+.detail-scroll-container {
+    -fx-border-color: transparent;
+    -fx-background-color: #091856;
+    -fx-pref-width: 300;
+    -fx-pref-height: 370;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+.detail-container {
+    -fx-background-color: #091856;
+    -fx-pref-width: 370;
+    -fx-text-fill: White;
+}
+.detail-container Label {
+    -fx-alignment: left;
+    -fx-font-size: 20;
     -fx-font-weight: bold;
+    -fx-text-fill: White;
 }
-
-/* Rules Section Styling */
-.rules-container {
-    -fx-padding: 20px;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1px;
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
+.detail-container TextArea {
+    -fx-alignment: left;
+    -fx-pref-width: 200;
+    -fx-pref-height: 150;
+    -fx-border-color: transparent;
+    -fx-background-color: #091856;
+    -fx-font-size: 16;
+    -fx-text-fill: White;
 }
-
-.heading {
-    -fx-font-size: 20px;
-    -fx-text-fill: #444444;
-    -fx-font-weight: bold;
+.detail-container TextArea .content {
+    -fx-background-color: #091856;
+    -fx-cursor: default;
+    -fx-text-fill: White;
 }
-
-.rule-text {
-    -fx-font-size: 16px;
-    -fx-text-fill: #555555;
-    -fx-line-spacing: 5px;
-    -fx-padding: 0 10px;
+#rulesArea {
+    -fx-pref-height: 200;
+    -fx-font-size: 16;
+    -fx-text-fill: White;
 }
-
-/* Bottom Bar Styling */
-.bottom-bar {
-    -fx-padding: 10px;
-    -fx-background-color: #333333;
+#citationArea {
+    -fx-pref-height: 50;
+    -fx-font-size: 12;
+    -fx-text-fill: White;
 }
-
-.nav-button {
-    -fx-font-size: 16px;
-    -fx-text-fill: white;
-    -fx-background-color: #1b1c1c;
-    -fx-padding: 5px 15px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
+#citationArea .scroll-bar:vertical:disabled {
+    -fx-pref-width: 1;
+    -fx-opacity: 0;
 }
-
-.nav-button:hover {
-    -fx-background-color: #005a9e;
-}
-

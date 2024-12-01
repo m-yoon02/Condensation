@@ -28,14 +28,14 @@ public class tMenuController {
         playButton.setOnAction(event -> navigateTo("tGame.fxml"));
         leaderboardButton.setOnAction(event -> navigateTo("tLeaderboard.fxml"));
         howToPlayButton.setOnAction(event -> navigateTo("tHowToPlay.fxml"));
-        //backButton.setOnAction(event -> navigateTo("login page.fxml"));
+        //goBack.setOnAction(event -> navigateTo("profilePage.fxml"));
     }
 
     private void navigateTo(String fxmlFile) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
             Stage stage = (Stage) playButton.getScene().getWindow();
-            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            Scene scene = new Scene(fxmlLoader.load(), 700, 500);
             stage.setTitle("Games Menu");
             stage.setScene(scene);
             stage.show();
