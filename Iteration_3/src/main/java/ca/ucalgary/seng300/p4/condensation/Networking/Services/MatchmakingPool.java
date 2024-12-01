@@ -66,7 +66,7 @@ public class MatchmakingPool {
             UUIDarrayList.add(jsonObject);
         }
         Random random = new Random();
-        while (UUIDarrayList.size() < 8) {
+        while (UUIDarrayList.size() < 4) {
             int randomIndex = random.nextInt(UUIDarrayList.size());
             JSONObject randomUUID = UUIDarrayList.get(randomIndex);
 

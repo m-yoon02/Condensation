@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -88,8 +90,8 @@ public class OtherProfileController {
         playerRecentgameColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("gameType")));
         playerRecentoutcomeColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("outcome")));
         playerRecentcurrentEloColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(((Long) cellData.getValue().get("currentElo")).intValue()));
-        playerRecenttotalWinsColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(0)); // Placeholder if not in matches
-        playerRecentgamesPlayedColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(0)); // Placeholder if not in matches
+        playerRecenttotalWinsColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(((Number) cellData.getValue().get("totalWins")).intValue())); // Placeholder if not in matches
+        playerRecentgamesPlayedColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(((Number) cellData.getValue().get("gamesPlayed")).intValue())); // Placeholder if not in matches
 
         // Initialize the leaderboard instance
         try {
@@ -107,7 +109,7 @@ public class OtherProfileController {
      * @param event ActionEvent triggered by the "Search" button.
      */
     @FXML
-    void onSearchButtonClicked(ActionEvent event) {
+    void onSearchButtonClicked(ActionEvent event) throws IOException, ParseException {
         String username = usernameTextField.getText().trim();
         JSONObject user = leaderboard.findUserByName(username);
         if (username.isEmpty()) {
@@ -137,12 +139,22 @@ public class OtherProfileController {
      * @param gameName Name of the game (e.g., Connect4, Checkers).
      * @return PlayerProfile object containing game-specific stats.
      */
-    private PlayerProfile parsePlayer(JSONObject user, String gameName) {
+    private PlayerProfile parsePlayer(JSONObject user, String gameName) throws IOException, ParseException {
         String playerName = (String) user.get("username");
         String currentElo = user.get(gameName.toLowerCase() + "Elo").toString();
         String totalWins = user.get("winsIn" + gameName).toString();
         String gamesPlayed = user.get("gamesPlayed" + gameName).toString();
-        String status = Integer.parseInt(currentElo) > 1500 ? "Online" : "Offline";
+        UUID playerID = UUID.fromString( (String) user.get("playerUUID"));
+        System.out.println(STR."PlayerID: \{playerID}");
+        boolean isOnline = NetworkManager.getNetworkInstance().isPlayerOnline(playerID);
+        System.out.println("Is online? " + isOnline);
+//        String status = isOnline ? "Online" : "Offline";
+        String status;
+        if (isOnline){
+            status = "Online";
+        } else {
+            status = "Offline";
+        }
 
         return new PlayerProfile(playerName, gameName, currentElo, totalWins, gamesPlayed, status);
     }
@@ -154,11 +166,40 @@ public class OtherProfileController {
             JSONObject user = leaderboard.findUserByName(username);
 
             if (user != null) {
-                // Extract recent matches and populate the TableView
+                // Extract recent matches
                 JSONArray recentMatches = (JSONArray) user.get("recentMatches");
                 playerRecentTableView.getItems().clear();
+
                 for (Object match : recentMatches) {
-                    playerRecentTableView.getItems().add((JSONObject) match);
+                    JSONObject matchObject = (JSONObject) match;
+
+                    // Determine the game type and add total wins and games played
+                    String gameType = (String) matchObject.get("gameType");
+
+                    int totalWins = 0;
+                    int gamesPlayed = 0;
+
+                    switch (gameType) {
+                        case "TICTACTOE":
+                            totalWins = ((Long) user.get("winsInTicTacToe")).intValue();
+                            gamesPlayed = ((Long) user.get("gamesPlayedTicTacToe")).intValue();
+                            break;
+                        case "CHECKERS":
+                            totalWins = ((Long) user.get("winsInCheckers")).intValue();
+                            gamesPlayed = ((Long) user.get("gamesPlayedCheckers")).intValue();
+                            break;
+                        case "CONNECT4":
+                            totalWins = ((Long) user.get("winsInConnect4")).intValue();
+                            gamesPlayed = ((Long) user.get("gamesPlayedConnect4")).intValue();
+                            break;
+                    }
+
+                    // Add these fields to the matchObject for display
+                    matchObject.put("totalWins", totalWins);
+                    matchObject.put("gamesPlayed", gamesPlayed);
+
+                    // Add the updated matchObject to the TableView
+                    playerRecentTableView.getItems().add(matchObject);
                 }
             } else {
                 System.out.println("User not found.");
@@ -168,6 +209,7 @@ public class OtherProfileController {
             System.out.println("Error displaying recent matches.");
         }
     }
+
 
 
 

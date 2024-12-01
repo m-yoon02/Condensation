@@ -171,13 +171,22 @@ public class NetworkManager {
         return String.format("Successfully created user with username %s", username);
     }
 
-    public String editUsername(UUID Player){
-        // retune some so
-        return null;
+    public String editUsername(JSONObject editUsernamePayload) throws IOException, ParseException {
+        UUID playedID = UUID.fromString((String) editUsernamePayload.get("playerID"));
+        String newUsername = (String) editUsernamePayload.get("NewUsername");
+
+        Leaderboard.getInstance().changeName(playedID, newUsername);
+
+        return String.format("You have successfully changed your username to %s", newUsername);
     }
 
-    public String editPassword(UUID Player){
-        return null;
+    public String editPassword(JSONObject editPasswordPayload) throws IOException, ParseException {
+        UUID playedID = UUID.fromString((String) editPasswordPayload.get("playerID"));
+        String newPassword = (String) editPasswordPayload.get("NewUsername");
+
+        Leaderboard.getInstance().changeName(playedID, newPassword);
+
+        return String.format("You have successfully changed your username to %s", newPassword);
     }
 
 
@@ -230,14 +239,14 @@ public class NetworkManager {
      * @param eventType
      * @param clientResponsePayload
      */
-    public void notifyGameSessionClients(UUID sessionID, GameEventType eventType, JSONObject clientResponsePayload) {
+    public void notifyGameSessionClients(UUID sessionID, GameEventType eventType, JSONObject clientResponsePayload, GameTypes gameType) {
 
         // here we are getting the specific list of clients that are subscribed to the session
         List<GameDataListener> clientListeners = sessionListeners.get(sessionID);
 
         if (clientListeners != null) {
             for (GameDataListener listener : clientListeners) {
-                listener.onGameEvent(eventType, clientResponsePayload);
+                listener.onGameEvent(eventType, clientResponsePayload, gameType);
             }
         } else {
             System.out.println("No clients found in the gameSession: " + sessionID);
@@ -263,6 +272,19 @@ public class NetworkManager {
             System.out.println("No clients found in the gameSession: " + sessionID);
         }
     }
+
+
+    public boolean isPlayerOnline(UUID playerID) {
+        // Print out the loggedInClients map
+        System.out.println("Logged-in Clients: ");
+        loggedInClients.forEach((id, client) ->
+                System.out.println("ID: " + id + ", Client: " + client)
+        );
+
+        // Check if the playerID exists in the map
+        return loggedInClients.containsKey(playerID);
+    }
+
 
 
 
@@ -373,9 +395,9 @@ public class NetworkManager {
      * sendGameDataToClients sends the clientPayload = sessionID + gameState payload to the clients
      * @param clientPayload
      */
-    public void sendGameDataToClients(JSONObject clientPayload, UUID sessionID, GameEventType gameEventType){
+    public void sendGameDataToClients(JSONObject clientPayload, UUID sessionID, GameEventType gameEventType, GameTypes gameType){
         // The appropriate gameSession listener will have been notified
-        notifyGameSessionClients(sessionID, gameEventType, clientPayload);          // Notify all subscribed clients
+        notifyGameSessionClients(sessionID, gameEventType, clientPayload, gameType);          // Notify all subscribed clients
 
     }
 
