@@ -1,12 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.MoveData;
 
-
-import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import org.junit.Test;
-
-import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 public class MoveDataTest {
 

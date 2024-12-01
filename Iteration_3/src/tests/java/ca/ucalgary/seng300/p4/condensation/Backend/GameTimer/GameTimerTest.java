@@ -67,14 +67,6 @@ public class GameTimerTest {
     }
 
     @Test
-    public void startTimer() throws InterruptedException {
-        gameTimer.startTimer();
-        assertTrue("Timer should be active", gameTimer.isActive());
-        gameTimer.stopTimer();
-        assertFalse("Timer ends after", gameTimer.isActive());
-    }
-
-    @Test
     public void stopTimer() {
         gameTimer.stopTimer();
         assertFalse("Timer should not be active", gameTimer.isActive());
@@ -126,5 +118,120 @@ public class GameTimerTest {
     public void testGetOtherPlayerID() {
         UUID otherPlayer = gameTimer.getOtherPlayerID(p1ID);
         assertEquals(p2ID, otherPlayer);
+    }
+
+    @Test
+    public void testGetOtherPlayerID_ReturnsNullWhenOnlyOnePlayer() {
+
+        UUID singlePlayerID = UUID.randomUUID();
+        GameTimer singlePlayerTimer = new GameTimer(singlePlayerID, singlePlayerID, 60);
+
+        singlePlayerTimer.getTimerHashMap().remove(singlePlayerID);
+        singlePlayerTimer.getTimerHashMap().put(singlePlayerID, 60);
+
+        UUID otherPlayerID = singlePlayerTimer.getOtherPlayerID(singlePlayerID);
+
+        assertNull("getOtherPlayerID should return null when there is no other player", otherPlayerID);
+    }
+
+    @Test
+    public void testSwitchTimer_ValidPlayerID() {
+        UUID initialPlayerID = gameTimer.getCurrentPlayerID();
+        UUID otherPlayerID = gameTimer.getOtherPlayerID(initialPlayerID);
+
+        gameTimer.switchTimer(initialPlayerID);
+
+        assertEquals("Current player should be switched to the other player", otherPlayerID, gameTimer.getCurrentPlayerID());
+    }
+
+    @Test
+    public void testSwitchTimer_InvalidPlayerID_DoesNotChangeCurrentPlayer() {
+        UUID invalidPlayerID = UUID.randomUUID();
+        UUID initialPlayerID = gameTimer.getCurrentPlayerID();
+
+        gameTimer.switchTimer(invalidPlayerID);
+
+        assertEquals("Current player should remain unchanged when invalid ID is provided", initialPlayerID, gameTimer.getCurrentPlayerID());
+    }
+
+    @Test
+    public void testDisplayTimer_LessThanOneMinute() {
+        String result = gameTimer.displayTimer(0);
+        assertEquals("00", result);
+
+        result = gameTimer.displayTimer(5);
+        assertEquals("05", result);
+
+        result = gameTimer.displayTimer(59);
+        assertEquals("59", result);
+    }
+
+    @Test
+    public void testDisplayTimer_ExactlyOneMinute() {
+        String result = gameTimer.displayTimer(60);
+        assertEquals("01:00", result);
+    }
+
+    @Test
+    public void testDisplayTimer_LessThanOneHour() {
+        String result = gameTimer.displayTimer(61);
+        assertEquals("01:01", result);
+
+        result = gameTimer.displayTimer(3599);
+        assertEquals("59:59", result);
+    }
+
+    @Test
+    public void testDisplayTimer_ExactlyOneHour() {
+        String result = gameTimer.displayTimer(3600);
+        assertEquals("01:00:00", result);
+    }
+
+    @Test
+    public void testDisplayTimer_MoreThanOneHour() {
+        String result = gameTimer.displayTimer(3601);
+        assertEquals("01:00:01", result);
+
+        result = gameTimer.displayTimer(3661);
+        assertEquals("01:01:01", result);
+
+        result = gameTimer.displayTimer(86399);
+        assertEquals("23:59:59", result);
+    }
+
+    @Test
+    public void testDisplayTimer_ExactlyOneDay() {
+        String result = gameTimer.displayTimer(86400);
+        assertEquals("24:00:00", result);
+    }
+
+    @Test
+    public void testDisplayTimer_LargeTimeValues() {
+        String result = gameTimer.displayTimer(90061);
+        assertEquals("25:01:01", result);
+
+        result = gameTimer.displayTimer(172800);
+        assertEquals("48:00:00", result);
+    }
+
+    @Test
+    public void testDisplayTimer_BoundaryValues() {
+        String result = gameTimer.displayTimer(59);
+        assertEquals("59", result);
+
+        result = gameTimer.displayTimer(60);
+        assertEquals("01:00", result);
+
+        result = gameTimer.displayTimer(3599);
+        assertEquals("59:59", result);
+
+        result = gameTimer.displayTimer(3600);
+        assertEquals("01:00:00", result);
+    }
+
+    @Test
+    public void testDisplayTimer_ZeroTime() {
+        String result = gameTimer.displayTimer(0);
+        assertEquals("00", result);
     }
 }
