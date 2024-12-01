@@ -20,6 +20,11 @@ public class CheckersHandler extends GameHandler {
         super(player1ID, player2ID, COLORS);
     }
 
+    @Override
+    public void makeMove(String moveDataJSON) {
+        makeMove(CheckersMoveData.fromJSON(moveDataJSON));
+    }
+
     // This is the main driver of your game logic.
     // Assume that this method is called whenever a player makes a move
     // You are to use the move data and translate it to the GameBoard
@@ -37,13 +42,9 @@ public class CheckersHandler extends GameHandler {
      * <li>Checks if the game is won,</li>
      * <li>And if not, ends the turn of the player.</li>
      * </ul>
-     * @param moveDataJSON a JSON string containing move details (Player ID, Old position, New position)
+     * @param checkersMoveData a CheckersMoveData containing move details (Player ID, Old position, New position)
      */
-    @Override
-    public void makeMove(String moveDataJSON) {
-        // USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
-        CheckersMoveData checkersMoveData = CheckersMoveData.fromJSON(moveDataJSON);
-
+    public void makeMove(CheckersMoveData checkersMoveData) {
         // Initializing
         UUID playerID = checkersMoveData.getPlayerID();
         UUID opponentID = getOtherPlayerUUID(playerID);
