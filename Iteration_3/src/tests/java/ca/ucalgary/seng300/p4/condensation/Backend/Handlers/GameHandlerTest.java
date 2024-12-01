@@ -93,10 +93,10 @@ public class GameHandlerTest {
         assertNotNull(player2Memo);
 
         // Ensure players have different colors
-        assertThat("Players should have different colours",player1Memo.pieceColor(), not(equals(player2Memo.pieceColor())));
+        assertThat("Players should have different colours", player1Memo.pieceColor(), not(equals(player2Memo.pieceColor())));
 
         // Verify first player is set
-        assertNotNull("First Player should not be null",gameHandler.getFirstPlayerID());
+        assertNotNull("First Player should not be null", gameHandler.getFirstPlayerID());
     }
 
     @Test
@@ -104,21 +104,21 @@ public class GameHandlerTest {
         PlayerMemo player1Memo = gameHandler.getPlayerMemoFromUUID(player1ID);
         PieceColor expectedColor = player1Memo.pieceColor();
 
-        assertEquals("Colour expected and returned dont match",expectedColor, gameHandler.getPlayerColorFromUUID(player1ID));
+        assertEquals("Colour expected and returned dont match", expectedColor, gameHandler.getPlayerColorFromUUID(player1ID));
     }
 
     @Test
     public void testGetOtherPlayerUUID_1() {
         UUID otherPlayerID = gameHandler.getOtherPlayerUUID(player1ID);
 
-        assertEquals("Player 2 should be returned when we pass in player 1",player2ID, otherPlayerID);
+        assertEquals("Player 2 should be returned when we pass in player 1", player2ID, otherPlayerID);
     }
 
     @Test
     public void testGetOtherPlayerUUID_2() {
         UUID otherPlayerID = gameHandler.getOtherPlayerUUID(player2ID);
 
-        assertEquals("Player 1 should be returned when we pass in player 2",player1ID, otherPlayerID);
+        assertEquals("Player 1 should be returned when we pass in player 2", player1ID, otherPlayerID);
     }
 
 
@@ -127,7 +127,7 @@ public class GameHandlerTest {
         PieceColor player1Color = gameHandler.getPlayerColorFromUUID(player1ID);
         PlayerMemo playerMemo = gameHandler.getPlayerMemoFromPieceColor(player1Color);
 
-        assertEquals("Colour should uniquely identify the players",player1ID, playerMemo.playerID());
+        assertEquals("Colour should uniquely identify the players", player1ID, playerMemo.playerID());
     }
 
     @Test
@@ -217,7 +217,7 @@ public class GameHandlerTest {
 
     @Test
     public void testGetPlayerMemoFromUUID() {
-        assertNotNull("A player should exist with UUID defined",gameHandler.getPlayerMemoFromUUID(player1ID));
+        assertNotNull("A player should exist with UUID defined", gameHandler.getPlayerMemoFromUUID(player1ID));
     }
 
     @Test

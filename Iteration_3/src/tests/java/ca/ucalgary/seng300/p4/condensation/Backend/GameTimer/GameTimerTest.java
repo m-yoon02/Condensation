@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Random;
-
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -42,27 +41,27 @@ public class GameTimerTest {
     }
 
     @Test
-    public void testInitializationForTimerHashMaps_NotNull(){
-        assertNotNull("Timer should not be null!",gameTimer.getTimerHashMap());
+    public void testInitializationForTimerHashMaps_NotNull() {
+        assertNotNull("Timer should not be null!", gameTimer.getTimerHashMap());
     }
 
     @Test
-    public void testInitializationForTimerHashMaps_1(){
+    public void testInitializationForTimerHashMaps_1() {
         assertEquals("Times should be equal", (int) gameTimer.getTimerHashMap().get(p1ID), timeInSeconds);
     }
 
     @Test
-    public void testInitializationForTimerHashMaps_2(){
+    public void testInitializationForTimerHashMaps_2() {
         assertEquals("Times should be equal", (int) gameTimer.getTimerHashMap().get(p2ID), timeInSeconds);
     }
 
     @Test
-    public void testGetOtherPlayerUUID_1(){
+    public void testGetOtherPlayerUUID_1() {
         assertEquals("UUID of other player should match!", gameTimer.getOtherPlayerID(p1ID), p2ID);
     }
 
     @Test
-    public void testGetOtherPlayerUUID_2(){
+    public void testGetOtherPlayerUUID_2() {
         assertEquals("UUID of other player should match!", gameTimer.getOtherPlayerID(p2ID), p1ID);
     }
 

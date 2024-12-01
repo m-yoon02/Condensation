@@ -1,17 +1,19 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Pieces;
 
-import org.junit.After;
-import org.junit.Before;
+import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
+import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TicTacToePieceTest {
 
-    @Before
-    public void setUp() throws Exception {
-    }
+    @Test
+    public void testConstructorByColor() {
+        PieceColor color = PieceColor.RED;
+        TicTacToePiece piece = new TicTacToePiece(color);
 
-    @After
-    public void tearDown() throws Exception {
+        assertEquals(Vector2.ZERO, piece.getPosition());
+        assertEquals(color, piece.getColor());
     }
 }

@@ -3,7 +3,6 @@ package ca.ucalgary.seng300.p4.condensation.Backend.Handlers;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.CheckersPiece;
-
 import org.junit.Before;
 import org.junit.Test;
 

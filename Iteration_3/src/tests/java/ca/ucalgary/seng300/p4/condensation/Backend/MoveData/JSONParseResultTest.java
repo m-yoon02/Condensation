@@ -1,8 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.MoveData;
 
-import java.util.UUID;
-
 import org.junit.Test;
+
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 

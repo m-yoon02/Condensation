@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
+
 public class TicTacToeHandlerTest {
 
     private UUID p1ID;
@@ -42,7 +43,7 @@ public class TicTacToeHandlerTest {
         }
     }
 
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void testMakeMove_NullMoveData_ThrowsException() {
         try {
             ticTacToeHandler.makeMove((MoveData) null);
@@ -67,7 +68,7 @@ public class TicTacToeHandlerTest {
         }
     }
 
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void testMakeMove_UnrecognizedPlayerID_IgnoresMove() {
         UUID invalid = UUID.randomUUID();
 
@@ -83,7 +84,6 @@ public class TicTacToeHandlerTest {
     }
 
 
-
     @Test
     public void testMakeMove_ValidP1Move_UpdatesBoard() {
         MoveData md = new MoveData(p1ID, new Vector2(0, 0));
@@ -96,7 +96,7 @@ public class TicTacToeHandlerTest {
             throw new RuntimeException(e);
         }
 
-        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0,0);
+        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0, 0);
         assertNotNull("Piece should be played at the move coordinates", piece);
         assertEquals("Piece colour is player colour", ticTacToeHandler.getPlayerColorFromUUID(p1ID), piece.getColor());
     }
@@ -114,7 +114,7 @@ public class TicTacToeHandlerTest {
             throw new RuntimeException(e);
         }
 
-        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0,1);
+        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0, 1);
         assertNotNull("Piece should be played at the move coordinates", piece);
         assertEquals("Piece colour is player colour", ticTacToeHandler.getPlayerColorFromUUID(p2ID), piece.getColor());
     }
@@ -150,7 +150,7 @@ public class TicTacToeHandlerTest {
             throw new RuntimeException(e);
         }
 
-        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0,1);
+        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0, 1);
 
         assertEquals("Player 1 cannot move in location that P2 occupies", ticTacToeHandler.getPlayerColorFromUUID(p2ID), piece.getColor());
     }
@@ -194,11 +194,10 @@ public class TicTacToeHandlerTest {
             throw new RuntimeException(e);
         }
 
-        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0,2);
+        TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0, 2);
 
-        assertEquals("Player 2 cannot move in location that P1 occupies",ticTacToeHandler.getPlayerColorFromUUID(p1ID), piece.getColor());
+        assertEquals("Player 2 cannot move in location that P1 occupies", ticTacToeHandler.getPlayerColorFromUUID(p1ID), piece.getColor());
     }
-
 
 
     @Test
@@ -286,7 +285,7 @@ public class TicTacToeHandlerTest {
         MoveData md = new MoveData(p1ID, new Vector2(0, 0));
         ticTacToeHandler.makeMove(md);
 
-        md = new MoveData(p1ID, new Vector2(0,1));
+        md = new MoveData(p1ID, new Vector2(0, 1));
         ticTacToeHandler.makeMove(md);
 
 

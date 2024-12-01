@@ -1,9 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Board;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
-import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.GamePiece;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
-
+import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.GamePiece;
 import org.junit.Before;
 import org.junit.Test;
 

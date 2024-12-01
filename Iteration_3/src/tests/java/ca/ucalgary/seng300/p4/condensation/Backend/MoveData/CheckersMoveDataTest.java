@@ -1,7 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.MoveData;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
-
 import org.junit.Test;
 
 import java.util.UUID;
@@ -36,7 +35,7 @@ public class CheckersMoveDataTest {
         CheckersMoveData.fromJSON(json);
     }
 
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void testFromJSON_IncorrectFields() {
         String json = "{\"player\":\"wrong\",\"position\":[1,2]}";
         try {
