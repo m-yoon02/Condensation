@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <?import javafx.scene.control.Button?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22.0.1" fx:controller="ca.ucalgary.seng300.p4.condensation.tLeaderboardController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22.0.1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.tLeaderboardController">
     <top>
         <Label style="-fx-font-size: 24;" text="Leaderboard - Connect 4" BorderPane.alignment="CENTER" />
     </top>
