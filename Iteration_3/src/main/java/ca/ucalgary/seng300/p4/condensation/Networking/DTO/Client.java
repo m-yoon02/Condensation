@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Networking.DTO;
 
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.Networking.Listeners.GameDataListener;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.UUID;
@@ -19,11 +20,17 @@ public class Client implements GameDataListener {
     }
 
 
+    @Override
+    public void onChatEvent(GameEventType gameEventType, JSONArray clientResponsePayload){
+        
+    }
+
 
 
     @Override
     public void onGameEvent(GameEventType eventType, JSONObject payload) {
         if(eventType == GameEventType.CHAT_MESSAGE_RECEIVED){
+
             // will recieve message information from the frontend
 
         }else{

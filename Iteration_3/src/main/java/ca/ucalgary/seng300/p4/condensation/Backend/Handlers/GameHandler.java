@@ -5,7 +5,9 @@ import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.GameTimer.GameTimer;
 import ca.ucalgary.seng300.p4.condensation.Backend.GameTimer.TimerEndListener;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -23,7 +25,7 @@ public abstract class GameHandler implements IGameHandler{
 
     private class EndGameOnTimerEndListener implements TimerEndListener {
         @Override
-        public void onTimerEnd(UUID winnerPlayerID) {
+        public void onTimerEnd(UUID winnerPlayerID) throws IOException, ParseException {
             notifyGameEnd(GameResult.WIN, winnerPlayerID);
         }
     }
@@ -76,7 +78,7 @@ public abstract class GameHandler implements IGameHandler{
      * @param gameResult the game result
      * @param winnerID the ID of the winner player if the game has ended on a win
      */
-    protected void notifyGameEnd(GameResult gameResult, UUID winnerID){
+    protected void notifyGameEnd(GameResult gameResult, UUID winnerID) throws IOException, ParseException {
         //Stop the timer when the game ends obviously
         gameTimer.stopTimer();
         for (GameEndListener listener: gameEndListeners){

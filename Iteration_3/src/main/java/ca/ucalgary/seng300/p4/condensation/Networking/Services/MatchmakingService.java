@@ -50,7 +50,7 @@ public class MatchmakingService {
                 }
 
                 //if player1 and player2 are not the same player, check if it could be a possible match
-                if (player1 != player2) {
+                if (!player1.equals(player2)) {
                     //check if that player can be a possible match
                     if (player2.Elo() >= minRank && player2.Elo() <= maxRank) {
                         //match found!

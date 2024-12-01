@@ -23,21 +23,21 @@ public class ChatService {
 
 
 
-    public JSONArray sendChatMessage(String msg, String username) {
+    public JSONArray sendChatMessage(String username1, String message1, String username2 ) {
         JSONArray chatMessages = new JSONArray();
         for (String key : responses.keySet()) {
-            if (msg.equals(key)) {
+            if (message1.equals(key)) {
 
                 JSONObject clientResponse = new JSONObject();
-                clientResponse.put("username", username);
+                clientResponse.put("username", username1);
                 clientResponse.put("date", LocalDateTime.now());
                 clientResponse.put("message", key);
 
 
                 JSONObject serverResponses = new JSONObject();
-                serverResponses.put("username", "WorldD3story3r80664");
+                serverResponses.put("username", username2);
                 serverResponses.put("date", LocalDateTime.now());
-                serverResponses.put("message", key);
+                serverResponses.put("message", responses.get(key));
 
                 chatMessages.add(clientResponse);
                 chatMessages.add(serverResponses);

@@ -1,0 +1,168 @@
+package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
+
+import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.event.ActionEvent;
+import javafx.stage.Stage;
+import org.json.simple.JSONObject;
+
+import java.io.IOException;
+
+public class ProfileLeaderBController {
+
+    @FXML
+    private TableView<org.json.simple.JSONObject> ticTacToeTable;
+
+    @FXML
+    private TableView<org.json.simple.JSONObject> connect4Table;
+
+    @FXML
+    private TableView<org.json.simple.JSONObject> checkersTable;
+
+    @FXML
+    private TableColumn<JSONObject, Integer> ticTacToeRankColumn;
+
+    @FXML
+    private TableColumn<JSONObject, String> ticTacToePlayerColumn;
+
+    @FXML
+    private TableColumn<JSONObject, Integer> ticTacToeScoreColumn;
+
+    @FXML
+    private TableColumn<JSONObject, Integer> connect4RankColumn;
+
+    @FXML
+    private TableColumn<JSONObject, String> connect4PlayerColumn;
+
+    @FXML
+    private TableColumn<JSONObject, Integer> connect4ScoreColumn;
+
+    @FXML
+    private TableColumn<JSONObject, Integer> checkersRankColumn;
+
+    @FXML
+    private TableColumn<JSONObject, String> checkersPlayerColumn;
+
+    @FXML
+    private TableColumn<JSONObject, Integer> checkersScoreColumn;
+
+
+    // Initialize method for setting up the leaderboard data
+    @FXML
+    public void initialize() {
+        // Configure Tic Tac Toe columns
+        ticTacToeRankColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Integer) cellData.getValue().get("rank")).intValue()).asObject());
+        ticTacToePlayerColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("username")));
+        ticTacToeScoreColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Long) cellData.getValue().get("tictactoeElo")).intValue()).asObject());
+
+        // Configure Connect 4 columns
+        connect4RankColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Integer) cellData.getValue().get("rank")).intValue()).asObject());
+        connect4PlayerColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("username")));
+        connect4ScoreColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Long) cellData.getValue().get("connect4Elo")).intValue()).asObject());
+
+        // Configure Checkers columns
+        checkersRankColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Integer) cellData.getValue().get("rank")).intValue()).asObject());
+        checkersPlayerColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("username")));
+        checkersScoreColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(((Long) cellData.getValue().get("checkersElo")).intValue()).asObject());
+
+        // Load leaderboard data dynamically
+        loadLeaderboardData();
+    }
+
+
+    //this is just the sample data to see how the table looks like  //TODO: connect with networking
+    private void loadLeaderboardData() {
+        try {
+            // Get the leaderboard instance
+            Leaderboard leaderboard = Leaderboard.getInstance("path_to_your_data_file.json");
+
+            // Create observable lists for each game
+            ObservableList<org.json.simple.JSONObject> ticTacToeData = FXCollections.observableArrayList();
+            ObservableList<org.json.simple.JSONObject> connect4Data = FXCollections.observableArrayList();
+            ObservableList<org.json.simple.JSONObject> checkersData = FXCollections.observableArrayList();
+
+            // Populate the data
+            leaderboard.getAllUsers().forEach(user -> {
+                org.json.simple.JSONObject userObject = (org.json.simple.JSONObject) user;
+
+                // Add the user to each game's leaderboard
+                ticTacToeData.add(userObject);
+                connect4Data.add(userObject);
+                checkersData.add(userObject);
+            });
+
+            // Sort the data by score for each game
+            ticTacToeData.sort((o1, o2) -> Long.compare((Long) o2.get("tictactoeElo"), (Long) o1.get("tictactoeElo")));
+            connect4Data.sort((o1, o2) -> Long.compare((Long) o2.get("connect4Elo"), (Long) o1.get("connect4Elo")));
+            checkersData.sort((o1, o2) -> Long.compare((Long) o2.get("checkersElo"), (Long) o1.get("checkersElo")));
+
+            // Assign ranks AFTER sorting
+            for (int i = 0; i < ticTacToeData.size(); i++) {
+                ticTacToeData.get(i).put("rank", i + 1); // Rank starts at 1
+            }
+            for (int i = 0; i < connect4Data.size(); i++) {
+                connect4Data.get(i).put("rank", i + 1); // Rank starts at 1
+            }
+            for (int i = 0; i < checkersData.size(); i++) {
+                checkersData.get(i).put("rank", i + 1); // Rank starts at 1
+            }
+
+            // Debug: Print sorted data with ranks
+            System.out.println("Tic Tac Toe Data After Sorting:");
+            ticTacToeData.forEach(data -> System.out.println(data));
+
+            System.out.println("Connect 4 Data After Sorting:");
+            connect4Data.forEach(data -> System.out.println(data));
+
+            System.out.println("Checkers Data After Sorting:");
+            checkersData.forEach(data -> System.out.println(data));
+
+            // Set the data to the tables
+            ticTacToeTable.setItems(ticTacToeData);
+            connect4Table.setItems(connect4Data);
+            checkersTable.setItems(checkersData);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading leaderboard data.");
+        }
+    }
+
+
+
+
+    //back to home
+    @FXML
+    void onHomeButtonClicked(ActionEvent event) throws IOException {
+        System.out.println("Home button clicked..redirecting to home.");
+        // Navigate back to the Home screen
+        // Add functionality to go back to home
+        Parent gamesParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileHome.fxml"));
+        Scene gamesScene = new Scene(gamesParent);
+
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(gamesScene);
+        window.show();
+    }
+}
