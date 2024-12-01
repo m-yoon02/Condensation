@@ -135,6 +135,9 @@ public class ConnectFourController {
 
     private String jsonUpdate;
 
+    public static void receiveConnectFour(JSONObject payload) {
+    }
+
     @FXML
     public void initialize() {
         for (int row = 0; row < 6; row++) {
