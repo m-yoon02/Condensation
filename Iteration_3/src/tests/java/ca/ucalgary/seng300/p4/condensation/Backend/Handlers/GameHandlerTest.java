@@ -4,7 +4,6 @@ import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.PlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.GameTimer.GameTimer;
-import ca.ucalgary.seng300.p4.condensation.Backend.GameTimer.TimerEndListener;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
