@@ -125,7 +125,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
         // we will also need to store some kind of game history
         // sends the payload to frontend client listeners.
-        NetworkManager.getNetworkInstance().sendGameDataToClients(gameEndPayload, this.sessionId, gameEventType);
+        NetworkManager.getNetworkInstance().sendGameDataToClients(gameEndPayload, this.sessionId, gameEventType, this.gameType);
         
         // remove game from the GameSessionsManager hashmap
         GameSessionManager.getInstance().removeGameSession(this.sessionId);
@@ -156,7 +156,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
         responseClientPayload.put("Changes", gameStateJson);
 
         try {
-            NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload, sessionId, gameEventType);
+            NetworkManager.getNetworkInstance().sendGameDataToClients(responseClientPayload, sessionId, gameEventType, this.gameType);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -24,7 +24,7 @@ public class CheckersController {
     public UUID sessionID;
     public UUID newTurn;
 
-    public void receiveCheckers(JSONObject backendUpdate){
+    public static void receiveCheckers(JSONObject backendUpdate){
         String win_or_not_win = (String) backendUpdate.get("UpdateType");
         if (Objects.equals(win_or_not_win, "GAME_END")){
             resultOfCheckers = (GameResult) backendUpdate.get("GameState");

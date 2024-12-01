@@ -10,9 +10,17 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class TicTacToeController {
-    private Button btn00, btn01, btn02, btn10, btn11, btn12, btn20, btn21, btn22;
+    private static Button btn00;
+    private static Button btn01;
+    private static Button btn02;
+    private static Button btn10;
+    private static Button btn11;
+    private static Button btn12;
+    private static Button btn20;
+    private static Button btn21;
+    private static Button btn22;
     public int numberOfPiecesOnBoard = 0;
-    Button[][] buttons = new Button[][] {
+    static Button[][] buttons = new Button[][] {
         {btn00, btn01, btn02},
         {btn10, btn11, btn12},
         {btn20, btn21, btn22}
@@ -20,12 +28,12 @@ public class TicTacToeController {
 
     public static final int NUMBER_OF_ROWS = 3;
     public static final int NUMBER_OF_COLS = 3;
-    public GameResult resultOfTicTacToe;
+    public static GameResult resultOfTicTacToe;
     public UUID playerOne;
     public UUID playerTwo;
-    public UUID sessionID;
-    public UUID newTurn;
-    public void receiveFromBackendTicTacToe(JSONObject backendUpdate){
+    public static UUID sessionID;
+    public static UUID newTurn;
+    public static void receiveFromBackendTicTacToe(JSONObject backendUpdate){
         String win_or_not_win = (String) backendUpdate.get("UpdateType");
         if (Objects.equals(win_or_not_win, "GAME_END")){
             resultOfTicTacToe = (GameResult) backendUpdate.get("GameState");
@@ -104,7 +112,7 @@ public class TicTacToeController {
         }
     }
 
-    private void disableAllButtons() { //when game ends
+    private static void disableAllButtons() { //when game ends
         for (Button[] buttonRow : buttons) {
             for (Button button : buttonRow) {
                 button.setDisable(true);
