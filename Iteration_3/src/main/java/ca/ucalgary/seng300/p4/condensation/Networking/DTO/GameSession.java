@@ -82,11 +82,12 @@ public class GameSession implements GameEndListener, TurnEndListener {
     }
 
     /**
-     * onGameEnd will update leaderboards, remove gameSession object from the sessions hashmap, and will send this information to the frontend.
-     * @param gameResult
-     * @param winnerPlayer
-     * @PreCondition Game just ended and backend notifies game session listener that this event has occured
-     * @PostCondiiton update leaderboards, remove gameSession object from the sessions hashmap, and will send this information to the frontend as JSON Payload
+     * Handles the end of a game by determining the result, updating player Elo ratings,
+     * notifying clients, and cleaning up the game session.
+     * @param gameResult   The result of the game (WIN, TIE, etc.).
+     * @param winnerPlayer The UUID of the player who won the game.
+     * @throws IOException    If an error occurs while sending game data to clients.
+     * @throws ParseException If there is an error parsing or processing game-related data.
      */
     @Override
     public void onGameEnd(GameResult gameResult, UUID winnerPlayer) throws IOException, ParseException {
@@ -132,13 +133,12 @@ public class GameSession implements GameEndListener, TurnEndListener {
     }
 
     /**
-     * onTurnEnd This is the implementation for the method that's invoked when a Turn has ended on the backend.
-     * @param playersTurnID
-     * @param gameStateJson
-     * PreCondition : recieves the PlayerTurnID and gameStateJson on listener notification.
-     * PostCondition : Calls network singelton method that sends formatted JSON Object data to client
+     * Handles the end of a player's turn by creating a payload with the updated game state
+     * and notifying the clients in the game session.
+     * @param playersTurnID  The UUID of the player whose turn has ended.
+     * @param gameStateJson  A JSON string representing the updated game state.
+     * @throws RuntimeException If an error occurs while sending game data to clients.
      */
-
     @Override
     public void onTurnEnd(UUID playersTurnID, String gameStateJson) {
 
@@ -162,46 +162,6 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
     }
 
-
-    // This is what the backend will send back to the client
-
-    // ```json
-    //{
-    //    "UpdateType": "GAME_END", //(OR StateChange)
-    //    "GameState": "WIN", // (or TIE)
-    //    // IF GameState == WIN:
-    //    "PlayerWon": "UUID of the player who won",
-    //    "PlayerLost": "UUID of the player who lost"
-    //    // if GameState == TIE, above fields will NOT exist
-    //}
-    //```
-    //
-    //```json
-    //{
-    //    "UpdateType": "TURN_END",
-    //    "SessionID": "UUID of the Session",
-    //    "PlayerTurn": "UUID of the next player's turn",
-    //    "Changes": [
-    //        ["EMPTY", "RED", "EMPTY"],
-    //        ["BLUE", "RED", "EMPTY"],
-    //        ["EMPTY", "BLUE", "EMPTY"],
-    //    ] // A 2D array representing the current state of the board on the Back End
-    //    // RED, BLUE are not the only colours, colours differ per game, SEE BELOW
-    //}
-
-
-    // This is what frontend recieves from the backend via recieveGameDataFromClient
-    // we recieve this as a json object from the frontend not as a string
-
-    // {
-    //    "SessionID": "UUID Representing Session",
-    //    "PlayerID": "UUID of the player making the move",
-    //    "NewPosition": [0, 5],
-    //    // If the game is Checkers:
-    //    "OldPosition": [1, 6]
-    //    //NewPosition represents the new position that the player wants to move the piece to
-    //    //IF THE GAME IS CHECKERS, OldPosition will represent the old position of the piece
-    //}
 
 
 
