@@ -274,6 +274,19 @@ public class NetworkManager {
     }
 
 
+    public boolean isPlayerOnline(UUID playerID) {
+        // Print out the loggedInClients map
+        System.out.println("Logged-in Clients: ");
+        loggedInClients.forEach((id, client) ->
+                System.out.println("ID: " + id + ", Client: " + client)
+        );
+
+        // Check if the playerID exists in the map
+        return loggedInClients.containsKey(playerID);
+    }
+
+
+
 
     // ---------------------------------------------------------------------------------------------------
     // Network methods that handles queueing, creating, and starting game session sequence.
