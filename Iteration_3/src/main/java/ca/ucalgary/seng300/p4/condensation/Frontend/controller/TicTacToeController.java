@@ -40,12 +40,12 @@ public class TicTacToeController {
     public static final int NUMBER_OF_COLS = 3;
     public static GameResult resultOfTicTacToe;
     public UUID playerOne;
-    public UUID playerTwo;
+    public static UUID playerTwo;
     public static UUID sessionID;
     public static UUID newTurn;
 
     @FXML
-    public Label playerStatus;
+    public static Label playerStatus;
 
     @FXML
     public void initialize() throws IOException, ParseException {
@@ -117,7 +117,7 @@ public class TicTacToeController {
         }
     }
 
-    private void disableAllButtons() { //when game ends
+    private static void disableAllButtons() { //when game ends
         for (Button[] buttonRow : buttons) {
             for (Button button : buttonRow) {
                 button.setDisable(true);
@@ -168,11 +168,4 @@ public class TicTacToeController {
     }
 }
 
-    private static void disableAllButtons() { //when game ends
-        for (Button[] buttonRow : buttons) {
-            for (Button button : buttonRow) {
-                button.setDisable(true);
-            }
-        }
-    }
 
