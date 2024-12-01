@@ -12,15 +12,15 @@ public class ConnectFourController {
 
     private Button btn00, btn01, btn02, btn10, btn11, btn12, btn20, btn21, btn22;
     public int numberOfPiecesOnBoard = 0;
-    Button[][] buttons = new Button[][] {};
+    static Button[][] buttons = new Button[][] {};
 
     public static final int NUMBER_OF_ROWS = 6;
     public static final int NUMBER_OF_COLS = 7;
-    public GameResult resultOfTicTacToe;
+    public static GameResult resultOfTicTacToe;
     public UUID playerOne;
     public UUID playerTwo;
-    public UUID sessionID;
-    public UUID newTurn;
+    public static UUID sessionID;
+    public static UUID newTurn;
     public static void receiveConnectFour(JSONObject backendUpdate){
         String win_or_not_win = (String) backendUpdate.get("UpdateType");
         if (Objects.equals(win_or_not_win, "GAME_END")){
@@ -100,7 +100,7 @@ public class ConnectFourController {
         }
     }
 
-    private void disableAllButtons() { //when game ends
+    private static void disableAllButtons() { //when game ends
         for (Button[] buttonRow : buttons) {
             for (Button button : buttonRow) {
                 button.setDisable(true);

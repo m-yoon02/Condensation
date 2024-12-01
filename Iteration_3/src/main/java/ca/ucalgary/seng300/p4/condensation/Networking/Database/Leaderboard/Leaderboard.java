@@ -31,7 +31,7 @@ public class Leaderboard {
     /**
      * Provides global access to the single instance of the Leaderboard class.
      *
-     * @param DATA_FILE the path to the data file (only used during first initialization).
+     * @param
      * @return the singleton instance of the Leaderboard.
      * @throws IOException    if there is an error reading the file.
      * @throws ParseException if there is an error parsing the JSON data.
@@ -272,7 +272,7 @@ public class Leaderboard {
         player2CurrentMatch.put("outcome", "T");
         player2CurrentMatch.put("currentElo", player1Elo);
         player2RecentMatches.add(player2CurrentMatch);
-        player1.put("recentMatches", player2RecentMatches);
+        player2.put("recentMatches", player2RecentMatches);
 
 
 

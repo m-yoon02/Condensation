@@ -101,8 +101,8 @@ public class GameSession implements GameEndListener, TurnEndListener {
         if(gameResult == GameResult.WIN){
             gameEndPayload.put("GameState", GameResult.WIN);
             if (winnerPlayer.equals(this.player1ID)) {
-                Leaderboard.getInstance().updateEloForWinningPlayer(this.player1ID, this.gameType);
-                Leaderboard.getInstance().updateEloForLosingPlayer(this.player2ID, this.gameType);
+                Leaderboard.getInstance().updateEloForWinningPlayer(this.player1ID, this.gameType, this.sessionId);
+                Leaderboard.getInstance().updateEloForLosingPlayer(this.player2ID, this.gameType, this.sessionId);
                 gameEndPayload.put("PlayerWon", this.player1ID);
                 gameEndPayload.put("PlayerLost", this.player2ID);
 
@@ -110,13 +110,13 @@ public class GameSession implements GameEndListener, TurnEndListener {
                 // as winner and player 2 as loser
             } else {
                 // update leaderboard for player 2 winner, and player 1 as loser
-                Leaderboard.getInstance().updateEloForWinningPlayer(this.player2ID, this.gameType);
-                Leaderboard.getInstance().updateEloForLosingPlayer(this.player1ID, this.gameType);
+                Leaderboard.getInstance().updateEloForWinningPlayer(this.player2ID, this.gameType, this.sessionId);
+                Leaderboard.getInstance().updateEloForLosingPlayer(this.player1ID, this.gameType, this.sessionId);
                 gameEndPayload.put("PlayerWon", this.player2ID);
                 gameEndPayload.put("PlayerLost", this.player1ID);
             }
         }else{
-            Leaderboard.getInstance(DATA_FILE).updateForTieGame(this.player1ID, this.player2ID, this.sessionId, this.gameType);
+            Leaderboard.getInstance().updateForTieGame(this.player1ID, this.player2ID, this.sessionId, this.gameType);
             gameEndPayload.put("GameState", GameResult.TIE);
             // Player fields will not exist and elo's will not change.
 
