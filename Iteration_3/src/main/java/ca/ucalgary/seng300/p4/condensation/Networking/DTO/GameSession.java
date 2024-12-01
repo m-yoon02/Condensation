@@ -89,7 +89,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
      * @PostCondiiton update leaderboards, remove gameSession object from the sessions hashmap, and will send this information to the frontend as JSON Payload
      */
     @Override
-    public void onGameEnd(GameResult gameResult, UUID winnerPlayer) throws IOException, ParseException {
+    public void onGameEnd(GameResult gameResult, UUID winnerPlayer){
 
         GameEventType gameEventType = GameEventType.GAME_END;
         // we need to make the response payload here as well
@@ -101,8 +101,12 @@ public class GameSession implements GameEndListener, TurnEndListener {
         if(gameResult == GameResult.WIN){
             gameEndPayload.put("GameState", GameResult.WIN);
             if (winnerPlayer.equals(this.player1ID)) {
-                Leaderboard.getInstance(DATA_FILE).updateEloForWinningPlayer(this.player1ID, this.gameType);
-                Leaderboard.getInstance(DATA_FILE).updateEloForLosingPlayer(this.player2ID, this.gameType);
+                try {
+                    Leaderboard.getInstance(DATA_FILE).updateEloForWinningPlayer(this.player1ID, this.gameType);
+                    Leaderboard.getInstance(DATA_FILE).updateEloForLosingPlayer(this.player2ID, this.gameType);
+                } catch (IOException | ParseException e) {
+                    throw new RuntimeException(e);
+                }
                 gameEndPayload.put("PlayerWon", this.player1ID);
                 gameEndPayload.put("PlayerLost", this.player2ID);
 
@@ -110,8 +114,12 @@ public class GameSession implements GameEndListener, TurnEndListener {
                 // as winner and player 2 as loser
             } else {
                 // update leaderboard for player 2 winner, and player 1 as loser
-                Leaderboard.getInstance(DATA_FILE).updateEloForWinningPlayer(this.player2ID, this.gameType);
-                Leaderboard.getInstance(DATA_FILE).updateEloForLosingPlayer(this.player1ID, this.gameType);
+                try {
+                    Leaderboard.getInstance(DATA_FILE).updateEloForWinningPlayer(this.player2ID, this.gameType);
+                    Leaderboard.getInstance(DATA_FILE).updateEloForLosingPlayer(this.player1ID, this.gameType);
+                } catch (IOException | ParseException e) {
+                    throw new RuntimeException(e);
+                }
                 gameEndPayload.put("PlayerWon", this.player2ID);
                 gameEndPayload.put("PlayerLost", this.player1ID);
             }
@@ -123,8 +131,12 @@ public class GameSession implements GameEndListener, TurnEndListener {
 
         // we will also need to store some kind of game history
         // sends the payload to frontend client listeners.
-        NetworkManager.getNetworkInstance().sendGameDataToClients(gameEndPayload, this.sessionId, gameEventType);
-        
+        try {
+            NetworkManager.getNetworkInstance().sendGameDataToClients(gameEndPayload, this.sessionId, gameEventType);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         // remove game from the GameSessionsManager hashmap
         GameSessionManager.getInstance().removeGameSession(this.sessionId);
 
