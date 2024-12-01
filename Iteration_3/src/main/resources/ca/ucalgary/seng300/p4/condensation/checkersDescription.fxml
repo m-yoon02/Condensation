@@ -27,7 +27,10 @@
               <content>
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1278.0" prefWidth="700.0" styleClass="detail-container">
                       <children>
-                          <Label text="About" />
+                          <Label text="About">
+                        <VBox.margin>
+                           <Insets left="5.0" />
+                        </VBox.margin></Label>
                           <TextArea editable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0" text="Checkers, also known as draughts, is a classic strategy board game played between two players. It is played on an 8x8 square board, similar to a chessboard, but only the dark squares are used. Each player starts with 12 pieces, typically black and white or red and black, placed on the dark squares of the three rows closest to them." wrapText="true" VBox.vgrow="ALWAYS">
                               <VBox.margin>
                                   <Insets left="10.0" right="10.0" />
@@ -36,7 +39,10 @@
                                   <Cursor fx:constant="NONE" />
                               </cursor>
                           </TextArea>
-                          <Label layoutX="10.0" layoutY="46.0" text="Rules" />
+                          <Label layoutX="10.0" layoutY="46.0" text="Rules">
+                        <VBox.margin>
+                           <Insets left="5.0" />
+                        </VBox.margin></Label>
                           <TextArea fx:id="rulesArea" editable="false" layoutX="10.0" layoutY="46.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0" text="1. Movement: Pieces move diagonally forward to an adjacent empty square.&#10;2. Capturing: A piece can “jump” over an opponent’s piece diagonally to an empty square immediately beyond it, capturing the opponent’s piece. Multiple jumps are allowed in one turn if possible.&#10;3. King Pieces: When a piece reaches the opponent’s back row, it becomes a “king” and gains the ability to move diagonally both forward and backward.&#10;4. Winning: The game ends when a player captures all of the opponent’s pieces or blocks them so they cannot make a legal move." wrapText="true" VBox.vgrow="ALWAYS">
                               <cursor>
                                   <Cursor fx:constant="NONE" />

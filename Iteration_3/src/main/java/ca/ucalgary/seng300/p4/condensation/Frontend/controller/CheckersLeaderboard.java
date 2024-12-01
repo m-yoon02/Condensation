@@ -125,11 +125,15 @@ public class CheckersLeaderboard {
 
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/ca/ucalgary/seng300/p4/condensation/ConnectFourHomeMenu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(fxmlLoader.load(), 800, 600);
-        stage.setTitle("Connect 4 - Menu");
+        CheckersController controller = new CheckersController(stage);
+        fxmlLoader.setController(controller);
+        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        stage.setTitle("Checkers Home Menu");
         stage.setScene(scene);
+        stage.setMinWidth(700);
+        stage.setMinHeight(530);
         stage.show();
     }
 
@@ -137,7 +141,7 @@ public class CheckersLeaderboard {
     public static Team mainTeam;
 
     static {
-        File file = new File("src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+        File file = new File("Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
 
         mainTeam = load(file);
         if (mainTeam == null) {

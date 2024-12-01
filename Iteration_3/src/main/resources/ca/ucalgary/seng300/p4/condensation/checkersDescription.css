@@ -15,7 +15,7 @@
     -fx-pref-height: 30;
 }
 .menu-container Button{
-    -fx-font-size: 12;
+    -fx-font-size: 11;
     -fx-background-color: #2415E2;
     -fx-font-family: "Oswald", sans-serif;
     -fx-text-fill: White;
@@ -55,6 +55,7 @@
     -fx-background-color: #091856;
     -fx-cursor: default;
     -fx-text-fill: White;
+    -fx-background-radius: 0;
 }
 #rulesArea {
     -fx-pref-height: 200;

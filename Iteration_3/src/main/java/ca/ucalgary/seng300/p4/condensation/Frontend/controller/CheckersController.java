@@ -35,8 +35,6 @@ public class CheckersController {
     }
 
 
-
-
     // Checkers home menu
     public void onCheckersSelected(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
@@ -76,7 +74,6 @@ public class CheckersController {
     }
 
 
-
     @FXML
     Button leaderboardBtn;
 
@@ -96,16 +93,19 @@ public class CheckersController {
 //        stage.setMinWidth(700);
 //        stage.setMinHeight(530);
 //        stage.show();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/CheckersLeaderboard.fxml"));
-            Stage stage = (Stage) leaderboardBtn.getScene().getWindow();
-            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-            stage.setTitle("Checkers - Leaderboard");
-            stage.setScene(scene);
-            stage.show();
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
+        stage = (Stage) leaderboardBtn.getScene().getWindow();
+        CheckersLeaderboard controller = new CheckersLeaderboard();
+        fxmlLoader.setController(controller);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        stage.setTitle("Checkers - Leaderboard");
+        stage.setScene(scene);
+        stage.show();
     }
+
     @FXML
     public void onLeaderboardBackBtnClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersHomeMenu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         CheckersController controller = new CheckersController(stage);
         fxmlLoader.setController(controller);
@@ -138,6 +138,7 @@ public class CheckersController {
         stage.setMinHeight(530);
         stage.show();
     }
+
     @FXML
     public void onHowToPlayBackBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersHomeMenu.fxml"));
@@ -151,8 +152,6 @@ public class CheckersController {
         stage.setMinHeight(530);
         stage.show();
     }
-
-
 
 
     // Checkers instance
@@ -225,7 +224,8 @@ public class CheckersController {
                     }
                 }
                 if (r >= 5) {   // last 3 rows
-                    Image image = new Image((this.getClass().getResource("/ca/ucalgary/seng300/p4/condensation/red.png")).toExternalForm());                    if (r % 2 == 0) { // 6
+                    Image image = new Image((this.getClass().getResource("/ca/ucalgary/seng300/p4/condensation/red.png")).toExternalForm());
+                    if (r % 2 == 0) { // 6
                         if (c % 2 == 0) {
                             addPieceToSquare(image, square);
                             redPieces[redCount] = square;
@@ -282,7 +282,6 @@ public class CheckersController {
     }
 
 
-
     // chat
     @FXML
     TextArea chatBox;
@@ -324,12 +323,13 @@ public class CheckersController {
             String messageStr2 = "";
             boolean responded = false;
             if (chatMessages != null) {
-                LocalDateTime localDateTime1 = (LocalDateTime) ((JSONObject)chatMessages.get(0)).get("date");
+                LocalDateTime localDateTime1 = (LocalDateTime) ((JSONObject) chatMessages.get(0)).get("date");
                 date1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDateTime1);
 
-                LocalDateTime localDateTime2 = (LocalDateTime) ((JSONObject)chatMessages.get(1)).get("date");
-                date2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDateTime2);;
-                messageStr2 = ((JSONObject)chatMessages.get(1)).get("message").toString();
+                LocalDateTime localDateTime2 = (LocalDateTime) ((JSONObject) chatMessages.get(1)).get("date");
+                date2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDateTime2);
+                ;
+                messageStr2 = ((JSONObject) chatMessages.get(1)).get("message").toString();
 
                 responded = true;
             } else {
