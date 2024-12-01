@@ -119,6 +119,13 @@ public class GameHandlerTest {
         assertEquals("Player 1 should be returned when we pass in player 2",player1ID, otherPlayerID);
     }
 
+    @Test(expected = NullPointerException.class)
+    public void testGetOtherPlayerUUID_3() {
+        gameHandler = new TestGameHandler(player1ID, null, colors, testGameTimer);
+
+        UUID otherPlayerID = gameHandler.getOtherPlayerUUID(player2ID);
+    }
+
 
     @Test
     public void testGetPlayerMemoFromPieceColor() {
@@ -127,6 +134,7 @@ public class GameHandlerTest {
 
         assertEquals("Colour should uniquely identify the players",player1ID, playerMemo.playerID());
     }
+
 
     @Test
     public void testAddGameEndListener() {
