@@ -14,7 +14,7 @@ public class JSONParseResultTest {
         int[] newPosition = {3, 4};
         int[] oldPosition = {2, 3};
         String json = String.format("{\"PlayerID\":\"%s\",\"NewPosition\":[%d,%d],\"OldPosition\":[%d,%d]}",
-                playerID.toString(), newPosition[0], newPosition[1], oldPosition[0], oldPosition[1]);
+                playerID, newPosition[0], newPosition[1], oldPosition[0], oldPosition[1]);
         JSONParseResult result = JSONParseResult.parseJSON(json);
         assertEquals(playerID, result.playerID());
         assertArrayEquals(newPosition, result.newPosition());
@@ -56,8 +56,7 @@ public class JSONParseResultTest {
         try {
             JSONParseResult.parseJSON(json);
             fail("Expected RuntimeException");
-        } catch (RuntimeException e) {
-            // Expected exception
+        } catch (RuntimeException _) {
         }
     }
 
@@ -67,8 +66,7 @@ public class JSONParseResultTest {
         try {
             JSONParseResult.parseJSON(json);
             fail("Expected RuntimeException");
-        } catch (RuntimeException e) {
-            // Expected exception
+        } catch (RuntimeException _) {
         }
     }
 
@@ -78,8 +76,7 @@ public class JSONParseResultTest {
         try {
             JSONParseResult.parseJSON(json);
             fail("Expected RuntimeException");
-        } catch (RuntimeException e) {
-            // Expected exception
+        } catch (RuntimeException _) {
         }
     }
 }

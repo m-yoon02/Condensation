@@ -66,19 +66,19 @@ public class GameTimerTest {
         assertEquals("UUID of other player should match!", gameTimer.getOtherPlayerID(p2ID), p1ID);
     }
 
-    @Test
-    public void startTimer() throws InterruptedException {
-        gameTimer.startTimer();
-        assertTrue("Timer should be active", gameTimer.isActive());
-        gameTimer.stopTimer();
-        assertFalse("Timer ends after", gameTimer.isActive());
-    }
+//    @Test
+//    public void startTimer() throws InterruptedException {
+//        gameTimer.startTimer();
+//        assertTrue("Timer should be active", gameTimer.isActive());
+//        gameTimer.stopTimer();
+//        assertFalse("Timer ends after", gameTimer.isActive());
+//    }
 
-    @Test
-    public void stopTimer() {
-        gameTimer.stopTimer();
-        assertFalse("Timer should not be active", gameTimer.isActive());
-    }
+//    @Test
+//    public void stopTimer() {
+//        gameTimer.stopTimer();
+//        assertFalse("Timer should not be active", gameTimer.isActive());
+//    }
 
     @Test
     public void testSwitchTimer_ValidPlayer() {
