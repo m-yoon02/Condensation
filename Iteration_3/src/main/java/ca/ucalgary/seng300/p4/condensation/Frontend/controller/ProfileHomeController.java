@@ -18,119 +18,144 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.UUID;
 
+/**
+ * Controller for the Profile Home screen.
+ * Displays recent matches of the player and allows navigation to other parts of the application.
+ */
 public class ProfileHomeController {
 
+    // TableView to display recent matches
     @FXML
     private TableView<JSONObject> tableView;
 
     @FXML
-    private TableColumn<JSONObject, String> gameColumn;
-
+    private TableColumn<JSONObject, String> gameColumn; // Column for game type
     @FXML
-    private TableColumn<JSONObject, String> outcomeColumn;
-
+    private TableColumn<JSONObject, String> outcomeColumn; // Column for match outcome
     @FXML
-    private TableColumn<JSONObject, Number> currentEloColumn;
-
+    private TableColumn<JSONObject, Number> currentEloColumn; // Column for player's ELO after the match
     @FXML
-    private TableColumn<JSONObject, Number> totalWinsColumn;
-
+    private TableColumn<JSONObject, Number> totalWinsColumn; // Placeholder column for total wins
     @FXML
-    private TableColumn<JSONObject, Number> gamesPlayedColumn;
+    private TableColumn<JSONObject, Number> gamesPlayedColumn; // Placeholder column for games played
 
-
+    // Text fields and buttons
     @FXML
-    private TextField profileTitle;
-
+    private TextField profileTitle; // Title or name of the profile (editable)
     @FXML
-    private Label usernameField;
-
+    private Label usernameField; // Label to display the player's username
     @FXML
-    private Button logoutButton;
-
+    private Button logoutButton; // Button to log out
     @FXML
-    private Button leaderboardButton;
-
+    private Button leaderboardButton; // Button to navigate to the leaderboard screen
     @FXML
-    private Button playerProfilesButton;
-
+    private Button playerProfilesButton; // Button to navigate to the player profiles screen
     @FXML
-    private Button gamesButton;
+    private Button gamesButton; // Button to navigate to the games screen
 
+    /**
+     * Initializes the controller and sets up the TableView.
+     */
     @FXML
     public void initialize() {
         // Set the column resize policy for the TableView
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+        // Example username (replace this logic with actual user data)
         usernameField.setText("Player 1");
 
+        // Bind columns to the JSON object fields
         gameColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("gameType")));
         outcomeColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("outcome")));
         currentEloColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(((Long) cellData.getValue().get("currentElo")).intValue()));
         totalWinsColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(0)); // Placeholder if not in matches
         gamesPlayedColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(0)); // Placeholder if not in matches
 
-        UUID playerUUID = UUID.fromString("345e6789-e89d-45d5-a678-627836285538"); // Replace with real UUID logic
+        // Replace this UUID logic with actual logic for identifying the current player
+        UUID playerUUID = UUID.fromString("345e6789-e89d-45d5-a678-627836285538");
 
-        // Display recent matches for this player
+        // Display recent matches for the player
         displayRecentMatches(playerUUID);
     }
 
-    /**When this method is called, it will change the scene back to log in page.*/
+    /**
+     * Handles the logout button click.
+     * Redirects to the login screen or performs logout functionality.
+     *
+     * @param event ActionEvent triggered by the logout button.
+     */
     @FXML
     public void onlogOutButtonClicked(ActionEvent event) {
         System.out.println("Logging out...");
-        // Add logout functionality here
+        // TODO: Add logout functionality here
     }
 
-    //When this method is called, it will change the scene to leaderboard page.
+    /**
+     * Handles the leaderboard button click.
+     * Navigates to the leaderboard page.
+     *
+     * @param event ActionEvent triggered by the leaderboard button.
+     * @throws IOException if the FXML file for the leaderboard screen cannot be loaded.
+     */
     @FXML
-    void onLeaderboardButtonClicked (ActionEvent event) throws IOException{
+    void onLeaderboardButtonClicked(ActionEvent event) throws IOException {
         System.out.println("Opening Leaderboard...");
-        // Add functionality to open the leaderboard page
         Parent gamesParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileLeaderB.fxml"));
         Scene gamesScene = new Scene(gamesParent);
 
-        //This line gets the Stage information
-        Stage window= (Stage)((Node)event.getSource()).getScene().getWindow();
+        // Get the current stage and set the new scene
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(gamesScene);
         window.show();
-
     }
 
-    //When this method is called, it will change the scene back to player profile page.
+    /**
+     * Handles the player profiles button click.
+     * Navigates to the player profiles lookup page.
+     *
+     * @param event ActionEvent triggered by the player profiles button.
+     * @throws IOException if the FXML file for the player profiles screen cannot be loaded.
+     */
     @FXML
     void onPlayerProfilesButtonClicked(ActionEvent event) throws IOException {
-        System.out.println("opening player profile look up page");
-        // Add functionality to open the player profiles look up page
+        System.out.println("Opening player profile lookup page...");
         Parent gamesParent = FXMLLoader.load(HelloApplication.class.getResource("otherprofile.fxml"));
         Scene gamesScene = new Scene(gamesParent);
 
-        //This line gets the Stage information
-        Stage window= (Stage)((Node)event.getSource()).getScene().getWindow();
+        // Get the current stage and set the new scene
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(gamesScene);
         window.show();
-
     }
 
-    //When this method is called, it will change the scene back to game selection page.
+    /**
+     * Handles the games button click.
+     * Navigates to the game selection page.
+     *
+     * @param event ActionEvent triggered by the games button.
+     * @throws IOException if the FXML file for the game selection screen cannot be loaded.
+     */
     @FXML
     void onGamesButtonClicked(ActionEvent event) throws IOException {
         System.out.println("Opening Games...");
-        // Add functionality to open the games page
         Parent gamesParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileGame.fxml"));
         Scene gamesScene = new Scene(gamesParent);
 
-        //This line gets the Stage information
-        Stage window= (Stage)((Node)event.getSource()).getScene().getWindow();
+        // Get the current stage and set the new scene
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(gamesScene);
         window.show();
-
     }
 
+    /**
+     * Displays recent matches for the given player.
+     *
+     * @param playerUUID UUID of the player whose recent matches are to be displayed.
+     */
     public void displayRecentMatches(UUID playerUUID) {
         try {
             // Fetch the user from the Leaderboard
-            Leaderboard leaderboard = Leaderboard.getInstance("C:\\Users\\Richa\\IdeaProjects\\demo6\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca");
+            Leaderboard leaderboard = Leaderboard.getInstance();
             JSONObject user = leaderboard.findUserById(playerUUID);
 
             if (user != null) {
@@ -148,7 +173,4 @@ public class ProfileHomeController {
             System.out.println("Error displaying recent matches.");
         }
     }
-
 }
-
-

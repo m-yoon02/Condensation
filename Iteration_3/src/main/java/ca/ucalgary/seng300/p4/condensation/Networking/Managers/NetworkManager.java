@@ -134,9 +134,9 @@ public class NetworkManager {
 
     public JSONObject validateUserCredentials(String username, String password) throws IOException, ParseException {
 
-        JSONObject jsonUsername = Leaderboard.getInstance(DATA_FILE).findUserByName(username);
+        JSONObject jsonUsername = Leaderboard.getInstance().findUserByName(username);
 
-        JSONObject jsonPassword =Leaderboard.getInstance(DATA_FILE).findUserByPassword(password);
+        JSONObject jsonPassword =Leaderboard.getInstance().findUserByPassword(password);
 
         // return null because user does not exist, probably a better way to handle but we need to iterate fas
         if(jsonUsername != null && jsonPassword != null){
@@ -165,7 +165,7 @@ public class NetworkManager {
         String username = (String) signupPayload.get("username");
         String password = (String) signupPayload.get("password");
 
-        Leaderboard.getInstance(DATA_FILE).createUser(username, password);
+        Leaderboard.getInstance().createUser(username, password);
 
         // we could also add a check to see if the username already exists in our database
         return String.format("Successfully created user with username %s", username);
@@ -285,7 +285,7 @@ public class NetworkManager {
         String playerIDString = (String) queuedPlayerPayload.get("playerID");
         UUID player1UUID = UUID.fromString(playerIDString);
         GameTypes gameType = (GameTypes) queuedPlayerPayload.get("gameType");
-        JSONObject player1 = Leaderboard.getInstance(DATA_FILE).findUserById(player1UUID);
+        JSONObject player1 = Leaderboard.getInstance().findUserById(player1UUID);
 
         Number elo = 0;
         switch(gameType){
@@ -433,8 +433,8 @@ public class NetworkManager {
             // get the game session along with player 2's UUID associated w that game session
             GameSession gameSession = gameSessionManager.getGameSessionBySessionID(sessionID);
             UUID player2ID = gameSession.getPlayer2ID();
-            JSONObject player1 = Leaderboard.getInstance(DATA_FILE).findUserById(player1ID);
-            JSONObject player2 = Leaderboard.getInstance(DATA_FILE).findUserById(player2ID);
+            JSONObject player1 = Leaderboard.getInstance().findUserById(player1ID);
+            JSONObject player2 = Leaderboard.getInstance().findUserById(player2ID);
 
             String player1Username = (String) player1.get("username");
             String player2Username = (String) player2.get("username");
