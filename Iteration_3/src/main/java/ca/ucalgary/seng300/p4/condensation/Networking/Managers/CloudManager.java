@@ -1,4 +1,4 @@
-package ca.ucalgary.seng300.p4.condensation.condensation.Networking.Managers;
+package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +149,18 @@ public class CloudManager {
         
         return new ArrayList<>(syncedPlayerIDs);
 
+    }
+
+
+    /**
+     * A method to authenticate user. Since it is a stub, it won't go into much detail of how to authenticate a user when connecting to the cloud
+     * @param username
+     * @param password
+     * @return boolean value indicating if the user has been authenticated
+     */
+    public boolean authenticateUser(String username, String password) {
+        // simulate user authentication
+        return true;        // since it is a stub, just return true
     }
 
     
