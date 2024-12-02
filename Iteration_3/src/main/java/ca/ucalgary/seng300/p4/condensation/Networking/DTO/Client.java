@@ -32,12 +32,20 @@ public class Client implements GameDataListener {
 
 
 
+    /**
+     * Handles a game event by delegating the payload to the appropriate game controller
+     * based on the game type.
+     * @param eventType The type of game event being handled.
+     * @param payload   The {@link JSONObject} containing the event data to process.
+     * @param gameType  The type of game the event is associated with.
+     * @throws IOException If an error occurs while processing the event.
+     */
     @Override
     public void onGameEvent(GameEventType eventType, JSONObject payload, GameTypes gameType) throws IOException {
 
         // we can call a frontend recieveMethod(JSONObject gameData) that client will directly call
 
-        switch(gameType){
+        switch(gameType) {
             case CHECKERS -> {
                 CheckersController.receiveCheckers(payload);
             }
@@ -48,8 +56,6 @@ public class Client implements GameDataListener {
                 ConnectFourController.receiveConnectFour(payload);
             }
         }
-
-
 
     }
 }

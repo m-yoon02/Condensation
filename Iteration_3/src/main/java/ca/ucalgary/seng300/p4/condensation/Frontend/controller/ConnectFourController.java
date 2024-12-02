@@ -159,7 +159,7 @@ public class ConnectFourController {
             }
         }
 
-        Object newPlayerJSONFileObject = new JSONParser().parse(new FileReader("newplayer.json"));
+        Object newPlayerJSONFileObject = new JSONParser().parse(new FileReader("sessionData.json"));
         JSONObject newPlayerJSONFile = (JSONObject) newPlayerJSONFileObject;
 
         playerOne = (UUID) newPlayerJSONFile.get("Player1ID");

@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.TicTacToeQueueController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ConnectFourQueueController">
    <children>
       <Pane prefHeight="407.0" prefWidth="600.0">
          <children>
             <Label layoutX="241.0" layoutY="22.0" prefHeight="17.0" prefWidth="119.0" text="Connect Four Queue" />
-            <Button layoutX="258.0" layoutY="349.0" mnemonicParsing="false" text="Leave Queue" />
+            <Button fx:id="leaveQueue" layoutX="258.0" layoutY="349.0" mnemonicParsing="false" onAction="#returnToConnectFourPage" text="Leave Queue" />
             <Label layoutX="241.0" layoutY="51.0" prefHeight="17.0" prefWidth="112.0" text="Waiting For Player...." />
          </children>
       </Pane>

@@ -58,6 +58,12 @@ public class MatchmakingPool {
 
     }
 
+    /**
+     * Fetches four random players from the leaderboard and adds them to a game queue,
+     * associating each player with a specific game type.
+     * @throws IOException    If an error occurs while accessing the leaderboard data.
+     * @throws ParseException If the leaderboard data cannot be parsed correctly.
+     */
     public void fetch4RandomPlayers() throws IOException, ParseException {
         ArrayList<JSONObject> UUIDarrayList = new ArrayList<>();
         for (Object object : Leaderboard.getInstance().getAllUsers()) {

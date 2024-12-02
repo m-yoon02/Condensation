@@ -33,9 +33,9 @@ public class GameSessionManager {
 
 
     /**
-     * Returns a gameSession obbject to
-     * @param SessionID
-     * @return
+     * Retrieves a game session by its unique session ID.
+     * @param SessionID The unique identifier of the game session.
+     * @return The {@link GameSession} object associated with the given session ID, or {@code null} if not found.
      */
     public GameSession getGameSessionBySessionID(UUID SessionID){
 
@@ -44,8 +44,8 @@ public class GameSessionManager {
     }
 
     /**
-     * addGameSession
-     * @param gameSession
+     * Adds a game session to the session manager.
+     * @param gameSession The {@link GameSession} to be added.
      */
     public void addGameSession(GameSession gameSession){
         // add gameSession object to the hashmap
@@ -56,8 +56,8 @@ public class GameSessionManager {
     }
 
     /**
-     * removeGameSession removes gameSession following on gameEnd
-     * @param sessionID
+     * Removes a game session from the session manager.
+     * @param sessionID The unique identifier of the game session to be removed.
      */
     public void removeGameSession(UUID sessionID) {
         // remove gameSession object from hashmap

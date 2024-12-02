@@ -72,7 +72,7 @@ public class TicTacToeController {
                 {btn20, btn21, btn22}
         };
 
-        Object newPlayerJSONFileObject = new JSONParser().parse(new FileReader("newplayer.json"));
+        Object newPlayerJSONFileObject = new JSONParser().parse(new FileReader("sessionData.json"));
         JSONObject newPlayerJSONFile = (JSONObject) newPlayerJSONFileObject;
 
         playerOne = (UUID) newPlayerJSONFile.get("Player1ID");

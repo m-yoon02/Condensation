@@ -59,8 +59,6 @@ public class ProfileGameController {
     @FXML
     void onTicTacToePlayClicked(ActionEvent event) throws IOException {
         System.out.println("Tic Tac Toe Play button clicked");
-
-        // Load the TicTacToe FXML file
         Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("tMenu.fxml"));
         Scene homeScene = new Scene(homeParent);
 
@@ -78,9 +76,7 @@ public class ProfileGameController {
     @FXML
     void onConnect4PlayClicked(ActionEvent event) throws IOException {
         System.out.println("Connect 4 Play button clicked");
-
-        // Load the Connect 4 FXML file
-        Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("connect4HomeMenu.fxml"));
+        Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
         Scene homeScene = new Scene(homeParent);
 
         // Get the current stage and set the new scene
@@ -97,8 +93,6 @@ public class ProfileGameController {
     @FXML
     void onCheckersPlayClicked(ActionEvent event) throws IOException {
         System.out.println("Checkers Play button clicked");
-
-        // Load the Checkers FXML file
         Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
         Scene homeScene = new Scene(homeParent);
 

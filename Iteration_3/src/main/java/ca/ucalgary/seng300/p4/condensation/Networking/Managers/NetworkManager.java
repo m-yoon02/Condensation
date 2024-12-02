@@ -85,13 +85,14 @@ public class NetworkManager {
     // ---------------------------------------------------------------------------------------------------
 
     /**
-     * Handles a login request from the frontend.
-     * @param loginPayload JSONObject containing username and password
-     * @return If a success the string on the player UUID and if not some kind of fail message ( exception)
-     * @throws IllegalArgumentException If the login payload is invalid
-     * PreCondition : the client calls this network method with the parameter : loginPayload
-     * PostCondition : the method verfies login information, adds client to logged in list, and returns a playerID json string back to client
-     *
+     * Handles the player login process by validating credentials, checking login status,
+     * and registering the player as logged in.
+     * @param loginPayload The player's login credentials.
+     * @return A {@link JSONObject} containing the login response with the username and player ID.
+     * @throws IllegalArgumentException If the credentials are invalid, the user is already logged in,
+     *                                  or if the user cannot be found.
+     * @throws IOException              If an error occurs during processing.
+     * @throws ParseException           If the data cannot be parsed correctly.
      */
     public JSONObject playerLoginHandler(JSONObject loginPayload) throws IllegalArgumentException, IOException, ParseException {
 
@@ -132,6 +133,14 @@ public class NetworkManager {
 
     }
 
+    /**
+     * Validates user credentials by checking the provided username and password against the leaderboard records.
+     * @param username The username to validate.
+     * @param password The password to validate.
+     * @return A {@link JSONObject} representing the user's data if the credentials are valid; {@code null} otherwise.
+     * @throws IOException    If an error occurs during processing.
+     * @throws ParseException If the data cannot be parsed correctly.
+     */
     public JSONObject validateUserCredentials(String username, String password) throws IOException, ParseException {
 
         JSONObject jsonUsername = Leaderboard.getInstance().findUserByName(username);
@@ -153,14 +162,12 @@ public class NetworkManager {
     }
 
     /**
-     * createUser This will be used by frontend to add player to tne user database
-     * @param signupPayload
-     * PreCondition : The client sends the signupPayload
-     * PostCondition : A player object is instantiated and a json representation of the client is saved to the user database
-     * NOTE : This would interact with methods in the Database class so not sure how this would be Tested.
-     * */
-
-
+     * Handles the user signup process by creating a new user in the leaderboard.
+     * @param signupPayload A {@link JSONObject} containing the user's signup details.
+     * @return A message confirming the successful creation of the user.
+     * @throws IOException    If an error occurs during processing.
+     * @throws ParseException If the payload cannot be parsed correctly.
+     */
     public String signUpHandler (JSONObject signupPayload) throws IOException, ParseException {
         String username = (String) signupPayload.get("username");
         String password = (String) signupPayload.get("password");
@@ -171,6 +178,14 @@ public class NetworkManager {
         return String.format("Successfully created user with username %s", username);
     }
 
+
+    /**
+     * Edits a player's username in the leaderboard.
+     * @param editUsernamePayload A {@link JSONObject} containing the player's ID and the new username.
+     * @return A message confirming the successful username change.
+     * @throws IOException    If an error occurs during processing.
+     * @throws ParseException If the payload cannot be parsed correctly.
+     */
     public String editUsername(JSONObject editUsernamePayload) throws IOException, ParseException {
         UUID playedID = UUID.fromString((String) editUsernamePayload.get("playerID"));
         String newUsername = (String) editUsernamePayload.get("NewUsername");
@@ -180,6 +195,13 @@ public class NetworkManager {
         return String.format("You have successfully changed your username to %s", newUsername);
     }
 
+    /**
+     * Edits a player's password in the leaderboard.
+     * @param editPasswordPayload A {@link JSONObject} containing the player's ID and the new password.
+     * @return A message confirming the successful password change.
+     * @throws IOException    If an error occurs during processing.
+     * @throws ParseException If the payload cannot be parsed correctly.
+     */
     public String editPassword(JSONObject editPasswordPayload) throws IOException, ParseException {
         UUID playedID = UUID.fromString((String) editPasswordPayload.get("playerID"));
         String newPassword = (String) editPasswordPayload.get("NewUsername");
@@ -213,10 +235,12 @@ public class NetworkManager {
     // ---------------------------------------------------------------------------------------------------
 
     /**
-     * subscribeToGameSession this method is used to subscribe a client to a list of listeners ( 2 client players) that map to particular sessionID
-     * @param sessionID The game session's UUID
-     * @param client
+     * Subscribes a client to a specific game session, allowing the client to receive updates
+     * and events related to that session.
+     * @param sessionID The ID of the game session to subscribe to.
+     * @param client    The client to subscribe to the session.
      */
+
     public void subscribeToGameSession(UUID sessionID, Client client) {
         // Check if the sessionID already exists in the map
         List<GameDataListener> clientListeners = sessionListeners.get(sessionID);
@@ -234,10 +258,12 @@ public class NetworkManager {
     }
 
     /**
-     *Notifies all clients subscribed to a game session about one of 4 different gameEvents
-     * @param sessionID
-     * @param eventType
-     * @param clientResponsePayload
+     * Notifies all clients subscribed to a specific game session about a game event.
+     * @param sessionID             The ID of the game session.
+     * @param eventType             The type of game event to notify clients about.
+     * @param clientResponsePayload The data payload associated with the game event.
+     * @param gameType              The type of game being played in the session.
+     * @throws IOException If an error occurs while notifying clients.
      */
     public void notifyGameSessionClients(UUID sessionID, GameEventType eventType, JSONObject clientResponsePayload, GameTypes gameType) throws IOException {
 
@@ -253,11 +279,11 @@ public class NetworkManager {
         }
     }
 
-        /**
-     * notifyGameSessionClientsOfMessage 
-     * @param clientResponsePayload
-     * @param sessionID
-     * @param gameEventType
+    /**
+     * Notifies all clients subscribed to a specific game session about a chat message event.
+     * @param clientResponsePayload The chat message data to send to the clients.
+     * @param sessionID             The ID of the game session.
+     * @param gameEventType         The type of game event associated with the chat message.
      */
     public void notifyGameSessionClientsOfMessage(JSONArray clientResponsePayload, UUID sessionID, GameEventType gameEventType) {
 
@@ -273,6 +299,11 @@ public class NetworkManager {
         }
     }
 
+    /**
+     * Checks if a player is currently online.
+     * @param playerID The unique ID of the player to check.
+     * @return {@code true} if the player is online; {@code false} otherwise.
+     */
 
     public boolean isPlayerOnline(UUID playerID) {
         // Print out the loggedInClients map
@@ -357,6 +388,11 @@ public class NetworkManager {
      * @return
      */
     public JSONObject handleChallengedQueuePlayer(JSONObject challengeQueuedPlayer){
+
+        // Pseudocode :
+        // 1. The frontend will have a button in the player lookup which essentially allows you to challenge a player if they are online.
+        //
+        //
         return null;
     }
 
@@ -392,8 +428,12 @@ public class NetworkManager {
     // ---------------------------------------------------------------------------------------------------
 
     /**
-     * sendGameDataToClients sends the clientPayload = sessionID + gameState payload to the clients
-     * @param clientPayload
+     * Sends game data to all clients associated with a specific game session.
+     * @param clientPayload The game data to send.
+     * @param sessionID     The ID of the game session.
+     * @param gameEventType The type of game event triggering the update.
+     * @param gameType      The type of game being played.
+     * @throws IOException If an error occurs while sending data.
      */
     public void sendGameDataToClients(JSONObject clientPayload, UUID sessionID, GameEventType gameEventType, GameTypes gameType) throws IOException {
         // The appropriate gameSession listener will have been notified
@@ -401,13 +441,20 @@ public class NetworkManager {
 
     }
 
+
+    /**
+     * Sends chat data to all clients associated with a specific game session.
+     * @param clientResponsePayload The chat data to send.
+     * @param sessionID             The ID of the game session.
+     * @param type                  The type of event triggering the chat update.
+     */
     public void sendChatDataToClients(JSONArray clientResponsePayload,UUID sessionID, GameEventType type){
         notifyGameSessionClientsOfMessage(clientResponsePayload, sessionID, type);          // Notify all subscribed clients
     }
 
     /**
-     * recieveGameDataFromClient recieves the gameState json payload (includes sessionID) from client which they will directly call via network singleton.
-     * - calls GameSessionManager instance partFrontEndPayload method -> returns gameSession object,  gameState json(only gameState data)
+     * Processes game data received from a client and updates the game session's state.
+     * @param receiveClientPayload The data received from the client.
      */
     public void receiveGameDataFromClient(JSONObject receiveClientPayload){
 
@@ -429,22 +476,14 @@ public class NetworkManager {
     // ---------------------------------------------------------------------------------------------------
 
 
-    // will delegate this to nathan and ani
-
+    /**
+     * Handles a player's chat message by forwarding it to the recipient
+     * and broadcasting the chat data to clients in the game session.
+     * @param recievePlayerMessage the playerID and their message
+     * @return Always returns {@code null}.
+     * @throws RuntimeException if an error occurs during processing.
+     */
     public JSONArray recievePlayerMessage(JSONObject recievePlayerMessage) {
-
-        // PSEUDOCODE :
-            // we also need the sessionID so we know which clients to notify
-            // you would get the message
-            // we need to get the username of player 1 from the database
-            // so chatService needs a reference to player 2 as well so that it has it's username in the message
-            // so we will pass into chatService method username 1, message1, username2
-            // clients
-            //
-            // we can find their username by UUID here which we can the pass into chat messages
-            // Message
-            // sendGameDataToClients
-            // which means we will have to subscribe them to some sort of listeners lists\
 
         try {
             // parse the JASONObject
@@ -467,13 +506,14 @@ public class NetworkManager {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
-        //TODO: Need to get the reference of the user name, client should store UUID information on their following login and after creating a session.
-        // JSONArray messages = chatService.sendChatMessage(msg, "username");
-        // return messages;
+
         return null;
     }
 
+    /**
+     * getDATA_FILE simply gets the path of the data file
+     * @return
+     */
     public String getDATA_FILE(){
         return DATA_FILE;
     }
