@@ -2,42 +2,49 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.OtherProfileController">
-   <children>
-      <ScrollPane layoutX="144.0" layoutY="117.0" prefHeight="227.0" prefWidth="308.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="230.0" prefWidth="307.0">
-               <children>
-                  <TableView prefHeight="213.0" prefWidth="297.0">
+<?import javafx.scene.layout.HBox?>
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="main-pane" stylesheets="@otherProfile.css" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.OtherProfileController">
+    <children>
+        <Pane prefHeight="500.0" prefWidth="700.0" styleClass="flexDisplay">
+            <children>
+                <Label layoutX="222.0" layoutY="14.0" prefHeight="31.0" prefWidth="238.0" text="Player Profile Lookup" styleClass="titleText">
+                </Label>
+                <TextField fx:id="usernameTextField" layoutX="65.0" layoutY="81.0" prefHeight="30.0" prefWidth="515.0" promptText="Username" />
+                <Label layoutX="136.0" layoutY="57.0" prefHeight="20.0" prefWidth="403.0" styleClass="player-lookup-bar" text="Type in the Search Box and Press Search to Lookup Any Player:" />
+                <Button fx:id="searchButton" layoutX="594.0" layoutY="79.0" styleClass="lookup-button" mnemonicParsing="false" onAction="#onSearchButtonClicked" text="Search" />
+                <TableView fx:id="playerTableView" layoutX="12.0" layoutY="135.0" prefHeight="142.0" prefWidth="676.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Game" />
-                      <TableColumn prefWidth="75.0" text="Date" />
-                        <TableColumn prefWidth="75.0" text="Other Info" />
+<!--                        <TableColumn fx:id="playerColumn" prefWidth="94.40002250671387" text="Player" />-->
+                        <TableColumn fx:id="gameColumn" prefWidth="85.0" text="Game" />
+                        <TableColumn fx:id="currentEloColumn" prefWidth="94.4000244140625" text="Current Elo" />
+                        <TableColumn fx:id="totalWinsColumn" prefWidth="86.39996337890625" text="Total Wins" />
+<!--                        <TableColumn fx:id="gamesPlayedColumn" prefWidth="111.99996948242188" text="Games Played" />-->
+                        <TableColumn fx:id="statusColumn" prefWidth="104.800048828125" text="Status" />
+
                     </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
-      <Pane prefHeight="400.0" prefWidth="600.0">
-         <children>
-            <Button layoutX="534.0" layoutY="361.0" mnemonicParsing="false" text="Home" />
-            <Label layoutX="226.0" layoutY="14.0" prefHeight="31.0" prefWidth="164.0" text="Player Profile Lookup">
-               <font>
-                  <Font name="Segoe UI" size="17.0" />
-               </font></Label>
-            <TextField layoutX="149.0" layoutY="81.0" prefHeight="25.0" prefWidth="297.0" />
-            <Label layoutX="132.0" layoutY="54.0" prefHeight="17.0" prefWidth="337.0" text="Type in the Search Box and Press Enter to Lookup Any Player:" />
-            <Label layoutX="14.0" layoutY="81.0" prefHeight="17.0" prefWidth="92.0" text="Label" />
-         </children>
-      </Pane>
-   </children>
+                </TableView>
+                <Text fx:id="statusMessage" layoutX="14.0" layoutY="472.0" wrappingWidth="566.2894115447998" />
+                <TableView fx:id="playerRecentTableView" layoutX="12.0" layoutY="306.0" prefHeight="142.0" prefWidth="676.0">
+                    <columns>
+                        <TableColumn fx:id="playerRecentgameColumn" prefWidth="91.20001983642578" text="Game" />
+                        <TableColumn fx:id="playerRecentoutcomeColumn" prefWidth="95.199951171875" text="Outcome" />
+                        <TableColumn fx:id="playerRecentcurrentEloColumn" prefWidth="94.4000244140625" text="CurrentElo" />
+                        <TableColumn fx:id="playerRecenttotalWinsColumn" prefWidth="104.800048828125" text="Total Wins" />
+                        <TableColumn fx:id="playerRecentgamesPlayedColumn" prefWidth="104.800048828125" text="Games Played" />
+                    </columns>
+                </TableView>
+                <Label layoutX="14.0" layoutY="115.0" styleClass="white" text="Player overall stats" />
+                <Label layoutX="12.0" layoutY="286.0" styleClass="white" text="Player recent matches" />
+            </children>
+        </Pane>
+        <Button fx:id="homeButton" layoutX="600" layoutY="451.0"  styleClass="lookup-button" mnemonicParsing="false" onAction="#onHomeButtonClicked" text="Home" />
+    </children>
 </AnchorPane>
