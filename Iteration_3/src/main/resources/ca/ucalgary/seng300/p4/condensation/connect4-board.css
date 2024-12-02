@@ -1,27 +1,17 @@
-/* General styling */
-.root {
-    -fx-background-color: #091856; /* Set the background color to #091856 (a shade of blue) */
-    -fx-padding: 20px;
-    -fx-alignment: center;
-    -fx-font-family: Arial, sans-serif; /* Apply a gaming-inspired font */
-    -fx-text-fill: white; /* Set text color to white */
-}
-.splitpane {
-    -fx-background-color: #091856;
-}
-/* Title styling */
+/* Style for the main title */
 .title-text {
     -fx-font-size: 36px;
     -fx-font-weight: bold;
-    -fx-fill: white; /* Use -fx-fill for Text nodes */
+    -fx-text-fill: #333333; /* Dark gray for better visibility */
+    /*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 10, 0.5, 0, 3);*/
     -fx-padding: 20 0 20 0;
 }
 
 /* GridPane styling */
 #connectFourGrid {
-    -fx-background-color: #091856; /* Keep the board background color consistent */
+    -fx-background-color: #2c3e50; /* Navy-blue board background */
     -fx-padding: 15px;
-    -fx-border-color: white; /* Use white for border */
+    -fx-border-color: #34495e;
     -fx-border-width: 4px;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
@@ -64,90 +54,9 @@
     -fx-cursor: not-allowed;
 }
 
-/* Forfeit button styling */
-.forfeit-button {
-    -fx-background-color: #e74c3c; /* Bright red for the button */
-    -fx-border-color: #c0392b;
-    -fx-border-width: 2px;
-    -fx-text-fill: white; /* White text for visibility */
-    -fx-font-weight: bold;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-    -fx-cursor: hand;
-}
-
-/* Hover effect for the forfeit button */
-.forfeit-button:hover {
-    -fx-background-color: #c0392b; /* Slightly darker red on hover */
-}
-
-/* chat */
-.chat-v-box {
-    -fx-pref-width: 250;
-    -fx-background-color: #091856
-}
-.chat-scroll-pane {
-    -fx-pref-width: 250;
-    -fx-pref-height: 300;
-    -fx-fit-to-height: true;
-    -fx-fit-to-width: true;
-    -fx-border-color: white;
-}
-.chat-scroll-pane .scroll-bar {
-
-}
-#paneInsideScrollPane {
-    -fx-background-color: #191e26; /* Match the blue background */
-}
-.chat-container {
-    -fx-pref-width: 250;
-    -fx-pref-height: 25;
-}
-/* Label styling */
-.label {
-    -fx-background-color: #091856; /* Same blue background as the root */
-    -fx-text-fill: white; /* White text color for contrast */
-    -fx-padding: 5px 10px; /* Add some padding for a neat look */
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-font-size: 16px;
-}
-
-/* Chatbox container border styling */
-.chat-container {
-    -fx-pref-width: 250;
-    -fx-border-color: #bdc3c7; /* Slightly lighter grey border */
-    -fx-border-width: 2px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-    -fx-background-color: transparent; /* Transparent background for styling flexibility */
-}
-
-/*!* Chatbox styling *!*/
-/*#chatBox {*/
-/*    -fx-pref-width: 150;*/
-/*    -fx-pref-height: 25;*/
-/*    -fx-border-color: #bdc3c7; !* Same border as the container *!*/
-/*    -fx-border-width: 2px;*/
-/*    -fx-border-radius: 8px;*/
-/*    -fx-background-radius: 8px;*/
-/*    -fx-background-color: #f0f0f0; !* Light background for input area *!*/
-/*    -fx-padding: 5px;*/
-/*}*/
-
-/* Send button */
-#sendBtn {
-    -fx-pref-width: 50;
-    -fx-pref-height: 25;
-    -fx-font-size: 12;
-    -fx-background-color: #191e26;
-    -fx-text-fill: white;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-cursor: hand;
-}
-
-/* Hover effect for Send button */
-#sendBtn:hover {
-    -fx-background-color: #2980b9; /* Slightly darker blue on hover */
+/* Overall layout margins and paddings */
+.root {
+    -fx-background-color: #ecf0f1; /* Light background for the entire app */
+    -fx-padding: 20px;
+    -fx-alignment: center;
 }
