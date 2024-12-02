@@ -137,8 +137,7 @@ public class ConnectFourController {
             }
             connectFourJSON.put("New Position", new Vector2(row, col));
             connectFourJSON.put("gameType", GameTypes.CONNECT4);
-            JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(connectFourJSON);
-            // NetworkManager.getNetworkInstance().receiveGameDataFromClient();
+            NetworkManager.getNetworkInstance().receiveGameDataFromClient(connectFourJSON);
         }
     }
 
@@ -367,7 +366,7 @@ public class ConnectFourController {
     private Button forfeitBtn;
 
     @FXML
-    public void onForfeitBtnClick() {
+    public void onForfeitBtnClick() throws IOException {
         // Create a confirmation alert for the forfeit action
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
         alert.setTitle("Forfeit");
@@ -385,9 +384,10 @@ public class ConnectFourController {
     }
 
     @FXML
-    public void onForfeitYesClick() {
+    public void onForfeitYesClick() throws IOException {
         System.out.println("Player chose to forfeit the game.");
         // Additional logic to handle forfeiting (e.g., notify opponent, update game state)
+        handleForfeit();
     }
 
     @FXML

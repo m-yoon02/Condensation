@@ -190,10 +190,7 @@ public class TicTacToeController {
             }
             ticTacToeJSON.put("New Position", new Vector2(row, col));
             ticTacToeJSON.put("gameType", GameTypes.TICTACTOE);
-            numberOfPiecesOnBoard += 1;
-            System.out.println(ticTacToeJSON);
-            JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(ticTacToeJSON);
-            // NetworkManager.getNetworkInstance().receiveGameDataFromClient();
+            NetworkManager.getNetworkInstance().receiveGameDataFromClient(ticTacToeJSON);
         }
     }
 

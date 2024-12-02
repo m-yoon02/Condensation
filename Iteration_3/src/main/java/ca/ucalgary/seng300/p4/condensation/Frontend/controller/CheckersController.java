@@ -1,19 +1,17 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
@@ -27,8 +25,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 public class CheckersController {
@@ -40,7 +37,7 @@ public class CheckersController {
 
     // Checkers instance
     @FXML
-    GridPane chessboardGrid;
+    static GridPane chessboardGrid;
 
     static final int BOARD_DIM = 8;
     static String white = "-fx-background-color: #ffffff;" +
@@ -60,9 +57,14 @@ public class CheckersController {
     public static UUID sessionID;
     public static UUID newTurn;
 
+    public List<List<Integer>> coordinatesOfTwoClicks = new ArrayList<>();
 
-    public static void receiveCheckers(JSONObject payload) {
-    }
+    public static List<List<Integer>> locationOfBlackPieces = new ArrayList<>();
+
+    public static List<List<Integer>> locationOfRedPieces = new ArrayList<>();
+
+    static Image BLACK_IMAGE =  new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/black2.png")).toExternalForm());
+    static Image RED_IMAGE = new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/red.png")).toExternalForm());
 
     @FXML
     public void initialize() throws IOException, ParseException {
@@ -98,43 +100,161 @@ public class CheckersController {
                 }
 
                 if (r <= 2) {   // first 3 rows
-                    Image image = new Image((this.getClass().getResource("/ca/ucalgary/seng300/p4/condensation/black2.png")).toExternalForm());
                     if (r % 2 == 0) { // 0 and 2
                         if (c % 2 == 0) {
-                            addPieceToSquare(image, square);
+                            addPieceToSquare(BLACK_IMAGE, square);
                             blackPieces[blackCount] = square;
                             blackCount++;
                         }
                     } else { // 1
                         if (c % 2 != 0) {
-                            addPieceToSquare(image, square);
+                            addPieceToSquare(BLACK_IMAGE, square);
                             blackPieces[blackCount] = square;
                             blackCount++;
                         }
                     }
+                    List<Integer> coordinateForBlacks = new ArrayList<>();
+                    coordinateForBlacks.add(r);
+                    coordinateForBlacks.add(c);
+                    locationOfBlackPieces.add(coordinateForBlacks);
                 }
                 if (r >= 5) {   // last 3 rows
-                    Image image = new Image((this.getClass().getResource("/ca/ucalgary/seng300/p4/condensation/red.png")).toExternalForm());
                     if (r % 2 == 0) { // 6
                         if (c % 2 == 0) {
-                            addPieceToSquare(image, square);
+                            addPieceToSquare(RED_IMAGE, square);
                             redPieces[redCount] = square;
                             redCount++;
                         }
                     } else { // 5 and 7
                         if (c % 2 != 0) {
-                            addPieceToSquare(image, square);
+                            addPieceToSquare(RED_IMAGE, square);
                             redPieces[redCount] = square;
                             redCount++;
                         }
                     }
+                    List<Integer> coordinateForReds = new ArrayList<>();
+                    coordinateForReds.add(r);
+                    coordinateForReds.add(c);
+                    locationOfRedPieces.add(coordinateForReds);
                 }
+
+                final int finalRow = r;
+                final int finalCol = c;
+                square.setOnMouseClicked(event -> {
+                    try {
+                        List<Integer> coordinate = new ArrayList<>();
+                        coordinate.add(finalRow);
+                        coordinate.add(finalCol);
+                        coordinatesOfTwoClicks.add(coordinate);
+                        returnToBackendCheckers(event);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
 
                 chessboard[c][r] = square;  // add square to chessboard array
                 chessboardGrid.add(square, c, r, 1, 1); // add square to grid pane
             }
         }
     }
+
+    public static void receiveCheckers(JSONObject payload) {
+        String gameResult = (String) payload.get("UPDATE_TYPE");
+
+        if (Objects.equals(gameResult, "TURN_END")){
+            handleTurnEnd(payload);
+        }
+        else{
+            handleGameEnd(payload);
+        }
+    }
+
+    private static void handleTurnEnd(JSONObject payload){
+        sessionID = (UUID) payload.get("SessionID");
+        newTurn = (UUID) payload.get("PlayerTurn");
+        updateBoardAndPieces((JSONArray) payload.get("Changes"));
+    }
+
+    private static void updateBoardAndPieces(JSONArray allUpdatedPieces){
+        locationOfBlackPieces = new ArrayList<>();
+        locationOfRedPieces = new ArrayList<>();
+        for (int row = 0; row < allUpdatedPieces.size(); row++) {
+            JSONArray rowArray = (JSONArray) allUpdatedPieces.get(row);
+            for (int col = 0; col < rowArray.size(); col++) {
+                String state = (String) rowArray.get(col);
+                Button newButton = chessboard[row][col];
+                if (state.equals("EMPTY")){
+                    if (row % 2 == 0) {   // even rows
+                        if (col % 2 == 0) {   // even columns
+                            newButton.setStyle(black);
+                        } else {    // odd columns
+                            newButton.setStyle(white);
+                        }
+                    } else {    // odd rows
+                        if (col % 2 == 0) {   // even columns
+                            newButton.setStyle(white);
+                        } else {    // odd columns
+                            newButton.setStyle(black);
+                        }
+                    }
+                }
+                else if(state.equals("RED")){
+                    addPieceToSquare(RED_IMAGE, newButton);
+                    List<Integer> newRedCoordinates = new ArrayList<>();
+                    newRedCoordinates.add(row);
+                    newRedCoordinates.add(col);
+                    locationOfRedPieces.add(newRedCoordinates);
+                }
+                else{
+                    addPieceToSquare(BLACK_IMAGE, newButton);
+                    List<Integer> newBlackCoordinates = new ArrayList<>();
+                    newBlackCoordinates.add(row);
+                    newBlackCoordinates.add(col);
+                    locationOfBlackPieces.add(newBlackCoordinates);
+                }
+                chessboardGrid.add(newButton, col, row, 1, 1);
+            }
+        }
+    }
+
+    private static void handleGameEnd(JSONObject payload){
+
+    }
+
+    @FXML
+    public void returnToBackendCheckers(MouseEvent event) throws IOException, ParseException {
+        List<Integer> firstMove = coordinatesOfTwoClicks.getFirst();
+        List<Integer> secondMove = coordinatesOfTwoClicks.getLast();
+        int firstMoveIndex = -1;
+        int secondMoveIndex = -1;
+
+        if (newTurn.equals(playerOne)){
+            firstMoveIndex = locationOfRedPieces.indexOf(firstMove);
+            secondMoveIndex = locationOfBlackPieces.indexOf(secondMove);
+        }
+        else{
+            firstMoveIndex = locationOfBlackPieces.indexOf(firstMove);
+            secondMoveIndex = locationOfRedPieces.indexOf(secondMove);
+        }
+        if (coordinatesOfTwoClicks.size() == 2 && (firstMoveIndex >= 0 && secondMoveIndex >= 0)){
+            JSONObject checkersJSON = new JSONObject();
+            checkersJSON.put("SessionID", sessionID);
+            if (newTurn.equals(playerOne)){
+                checkersJSON.put("playerID", playerOne.toString());
+            }
+            else{
+                checkersJSON.put("playerID", playerTwo.toString());
+            }
+            checkersJSON.put("OldPosition", new Vector2(firstMove.getFirst(), firstMove.getLast()));
+            checkersJSON.put("NewPosition", new Vector2(secondMove.getFirst(), secondMove.getLast()));
+            checkersJSON.put("gameType", GameTypes.CHECKERS);
+            NetworkManager.getNetworkInstance().receiveGameDataFromClient(checkersJSON);
+        }
+        coordinatesOfTwoClicks.removeFirst();
+        coordinatesOfTwoClicks.removeFirst();
+
+    }
+
 
     private static void addPieceToSquare(Image image, Button square) {
         ImageView piece = new ImageView();
