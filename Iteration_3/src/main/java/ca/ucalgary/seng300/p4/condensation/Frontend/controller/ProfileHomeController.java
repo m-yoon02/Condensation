@@ -197,8 +197,16 @@ public class ProfileHomeController {
     }
 
     @FXML
-    void onlogOutButtonClicked(ActionEvent event) {
+    void onlogOutButtonClicked(ActionEvent event) throws IOException {
         System.out.println("Logging out...");
+        // Load the Welcome Screen
+        Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("WelcomeScreen.fxml"));
+        Scene homeScene = new Scene(homeParent);
+
+        // Get the current stage and set the new scene
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(homeScene);
+        window.show();
     }
 
     private void navigateToScreen(ActionEvent event, String fxml) throws IOException {
