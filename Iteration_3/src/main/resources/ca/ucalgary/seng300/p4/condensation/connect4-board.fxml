@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -22,36 +20,27 @@
     <top>
         <Text styleClass="title-text" text="Connect 4" BorderPane.alignment="CENTER" />
     </top>
+    <!-- Game Area -->
     <center>
-        <SplitPane dividerPositions="0.32685512367491165" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-            <items>
-                <VBox alignment="CENTER" styleClass="chat-v-box" HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label fx:id="playerTurnText" text="Player 1's Turn" VBox.vgrow="ALWAYS">
-                            <VBox.margin>
-                                <Insets bottom="10.0" />
-                            </VBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                        </Label>
-                        <ScrollPane fx:id="chatScrollPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="247.0" styleClass="chat-scroll-pane" VBox.vgrow="ALWAYS">
-                            <content>
-                                <VBox fx:id="paneInsideScrollPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity">
-                                    <children>
-                                    </children></VBox>
-                            </content>
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                        </ScrollPane>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="chat-container">
-                            <children>
-                                <TextArea fx:id="chatBox" layoutX="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="206.0" promptText="Enter a message..." wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-3.0" />
-                                <Button fx:id="sendBtn" layoutX="203.0" mnemonicParsing="false" onAction="#onSendBtnClick" text="Send" />
-                            </children>
-                        </AnchorPane>
-                    </children>
+        <AnchorPane styleClass="splitpane" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
+                <!-- Chat Section -->
+                <VBox alignment="TOP_CENTER" spacing="10" styleClass="chat-v-box">
+                    <Label fx:id="playerTurnText" prefHeight="66.0" prefWidth="130.0" styleClass="player-turn-label" text="Player 1's Turn">
+                  <font>
+                     <Font size="22.0" />
+                  </font></Label>
+                    <ScrollPane fx:id="chatScrollPane" styleClass="chat-scroll-pane">
+                        <content>
+                            <VBox fx:id="paneInsideScrollPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="386.0" prefWidth="246.0" styleClass="chat-pane-inside" />
+                        </content>
+                    </ScrollPane>
+                    <HBox alignment="CENTER" prefHeight="20.0" spacing="5">
+                  <children>
+                           <TextArea fx:id="chatBox" maxHeight="-Infinity" prefHeight="37.0" prefWidth="201.0" promptText="Enter a message..." wrapText="true" />
+                           <Button fx:id="sendBtn" onAction="#onSendBtnClick" prefHeight="51.0" prefWidth="120.0" text="Send" />
+                  </children>
+                    </HBox>
                 </VBox>
                 <GridPane fx:id="connectFourGrid" alignment="CENTER" hgap="5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" vgap="5">
                     <!-- Rows -->
@@ -144,8 +133,8 @@
                         <RowConstraints />
                     </rowConstraints>
                 </GridPane>
-            </items>
-        </SplitPane>
+            </HBox>
+        </AnchorPane>
     </center>
 
     <!-- Forfeit Button -->
