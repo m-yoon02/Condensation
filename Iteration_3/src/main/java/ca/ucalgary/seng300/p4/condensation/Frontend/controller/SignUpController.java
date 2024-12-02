@@ -153,6 +153,7 @@ public class SignUpController {
                 // Set the window and scene to the login screen
                 window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
+                window.setResizable(false);
                 window.setScene(scene);
                 window.show();
 
@@ -213,6 +214,34 @@ public class SignUpController {
             // print the call stack
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Method: returnBack
+     * @param event Triggered by the mouseclick
+     * @throws IOException Exception for when the FXML file does not exist
+     *
+     * Returns the user back to the welcome screen
+     */
+    @FXML
+    void returnBack(MouseEvent event) throws IOException {
+
+        try {
+            // Load the WelcomeScreen.fxml file to change scene
+            loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/WelcomeScreen.fxml"));
+            root = loader.load();
+
+            // Set the window and scene to the login screen
+            window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            window.setScene(scene);
+            window.setResizable(false);
+            window.show();
+        } catch (IOException e) {
+            // Catch exception and print call stack
+            e.printStackTrace();
+        }
+
     }
 
 
