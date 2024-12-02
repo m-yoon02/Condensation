@@ -34,10 +34,7 @@ public class ConnectFourLeaderboardTest {
         );
 
         //should be able to assign playerList to leaderboard.playerList
-    }
-
-    @After
-    public void tearDown() throws Exception {
+        leaderboard.setPlayerList(mockPlayerList);
     }
 
     /**

@@ -129,7 +129,7 @@ public class ConnectFourLeaderboard {
      */
 
     /**
-     * Getter methods for all private properties in ConnectFourLeaderboard
+     * Getter methods for all private properties in ConnectFourLeaderboard used in testing
      * @return the private property
      */
     public TableView<ConnectFourHomeMenuController.Player> getLeaderboardTable() {
@@ -166,5 +166,13 @@ public class ConnectFourLeaderboard {
 
     public ObservableList<ConnectFourHomeMenuController.Player> getPlayerList() {
         return playerList;
+    }
+
+    /**
+     * a setter for playerList used in testing
+     * @param playerList
+     */
+    public void setPlayerList(ObservableList<ConnectFourHomeMenuController.Player> playerList) {
+        this.playerList = playerList;
     }
 }
