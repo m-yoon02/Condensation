@@ -127,4 +127,44 @@ public class ConnectFourLeaderboard {
         stage.show();
     }
      */
+
+    /**
+     * Getter methods for all private properties in ConnectFourLeaderboard
+     * @return the private property
+     */
+    public TableView<ConnectFourHomeMenuController.Player> getLeaderboardTable() {
+        return leaderboardTable;
+    }
+
+    public TableColumn<ConnectFourHomeMenuController.Player, Integer> getRankColumn() {
+        return rankColumn;
+    }
+
+    public TableColumn<ConnectFourHomeMenuController.Player, String> getNameColumn() {
+        return nameColumn;
+    }
+
+    public TableColumn<ConnectFourHomeMenuController.Player, Integer> getGamesPlayedColumn() {
+        return gamesPlayedColumn;
+    }
+
+    public TableColumn<ConnectFourHomeMenuController.Player, Integer> getWinsColumn() {
+        return winsColumn;
+    }
+
+    public TableColumn<ConnectFourHomeMenuController.Player, Integer> getLossesColumn() {
+        return lossesColumn;
+    }
+
+    public TableColumn<ConnectFourHomeMenuController.Player, Integer> getDrawsColumn() {
+        return drawsColumn;
+    }
+
+    public TableColumn<ConnectFourHomeMenuController.Player, Double> getWinPercentageColumn() {
+        return winPercentageColumn;
+    }
+
+    public ObservableList<ConnectFourHomeMenuController.Player> getPlayerList() {
+        return playerList;
+    }
 }

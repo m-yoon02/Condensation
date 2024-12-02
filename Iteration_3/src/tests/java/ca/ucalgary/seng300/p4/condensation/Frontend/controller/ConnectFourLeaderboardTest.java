@@ -50,21 +50,21 @@ public class ConnectFourLeaderboardTest {
         leaderboard.initialize();
 
         //left these errors in for now, but this is the basic idea of test #1
-//        assertNotNull(leaderboard.rankColumn);
-//        assertNotNull(leaderboard.nameColumn);
-//        assertNotNull(leaderboard.gamesPlayedColumn);
-//        assertNotNull(leaderboard.winsColumn);
-//        assertNotNull(leaderboard.lossesColumn);
-//        assertNotNull(leaderboard.drawsColumn);
-//        assertNotNull(leaderboard.winPercentageColumn);
+        assertNotNull(leaderboard.getRankColumn());
+        assertNotNull(leaderboard.getNameColumn());
+        assertNotNull(leaderboard.getGamesPlayedColumn());
+        assertNotNull(leaderboard.getWinsColumn());
+        assertNotNull(leaderboard.getLossesColumn());
+        assertNotNull(leaderboard.getDrawsColumn());
+        assertNotNull(leaderboard.getWinPercentageColumn());
 
         //test the column alignment, these all should be center aligned
-//        assertEquals("-fx-alignment: CENTER;", leaderboard.rankColumn.getStyle());
-//        assertEquals("-fx-alignment: CENTER;", leaderboard.gamesPlayedColumn.getStyle());
-//        assertEquals("-fx-alignment: CENTER;", leaderboard.winsColumn.getStyle());
-//        assertEquals("-fx-alignment: CENTER;", leaderboard.lossesColumn.getStyle());
-//        assertEquals("-fx-alignment: CENTER;", leaderboard.drawsColumn.getStyle());
-//        assertEquals("-fx-alignment: CENTER;", leaderboard.winPercentageColumn.getStyle());
+        assertEquals("-fx-alignment: CENTER;", leaderboard.getRankColumn().getStyle());
+        assertEquals("-fx-alignment: CENTER;", leaderboard.getGamesPlayedColumn().getStyle());
+        assertEquals("-fx-alignment: CENTER;", leaderboard.getWinsColumn().getStyle());
+        assertEquals("-fx-alignment: CENTER;", leaderboard.getLossesColumn().getStyle());
+        assertEquals("-fx-alignment: CENTER;", leaderboard.getDrawsColumn().getStyle());
+        assertEquals("-fx-alignment: CENTER;", leaderboard.getWinPercentageColumn().getStyle());
     }
 
     /**
@@ -75,7 +75,7 @@ public class ConnectFourLeaderboardTest {
         leaderboard.initialize();
 
         //get the sorted player list from leaderboard
-        ObservableList<ConnectFourHomeMenuController.Player> sortedList = leaderboard.leaderboardTable.getItems();
+        ObservableList<ConnectFourHomeMenuController.Player> sortedList = leaderboard.getLeaderboardTable().getItems();
 
         //test that players are sorted correctly by their win percentage in descending order
         double prevWinPercent = 100;
@@ -97,10 +97,10 @@ public class ConnectFourLeaderboardTest {
         leaderboard.initialize();
 
         //get the sorted player list from leaderboard
-        ObservableList<ConnectFourHomeMenuController.Player> sortedList = leaderboard.leaderboardTable.getItems();
+        ObservableList<ConnectFourHomeMenuController.Player> sortedList = leaderboard.getLeaderboardTable().getItems();
 
         for (int i = 0; i < sortedList.size(); i++) {
-            assertEquals(Integer.valueOf(i + 1), leaderboard.rankColumn.getCellData(sortedList.get(i)));
+            assertEquals(Integer.valueOf(i + 1), leaderboard.getRankColumn().getCellData(sortedList.get(i)));
         }
     }
 }
