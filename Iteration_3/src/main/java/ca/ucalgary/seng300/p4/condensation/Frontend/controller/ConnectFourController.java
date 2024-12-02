@@ -1,14 +1,16 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
-import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
+import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.input.MouseEvent;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,6 +19,9 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class ConnectFourController {
 
@@ -27,18 +32,31 @@ public class ConnectFourController {
     private Text forfeitButton;
 
     @FXML
-    private Text playerTurnText;
+    private Label playerTurnText;
 
-    private Button[][] buttons = new Button[6][7];
+    private final Button[][] buttons = new Button[6][7];
 
     public static final int NUMBER_OF_ROWS = 6;
     public static final int NUMBER_OF_COLS = 7;
 
     private String sessionID;
     private String playerID;
+    private String playerName;
+
+    // Singleton instance
+    private static ConnectFourController instance;
+
+    public ConnectFourController() {
+        // Store the singleton instance
+        instance = this;
+    }
+
+    public static ConnectFourController getInstance() {
+        return instance;
+    }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws ParseException {
         for (int row = 0; row < NUMBER_OF_ROWS; row++) {
             for (int col = 0; col < NUMBER_OF_COLS; col++) {
                 String buttonId = "btn" + row + col;
@@ -59,7 +77,7 @@ public class ConnectFourController {
             }
         }
 
-//        // Simulated backend update JSON
+//       //Simulated backend update JSON
 //        String jsonUpdate = "{ " +
 //                "\"UpdateType\": \"TURN_END\", " +
 //                "\"SessionID\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\", " +
@@ -74,19 +92,30 @@ public class ConnectFourController {
 //                "]" +
 //                "}";
 //
-//        receiveConnectFour(jsonUpdate);
+//        JSONParser parser = new JSONParser();
+//        JSONObject json = (JSONObject) parser.parse(jsonUpdate);
+//
+//        receiveConnectFour(json);
     }
 
-    public void receiveConnectFour(JSONObject update) {
+    public static void receiveConnectFour(JSONObject update) {
+        // Access the singleton instance
+        ConnectFourController controller = ConnectFourController.getInstance();
+
+        if (controller == null) {
+            System.err.println("Controller instance is not initialized!");
+            return;
+        }
+
         try {
             String updateType = (String) update.get("UpdateType");
 
             switch (updateType) {
                 case "GAME_END":
-                    handleGameEnd(update);
+                    controller.handleGameEnd(update);
                     break;
                 case "TURN_END":
-                    handleTurnEnd(update);
+                    controller.handleTurnEnd(update);
                     break;
                 default:
                     System.out.println("Unknown UpdateType: " + updateType);
@@ -101,6 +130,7 @@ public class ConnectFourController {
         if ("WIN".equals(gameState)) {
             String playerWon = (String) update.get("PlayerWon");
             String playerTurnName = getUsernameFromUUID(playerWon);
+            playerName = playerTurnName;
             playerTurnText.setText(playerTurnName + " won the game!");
         } else if ("TIE".equals(gameState)) {
             playerTurnText.setText("The game ended in a tie!");
@@ -120,7 +150,7 @@ public class ConnectFourController {
 
     private String getUsernameFromUUID(String playerUUID) {
         try {
-            File file = new File("src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+            File file = new File("Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
             JSONParser parser = new JSONParser();
             JSONArray leaderboard = (JSONArray) parser.parse(new FileReader(file));
 
@@ -152,8 +182,8 @@ public class ConnectFourController {
                 button.setStyle("-fx-background-color: white;");
                 button.setDisable(false);
                 break;
-            case "RED":
-                button.setStyle("-fx-background-color: red;");
+            case "ORANGE":
+                button.setStyle("-fx-background-color: orange;");
                 button.setDisable(true);
                 break;
             case "BLUE":
@@ -173,21 +203,16 @@ public class ConnectFourController {
             return;
         }
 
-        // Create JSON for the move
         JSONObject move = new JSONObject();
         move.put("SessionID", sessionID);
         move.put("PlayerID", playerID);
 
-        // Add the new position as Vector2
         Vector2 newPosition = new Vector2(row, col);
         move.put("NewPosition", newPosition);
 
         System.out.println("Sending move to backend: " + move.toJSONString());
 
-        // Send the move to the backend
         JSONObject backendResponse = NetworkManager.getNetworkInstance().handleQueuePlayer(move);
-
-        // Process the backend response
         receiveConnectFour(backendResponse);
     }
 
@@ -198,4 +223,120 @@ public class ConnectFourController {
             }
         }
     }
+
+//chat
+    @FXML
+    private TextArea chatBox;
+
+    @FXML
+    private Button sendBtn;
+
+    @FXML
+    private ScrollPane chatScrollPane;
+
+    @FXML
+    private VBox paneInsideScrollPane;
+
+    private final String username1 = "Me";
+    private final String username2 = "RoboAI";
+
+    private final String messageHBoxStyle = "    -fx-pref-width: 50;\n    -fx-max-width: 200;";
+    private final String senderNameStyle = "-fx-font-size: 13;\n    -fx-font-family: 'Oswald', sans-serif;\n    -fx-text-fill: White;\n    -fx-font-weight: bold;";
+    private final String timeSentStyle = "-fx-font-size: 8;\n    -fx-font-family: 'Oswald', sans-serif;\n    -fx-text-fill: White;";
+    private final String nameTimeHBoxStyle = "-fx-alignment: CENTER_LEFT";
+    private final String messageStyle = "-fx-font-size: 12;\n    -fx-font-family: 'Oswald', sans-serif;\n    -fx-text-fill: White;";
+
+    @FXML
+    public void onSendBtnClick() {
+        String messageStr = chatBox.getText();
+        if (!messageStr.isEmpty()) {
+            ChatService chatService = new ChatService();
+            JSONArray chatMessages = chatService.sendChatMessage(username1, messageStr, username2);
+
+            String date1;
+            String date2 = "";
+            String messageStr2 = "";
+            boolean responded = false;
+            if (chatMessages != null) {
+                LocalDateTime localDateTime1 = LocalDateTime.parse(((JSONObject) chatMessages.get(0)).get("date").toString());
+                date1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDateTime1);
+
+                LocalDateTime localDateTime2 = LocalDateTime.parse(((JSONObject) chatMessages.get(1)).get("date").toString());
+                date2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDateTime2);
+
+                messageStr2 = ((JSONObject) chatMessages.get(1)).get("message").toString();
+                responded = true;
+            } else {
+                LocalDateTime localDateTime1 = LocalDateTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
+                date1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDateTime1);
+            }
+
+            addMessageToChat(username1, messageStr, date1);
+
+            if (responded) {
+                addMessageToChat(username2, messageStr2, date2);
+            }
+            chatBox.setText("");
+            chatScrollPane.setVvalue(1.0);
+        }
+    }
+
+    private void addMessageToChat(String sender, String messageContent, String timestamp) {
+        HBox messageHBox = new HBox();
+        messageHBox.setStyle(messageHBoxStyle);
+        messageHBox.setPadding(new Insets(5, 10, 5, 5));
+
+        Label senderName = new Label(sender);
+        senderName.setStyle(senderNameStyle);
+        senderName.setPadding(new Insets(0, 0, -3, 0));
+
+        Label timeSent = new Label(timestamp);
+        timeSent.setStyle(timeSentStyle);
+        timeSent.setPadding(new Insets(0, 0, 0, 3));
+
+        HBox nameTimeHBox = new HBox(senderName, timeSent);
+        nameTimeHBox.setStyle(nameTimeHBoxStyle);
+
+        Label message = new Label(messageContent);
+        message.setStyle(messageStyle);
+        message.setWrapText(true);
+
+        VBox vBox = new VBox(nameTimeHBox, message);
+        messageHBox.getChildren().add(vBox);
+
+        paneInsideScrollPane.getChildren().add(messageHBox);
+    }
+
+    @FXML
+    private Button forfeitBtn;
+
+    @FXML
+    public void onForfeitBtnClick() {
+        // Create a confirmation alert for the forfeit action
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
+        alert.setTitle("Forfeit");
+        alert.setHeaderText("Forfeit Game");
+
+        // Display the alert and capture the user's response
+        Optional<ButtonType> choice = alert.showAndWait();
+
+        // Process the user's choice
+        if (choice.isPresent() && choice.get() == ButtonType.OK) {
+            onForfeitYesClick();
+        } else {
+            onForfeitNoClick();
+        }
+    }
+
+    @FXML
+    public void onForfeitYesClick() {
+        System.out.println("Player chose to forfeit the game.");
+        // Additional logic to handle forfeiting (e.g., notify opponent, update game state)
+    }
+
+    @FXML
+    public void onForfeitNoClick() {
+        System.out.println("Player canceled the forfeit action.");
+    }
+
 }

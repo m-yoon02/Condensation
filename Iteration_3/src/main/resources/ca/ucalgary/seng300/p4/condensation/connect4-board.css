@@ -60,3 +60,34 @@
     -fx-padding: 20px;
     -fx-alignment: center;
 }
+
+/* chat */
+.chat-v-box {
+    -fx-pref-width: 250;
+}
+.chat-scroll-pane {
+    -fx-pref-width: 250;
+    -fx-pref-height: 300;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+    -fx-border-color: white;
+}
+.chat-scroll-pane .scroll-bar {
+
+}
+#paneInsideScrollPane {
+    -fx-background-color: #191e26;
+}
+.chat-container {
+    -fx-pref-width: 250;
+    -fx-pref-height: 25;
+}
+#chatBox {
+    -fx-pref-width: 150;
+    -fx-pref-height: 25;
+}
+#sendBtn {
+    -fx-pref-width: 50;
+    -fx-pref-height: 25;
+    -fx-font-size: 12;
+}
