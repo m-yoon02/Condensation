@@ -3,13 +3,11 @@ package java.ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 import ca.ucalgary.seng300.p4.condensation.Frontend.controller.ConnectFourHomeMenuController;
 import ca.ucalgary.seng300.p4.condensation.Frontend.controller.ConnectFourLeaderboard;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
 
 import static org.junit.Assert.*;
 
