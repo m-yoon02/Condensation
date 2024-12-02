@@ -96,21 +96,24 @@ public class AftermathController {
         }
 
         // https://stackoverflow.com/questions/153724/how-to-round-a-number-to-n-decimal-places-in-java
-        overallWLR.setText(STR."(\{totalWins}/\{totalGames}) \{(double)Math.round(ratio * 1000) / 1000}%");
+        overallWLR.setText(String.format("%d\\%d (%.2f)%s",totalWins, totalGames, (double)Math.round(ratio * 1000) / 1000, "%"));
 
         if (typeOfMatch == TICTACTOE){
             double specRatio = (double) totalWinsForTTT / totalGamesPlayedForTTT;
-            gameWLR.setText(STR."(\{totalWinsForTTT}/\{totalGamesPlayedForTTT}) \{(double)Math.round(specRatio * 1000) / 1000}%");
+            double roundedRatio = (double) Math.round(specRatio * 1000) / 1000;
+            gameWLR.setText(String.format("%d\\%d (%.2f)%s",totalWinsForTTT, totalGamesPlayedForTTT, roundedRatio, "%"));
             eloRanking.setText((String) playerInfoForGame.get("tictactoeElo"));
         }
         else if (typeOfMatch == CHECKERS){
             double specRatio = (double) totalWinsForCheckers / totalGamesPlayedForForCheckers;
-            gameWLR.setText(STR."(\{totalWinsForCheckers}/\{totalGamesPlayedForForCheckers}) \{(double)Math.round(specRatio * 1000) / 1000}%");
+            double roundedRatio = (double) Math.round(specRatio * 1000) / 1000;
+            gameWLR.setText(String.format("%d\\%d (%.2f)%s",totalWinsForCheckers, totalGamesPlayedForForCheckers, roundedRatio, "%"));
             eloRanking.setText((String) playerInfoForGame.get("checkersElo"));
         }
         else{
             double specRatio = (double) totalWins / totalGamesPlayedForConnect4;
-            gameWLR.setText(STR."(\{totalWinsForConnect4}/\{totalGamesPlayedForConnect4}) \{(double)Math.round(specRatio * 1000) / 1000}%");
+            double roundedRatio = (double) Math.round(specRatio * 1000) / 1000;
+            gameWLR.setText(String.format("%d\\%d (%.2f)%s",totalWinsForConnect4, totalGamesPlayedForConnect4, roundedRatio, "%"));
             eloRanking.setText((String) playerInfoForGame.get("connect4Elo"));
         }
 
