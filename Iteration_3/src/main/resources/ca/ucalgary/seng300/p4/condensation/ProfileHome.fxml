@@ -34,7 +34,7 @@
         <Button fx:id="leaderboardButton" layoutX="27.0" layoutY="135.0" onAction="#onLeaderboardButtonClicked" prefHeight="39.0" prefWidth="114.0" text="Leaderboard" />
         <Button fx:id="gamesButton" layoutX="27.0" layoutY="206.0" onAction="#onGamesButtonClicked" prefHeight="39.0" prefWidth="114.0" text="Games" />
         <Button fx:id="playerProfilesButton" layoutX="27.0" layoutY="279.0" onAction="#onPlayerProfilesButtonClicked" prefHeight="39.0" prefWidth="114.0" text="Player Lookup" />
-        <Button fx:id="logoutButton" layoutX="27.0" layoutY="358.0" onAction="#onlogOutButtonClicked" prefHeight="39.0" prefWidth="114.0" text="Logout" />
+        <Button fx:id="logoutButton" layoutX="27.0" layoutY="358.0" onMouseClicked="#onlogOutButtonClicked" prefHeight="39.0" prefWidth="114.0" text="Logout" />
       <Label fx:id="usernameField1" layoutX="293.0" layoutY="34.0" text="Profile Home">
          <font>
             <Font size="26.0" />
