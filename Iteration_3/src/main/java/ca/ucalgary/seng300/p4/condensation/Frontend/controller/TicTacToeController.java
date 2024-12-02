@@ -10,7 +10,9 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
@@ -25,6 +27,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TicTacToeController {
@@ -56,6 +59,9 @@ public class TicTacToeController {
     private static Stage stage;
     @FXML
     public static Label playerStatus;
+
+    @FXML
+    public static Button forfeitBtn;
 
     @FXML
     public void initialize() throws IOException, ParseException {
@@ -184,10 +190,7 @@ public class TicTacToeController {
             }
             ticTacToeJSON.put("New Position", new Vector2(row, col));
             ticTacToeJSON.put("gameType", GameTypes.TICTACTOE);
-            numberOfPiecesOnBoard += 1;
-            System.out.println(ticTacToeJSON);
-            JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(ticTacToeJSON);
-            // NetworkManager.getNetworkInstance().receiveGameDataFromClient();
+            NetworkManager.getNetworkInstance().receiveGameDataFromClient(ticTacToeJSON);
         }
     }
 
@@ -208,6 +211,33 @@ public class TicTacToeController {
         }
         return null;
     }
+
+    @FXML
+    public void onForfeitBtnClick() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
+        alert.setTitle("Forfeit");
+
+        Optional<ButtonType> choice = alert.showAndWait();
+        if (choice.isPresent() && choice.get() == ButtonType.OK) {
+            onForfeitYesClick();
+        } else if (choice.isPresent() && choice.get() == ButtonType.CANCEL) {
+            System.out.println("No");
+        }
+    }
+    @FXML
+    public void onForfeitYesClick() {
+        System.out.println("Forfeit confirmed. Closing the application window...");
+
+        // Close the current window
+        Stage stage = (Stage) forfeitBtn.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void onForfeitNoClick() {
+        System.out.println("Forfeit canceled. The window remains open.");
+    }
+
 }
 
 

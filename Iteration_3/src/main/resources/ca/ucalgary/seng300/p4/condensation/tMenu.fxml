@@ -28,7 +28,7 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </Label>
-                        <Button fx:id="playButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#initialize" stylesheets="@tMenu.css" text="Play" VBox.vgrow="ALWAYS">
+                        <Button fx:id="playButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"  stylesheets="@tMenu.css" text="Play" VBox.vgrow="ALWAYS">
                             <VBox.margin>
                                 <Insets bottom="10.0" top="20.0" />
                             </VBox.margin>

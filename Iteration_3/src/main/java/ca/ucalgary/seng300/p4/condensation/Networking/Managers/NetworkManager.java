@@ -117,7 +117,7 @@ public class NetworkManager {
 
         // Check if the user is already logged in
         if (loggedInClients.containsKey(playerUUID)) {
-            throw new IllegalArgumentException("User already logged in");
+            this.logoutHandler(playerUUID);
         }
 
         // Create and store the Client object

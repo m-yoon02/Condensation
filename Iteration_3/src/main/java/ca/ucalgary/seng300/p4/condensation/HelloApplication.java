@@ -1,5 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.controller.CheckersController;
+import ca.ucalgary.seng300.p4.condensation.Frontend.controller.CheckersHomeMenuController;
+import ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileGameController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,8 +15,11 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("WelcomeScreen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 781, 479);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
+//        fxmlLoader.setController(null);
+//        fxmlLoader.setController(new CheckersHomeMenuController(stage));
+        fxmlLoader.setController(new CheckersController(stage));
+        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
 
         Image appIcon = new Image(getClass().getResourceAsStream("logo.png"));
         stage.getIcons().add(appIcon);
