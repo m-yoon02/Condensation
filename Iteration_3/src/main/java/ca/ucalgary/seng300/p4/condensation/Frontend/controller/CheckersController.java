@@ -1,11 +1,14 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -65,6 +69,9 @@ public class CheckersController {
 
     static Image BLACK_IMAGE =  new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/black2.png")).toExternalForm());
     static Image RED_IMAGE = new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/red.png")).toExternalForm());
+
+    @FXML
+    public static Label turnLabel;
 
     @FXML
     public void initialize() throws IOException, ParseException {
@@ -158,7 +165,7 @@ public class CheckersController {
         }
     }
 
-    public static void receiveCheckers(JSONObject payload) {
+    public static void receiveCheckers(JSONObject payload) throws IOException {
         String gameResult = (String) payload.get("UPDATE_TYPE");
 
         if (Objects.equals(gameResult, "TURN_END")){
@@ -219,8 +226,26 @@ public class CheckersController {
         }
     }
 
-    private static void handleGameEnd(JSONObject payload){
-
+    private static void handleGameEnd(JSONObject payload) throws IOException {
+        String gameState = (String) payload.get("GameState");
+        if ("WIN".equals(gameState)) {
+            String playerWon = (String) payload.get("PlayerWon");
+            turnLabel.setText(STR."Player \{playerWon} won the game!");
+            if (playerWon.equals(playerOne)){
+                turnLabel.setTextFill(Color.GREEN);
+            }
+            else{
+                turnLabel.setTextFill(Color.RED);
+            }
+        } else if ("TIE".equals(gameState)) {
+            turnLabel.setText("The game ended in a tie!");
+        }
+        disableAllButtons();
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Aftermath.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage.setTitle("Condensation Application - Aftermath");
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -430,5 +455,11 @@ public class CheckersController {
         return null;
     }
 
-
+    private static void disableAllButtons() { //when game ends
+        for (Button[] buttonRow : chessboard) {
+            for (Button button : buttonRow) {
+                button.setDisable(true);
+            }
+        }
+    }
 }
