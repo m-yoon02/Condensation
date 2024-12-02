@@ -54,9 +54,7 @@ public class ConnectFourController {
     public static UUID sessionID;
     public static UUID newTurn;
 
-    private String sessionID;
-    private String playerID;
-    private String playerName;
+    public static UUID playerID;
 
     private static Stage stage;
 
@@ -74,7 +72,7 @@ public class ConnectFourController {
     }
 
     @FXML
-    public void initialize() throws ParseException {
+    public void initialize() throws ParseException, IOException {
         for (int row = 0; row < NUMBER_OF_ROWS; row++) {
             for (int col = 0; col < NUMBER_OF_COLS; col++) {
                 String buttonId = "btn" + row + col;
@@ -154,14 +152,14 @@ public class ConnectFourController {
         }
 
         try {
-            String updateType = (String) update.get("UpdateType");
+            String updateType = (String) payload.get("UpdateType");
 
             switch (updateType) {
                 case "GAME_END":
-                    controller.handleGameEnd(update);
+                    controller.handleGameEnd(payload);
                     break;
                 case "TURN_END":
-                    controller.handleTurnEnd(update);
+                    controller.handleTurnEnd(payload);
                     break;
                 default:
                     System.out.println("Unknown UpdateType: " + updateType);
@@ -188,9 +186,9 @@ public class ConnectFourController {
     }
 
     private static void handleTurnEnd(JSONObject update) {
-        sessionID = (String) update.get("SessionID");
-        playerID = (String) update.get("PlayerTurn");
-        String playerTurnName = getUsernameFromUUID(playerID);
+        sessionID = (UUID) update.get("SessionID");
+        playerID = (UUID) update.get("PlayerTurn");
+        String playerTurnName = getUsernameFromUUID(String.valueOf(playerID));
         playerTurnText.setText(STR."It's \{playerTurnName}'s turn!");
 
         JSONArray changes = (JSONArray) update.get("Changes");
