@@ -78,7 +78,12 @@ public class ProfileHomeController {
         playerRecentgamesPlayedColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("gamesPlayed").toString()));
 
         // Set dummy username and initialize leaderboard
-        usernameField.setText("Player 1");
+        try {
+            String usernameOfPlayer = Leaderboard.getInstance().fetchUserFromNewPlayerJson();
+            usernameField.setText(usernameOfPlayer);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         try {
             leaderboard = Leaderboard.getInstance();
         } catch (IOException | org.json.simple.parser.ParseException e) {

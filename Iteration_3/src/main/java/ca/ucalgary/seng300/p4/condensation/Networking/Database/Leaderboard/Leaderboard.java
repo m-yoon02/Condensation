@@ -17,6 +17,7 @@ public class Leaderboard {
     private static Leaderboard instance; // Singleton instance
     private String DATA_FILE = "Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
     private JSONArray users;
+     private JSONObject playerInGame;
 
     /**
      * Constructs a new Leaderboard instance and loads data from the specified file.
@@ -661,4 +662,25 @@ public class Leaderboard {
             System.out.println("Name: " + user.get("username") + ", Elo: " + user.get("elo"));
         }
     }
+
+
+
+   public String fetchUserFromNewPlayerJson() throws FileNotFoundException {
+        String playerFile = "Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json";
+
+       File file = new File(playerFile);
+       if (!file.exists()) {
+           throw new FileNotFoundException("Leaderboard.json not found in the working directory: " + file.getAbsolutePath());
+       }
+
+       try (FileReader reader = new FileReader(file)) {
+           JSONParser parser = new JSONParser();
+           JSONObject player = (JSONObject) parser.parse(reader);
+           String username = (String) player.get("username");
+           return username;
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+      return null;
+   }
 }
