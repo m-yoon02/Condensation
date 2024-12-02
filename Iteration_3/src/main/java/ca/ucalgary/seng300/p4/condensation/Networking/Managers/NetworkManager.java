@@ -117,7 +117,7 @@ public class NetworkManager {
 
         // Check if the user is already logged in
         if (loggedInClients.containsKey(playerUUID)) {
-            throw new IllegalArgumentException("User already logged in");
+            this.logoutHandler(playerUUID);
         }
 
         // Create and store the Client object
@@ -210,6 +210,17 @@ public class NetworkManager {
 
         return String.format("You have successfully changed your username to %s", newPassword);
     }
+
+
+    public String logoutHandler(UUID playerID){
+
+        loggedInClients.remove(playerID);  // remove the client from the logged in clients list
+        String response = matchmakingPool.removePlayerFromMatchmakingPool(playerID);
+        return response;
+    }
+
+
+
 
 
 

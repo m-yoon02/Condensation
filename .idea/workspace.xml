@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc99c478-ea5d-43df-bf08-01098b9abd2c" name="Changes" comment="fixed minor full board checking error">
-      <change afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/ProfileGame.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ConnectFourController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ConnectFourController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/OtherProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/OtherProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/TicTacToeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/TicTacToeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/newplayer.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/sessionData.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/ProfileGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/ProfileGame.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/ProfileHome.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/ProfileHome.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/otherProfile.css" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/otherProfile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/otherprofile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/otherprofile.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="dc99c478-ea5d-43df-bf08-01098b9abd2c" name="Changes" comment="fixed minor full board checking error" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,22 +13,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitLabMergeRequestFiltersHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPENED",
-    "assignee": {
-      "type": "org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue",
-      "username": "project_6104_bot_3a2e84f106400ba9841a79ce44d344e6",
-      "fullname": "meow"
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;project_6104_bot_3a2e84f106400ba9841a79ce44d344e6&quot;,
+      &quot;fullname&quot;: &quot;meow&quot;
     }
   }
-}]]></component>
-  <component name="GitLabMergeRequestsSettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "first": "git@csgit.ucalgary.ca:ssafe/seng300-f24-project.git",
-    "second": "04d4e59c-ca8e-4db2-9727-4f13bc7e3e16"
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;git@csgit.ucalgary.ca:ssafe/seng300-f24-project.git&quot;,
+    &quot;second&quot;: &quot;04d4e59c-ca8e-4db2-9727-4f13bc7e3e16&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -61,7 +48,7 @@
     "Application.ProfileHomeApplication.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging networking-final-merge",
+    "git-widget-placeholder": "networking-final-merge",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/abach/Documents/UniversityWork/SENG_300/seng300-f24-project/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/profileHome.fxml",
     "node.js.detected.package.eslint": "true",
