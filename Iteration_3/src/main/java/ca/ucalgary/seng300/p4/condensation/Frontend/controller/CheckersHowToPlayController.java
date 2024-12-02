@@ -17,8 +17,8 @@ public class CheckersHowToPlayController {
     public void onHowToPlayBackBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersHomeMenu.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        CheckersController controller = new CheckersController(stage);
-        fxmlLoader.setController(controller);
+//        CheckersHomeMenuController controller = new CheckersHomeMenuController(stage);
+//        fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("Checkers Home Menu");
         stage.setScene(scene);

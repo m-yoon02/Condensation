@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Backend.Handlers.CheckersHandler;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -80,7 +81,7 @@ public class CheckersHomeMenuController {
     void onHowToPlayBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersDescription.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        CheckersController controller = new CheckersController(stage);
+        CheckersHowToPlayController controller = new CheckersHowToPlayController();
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("Checkers Description");
