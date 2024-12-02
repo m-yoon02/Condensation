@@ -17,9 +17,9 @@
             <Font name="Oswald Regular" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="ticTacToePlayButton" layoutX="95.0" layoutY="410.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="46.0" text="Play" />
-      <Button fx:id="connect4PlayButton" layoutX="565.0" layoutY="410.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="46.0" text="Play" />
-      <Button fx:id="checkersPlayButton" layoutX="329.0" layoutY="410.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="46.0" text="Play" />
+      <Button fx:id="ticTacToePlayButton" layoutX="95.0" layoutY="410.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="46.0" text="Play" onAction="#onTicTacToePlayClicked" />
+      <Button fx:id="checkersPlayButton" layoutX="565.0" layoutY="410.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="46.0" text="Play" onAction="#onCheckersPlayClicked"/>
+      <Button fx:id="connect4PlayButton" layoutX="329.0" layoutY="410.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="46.0" text="Play" onAction="#onConnect4PlayClicked"/>
       <Button fx:id="homeButton" layoutX="624.0" layoutY="453.0" mnemonicParsing="false" onAction="#onHomeButtonClicked" prefHeight="30.0" prefWidth="60.0" text="Home">
          <font>
             <Font size="14.0" />
