@@ -1,13 +1,17 @@
-package java.ca.ucalgary.seng300.p4.condensation.Frontend.controller;
+package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Frontend.controller.ConnectFourHomeMenuController;
-import org.junit.After;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
+import org.junit.After;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import static org.junit.Assert.*;
+
 
 import java.io.File;
 
