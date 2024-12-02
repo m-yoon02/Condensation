@@ -28,7 +28,7 @@ public class tMenuController {
         playButton.setOnAction(event -> navigateTo("tGame.fxml"));
         leaderboardButton.setOnAction(event -> navigateTo("tLeaderboard.fxml"));
         howToPlayButton.setOnAction(event -> navigateTo("tHowToPlay.fxml"));
-        //goBack.setOnAction(event -> navigateTo("profilePage.fxml"));
+        goBack.setOnAction(event -> navigateTo("ProfileGame.fxml"));
     }
 
     private void navigateTo(String fxmlFile) {

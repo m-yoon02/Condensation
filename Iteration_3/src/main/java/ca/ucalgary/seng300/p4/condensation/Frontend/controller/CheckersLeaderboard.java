@@ -51,6 +51,8 @@ public class CheckersLeaderboard {
 
     private ObservableList<Player> playerList;
 
+    private Stage stage;
+
     @FXML
     public void initialize() {
         // Bind each column's preferred width to a percentage of the table's total width

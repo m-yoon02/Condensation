@@ -18,7 +18,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,162 +32,48 @@ import java.util.UUID;
 
 
 public class CheckersController {
-    Stage stage;
+    static Stage stage;
 
     public CheckersController(Stage stage) {
         this.stage = stage;
     }
 
-
-    // Checkers home menu
-    public void onCheckersSelected(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
-        CheckersController controller = new CheckersController(stage);
-        fxmlLoader.setController(controller);
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Checkers Home Menu");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
-    }
-
-    @FXML
-    Button homeMenuBackBtn;
-
-    @FXML
-    Button playBtn;
-
-    @FXML
-    public void onHomeMenuBackBtnClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ProfileGame.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Select your game");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
-    }
-
-
-    // play button
-    @FXML
-    public void onPlayBtnClick() throws IOException {
-        onCheckersStart();
-    }
-
-
-    @FXML
-    Button leaderboardBtn;
-
-    @FXML
-    Button leaderboardBackBtn;
-
-    // leaderboard
-    @FXML
-    public void onLeaderboardBtnClick(ActionEvent event) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
-//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        CheckersController controller = new CheckersController(stage);
-//        fxmlLoader.setController(controller);
-//        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-//        stage.setTitle("Checkers Leaderboard");
-//        stage.setScene(scene);
-//        stage.setMinWidth(700);
-//        stage.setMinHeight(530);
-//        stage.show();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
-        stage = (Stage) leaderboardBtn.getScene().getWindow();
-        CheckersLeaderboard controller = new CheckersLeaderboard();
-        fxmlLoader.setController(controller);
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-        stage.setTitle("Checkers - Leaderboard");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void onLeaderboardBackBtnClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        CheckersController controller = new CheckersController(stage);
-        fxmlLoader.setController(controller);
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Checkers Home Menu");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
-    }
-
-
-    @FXML
-    Button howToPlayBtn;
-
-    @FXML
-    Button howToPlayBackBtn;
-
-    // how to play button
-    @FXML
-    void onHowToPlayBtnClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersDescription.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        CheckersController controller = new CheckersController(stage);
-        fxmlLoader.setController(controller);
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Checkers Description");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
-    }
-
-    @FXML
-    public void onHowToPlayBackBtnClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersHomeMenu.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        CheckersController controller = new CheckersController(stage);
-        fxmlLoader.setController(controller);
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Checkers Home Menu");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
-    }
-
-
     // Checkers instance
     @FXML
-    GridPane chessboardGrid;
+    static GridPane chessboardGrid;
 
-    final int BOARD_DIM = 8;
-    String white = "-fx-background-color: #ffffff;" +
+    static final int BOARD_DIM = 8;
+    static String white = "-fx-background-color: #ffffff;" +
             "-fx-alignment: center;" +
             "-fx-background-radius: 0;";
-    String black = "-fx-background-color: #000000;" +
+    static String black = "-fx-background-color: #000000;" +
             "-fx-alignment: center;" +
             "-fx-background-radius: 0;";
 
-    Button chessboard[][] = new Button[8][8];
+    static Button[][] chessboard = new Button[8][8];
 
-    Button blackPieces[] = new Button[12];
-    Button redPieces[] = new Button[12];
+    static Button[] blackPieces = new Button[12];
+    static Button[] redPieces = new Button[12];
+
+    public static UUID playerOne;
+    public static UUID playerTwo;
+    public static UUID sessionID;
+    public static UUID newTurn;
+
+
+    public static void receiveCheckers(JSONObject payload) {
+    }
 
     @FXML
-    public void onCheckersStart() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersInstance.fxml"));
-//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        CheckersController controller = this;
-        fxmlLoader.setController(controller);
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Checkers");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
+    public void initialize() throws IOException, ParseException {
 
+        Object newPlayerJSONFileObject = new JSONParser().parse(new FileReader("newplayer.json"));
+        JSONObject newPlayerJSONFile = (JSONObject) newPlayerJSONFileObject;
+
+        playerOne = (UUID) newPlayerJSONFile.get("Player1ID");
+        playerTwo = (UUID) newPlayerJSONFile.get("player2ID");
+        newTurn =  (UUID) newPlayerJSONFile.get("currentPlayerTurn");
+        sessionID = (UUID) newPlayerJSONFile.get("sessionID");
 
         int blackCount = 0;
         int redCount = 0;
@@ -246,7 +136,7 @@ public class CheckersController {
         }
     }
 
-    private void addPieceToSquare(Image image, Button square) {
+    private static void addPieceToSquare(Image image, Button square) {
         ImageView piece = new ImageView();
         piece.setFitWidth(36);
         piece.setPreserveRatio(true);
@@ -295,9 +185,6 @@ public class CheckersController {
     @FXML
     VBox paneInsideScrollPane;
 
-    String username1 = "Me";
-    String username2 = "You";
-
     String messageHBoxStyle = "    -fx-pref-width: 50;\n" +
             "    -fx-max-width: 200;";
     String senderNameStyle = "-fx-font-size: 13;\n" +
@@ -313,6 +200,8 @@ public class CheckersController {
             "    -fx-text-fill: White;";
 
     public void onSendBtnClick() {
+        String username1 = getUsernameFromUUID(String.valueOf(playerOne));
+        String username2 = getUsernameFromUUID(String.valueOf(playerTwo));
         String messageStr = chatBox.getText();
         if (!messageStr.isEmpty()) {
             ChatService chatService = new ChatService();
@@ -400,5 +289,24 @@ public class CheckersController {
 
         }
     }
+
+    private static String getUsernameFromUUID(String playerUUID) {
+        try {
+            File file = new File("src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+            JSONParser parser = new JSONParser();
+            JSONArray leaderboard = (JSONArray) parser.parse(new FileReader(file));
+
+            for (Object obj : leaderboard) {
+                JSONObject player = (JSONObject) obj;
+                if (playerUUID.equals(player.get("playerUUID"))) {
+                    return (String) player.get("username");
+                }
+            }
+        } catch (Exception e) {
+            System.err.println(STR."Error reading leaderboard.json: \{e.getMessage()}");
+        }
+        return null;
+    }
+
 
 }

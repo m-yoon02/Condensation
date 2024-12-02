@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main-pane" stylesheets="@tGame.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.tGameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main-pane" stylesheets="@tGame.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.TicTacToeController">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -66,6 +66,17 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
+                           <children>
+                              <Button fx:id="btn00" mnemonicParsing="false" prefHeight="151.0" prefWidth="262.0" />
+                              <Button fx:id="btn01" mnemonicParsing="false" prefHeight="160.0" prefWidth="524.0" GridPane.columnIndex="1" />
+                              <Button fx:id="btn02" mnemonicParsing="false" prefHeight="179.0" prefWidth="328.0" GridPane.columnIndex="2" />
+                              <Button fx:id="btn10" mnemonicParsing="false" prefHeight="173.0" prefWidth="391.0" GridPane.rowIndex="1" />
+                              <Button fx:id="btn11" mnemonicParsing="false" prefHeight="153.0" prefWidth="615.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button fx:id="btn12" mnemonicParsing="false" prefHeight="284.0" prefWidth="440.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="btn20" mnemonicParsing="false" prefHeight="293.0" prefWidth="528.0" GridPane.rowIndex="2" />
+                              <Button fx:id="btn21" mnemonicParsing="false" prefHeight="135.0" prefWidth="292.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="btn22" mnemonicParsing="false" prefHeight="165.0" prefWidth="487.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                           </children>
                                     <!--
                                    <children>
                                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
