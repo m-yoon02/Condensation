@@ -3,7 +3,6 @@ import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
-import com.sun.javafx.iio.ImageLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
