@@ -68,7 +68,7 @@ public class ProfileHomeController {
         gameColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("gameType")));
         currentEloColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("elo").toString()));
         totalWinsColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("totalWins").toString()));
-       // statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("status")));
+        // statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("status")));
 
         // Set up recent matches table
         playerRecentgameColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("gameType")));
@@ -199,14 +199,7 @@ public class ProfileHomeController {
     @FXML
     void onlogOutButtonClicked(ActionEvent event) throws IOException {
         System.out.println("Logging out...");
-        // Load the Welcome Screen
-        Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("WelcomeScreen.fxml"));
-        Scene homeScene = new Scene(homeParent);
-
-        // Get the current stage and set the new scene
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
+        navigateToScreen(event, "WelcomeScreen.fxml");
     }
 
     private void navigateToScreen(ActionEvent event, String fxml) throws IOException {
