@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.Services;
 
+import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Player;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
@@ -37,6 +38,24 @@ public class MatchmakingPool {
         pool.add(player);
         System.out.println("Player Added: " + player.PlayerID());
     }
+
+
+    public String removePlayerFromMatchmakingPool(UUID playerID) {
+        QueuedPlayerMemo playerToRemove = null;
+
+        for (QueuedPlayerMemo queuedPlayer : pool) {
+            if (queuedPlayer.PlayerID().equals(playerID)) {
+                pool.remove(queuedPlayer);
+                return String.format("You have successfully logged outm see you later ");                 // Exit loop after finding the player
+            }
+        }
+        return String.format("Player not found in matchmaking pool: "+ playerID);
+
+
+    }
+
+
+
 
 
 
