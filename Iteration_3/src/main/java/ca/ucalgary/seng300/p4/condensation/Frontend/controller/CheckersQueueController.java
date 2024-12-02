@@ -75,10 +75,9 @@ public class CheckersQueueController {
         fileWriter.flush();
         fileWriter.close();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
-        fxmlLoader.setController(new CheckersController(stage));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ticTacToeGame.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Checkers");
+        stage.setTitle("TicTacToe");
         stage.setScene(scene);
         stage.show();
     }
