@@ -105,9 +105,7 @@ public class NetworkManager {
         JSONObject validatePlayer = validateUserCredentials(username, password);
 
         if(validatePlayer == null){
-
-            throw new IllegalArgumentException("Invalid username or password");
-
+            throw new IllegalArgumentException("Invalid username or password (valid player is null)");
         }
         UUID playerUUID = UUID.fromString((String) validatePlayer.get("playerUUID"));
 
@@ -173,6 +171,7 @@ public class NetworkManager {
         String password = (String) signupPayload.get("password");
 
         Leaderboard.getInstance().createUser(username, password);
+        System.out.println(Leaderboard.getInstance().getAllUsers());
 
         // we could also add a check to see if the username already exists in our database
         return String.format("Successfully created user with username %s", username);
