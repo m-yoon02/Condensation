@@ -31,7 +31,7 @@
     -fx-text-fill: white;
     -fx-font-weight: 500;
     -fx-background-radius: 10px;
-    -fx-pref-width: 90px; /* Preferred width */
+    -fx-pref-width: 95px; /* Preferred width */
     -fx-pref-height: 20px; /* Preferred height */
 }
 

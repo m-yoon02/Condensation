@@ -82,6 +82,20 @@ public class GameSession implements GameEndListener, TurnEndListener {
     }
 
     /**
+     * Called when the game ends in the GameHandler
+     * @param gameResult the result of the Game (WIN, or TIE)
+     * @param winnerPlayer the Player ID of the winner player (If it is a WIN result)
+     */
+    @Override
+    public void onGameEnd(GameResult gameResult, UUID winnerPlayer) {
+        try {
+            processGameEnd(gameResult, winnerPlayer);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Handles the end of a game by determining the result, updating player Elo ratings,
      * notifying clients, and cleaning up the game session.
      * @param gameResult   The result of the game (WIN, TIE, etc.).
@@ -89,8 +103,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
      * @throws IOException    If an error occurs while sending game data to clients.
      * @throws ParseException If there is an error parsing or processing game-related data.
      */
-    @Override
-    public void onGameEnd(GameResult gameResult, UUID winnerPlayer) throws IOException, ParseException {
+    public void processGameEnd(GameResult gameResult, UUID winnerPlayer) throws IOException, ParseException {
 
         GameEventType gameEventType = GameEventType.GAME_END;
         // we need to make the response payload here as well
@@ -161,15 +174,4 @@ public class GameSession implements GameEndListener, TurnEndListener {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
 }
