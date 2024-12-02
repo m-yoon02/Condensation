@@ -22,9 +22,13 @@
 - `project_tracker.xlsx`: Project Tracker for the Iteration 1
     
 ## Iteration 2 Deliverables in `Iteration_2`
-    -   
+    - Files for Delta are in `Delta_Review\final_submission`
+    - Files for Echo are in `Echo_Review\final_submission`
 ## Iteration 3 Deliverables in `Iteration_3`
-    -
+    - `Planning`: Code planning and documents
+    - `src\main\java` has the code
+    - `src\main\resources` has the fxml files
+    - `tests` has the test files
 
 - `team.md`: in the main repository
 - `gitlab_link.txt`: the gitlab link in the main repository
