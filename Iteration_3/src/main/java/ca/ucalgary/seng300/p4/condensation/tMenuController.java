@@ -26,7 +26,7 @@ public class tMenuController {
     @FXML
     public void initialize() {
         playButton.setOnAction(event -> navigateTo("tGame.fxml"));
-        leaderboardButton.setOnAction(event -> navigateTo("tLeaderboard.fxml"));
+        leaderboardButton.setOnAction(event -> navigateTo("TicTacToeLeaderboard.fxml"));
         howToPlayButton.setOnAction(event -> navigateTo("tHowToPlay.fxml"));
         //backButton.setOnAction(event -> navigateTo("login page.fxml"));
     }
