@@ -11,6 +11,9 @@ module ca.ucalgary.seng300.p4.condensation {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires json.simple;
+    requires com.fasterxml.jackson.databind;
+    requires java.desktop;
+    requires java.datatransfer;
 
     opens ca.ucalgary.seng300.p4.condensation to javafx.fxml;
     exports ca.ucalgary.seng300.p4.condensation;

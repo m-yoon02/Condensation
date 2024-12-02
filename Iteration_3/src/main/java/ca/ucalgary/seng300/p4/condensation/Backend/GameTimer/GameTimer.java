@@ -1,5 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.GameTimer;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -24,7 +27,7 @@ public class GameTimer{
      * @param playerID the UUId to NOT get
      * @return the other player UUID that is not UUID
      */
-    private UUID getOtherPlayerID(UUID playerID){
+    public UUID getOtherPlayerID(UUID playerID){
         for (UUID id: timerHashMap.keySet()){
             if (!id.equals(playerID)){
                 return id;
@@ -37,7 +40,7 @@ public class GameTimer{
      * Notifies all listeners that one of the player's timers has run out, passes the winning player ID
      * @param loserPlayerID the ID of the player whose timer has run out
      */
-    private void notifyTimerEnded(UUID loserPlayerID){
+    public void notifyTimerEnded(UUID loserPlayerID){
         UUID winnerPlayerID = getOtherPlayerID(loserPlayerID);
         for (TimerEndListener listener: timerEndListeners){
             listener.onTimerEnd(winnerPlayerID);
@@ -73,7 +76,7 @@ public class GameTimer{
 
     /**
      * Starts the game timer countdown
-     * @exception Throws InterruptedException if the thread is interupted while sleeping
+     * @exception throws InterruptedException if the thread is interupted while sleeping
      */
     public void startTimer() throws InterruptedException {
         UUID backupCurrentPlayer;
@@ -166,5 +169,23 @@ public class GameTimer{
 
     public void addTimerEndListener(TimerEndListener listener){
         timerEndListeners.add(listener);
+    }
+
+
+    // getters used in testing
+    public HashMap<UUID, Integer> getTimerHashMap() {
+        return timerHashMap;
+    }
+
+    public ArrayList<TimerEndListener> getTimerEndListeners() {
+        return timerEndListeners;
+    }
+
+    public UUID getCurrentPlayerID() {
+        return currentPlayerID;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

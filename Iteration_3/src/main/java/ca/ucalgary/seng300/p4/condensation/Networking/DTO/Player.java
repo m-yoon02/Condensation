@@ -2,12 +2,24 @@ package ca.ucalgary.seng300.p4.condensation.Networking.DTO;
 
 import java.util.UUID;
 
+
+/**
+ * Represents a player in the system, including their unique ID, username,
+ * leaderboard position, and Elo rating.
+ */
 public class Player {
     UUID playerID;
     String userName;
     int leaderBoardPosition;
     int elo;
 
+    /**
+     * Constructs a new Player with the specified username, leaderboard position, and Elo rating.
+     * A unique player ID is automatically generated.
+     * @param userName            The player's username.
+     * @param leaderBoardPosition The player's position on the leaderboard.
+     * @param elo                 The player's Elo rating.
+     */
     public Player(String userName, int leaderBoardPosition, int elo) {
         this.userName = userName;
         this.playerID = UUID.randomUUID();

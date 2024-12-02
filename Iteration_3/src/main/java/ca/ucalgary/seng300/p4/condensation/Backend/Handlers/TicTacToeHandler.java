@@ -6,7 +6,6 @@ import ca.ucalgary.seng300.p4.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.MoveData;
 import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.TicTacToePiece;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
-
 import java.util.UUID;
 
 public class TicTacToeHandler extends GameHandler {
