@@ -52,6 +52,14 @@ public class ConnectFourLeaderboardTest {
         assertNotNull(leaderboard.getLossesColumn());
         assertNotNull(leaderboard.getDrawsColumn());
         assertNotNull(leaderboard.getWinPercentageColumn());
+    }
+
+    /**
+     * test the alignment of the columns
+     */
+    @Test
+    public void testColumnAlignment() {
+        leaderboard.initialize();
 
         //test the column alignment, these all should be center aligned
         assertEquals("-fx-alignment: CENTER;", leaderboard.getRankColumn().getStyle());
