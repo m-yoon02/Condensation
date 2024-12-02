@@ -99,16 +99,38 @@ public class Leaderboard {
     }
 
     public void createUser(String name, String password) throws IOException {
-        JSONObject user = new JSONObject(); //create new object
+        JSONObject user = new JSONObject(); // Create a new user object
 
-        user.put("playerUUID", UUID.randomUUID().toString()); //assign random uuid
+        // Assign random UUID and user credentials
+        user.put("playerUUID", UUID.randomUUID().toString());
         user.put("username", name);
         user.put("password", password);
+
+        // Set default ELO scores
         user.put("connect4Elo", 1200);
         user.put("checkersElo", 1200);
         user.put("tictactoeElo", 1200);
+
+        // Set default stats for games
+        user.put("leaderBoardPosition", 0); // Default leaderboard position
+        user.put("gamesPlayedCheckers", 0);
+        user.put("winsInCheckers", 0);
+        user.put("lossInCheckers", 0);
+        user.put("gamesPlayedConnect4", 0);
+        user.put("winsInConnect4", 0);
+        user.put("lossInConnect4", 0);
+        user.put("gamesPlayedTicTacToe", 0);
+        user.put("winsInTicTacToe", 0);
+        user.put("lossInTicTacToe", 0);
+
+        // Initialize an empty list of recent matches
+        JSONArray recentMatches = new JSONArray();
+        user.put("recentMatches", recentMatches);
+
+        // Add the new user to the list of users
         users.add(user);
 
+        // Save the data
         this.saveData();
     }
     /**
