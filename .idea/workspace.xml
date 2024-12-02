@@ -5,12 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc99c478-ea5d-43df-bf08-01098b9abd2c" name="Changes" comment="fixed minor full board checking error">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/ProfileGame.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ConnectFourController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ConnectFourController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/OtherProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/OtherProfileController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/TicTacToeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/TicTacToeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/newplayer.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/sessionData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/ProfileGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/ProfileGame.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/ProfileHome.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/ProfileHome.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/otherProfile.css" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/otherProfile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/otherprofile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/otherprofile.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +61,7 @@
     "Application.ProfileHomeApplication.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "networking-final-merge",
+    "git-widget-placeholder": "Merging networking-final-merge",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/abach/Documents/UniversityWork/SENG_300/seng300-f24-project/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/profileHome.fxml",
     "node.js.detected.package.eslint": "true",
@@ -75,7 +81,7 @@
       <option name="presentableId" value="Default" />
       <updated>1733089848099</updated>
       <workItem from="1733089850431" duration="6000" />
-      <workItem from="1733089860822" duration="3356000" />
+      <workItem from="1733089860822" duration="4086000" />
     </task>
     <servers />
   </component>

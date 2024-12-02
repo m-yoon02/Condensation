@@ -68,7 +68,7 @@ public class ProfileHomeController {
         gameColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("gameType")));
         currentEloColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("elo").toString()));
         totalWinsColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("totalWins").toString()));
-        statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("status")));
+       // statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("status")));
 
         // Set up recent matches table
         playerRecentgameColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("gameType")));
