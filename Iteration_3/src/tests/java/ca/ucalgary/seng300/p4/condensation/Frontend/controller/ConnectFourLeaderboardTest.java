@@ -105,7 +105,7 @@ public class ConnectFourLeaderboardTest {
      * test the win percentage calculation
      */
     @Test
-    public void calculateWinPercent() {
+    public void testCalculateWinPercent() {
         leaderboard.initialize();
 
         for (ConnectFourHomeMenuController.Player player : leaderboard.getLeaderboardTable().getItems()) {
@@ -123,7 +123,7 @@ public class ConnectFourLeaderboardTest {
      * test the draws calculated in the drawsColumn
      */
     @Test
-    public void calculateDraws() {
+    public void testCalculateDraws() {
         leaderboard.initialize();
 
         for (ConnectFourHomeMenuController.Player player : leaderboard.getLeaderboardTable().getItems()) {
@@ -133,6 +133,40 @@ public class ConnectFourLeaderboardTest {
 
             int expectedDraws = Math.max(0, gamesPlayed - gamesWon - gamesLost);
             assertEquals(expectedDraws, leaderboard.getDrawsColumn().getCellData(player).intValue());
+        }
+    }
+
+    /**
+     * make sure the generated list in the table is the same size as the mock player list
+     */
+    @Test
+    public void testPopulatePlayerListSize() {
+        leaderboard.initialize();
+
+        //check that the leaderboard table contains the correct number of rows
+        ObservableList<ConnectFourHomeMenuController.Player> tableItems = leaderboard.getLeaderboardTable().getItems();
+        assertEquals(mockPlayerList.size(), tableItems.size());
+    }
+
+    /**
+     * test if the contents displayed on the table match the code (what's inserted)
+     */
+    @Test
+    public void testPopulatePlayerListContents() {
+        leaderboard.initialize();
+
+        ObservableList<ConnectFourHomeMenuController.Player> tableItems = leaderboard.getLeaderboardTable().getItems();
+
+        for (int i = 0; i < mockPlayerList.size(); i++) {
+            ConnectFourHomeMenuController.Player mockPlayer = mockPlayerList.get(i);
+            ConnectFourHomeMenuController.Player playerInTable = tableItems.get(i);
+
+            //test their name, id, losses, wins, and games played
+            assertEquals(mockPlayer.getName(), playerInTable.getName());
+            assertEquals(mockPlayer.getId(), playerInTable.getId());
+            assertEquals(mockPlayer.getLossInCheckers(), playerInTable.getLossInCheckers());
+            assertEquals(mockPlayer.getWinsInCheckers(), playerInTable.getWinsInCheckers());
+            assertEquals(mockPlayer.getGamesPlayedCheckers(), playerInTable.getGamesPlayedCheckers());
         }
     }
 }
