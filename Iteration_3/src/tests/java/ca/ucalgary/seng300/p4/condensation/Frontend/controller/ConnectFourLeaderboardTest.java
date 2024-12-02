@@ -100,4 +100,39 @@ public class ConnectFourLeaderboardTest {
             assertEquals(Integer.valueOf(i + 1), leaderboard.getRankColumn().getCellData(sortedList.get(i)));
         }
     }
+
+    /**
+     * test the win percentage calculation
+     */
+    @Test
+    public void calculateWinPercent() {
+        leaderboard.initialize();
+
+        for (ConnectFourHomeMenuController.Player player : leaderboard.getLeaderboardTable().getItems()) {
+            int gamesPlayed = player.getGamesPlayedCheckers();
+            int gamesWon = player.getWinsInCheckers();
+
+            //calculate the expected win percent
+            double expectedWinPercent = gamesPlayed > 0 ? (gamesWon * 100.0) / gamesPlayed : 0;
+
+            assertEquals(expectedWinPercent, leaderboard.getWinPercentageColumn().getCellData(player), 0.01);
+        }
+    }
+
+    /**
+     * test the draws calculated in the drawsColumn
+     */
+    @Test
+    public void calculateDraws() {
+        leaderboard.initialize();
+
+        for (ConnectFourHomeMenuController.Player player : leaderboard.getLeaderboardTable().getItems()) {
+            int gamesPlayed = player.getGamesPlayedCheckers();
+            int gamesWon = player.getWinsInCheckers();
+            int gamesLost = player.getLossInCheckers();
+
+            int expectedDraws = Math.max(0, gamesPlayed - gamesWon - gamesLost);
+            assertEquals(expectedDraws, leaderboard.getDrawsColumn().getCellData(player).intValue());
+        }
+    }
 }
