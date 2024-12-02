@@ -178,40 +178,42 @@ public class CheckersController {
     private static void updateBoardAndPieces(JSONArray allUpdatedPieces){
         locationOfBlackPieces = new ArrayList<>();
         locationOfRedPieces = new ArrayList<>();
+        chessboardGrid.getChildren().clear();
+        // Removes all the buttons in the grid pane for now
+        // https://stackoverflow.com/questions/11147788/clean-gridpane-in-javafx-and-maintain-the-grid-line
         for (int row = 0; row < allUpdatedPieces.size(); row++) {
             JSONArray rowArray = (JSONArray) allUpdatedPieces.get(row);
             for (int col = 0; col < rowArray.size(); col++) {
                 String state = (String) rowArray.get(col);
-                Button newButton = chessboard[row][col];
-                if (state.equals("EMPTY")){
-                    if (row % 2 == 0) {   // even rows
-                        if (col % 2 == 0) {   // even columns
-                            newButton.setStyle(black);
-                        } else {    // odd columns
-                            newButton.setStyle(white);
-                        }
-                    } else {    // odd rows
-                        if (col % 2 == 0) {   // even columns
-                            newButton.setStyle(white);
-                        } else {    // odd columns
-                            newButton.setStyle(black);
-                        }
+                Button newButton = chessboard[col][row];
+                if (row % 2 == 0) {   // even rows
+                    if (col % 2 == 0) {   // even columns
+                        newButton.setStyle(black);
+                    } else {    // odd columns
+                        newButton.setStyle(white);
+                    }
+                } else {    // odd rows
+                    if (col % 2 == 0) {   // even columns
+                        newButton.setStyle(white);
+                    } else {    // odd columns
+                        newButton.setStyle(black);
                     }
                 }
-                else if(state.equals("RED")){
+                if(state.equals("RED")){
                     addPieceToSquare(RED_IMAGE, newButton);
                     List<Integer> newRedCoordinates = new ArrayList<>();
                     newRedCoordinates.add(row);
                     newRedCoordinates.add(col);
                     locationOfRedPieces.add(newRedCoordinates);
                 }
-                else{
+                else if (state.equals("BLACK")){
                     addPieceToSquare(BLACK_IMAGE, newButton);
                     List<Integer> newBlackCoordinates = new ArrayList<>();
                     newBlackCoordinates.add(row);
                     newBlackCoordinates.add(col);
                     locationOfBlackPieces.add(newBlackCoordinates);
                 }
+                chessboard[col][row] = newButton;
                 chessboardGrid.add(newButton, col, row, 1, 1);
             }
         }
