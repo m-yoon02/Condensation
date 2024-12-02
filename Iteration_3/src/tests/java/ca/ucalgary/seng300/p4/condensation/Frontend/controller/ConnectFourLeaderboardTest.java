@@ -11,7 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class ConnectFourLeaderboardTest {
     ConnectFourLeaderboard leaderboard; //create a leaderboard
@@ -57,5 +57,50 @@ public class ConnectFourLeaderboardTest {
 //        assertNotNull(leaderboard.lossesColumn);
 //        assertNotNull(leaderboard.drawsColumn);
 //        assertNotNull(leaderboard.winPercentageColumn);
+
+        //test the column alignment, these all should be center aligned
+//        assertEquals("-fx-alignment: CENTER;", leaderboard.rankColumn.getStyle());
+//        assertEquals("-fx-alignment: CENTER;", leaderboard.gamesPlayedColumn.getStyle());
+//        assertEquals("-fx-alignment: CENTER;", leaderboard.winsColumn.getStyle());
+//        assertEquals("-fx-alignment: CENTER;", leaderboard.lossesColumn.getStyle());
+//        assertEquals("-fx-alignment: CENTER;", leaderboard.drawsColumn.getStyle());
+//        assertEquals("-fx-alignment: CENTER;", leaderboard.winPercentageColumn.getStyle());
+    }
+
+    /**
+     * test the sorting of the players which is sorted by win percentage.
+     */
+    @Test
+    public void testSorting() {
+        leaderboard.initialize();
+
+        //get the sorted player list from leaderboard
+        ObservableList<ConnectFourHomeMenuController.Player> sortedList = leaderboard.leaderboardTable.getItems();
+
+        //test that players are sorted correctly by their win percentage in descending order
+        double prevWinPercent = 100;
+
+        for (ConnectFourHomeMenuController.Player player : sortedList) {
+            double currentWinPercent = (player.getWinsInCheckers() * 100.0) / player.getGamesPlayedCheckers();
+
+            assertTrue(currentWinPercent <= prevWinPercent); //check if players are sorted in descending order by win percent
+
+            prevWinPercent = currentWinPercent; //set the prev win percent to be the current one for this player
+        }
+    }
+
+    /**
+     * testing the rank assignment to the sorted list
+     */
+    @Test
+    public void testRankingAssignment() {
+        leaderboard.initialize();
+
+        //get the sorted player list from leaderboard
+        ObservableList<ConnectFourHomeMenuController.Player> sortedList = leaderboard.leaderboardTable.getItems();
+
+        for (int i = 0; i < sortedList.size(); i++) {
+            assertEquals(Integer.valueOf(i + 1), leaderboard.rankColumn.getCellData(sortedList.get(i)));
+        }
     }
 }
