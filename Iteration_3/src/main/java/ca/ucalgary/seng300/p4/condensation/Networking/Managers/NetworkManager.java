@@ -212,6 +212,17 @@ public class NetworkManager {
     }
 
 
+    public String logoutHandler(UUID playerID){
+
+        loggedInClients.remove(playerID);  // remove the client from the logged in clients list
+        String response = matchmakingPool.removePlayerFromMatchmakingPool(playerID);
+        return response;
+    }
+
+
+
+
+
 
 
     /**
