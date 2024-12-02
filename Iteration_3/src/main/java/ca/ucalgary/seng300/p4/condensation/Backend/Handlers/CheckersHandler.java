@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Handlers;
 
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.CheckersMoveData;
@@ -37,8 +38,62 @@ public class CheckersHandler extends GameHandler {
     // You are to use the move data and translate it to the GameBoard
     // You are also required to check for game winning scenarios here
     // This will also notify when the game has ended, and which player's turn it is after the move
+    /**
+     * Processes a move made by a player for Checkers, whenever a move is made.
+     * This method:
+     * <ul>
+     * <li>Checks if the moving piece exists,</li>
+     * <li>If the move is valid,</li>
+     * <li>If the move is a capture it captures the jumped piece,</li>
+     * <li>Moves the piece,</li>
+     * <li>Checks for promotion and promotes if available,</li>
+     * <li>Checks if the game is won,</li>
+     * <li>And if not, ends the turn of the player.</li>
+     * </ul>
+     * @param checkersMoveData a CheckersMoveData containing move details (Player ID, Old position, New position)
+     */
     public void makeMove(CheckersMoveData checkersMoveData) {
-        //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
+        // Initializing
+        UUID playerID = checkersMoveData.getPlayerID();
+        UUID opponentID = getOtherPlayerUUID(playerID);
+        Vector2 oldPosition = checkersMoveData.getOldPosition();
+        Vector2 newPosition = checkersMoveData.getMovePosition();
+
+        // Piece exists, is the players' piece
+        CheckersPiece movingPiece = board.getAt(oldPosition);
+        if (movingPiece == null || movingPiece.getColor() != getPlayerColorFromUUID(playerID)){
+            // Notifies that move invalid, allows the player to try again
+            notifyTurnEnd(playerID, board.toJSONString());
+            return;
+        }
+
+        // Move is valid (generally)
+        if (!isValidMove(oldPosition, newPosition)){
+            // Notifies that move invalid, allows the player to try again
+            notifyTurnEnd(playerID, board.toJSONString());
+            return;
+        }
+
+        // Move is a capture
+        int moveDistance = abs(newPosition.x() - oldPosition.x());
+        if (moveDistance == 2 && canCapture(board.getAt(oldPosition))){
+            processCaptureOnMove(oldPosition, newPosition);
+        }
+
+        // Moves piece
+        board.movePiece(oldPosition, newPosition);
+
+        // Checks for promotion
+        checkForPromotion(newPosition);
+
+        // Checks if game ended in a win (for the moving player)
+        if (checkForGameEnd(getPlayerColorFromUUID(opponentID))){
+            notifyGameEnd(GameResult.WIN, playerID);
+            return;
+        }
+
+        // Otherwise, notify the next turn to start
+        notifyTurnEnd(opponentID, board.toJSONString());
     }
 
     public boolean captureIsPossible(PieceColor color) {

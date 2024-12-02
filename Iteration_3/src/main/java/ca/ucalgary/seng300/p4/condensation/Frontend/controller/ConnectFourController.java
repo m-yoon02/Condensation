@@ -231,7 +231,7 @@ public class ConnectFourController {
         String gameState = (String) update.get("GameState");
         if ("WIN".equals(gameState)) {
             String playerWon = (String) update.get("PlayerWon");
-            playerTurnText.setText(STR."Player \{playerWon} won the game!");
+            // playerTurnText.setText(STR."Player \{playerWon} won the game!");
         } else if ("TIE".equals(gameState)) {
             playerTurnText.setText("The game ended in a tie!");
         }
@@ -246,7 +246,7 @@ public class ConnectFourController {
     private static void handleTurnEnd(JSONObject update) {
         String playerTurnUUID = (String) update.get("PlayerTurn");
         String playerTurnName = getUsernameFromUUID(playerTurnUUID);
-        playerTurnText.setText(STR."It's \{playerTurnName}'s turn!");
+        // playerTurnText.setText(STR."It's \{playerTurnName}'s turn!");
 
         JSONArray changes = (JSONArray) update.get("Changes");
         updateBoard(changes);

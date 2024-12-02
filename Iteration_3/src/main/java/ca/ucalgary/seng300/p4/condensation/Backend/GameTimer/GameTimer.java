@@ -43,13 +43,7 @@ public class GameTimer{
     public void notifyTimerEnded(UUID loserPlayerID){
         UUID winnerPlayerID = getOtherPlayerID(loserPlayerID);
         for (TimerEndListener listener: timerEndListeners){
-            try {
-                listener.onTimerEnd(winnerPlayerID);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
+            listener.onTimerEnd(winnerPlayerID);
         }
     }
     /**

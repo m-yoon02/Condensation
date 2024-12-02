@@ -85,7 +85,7 @@ public class TicTacToeController {
             if (resultOfTicTacToe == GameResult.WIN){
                 UUID winningPlayer = (UUID) backendUpdate.get("PlayerWon");
                 String nameOfWinningPlayer = getUsernameFromUUID(String.valueOf(winningPlayer));
-                playerStatus.setText(STR."Player \{nameOfWinningPlayer} won the game!");
+                // playerStatus.setText(STR."Player \{nameOfWinningPlayer} won the game!");
                 if (winningPlayer.equals(playerOne)){
                     playerStatus.setTextFill(Color.GREEN);
                 }
@@ -130,12 +130,12 @@ public class TicTacToeController {
             }
             if (newTurn.equals(playerTwo)){
                 String nameOfOpponentPlayer = getUsernameFromUUID(String.valueOf(newTurn));
-                playerStatus.setText(STR."It's \{nameOfOpponentPlayer}'s turn!");
+                // playerStatus.setText(STR."It's \{nameOfOpponentPlayer}'s turn!");
                 playerStatus.setTextFill(Color.BLUE);
             }
             else{
                 String nameOfMainPlayer = getUsernameFromUUID(String.valueOf(newTurn));
-                playerStatus.setText(STR."It's \{nameOfMainPlayer}'s turn!");
+                // playerStatus.setText(STR."It's \{nameOfMainPlayer}'s turn!");
                 playerStatus.setTextFill(Color.RED);
             }
         }
@@ -204,7 +204,7 @@ public class TicTacToeController {
                 }
             }
         } catch (Exception e) {
-            System.err.println(STR."Error reading leaderboard.json: \{e.getMessage()}");
+            // System.err.println(STR."Error reading leaderboard.json: \{e.getMessage()}");
         }
         return null;
     }
