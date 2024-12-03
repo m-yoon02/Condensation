@@ -76,7 +76,6 @@ public class CheckersQueueController {
         fileWriter.close();
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
-        fxmlLoader.setController(new CheckersController(stage));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("Checkers");
         stage.setScene(scene);

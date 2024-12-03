@@ -3,8 +3,6 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
@@ -21,8 +19,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import javafx.scene.control.Label;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -141,7 +137,7 @@ public class TicTacToeController {
             }
             else{
                 String nameOfMainPlayer = getUsernameFromUUID(String.valueOf(newTurn));
-                playerStatus.setText(String.format("It's %s's turn!", "It's %s's turn!"));
+                playerStatus.setText(String.format("It's %s's turn!", nameOfMainPlayer));
                 playerStatus.setTextFill(Color.RED);
             }
         }
@@ -207,7 +203,7 @@ public class TicTacToeController {
                 }
             }
         } catch (Exception e) {
-            System.err.println(String.format("Error reading leaderboard.json: %s", e.getMessage()));
+            System.err.printf("Error reading leaderboard.json: %s%n", e.getMessage());
         }
         return null;
     }

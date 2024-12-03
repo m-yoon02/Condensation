@@ -129,8 +129,6 @@ public class CheckersLeaderboard {
     private void handleBackButton(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        CheckersHomeMenuController controller = new CheckersHomeMenuController(stage);
-//        fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("Checkers Home Menu");
         stage.setScene(scene);
