@@ -34,6 +34,10 @@ public class CheckersHomeMenuController {
     @FXML
     Button howToPlayBackBtn;
 
+    public CheckersHomeMenuController(Stage stage) {
+        this.stage = stage;
+    }
+
 
     // Checkers home menu
     @FXML
@@ -47,7 +51,6 @@ public class CheckersHomeMenuController {
         window.setMinHeight(530);
         window.show();
     }
-
 
 
     // play button
