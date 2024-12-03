@@ -13,13 +13,11 @@ import static org.junit.Assert.*;
 public class CheckersHandlerTest {
 
     private CheckersHandler checkersHandler;
-    private UUID player1ID;
-    private UUID player2ID;
 
     @Before
     public void setUp() {
-        player1ID = UUID.randomUUID();
-        player2ID = UUID.randomUUID();
+        UUID player1ID = UUID.randomUUID();
+        UUID player2ID = UUID.randomUUID();
         checkersHandler = new CheckersHandler(player1ID, player2ID);
     }
 
