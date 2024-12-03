@@ -35,10 +35,6 @@ import java.util.*;
 public class CheckersController {
     static Stage stage;
 
-    public CheckersController(Stage stage) {
-        this.stage = stage;
-    }
-
     // Checkers instance
     @FXML
     static GridPane chessboardGrid;

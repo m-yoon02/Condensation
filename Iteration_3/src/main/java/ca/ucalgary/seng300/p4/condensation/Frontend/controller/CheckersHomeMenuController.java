@@ -34,61 +34,54 @@ public class CheckersHomeMenuController {
     @FXML
     Button howToPlayBackBtn;
 
-    public CheckersHomeMenuController(Stage stage) {
-        this.stage = stage;
-    }
-
 
     // Checkers home menu
     @FXML
     public void onHomeMenuBackBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ProfileGame.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Select your game");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
+        window.setTitle("Select your game");
+        window.setScene(scene);
+        window.setMinWidth(700);
+        window.setMinHeight(530);
+        window.show();
     }
+
 
 
     // play button
     @FXML
-    public void onPlayBtnClick() throws IOException {
+    public void onPlayBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Condensation Application - Queue");
-        stage.setScene(scene);
-        stage.show();
+        window.setScene(scene);
+        window.show();
     }
 
     // leaderboard
     @FXML
     public void onLeaderboardBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
-        stage = (Stage) leaderboardBtn.getScene().getWindow();
-        CheckersLeaderboard controller = new CheckersLeaderboard();
-        fxmlLoader.setController(controller);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-        stage.setTitle("Checkers - Leaderboard");
-        stage.setScene(scene);
-        stage.show();
+        window.setTitle("Checkers - Leaderboard");
+        window.setScene(scene);
+        window.show();
     }
 
     // how to play button
     @FXML
     void onHowToPlayBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersDescription.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        CheckersHowToPlayController controller = new CheckersHowToPlayController();
-        fxmlLoader.setController(controller);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Checkers Description");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
+        window.setTitle("Checkers Description");
+        window.setScene(scene);
+        window.setMinWidth(700);
+        window.setMinHeight(530);
+        window.show();
     }
 
 
