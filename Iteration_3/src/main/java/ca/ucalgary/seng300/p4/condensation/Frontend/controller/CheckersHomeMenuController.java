@@ -34,10 +34,6 @@ public class CheckersHomeMenuController {
     @FXML
     Button howToPlayBackBtn;
 
-    public CheckersHomeMenuController(Stage stage) {
-        this.stage = stage;
-    }
-
 
     // Checkers home menu
     @FXML
