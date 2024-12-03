@@ -230,7 +230,7 @@ public class CheckersController {
         String gameState = (String) payload.get("GameState");
         if ("WIN".equals(gameState)) {
             String playerWon = (String) payload.get("PlayerWon");
-            turnLabel.setText(STR."Player \{playerWon} won the game!");
+            turnLabel.setText(String.format("Player %s won the game!", playerWon));
             if (playerWon.equals(playerOne)){
                 turnLabel.setTextFill(Color.GREEN);
             }
@@ -450,7 +450,7 @@ public class CheckersController {
                 }
             }
         } catch (Exception e) {
-            System.err.println(STR."Error reading leaderboard.json: \{e.getMessage()}");
+            System.err.println(String.format("Error reading leaderboard.json: %s", e.getMessage()));
         }
         return null;
     }
