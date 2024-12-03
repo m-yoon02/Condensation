@@ -72,7 +72,7 @@ public class TicTacToeQueueController {
         Object newplayerJSONFileObject = new JSONParser().parse(new FileReader(NetworkManager.PLAYER_ID_FILE));
         JSONObject newplayerJSONFile = (JSONObject) newplayerJSONFileObject;
 
-        playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID "));
+        playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID"));
         playerInfoForGame.put("gameType", GameTypes.TICTACTOE);
         JSONObject startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
 
