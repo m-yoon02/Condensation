@@ -44,6 +44,7 @@ public class NetworkManager {
     private static final String LEADERBOARD_DIR = Paths.get(ABSOLUTE_PATH, "src", "main", "java", "ca", "ucalgary", "seng300", "p4", "condensation", "Networking", "Database", "Leaderboard").toString();
     public static final String LEADERBOARD_FILE = Paths.get(LEADERBOARD_DIR,"Leaderboard.json").toString();
     public static final String PLAYER_ID_FILE = Paths.get(LEADERBOARD_DIR, "playerID.json").toString();
+    public static final String NEW_GAME_FILE = Paths.get(LEADERBOARD_DIR, "newgame.json").toString();
 
     /**
      * constructor for network manager instance, when creating a new one

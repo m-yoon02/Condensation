@@ -70,7 +70,7 @@ public class CheckersQueueController {
         playerInfoForGame.put("gameType", GameTypes.CHECKERS);
         JSONObject startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
 
-        FileWriter fileWriter = new FileWriter("src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/newgame.json");
+        FileWriter fileWriter = new FileWriter(NetworkManager.PLAYER_ID_FILE);
         fileWriter.write(startGameInfoPayload.toJSONString());
         fileWriter.flush();
         fileWriter.close();
