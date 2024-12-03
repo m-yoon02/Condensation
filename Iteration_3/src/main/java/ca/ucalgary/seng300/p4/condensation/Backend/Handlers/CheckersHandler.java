@@ -154,14 +154,16 @@ public class CheckersHandler extends GameHandler {
         if(board.getAt(newPos) != null || (abs(distanceX) == 2 && board.getAt(oldPos.x()+(distanceX/2), oldPos.y()+(distanceY/2)) == null)){
             return false;
         }
-        //if destination is 2 tiles away, divide both distances by two to compare to the piece's possible directions
-        //assumes if x>1||x<-1, then y is also >1 || <-1
+        //if destination is 2 tiles away,
+        // divide both distances by two to compare to the piece's possible directions
         if(distanceX > 1 || distanceX < -1){
             distanceX = distanceX/2;
             distanceY = distanceY/2;
         }
         int[] directionOfTravel = {distanceX, distanceY};
         int[][] directions = getDirections(board.getAt(oldPos));
+        //iterates through each possible direction of travel for the piece and compares it with the
+        //actual direction of travel. Returns true if they are equal
         for(int[] dir: directions){
             if(dir[0] == directionOfTravel[0] && dir[1] == directionOfTravel[1]){
                 return true;
