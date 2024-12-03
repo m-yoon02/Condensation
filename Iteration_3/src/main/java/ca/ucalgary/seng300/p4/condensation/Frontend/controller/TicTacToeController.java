@@ -7,17 +7,17 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import javafx.scene.control.Label;
 
 import java.io.File;
 import java.io.FileReader;
@@ -234,6 +234,51 @@ public class TicTacToeController {
         System.out.println("Forfeit canceled. The window remains open.");
     }
 
+    @FXML
+    TextArea chatBox;
+
+    @FXML
+    Button sendBtn;
+
+    @FXML
+    ScrollPane chatScrollPane;
+
+    @FXML
+    VBox paneInsideScrollPane;
+
+
+    String username = "Me";
+    // TODOL: Connect
+    public void onSendBtnClick() {
+        String messageStr = chatBox.getText();
+        if (!messageStr.isEmpty()) {
+            HBox messageHBox = new HBox();
+            messageHBox.setStyle("    -fx-pref-width: 50;\n" +
+                    "    -fx-max-width: 200;");
+            messageHBox.setPadding(new Insets(5, 10, 5, 5));
+            messageHBox.setMaxHeight(Integer.MAX_VALUE);
+            Label senderName = new Label(username);
+            senderName.setStyle("-fx-font-size: 13;\n" +
+                    "    -fx-font-family: \"Oswald\", sans-serif;\n" +
+                    "    -fx-text-fill: White;\n" +
+                    "    -fx-font-weight: bold;");
+            senderName.setPadding(new Insets(0, 0, -3, 0));
+            Label message = new Label(messageStr);
+            message.setStyle("-fx-font-size: 12;\n" +
+                    "    -fx-font-family: \"Oswald\", sans-serif;\n" +
+                    "    -fx-text-fill: White;");
+            message.setWrapText(true);
+            message.setLineSpacing(-5);
+            VBox vBox = new VBox(senderName, message);
+            vBox.setMaxHeight(Integer.MAX_VALUE);
+            messageHBox.getChildren().addAll(vBox);
+            paneInsideScrollPane.getChildren().add(messageHBox);
+            chatBox.setText("");
+            chatScrollPane.setVvalue(1.0);
+        }
+    }
 }
+
+
 
 
