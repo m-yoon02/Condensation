@@ -153,7 +153,7 @@ public class LoginController {
                 errorMessage.setTextFill(Color.BLACK);
                 try {
                     // Load the profileHome.fxml file to change scene
-                    loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/profileHome.fxml"));
+                    loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/ProfileHome.fxml"));
                     root = loader.load();
 
                     // Set the window and scene to the login screen
