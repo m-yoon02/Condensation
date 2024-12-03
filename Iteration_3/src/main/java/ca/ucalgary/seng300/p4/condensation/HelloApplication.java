@@ -16,17 +16,19 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 781, 479);
+//        fxmlLoader.setController(null);
+//        fxmlLoader.setController(new CheckersHomeMenuController(stage));
+        fxmlLoader.setController(new CheckersController(stage));
+        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
 
-//        Image appIcon = new Image(getClass().getResourceAsStream("logo.png"));
-//        stage.getIcons().add(appIcon);
+        Image appIcon = new Image(getClass().getResourceAsStream("logo.png"));
+        stage.getIcons().add(appIcon);
 
         stage.setResizable(false);
         stage.setTitle("Condensation Application");
         stage.setScene(scene);
         stage.show();
     }
-
 
     public static void main(String[] args) {
         launch();
