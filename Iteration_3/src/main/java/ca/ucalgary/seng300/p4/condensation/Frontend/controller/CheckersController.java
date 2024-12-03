@@ -8,14 +8,13 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
@@ -34,10 +33,6 @@ import java.util.*;
 
 public class CheckersController {
     static Stage stage;
-
-    public CheckersController(Stage stage) {
-        this.stage = stage;
-    }
 
     // Checkers instance
     @FXML

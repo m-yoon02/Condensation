@@ -34,10 +34,6 @@ public class CheckersHomeMenuController {
     @FXML
     Button howToPlayBackBtn;
 
-    public CheckersHomeMenuController(Stage stage) {
-        this.stage = stage;
-    }
-
 
     // Checkers home menu
     @FXML
@@ -55,9 +51,10 @@ public class CheckersHomeMenuController {
 
     // play button
     @FXML
-    public void onPlayBtnClick() throws IOException {
+    public void onPlayBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Condensation Application - Queue");
         stage.setScene(scene);
         stage.show();
@@ -67,10 +64,7 @@ public class CheckersHomeMenuController {
     @FXML
     public void onLeaderboardBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
-        stage = (Stage) leaderboardBtn.getScene().getWindow();
-        CheckersLeaderboard controller = new CheckersLeaderboard();
-        fxmlLoader.setController(controller);
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("Checkers - Leaderboard");
         stage.setScene(scene);
         stage.show();
@@ -81,8 +75,6 @@ public class CheckersHomeMenuController {
     void onHowToPlayBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersDescription.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        CheckersHowToPlayController controller = new CheckersHowToPlayController();
-        fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("Checkers Description");
         stage.setScene(scene);
