@@ -172,7 +172,7 @@ public class ConnectFourController {
         String gameState = (String) update.get("GameState");
         if ("WIN".equals(gameState)) {
             String playerWon = (String) update.get("PlayerWon");
-            playerTurnText.setText(STR."Player \{playerWon} won the game!");
+            playerTurnText.setText(String.format("Player %s won the game!", playerWon));
         } else if ("TIE".equals(gameState)) {
             playerTurnText.setText("The game ended in a tie!");
         }
@@ -188,7 +188,7 @@ public class ConnectFourController {
         sessionID = (UUID) update.get("SessionID");
         playerID = (UUID) update.get("PlayerTurn");
         String playerTurnName = getUsernameFromUUID(String.valueOf(playerID));
-        playerTurnText.setText(STR."It's \{playerTurnName}'s turn!");
+        playerTurnText.setText(String.format("It's %s's turn!", playerTurnName));
 
         JSONArray changes = (JSONArray) update.get("Changes");
         updateBoard(changes);
