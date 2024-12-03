@@ -26,18 +26,18 @@ public class tMenuController {
 
     @FXML
     public void initialize() {
-        playButton.setOnAction(event -> navigateTo("tictactoequeue.fxml"));
-        leaderboardButton.setOnAction(event -> navigateTo("tLeaderboard.fxml"));
-        howToPlayButton.setOnAction(event -> navigateTo("tHowToPlay.fxml"));
-        goBack.setOnAction(event -> navigateTo("ProfileGame.fxml"));
+        playButton.setOnAction(event -> navigateTo("Condensation Appliance - Tic Tac Toe Queue", "tictactoequeue.fxml"));
+        leaderboardButton.setOnAction(event -> navigateTo("Condensation Appliance - Tic Tac Toe Leaderboard", "tLeaderboard.fxml"));
+        howToPlayButton.setOnAction(event -> navigateTo("Condensation Appliance - How to Play Tic Tac Toe", "tHowToPlay.fxml"));
+        goBack.setOnAction(event -> navigateTo("Condensation Appliance - Games Menu", "ProfileGame.fxml"));
     }
 
-    private void navigateTo(String fxmlFile) {
+    private void navigateTo(String title, String fxmlFile) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
             Stage stage = (Stage) playButton.getScene().getWindow();
             Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-            stage.setTitle("Games Menu");
+            stage.setTitle(title);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

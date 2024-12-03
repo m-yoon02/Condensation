@@ -23,7 +23,7 @@ public class tHowToPlayController {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
             Stage stage = (Stage) backbutton.getScene().getWindow();
             Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-            stage.setTitle("How to Play Tic Tac Toe!");
+            stage.setTitle("Condensation Appliance - How To Play Tic Tac Toe");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

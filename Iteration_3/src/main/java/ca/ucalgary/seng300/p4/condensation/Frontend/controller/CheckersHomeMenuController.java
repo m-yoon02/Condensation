@@ -55,6 +55,7 @@ public class CheckersHomeMenuController {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        window.setTitle("Condensation Appliance - Checkers Queue");
         window.setScene(scene);
         window.show();
     }
@@ -65,7 +66,7 @@ public class CheckersHomeMenuController {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-        window.setTitle("Checkers - Leaderboard");
+        window.setTitle("Condensation Appliance - Checkers Leaderboard");
         window.setScene(scene);
         window.show();
     }

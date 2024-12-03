@@ -34,18 +34,18 @@ public class ConnectFourHomeMenuController {
         connect4Image.setImage(new Image(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/connect4.png").toExternalForm()));
 
         // Button navigation
-        playButton.setOnAction(event -> navigateTo("/ca/ucalgary/seng300/p4/condensation/connectfourqueue.fxml"));
-        leaderboardButton.setOnAction(event -> navigateTo("/ca/ucalgary/seng300/p4/condensation/ConnectFourLeaderboard.fxml"));
-        howToPlayButton.setOnAction(event -> navigateTo("/ca/ucalgary/seng300/p4/condensation/howToPlayConnect4.fxml"));
-        backButton.setOnAction(event -> navigateTo("ProfileGame.fxml")); // Update with the actual previous page
+        playButton.setOnAction(event -> navigateTo("Condensation Appliance - Connect Four Queue", "/ca/ucalgary/seng300/p4/condensation/connectfourqueue.fxml"));
+        leaderboardButton.setOnAction(event -> navigateTo("Condensation Appliance - Connect Four Leaderboard", "/ca/ucalgary/seng300/p4/condensation/ConnectFourLeaderboard.fxml"));
+        howToPlayButton.setOnAction(event -> navigateTo("Condensation Appliance - How To Play Connect Four", "/ca/ucalgary/seng300/p4/condensation/howToPlayConnect4.fxml"));
+        backButton.setOnAction(event -> navigateTo("Condensation Appliance - Games Menu", "ProfileGame.fxml")); // Update with the actual previous page
     }
 
-    private void navigateTo(String fxmlFile) {
+    private void navigateTo(String title, String fxmlFile) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
             Stage stage = (Stage) playButton.getScene().getWindow();
             Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-            stage.setTitle("Games Menu");
+            stage.setTitle(title);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

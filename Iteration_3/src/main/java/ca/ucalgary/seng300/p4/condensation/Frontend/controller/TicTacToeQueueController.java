@@ -81,7 +81,7 @@ public class TicTacToeQueueController {
         fileWriter.flush();
         fileWriter.close();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tictactoe.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("Condensation Application - Tic Tac Toe");
         stage.setScene(scene);

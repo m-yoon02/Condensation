@@ -15,7 +15,7 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("WelcomeScreen.fxml"));
 //        fxmlLoader.setController(null);
 //        fxmlLoader.setController(new CheckersHomeMenuController(stage));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);

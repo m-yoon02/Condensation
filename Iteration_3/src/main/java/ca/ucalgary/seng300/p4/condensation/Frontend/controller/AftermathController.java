@@ -122,21 +122,21 @@ public class AftermathController {
         if (gameType == TICTACTOE){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tictactoequeue.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-            stage.setTitle("Condensation Application - Queue");
+            stage.setTitle("Condensation Application - Tic Tac Toe Queue");
             stage.setScene(scene);
             stage.show();
         }
         else if (gameType == CONNECT4){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connectfourqueue.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-            stage.setTitle("Condensation Application - Queue");
+            stage.setTitle("Condensation Application - Connect FourQueue");
             stage.setScene(scene);
             stage.show();
         }
         else{
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-            stage.setTitle("Condensation Application - Queue");
+            stage.setTitle("Condensation Application - Checkers Queue");
             stage.setScene(scene);
             stage.show();
         }
