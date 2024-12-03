@@ -2,7 +2,6 @@ package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
 import ca.ucalgary.seng300.p4.condensation.Backend.Handlers.GameHandler;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
-//import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.DatabaseBuilder;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
@@ -344,7 +343,7 @@ public class NetworkManager {
      * PostCondition: able to verify the client is logged in, and them to pool and returns a matchedGameSession object, which eventually sends created
      *               gameSession information to the GameSessionManager and finally uuids to the backend via (sendCreatedGameSession)
      */
-    public JSONObject handleQueuePlayer(JSONObject queuedPlayerPayload) throws IOException, ParseException {
+    public String handleQueuePlayer(JSONObject queuedPlayerPayload) throws IOException, ParseException {
 
         System.out.println(queuedPlayerPayload);
         // Extracts all neccessary Player1 information from database and payload and instantiates the queuedPlayer
@@ -383,15 +382,15 @@ public class NetworkManager {
 
         // preparing the json payload to be sent to the frontEnd
         JSONObject matchedSessionResponse = new JSONObject();
-        matchedSessionResponse.put("sessionID", sessionID);
-        matchedSessionResponse.put("player1ID", player1UUID);
-        matchedSessionResponse.put("player2ID", player2UUID);
-        matchedSessionResponse.put("currentPlayerTurn", getFirstPlayerID);
-        matchedSessionResponse.put("gameType", gameType);
+        matchedSessionResponse.put("sessionID", sessionID.toString());
+        matchedSessionResponse.put("player1ID", player1UUID.toString());
+        matchedSessionResponse.put("player2ID", player2UUID.toString());
+        matchedSessionResponse.put("currentPlayerTurn", getFirstPlayerID.toString());
+        matchedSessionResponse.put("gameType", gameType.toString());
 
         // also everytime client sends network a payload they will need to give sessionID so we can find the gameSession object and update the game handler field in the GameSession's object.
         // This way this.gamehandler recieves a payload and should then notify the frontend using the client listeners.
-        return matchedSessionResponse;
+        return matchedSessionResponse.toJSONString();
     }
 
 
@@ -400,7 +399,7 @@ public class NetworkManager {
      * @param challengeQueuedPlayer
      * @return
      */
-    public JSONObject handleChallengedQueuePlayer(JSONObject challengeQueuedPlayer){
+    public String handleChallengedQueuePlayer(JSONObject challengeQueuedPlayer){
 
         // Pseudocode :
         // 1. The frontend will have a button in the player lookup which essentially allows you to challenge a player if they are online.
