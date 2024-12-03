@@ -9,13 +9,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CheckersControllerTest extends ApplicationTest {
+public class CheckersControllerTest extends ApplicationTest {
 
     GridPane chessboardGrid;
     Label turnLabel;
