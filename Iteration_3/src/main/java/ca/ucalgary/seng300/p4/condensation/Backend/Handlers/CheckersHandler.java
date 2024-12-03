@@ -149,14 +149,25 @@ public class CheckersHandler extends GameHandler {
     private boolean isValidMove(Vector2 oldPos, Vector2 newPos){
         int distanceX = abs(newPos.x()) - abs(oldPos.x());
         int distanceY = abs(newPos.y()) - abs(oldPos.y());
-        if(abs(distanceX) > 2 || abs(distanceY) > 2 || abs(distanceX) < 1 || abs(distanceY) < 1
-                || abs(distanceY) != abs(distanceX) || board.getAt(newPos) != null){
+        // return false if there's a piece at newPos,
+        // or if there is no piece to jump over if the piece is trying to travel 2 tiles away
+        if(board.getAt(newPos) != null || (abs(distanceX) == 2 && board.getAt(oldPos.x()+(distanceX/2), oldPos.y()+(distanceY/2)) == null)){
             return false;
         }
-        if(abs(distanceX) == 2 && board.getAt(oldPos.x()+(distanceX/2), oldPos.y()+(distanceY/2)) == null){
-            return false;
+        //if destination is 2 tiles away, divide both distances by two to compare to the piece's possible directions
+        //assumes if x>1||x<-1, then y is also >1 || <-1
+        if(distanceX > 1 || distanceX < -1){
+            distanceX = distanceX/2;
+            distanceY = distanceY/2;
         }
-        return true;
+        int[] directionOfTravel = {distanceX, distanceY};
+        int[][] directions = getDirections(board.getAt(oldPos));
+        for(int[] dir: directions){
+            if(dir[0] == directionOfTravel[0] && dir[1] == directionOfTravel[1]){
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * Checks if a player is able to make further moves
