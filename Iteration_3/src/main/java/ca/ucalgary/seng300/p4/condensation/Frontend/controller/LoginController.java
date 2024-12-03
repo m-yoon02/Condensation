@@ -30,7 +30,7 @@ import java.io.IOException;
 public class LoginController {
 
     // Path to the json file for storing the username and UUID
-    public static final String DEFAULT_PLAYER_ID_FILE = "/Users/nateshoad/Desktop/University /Java_Files/SENG300F24P/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json";
+    public static final String DEFAULT_PLAYER_ID_FILE = "Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json";
 
     @FXML
     public Button loginBtn;
