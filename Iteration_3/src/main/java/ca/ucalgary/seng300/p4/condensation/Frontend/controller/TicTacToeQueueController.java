@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -10,16 +11,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import javafx.scene.layout.Pane;
-
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -74,14 +69,10 @@ public class TicTacToeQueueController {
 
         playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID"));
         playerInfoForGame.put("gameType", GameTypes.TICTACTOE);
-        JSONObject startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
+        String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
+        GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
 
-        FileWriter fileWriter = new FileWriter(NetworkManager.NEW_GAME_FILE);
-        fileWriter.write(startGameInfoPayload.toJSONString());
-        fileWriter.flush();
-        fileWriter.close();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tGame.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("Condensation Application - Tic Tac Toe");
         stage.setScene(scene);

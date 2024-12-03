@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -68,13 +69,8 @@ public class CheckersQueueController {
 
         playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID"));
         playerInfoForGame.put("gameType", GameTypes.CHECKERS);
-        JSONObject startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
-
-        FileWriter fileWriter = new FileWriter(NetworkManager.PLAYER_ID_FILE);
-        fileWriter.write(startGameInfoPayload.toJSONString());
-        fileWriter.flush();
-        fileWriter.close();
-
+        String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
+        GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("Checkers");

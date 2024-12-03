@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -64,19 +65,12 @@ public class ConnectFourQueueController {
     // https://dzone.com/articles/how-can-we-read-a-json-file-in-java
     public void sendToBackendConnectFour() throws IOException, ParseException {
         JSONObject playerInfoForGame = new JSONObject();
-
         Object newplayerJSONFileObject = new JSONParser().parse(new FileReader(NetworkManager.PLAYER_ID_FILE));
         JSONObject newplayerJSONFile = (JSONObject) newplayerJSONFileObject;
-
         playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID"));
         playerInfoForGame.put("gameType", GameTypes.CONNECT4);
-        JSONObject startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
-
-        FileWriter fileWriter = new FileWriter(NetworkManager.NEW_GAME_FILE);
-        fileWriter.write(startGameInfoPayload.toJSONString());
-        fileWriter.flush();
-        fileWriter.close();
-
+        String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
+        GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("Condensation Appliance - Connect Four");

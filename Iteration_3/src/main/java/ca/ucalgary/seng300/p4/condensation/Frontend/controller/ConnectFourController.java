@@ -1,7 +1,9 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
@@ -89,13 +91,12 @@ public class ConnectFourController {
             }
         }
 
-        Object newPlayerJSONFileObject = new JSONParser().parse(new FileReader("newplayer.json"));
-        JSONObject newPlayerJSONFile = (JSONObject) newPlayerJSONFileObject;
+        GameSessionRecord gameSessionRecord = GameSessionRecord.getGameSessionRecord();
 
-        playerOne = (UUID) newPlayerJSONFile.get("Player1ID");
-        playerTwo = (UUID) newPlayerJSONFile.get("player2ID");
-        newTurn =  (UUID) newPlayerJSONFile.get("currentPlayerTurn");
-        sessionID = (UUID) newPlayerJSONFile.get("sessionID");
+        playerOne = gameSessionRecord.getPlayer1ID();
+        playerTwo = gameSessionRecord.getPlayer2ID();
+        newTurn = gameSessionRecord.getCurrentPlayerID();
+        sessionID = gameSessionRecord.getSessionID();
     }
 
     @FXML
@@ -255,16 +256,15 @@ public class ConnectFourController {
         }
 
         JSONObject move = new JSONObject();
-        move.put("SessionID", sessionID);
-        move.put("PlayerID", playerID);
+        move.put("SessionID", sessionID.toString());
+        move.put("PlayerID", playerID.toString());
 
         Vector2 newPosition = new Vector2(row, col);
-        move.put("NewPosition", newPosition);
+        move.put("NewPosition", newPosition.toString());
 
         System.out.println("Sending move to backend: " + move.toJSONString());
 
-        JSONObject backendResponse = NetworkManager.getNetworkInstance().handleQueuePlayer(move);
-        receiveConnectFour(backendResponse);
+        NetworkManager.getNetworkInstance().receiveGameDataFromClient(move);
     }
 
     private static void disableAllButtons() {

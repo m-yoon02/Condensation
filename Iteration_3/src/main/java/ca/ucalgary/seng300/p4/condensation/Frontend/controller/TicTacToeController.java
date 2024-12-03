@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -68,13 +69,11 @@ public class TicTacToeController {
                 {btn20, btn21, btn22}
         };
 
-        Object newPlayerJSONFileObject = new JSONParser().parse(new FileReader("sessionData.json"));
-        JSONObject newPlayerJSONFile = (JSONObject) newPlayerJSONFileObject;
-
-        playerOne = (UUID) newPlayerJSONFile.get("Player1ID");
-        playerTwo = (UUID) newPlayerJSONFile.get("player2ID");
-        newTurn =  (UUID) newPlayerJSONFile.get("currentPlayerTurn");
-        sessionID = (UUID) newPlayerJSONFile.get("sessionID");
+        GameSessionRecord gameSessionRecord = GameSessionRecord.getGameSessionRecord();
+        playerOne = gameSessionRecord.getPlayer1ID();
+        playerTwo = gameSessionRecord.getPlayer2ID();
+        newTurn = gameSessionRecord.getCurrentPlayerID();
+        sessionID = gameSessionRecord.getSessionID();
 
         playerStatus.setText("RED TURN - YOUR TURN");
         playerStatus.setTextFill(Color.RED);

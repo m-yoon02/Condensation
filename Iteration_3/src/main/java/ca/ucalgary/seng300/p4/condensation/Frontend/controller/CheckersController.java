@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -71,13 +72,12 @@ public class CheckersController {
     @FXML
     public void initialize() throws IOException, ParseException {
 
-        Object newPlayerJSONFileObject = new JSONParser().parse(new FileReader("newplayer.json"));
-        JSONObject newPlayerJSONFile = (JSONObject) newPlayerJSONFileObject;
+        GameSessionRecord gameSessionRecord = GameSessionRecord.getGameSessionRecord();
 
-        playerOne = (UUID) newPlayerJSONFile.get("Player1ID");
-        playerTwo = (UUID) newPlayerJSONFile.get("player2ID");
-        newTurn =  (UUID) newPlayerJSONFile.get("currentPlayerTurn");
-        sessionID = (UUID) newPlayerJSONFile.get("sessionID");
+        playerOne = gameSessionRecord.getPlayer1ID();
+        playerTwo = gameSessionRecord.getPlayer2ID();
+        sessionID = gameSessionRecord.getSessionID();
+        newTurn = gameSessionRecord.getCurrentPlayerID();
 
         int blackCount = 0;
         int redCount = 0;
