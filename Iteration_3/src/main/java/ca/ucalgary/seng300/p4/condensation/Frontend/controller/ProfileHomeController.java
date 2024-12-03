@@ -242,7 +242,7 @@ public class ProfileHomeController {
         System.out.println("Logged out");
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("C:\\Users\\M.Y\\OneDrive - University of Calgary\\Documents\\Fall 2024\\SENG300\\Final Project\\iteration 3\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\playerID.json"));
+            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(NetworkManager.PLAYER_ID_FILE));
 
             String playerID = (String) jsonObject.get("playerID");
             UUID playerUUID = UUID.fromString(playerID);

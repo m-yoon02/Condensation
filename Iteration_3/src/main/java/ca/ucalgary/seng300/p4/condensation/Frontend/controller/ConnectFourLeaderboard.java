@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -137,7 +138,7 @@ public class ConnectFourLeaderboard {
     public static Team mainTeam;
 
     static {
-        File file = new File("Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+        File file = new File(NetworkManager.LEADERBOARD_FILE);
 
         mainTeam = load(file);
         if (mainTeam == null) {

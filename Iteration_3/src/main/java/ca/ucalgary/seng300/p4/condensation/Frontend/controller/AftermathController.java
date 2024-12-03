@@ -3,6 +3,7 @@ import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,7 +55,7 @@ public class AftermathController {
         JSONArray data = Leaderboard.getInstance().getAllUsers();
         JSONObject playerInfoForGame = new JSONObject();
 
-        Object newplayerJSONFileObject = new JSONParser().parse(new FileReader("playerID.json"));
+        Object newplayerJSONFileObject = new JSONParser().parse(new FileReader(NetworkManager.PLAYER_ID_FILE));
         JSONObject newplayerJSONFile = (JSONObject) newplayerJSONFileObject;
 
         String idOfPlayer = (String) newplayerJSONFile.get("playerID");

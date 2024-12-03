@@ -1,11 +1,10 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -17,8 +16,6 @@ import org.json.simple.JSONObject;
  */
 public class Leaderboard {
     private static Leaderboard instance; // Singleton instance
-    private static final Path ABSOLUTE_PATH = Path.of("").toAbsolutePath();
-    private String DATA_FILE = Paths.get(ABSOLUTE_PATH.toString(), "src", "main", "java", "ca", "ucalgary", "seng300", "p4", "condensation", "Networking", "Database", "Leaderboard", "Leaderboard.json").toString();
     private JSONArray users;
     private JSONObject playerInGame;
 
@@ -56,7 +53,7 @@ public class Leaderboard {
      * @throws ParseException if there is an error parsing the JSON data.
      */
     public void loadData() throws IOException, ParseException {
-        File file = new File(DATA_FILE);
+        File file = new File(NetworkManager.LEADERBOARD_FILE);
         if (!file.exists()) {
             throw new FileNotFoundException("Leaderboard.json not found in the working directory: " + file.getAbsolutePath());
         }
@@ -78,7 +75,7 @@ public class Leaderboard {
      */
     public void saveData() throws IOException {
         try {
-            FileWriter fileWriter = new FileWriter(DATA_FILE);
+            FileWriter fileWriter = new FileWriter(NetworkManager.LEADERBOARD_FILE);
             fileWriter.write(users.toJSONString());
             fileWriter.flush();
             fileWriter.close();
@@ -95,10 +92,6 @@ public class Leaderboard {
      */
     public JSONArray getAllUsers() {
         return users;
-    }
-
-    public void setDATA_FILE(String DATA_FILE) {
-        this.DATA_FILE = DATA_FILE;
     }
 
     public void createUser(String name, String password) throws IOException {
@@ -693,9 +686,7 @@ public class Leaderboard {
 
 
    public String fetchUserFromNewPlayerJson() throws FileNotFoundException {
-        String playerFile = "Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json";
-
-       File file = new File(playerFile);
+       File file = new File(NetworkManager.PLAYER_ID_FILE);
        if (!file.exists()) {
            throw new FileNotFoundException("Leaderboard.json not found in the working directory: " + file.getAbsolutePath());
        }

@@ -63,7 +63,7 @@ public class CheckersQueueController {
     public void sendToBackendCheckers() throws IOException, ParseException {
         JSONObject playerInfoForGame = new JSONObject();
 
-        Object newplayerJSONFileObject = new JSONParser().parse(new FileReader("playerID.json"));
+        Object newplayerJSONFileObject = new JSONParser().parse(new FileReader(NetworkManager.PLAYER_ID_FILE));
         JSONObject newplayerJSONFile = (JSONObject) newplayerJSONFileObject;
 
         playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID"));

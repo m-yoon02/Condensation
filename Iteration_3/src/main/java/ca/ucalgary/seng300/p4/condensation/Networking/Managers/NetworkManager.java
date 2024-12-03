@@ -17,6 +17,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class NetworkManager {
@@ -34,14 +36,14 @@ public class NetworkManager {
 
     // client listener lists mapped to specific to their gameSessions
 
-    private final String DATA_FILE = "\\C:\\Users\\Richa\\IdeaProjects\\demo6\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json\\";
     private Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final ChatService chatService;
 
-
-
-
+    private static final String ABSOLUTE_PATH = Path.of("").toAbsolutePath().toString();
+    private static final String LEADERBOARD_DIR = Paths.get(ABSOLUTE_PATH, "src", "main", "java", "ca", "ucalgary", "seng300", "p4", "condensation", "Networking", "Database", "Leaderboard").toString();
+    public static final String LEADERBOARD_FILE = Paths.get(LEADERBOARD_DIR,"Leaderboard.json").toString();
+    public static final String PLAYER_ID_FILE = Paths.get(LEADERBOARD_DIR, "playerID.json").toString();
 
     /**
      * constructor for network manager instance, when creating a new one
@@ -519,14 +521,4 @@ public class NetworkManager {
 
         return null;
     }
-
-    /**
-     * getDATA_FILE simply gets the path of the data file
-     * @return
-     */
-    public String getDATA_FILE(){
-        return DATA_FILE;
-    }
-
-
 }

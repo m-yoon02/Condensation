@@ -192,7 +192,7 @@ public class ConnectFourController {
 
     private static String getUsernameFromUUID(String playerUUID) {
         try {
-            File file = new File("Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+            File file = new File(NetworkManager.LEADERBOARD_FILE);
             JSONParser parser = new JSONParser();
             JSONArray leaderboard = (JSONArray) parser.parse(new FileReader(file));
 

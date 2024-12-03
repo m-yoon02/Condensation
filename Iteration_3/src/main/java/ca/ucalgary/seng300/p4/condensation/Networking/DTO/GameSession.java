@@ -27,8 +27,6 @@ public class GameSession implements GameEndListener, TurnEndListener {
     // field for instantited GameHandler
     private final GameHandler gameHandler;
     private final GameTypes gameType;
-    private final String DATA_FILE = "\\C:\\Users\\Richa\\IdeaProjects\\demo6\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json\\";
-
 
     /**
      * When creating GameSession we initialize sessionID field, and player1 and player2 UUIDs which will be passed into some instance of GameHandler
