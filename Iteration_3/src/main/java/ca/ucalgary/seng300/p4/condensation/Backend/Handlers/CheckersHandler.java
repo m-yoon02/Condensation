@@ -252,12 +252,10 @@ public class CheckersHandler extends GameHandler {
                     return true;
                 }
             } else{
-                if((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing())){
-                    return true;
-                }
-                if((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())){
+                if(((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
+                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
+                        && ((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
+                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing()))){
                     return true;
                 }
             }
@@ -275,48 +273,54 @@ public class CheckersHandler extends GameHandler {
                     return true;
                 }
             } else{
-                if((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing())){
-                    return true;
-                }
-                if((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())){
+                if(((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
+                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
+                        && ((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
+                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing()))){
                     return true;
                 }
             }
         } else if(pos.x() == 6 || pos.x() == 7){
             if(pos.y() == 0 || pos.y() == 1){
-                if (board.getAt(pos.x()-1, pos.y()+1) != null
-                        && board.getAt(pos.x()-2, pos.y()+2) == null) {
+                if ((board.getAt(pos.x()-1, pos.y()+1) != null
+                        && board.getAt(pos.x()-2, pos.y()+2) == null)
+                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing())) {
                     return true;
                 }
             } else if(pos.y() == 6 || pos.y() == 7){
-                if (board.getAt(pos.x()-1, pos.y()-1) != null
-                        && board.getAt(pos.x()-2, pos.y()-2) == null) {
+                if ((board.getAt(pos.x()-1, pos.y()-1) != null
+                        && board.getAt(pos.x()-2, pos.y()-2) == null)
+                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())) {
                     return true;
                 }
             } else{
-                if((board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)){
+                if(((board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)
+                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
+                        || ((board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)
+                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing()))){
                     return true;
                 }
             }
         } else {
             if(pos.y() == 0 || pos.y() == 1){
-                if((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)){
+                if(((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
+                        || (board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null))
+                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing())){
                     return true;
                 }
             }  else if(pos.y() == 6 || pos.y() == 7){
-                if((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)){
+                if(((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
+                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null))
+                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())){
                     return true;
                 }
             } else{
-                if((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)
-                        || (board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)){
+                if(((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
+                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)
+                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
+                        || ((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
+                        || (board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)
+                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing()))){
                     return true;
                 }
             }
