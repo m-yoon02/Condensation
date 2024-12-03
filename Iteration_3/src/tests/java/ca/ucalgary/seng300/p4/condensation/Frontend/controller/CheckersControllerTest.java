@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import org.junit.After;
 import org.testfx.framework.junit.ApplicationTest;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
