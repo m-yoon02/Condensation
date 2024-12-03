@@ -75,13 +75,7 @@ public class TicTacToeHandlerTest {
 
     @Test(expected = Exception.class)
     public void testMakeMove_NullMoveData_ThrowsException() {
-        try {
-            ticTacToeHandler.makeMove((MoveData) null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove((MoveData) null);
     }
 
 
@@ -89,13 +83,7 @@ public class TicTacToeHandlerTest {
     public void testMakeMove_InvalidCoordinates_IgnoresMove() {
         MoveData md = new MoveData(p1ID, new Vector2(-1, 0));
 
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
     }
 
     @Test(expected = Exception.class)
@@ -104,13 +92,7 @@ public class TicTacToeHandlerTest {
 
         MoveData md = new MoveData(invalid, new Vector2(0, 0));
 
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
     }
 
 
@@ -118,13 +100,7 @@ public class TicTacToeHandlerTest {
     public void testMakeMove_ValidP1Move_UpdatesBoard() {
         MoveData md = new MoveData(p1ID, new Vector2(0, 0));
 
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0, 0);
         assertNotNull("Piece should be played at the move coordinates", piece);
@@ -136,13 +112,7 @@ public class TicTacToeHandlerTest {
     public void testMakeMove_ValidP2Move_UpdatesBoard() {
         MoveData md = new MoveData(p2ID, new Vector2(0, 1));
 
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0, 1);
         assertNotNull("Piece should be played at the move coordinates", piece);
@@ -153,32 +123,14 @@ public class TicTacToeHandlerTest {
     @Test
     public void testMakeMove_InvalidP1Move_DoesNotUpdateBoard() {
         MoveData md = new MoveData(p1ID, new Vector2(0, 0));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         md = new MoveData(p2ID, new Vector2(0, 1));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
 
         md = new MoveData(p1ID, new Vector2(0, 1));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0, 1);
 
@@ -188,41 +140,17 @@ public class TicTacToeHandlerTest {
     @Test
     public void testMakeMove_InvalidP2Move_DoesNotUpdateBoard() {
         MoveData md = new MoveData(p1ID, new Vector2(0, 0));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         md = new MoveData(p2ID, new Vector2(0, 1));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
 
         md = new MoveData(p1ID, new Vector2(0, 2));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         md = new MoveData(p2ID, new Vector2(0, 2));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         TicTacToePiece piece = ticTacToeHandler.getBoard().getAt(0, 2);
 
@@ -233,13 +161,7 @@ public class TicTacToeHandlerTest {
     @Test
     public void testVerticalWins_VerticalWinFirstColumn_DoesUpdateBoard() throws IOException, ParseException {
         MoveData md = new MoveData(p1ID, new Vector2(0, 0));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         md = new MoveData(p1ID, new Vector2(1, 0));
         ticTacToeHandler.makeMove(md);
@@ -469,32 +391,14 @@ public class TicTacToeHandlerTest {
     @Test
     public void testDiagonalWins_NoWinDiagonalTwo_1_DoesUpdateBoard() {
         MoveData md = new MoveData(p1ID, new Vector2(0, 2));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         md = new MoveData(p2ID, new Vector2(1, 1));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
 
         md = new MoveData(p1ID, new Vector2(2, 0));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         PieceColor color = ticTacToeHandler.getPlayerColorFromUUID(p1ID);
 
@@ -504,32 +408,14 @@ public class TicTacToeHandlerTest {
     @Test
     public void testDiagonalWins_NoWinDiagonalTwo_2_DoesUpdateBoard() {
         MoveData md = new MoveData(p2ID, new Vector2(0, 2));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         md = new MoveData(p1ID, new Vector2(1, 1));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
 
         md = new MoveData(p1ID, new Vector2(2, 0));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         PieceColor color = ticTacToeHandler.getPlayerColorFromUUID(p1ID);
 
@@ -539,32 +425,14 @@ public class TicTacToeHandlerTest {
     @Test
     public void testDiagonalWins_NoWinDiagonalTwo_3_DoesUpdateBoard() {
         MoveData md = new MoveData(p1ID, new Vector2(0, 2));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         md = new MoveData(p1ID, new Vector2(1, 1));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
 
         md = new MoveData(p2ID, new Vector2(2, 0));
-        try {
-            ticTacToeHandler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        ticTacToeHandler.makeMove(md);
 
         PieceColor color = ticTacToeHandler.getPlayerColorFromUUID(p1ID);
 

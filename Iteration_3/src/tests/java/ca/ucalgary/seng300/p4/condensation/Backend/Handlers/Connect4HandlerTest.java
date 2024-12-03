@@ -60,13 +60,7 @@ public class Connect4HandlerTest {
     public void testMakeMode_ValidP1Move_UpdatesBoard() {
         MoveData md = new MoveData(p1ID, new Vector2(0, 0));
 
-        try {
-            c4Handler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        c4Handler.makeMove(md);
 
         ConnectFourPiece piece = c4Handler.getBoard().getAt(0, 5);
         assertNotNull("Piece should be placed at bottom of column", piece);
@@ -77,13 +71,7 @@ public class Connect4HandlerTest {
     public void testMakeMove_ValidP2Move_UpdatesBoard() {
         MoveData md = new MoveData(p2ID, new Vector2(0, 0));
 
-        try {
-            c4Handler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        c4Handler.makeMove(md);
 
         ConnectFourPiece piece = c4Handler.getBoard().getAt(0, 5);
         assertNotNull("Piece should be placed at bottom of column", piece);
@@ -100,13 +88,7 @@ public class Connect4HandlerTest {
 
         MoveData md = new MoveData(p1ID, new Vector2(column, 0));
 
-        try {
-            c4Handler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        c4Handler.makeMove(md);
 
         int filledCells = 0;
         for (int row = 0; row < c4Handler.getBoard().getRowSize(); row++) {
@@ -303,20 +285,8 @@ public class Connect4HandlerTest {
         PieceColor one = c4Handler.getPlayerColorFromUUID(p1ID);
         PieceColor two = c4Handler.getPlayerColorFromUUID(p2ID);
 
-        try {
-            c4Handler.makeMove(new MoveData(p1ID, new Vector2(0, 0)));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            c4Handler.makeMove(new MoveData(p2ID, new Vector2(1, 0)));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(0, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(1, 0)));
 
         assertTrue("Player 1 matches first colour", (PieceColor.BLUE == one || one == PieceColor.ORANGE));
         assertTrue("Player 2 matches second colour", (PieceColor.ORANGE == two || two == PieceColor.BLUE));
@@ -342,26 +312,14 @@ public class Connect4HandlerTest {
 
     @Test(expected = Exception.class)
     public void testMakeMove_NullMoveData_ThrowsException() {
-        try {
-            c4Handler.makeMove((MoveData) null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        c4Handler.makeMove((MoveData) null);
     }
 
     @Test(expected = Exception.class)
     public void testMakeMove_InvalidCoordinates_IgnoresMove() {
         MoveData md = new MoveData(p1ID, new Vector2(-1, 0));
 
-        try {
-            c4Handler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        c4Handler.makeMove(md);
     }
 
     @Test(expected = Exception.class)
@@ -370,13 +328,7 @@ public class Connect4HandlerTest {
 
         MoveData md = new MoveData(invalid, new Vector2(0, 0));
 
-        try {
-            c4Handler.makeMove(md);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        c4Handler.makeMove(md);
     }
 
     @Test
