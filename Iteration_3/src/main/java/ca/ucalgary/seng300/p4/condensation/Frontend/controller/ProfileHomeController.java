@@ -235,33 +235,44 @@ public class ProfileHomeController {
 
     /**
      * Handles the logout button click event, logs the player out, and navigates to the welcome screen.
+     * Reads the player information dynamically from the JSON file instead of using a hardcoded file path.
      * @param event The ActionEvent triggered by the button click.
      */
     @FXML
     void onlogOutButtonClicked(ActionEvent event) {
-        System.out.println("Logged out");
+        System.out.println("Logging out...");
         try {
-            JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("C:\\Users\\M.Y\\OneDrive - University of Calgary\\Documents\\Fall 2024\\SENG300\\Final Project\\iteration 3\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\playerID.json"));
+            // Fetch the username of the logged-in player
+            String usernameOfPlayer = Leaderboard.getInstance().fetchUserFromNewPlayerJson();
+            System.out.println("Fetched username: " + usernameOfPlayer);
 
-            String playerID = (String) jsonObject.get("playerID");
-            UUID playerUUID = UUID.fromString(playerID);
+            if (usernameOfPlayer != null) {
+                // Find player data in the leaderboard
+                JSONObject playerData = Leaderboard.getInstance().findUserByName(usernameOfPlayer);
 
-            NetworkManager.getNetworkInstance().logoutHandler(playerUUID);
+                if (playerData != null) {
+                    // Extract player UUID and log out
+                    String playerId = (String) playerData.get("playerUUID");
+                    UUID playerUUID = UUID.fromString(playerId);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/WelcomeScreen.fxml"));
-            Pane root = loader.load();
+                    String response = NetworkManager.getNetworkInstance().logoutHandler(playerUUID);
+                    System.out.println("Logout response: " + response);
+                } else {
+                    System.out.println("Player not found in the leaderboard data for username: " + usernameOfPlayer);
+                }
+            } else {
+                System.out.println("Username is null; cannot proceed with logout.");
+            }
 
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            window.setScene(scene);
-            window.setResizable(false);
-            window.show();
+            // Navigate to the welcome screen regardless of the outcome
+            navigateToScreen(event, "WelcomeScreen.fxml");
 
-        } catch (IOException | ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Error during logout.");
         }
     }
+
 
     /**
      * Navigates to the specified screen.
