@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -40,8 +41,8 @@ public class CheckersControllerTest extends ApplicationTest {
         checkersController = fxmlLoader.getController();
     }
 
-    @BeforeEach
-    void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         chessboardGrid = (GridPane) lookup("#chessboardGrid").queryAs(GridPane.class);
         turnLabel = (Label) lookup("#turnLabel").queryAs(Label.class);
         forfeitBtn = (Button) lookup("#forfeitBtn").queryAs(Button.class);
@@ -53,8 +54,8 @@ public class CheckersControllerTest extends ApplicationTest {
         paneInsideScrollPane = (VBox) lookup("#paneInsideScrollPane").queryAs(VBox.class);
     }
 
-    @AfterEach
-    void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         chessboardGrid = null;
         turnLabel = null;
         forfeitBtn = null;
@@ -67,26 +68,26 @@ public class CheckersControllerTest extends ApplicationTest {
     }
 
     @Test
-    void initialize() {
+    public void initialize() {
     }
 
     @Test
-    void receiveCheckers() {
+    public void receiveCheckers() {
     }
 
     @Test
-    void returnToBackendCheckers() {
+    public void returnToBackendCheckers() {
     }
 
     @Test
-    void onForfeitBtnClick() {
+    public void onForfeitBtnClick() {
     }
 
     @Test
-    void onForfeitYesClick() {
+    public void onForfeitYesClick() {
     }
 
     @Test
-    void onSendBtnClick() {
+    public void onSendBtnClick() {
     }
 }

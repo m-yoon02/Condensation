@@ -1,7 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
+import ca.ucalgary.seng300.p4.condensation.Frontend.controller.LoginController;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.scene.layout.Pane;
-import javafx.stage.Window;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
