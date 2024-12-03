@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import org.testfx.framework.junit.ApplicationTest;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CheckersControllerTest {
+class CheckersControllerTest extends ApplicationTest {
 
     GridPane chessboardGrid;
     Label turnLabel;
@@ -45,12 +46,12 @@ class CheckersControllerTest {
         chessboardGrid = (GridPane) lookup("#chessboardGrid").queryAs(GridPane.class);
         turnLabel = (Label) lookup("#turnLabel").queryAs(Label.class);
         forfeitBtn = (Button) lookup("#forfeitBtn").queryAs(Button.class);
-        forfeitNoBtn = (GridPane) lookup("#forfeitNoBtn").queryAs(Button.class);
-        forfeitYesBtn = (GridPane) lookup("#forfeitYesBtn").queryAs(Button.class);
-        sendBtn = (GridPane) lookup("#sendBtn").queryAs(Button.class);
-        chatBox = (GridPane) lookup("#chatBox").queryAs(TextArea.class);
-        chatScrollPane = (GridPane) lookup("#chatScrollPane").queryAs(ScrollPane.class);
-        paneInsideScrollPane = (GridPane) lookup("#paneInsideScrollPane").queryAs(VBox.class);
+        forfeitNoBtn = (Button) lookup("#forfeitNoBtn").queryAs(Button.class);
+        forfeitYesBtn = (Button) lookup("#forfeitYesBtn").queryAs(Button.class);
+        sendBtn = (Button) lookup("#sendBtn").queryAs(Button.class);
+        chatBox = (TextArea) lookup("#chatBox").queryAs(TextArea.class);
+        chatScrollPane = (ScrollPane) lookup("#chatScrollPane").queryAs(ScrollPane.class);
+        paneInsideScrollPane = (VBox) lookup("#paneInsideScrollPane").queryAs(VBox.class);
     }
 
     @AfterEach
