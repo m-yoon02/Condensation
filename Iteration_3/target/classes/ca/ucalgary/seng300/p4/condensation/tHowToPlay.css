@@ -28,22 +28,22 @@
 }
 
 .rule-text {
-    -fx-font-size: 16px;
-    -fx-text-fill: #555555;
+    -fx-font-size: 15px;
+    -fx-text-fill: #324b98;
     -fx-line-spacing: 5px;
     -fx-padding: 0 10px;
 }
 
 /* Bottom Bar Styling */
 .bottom-bar {
-    -fx-padding: 10px;
-    -fx-background-color: #333333;
+    -fx-padding: 8px;
+    -fx-background-color: #091856;
 }
 
 .nav-button {
     -fx-font-size: 16px;
     -fx-text-fill: white;
-    -fx-background-color: #1b1c1c;
+    -fx-background-color: #2415e2;
     -fx-padding: 5px 15px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
@@ -52,4 +52,3 @@
 .nav-button:hover {
     -fx-background-color: #005a9e;
 }
-

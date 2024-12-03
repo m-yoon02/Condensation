@@ -10,7 +10,9 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
@@ -25,6 +27,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TicTacToeController {
@@ -58,6 +61,9 @@ public class TicTacToeController {
     public static Label playerStatus;
 
     @FXML
+    public static Button forfeitBtn;
+
+    @FXML
     public void initialize() throws IOException, ParseException {
 
         buttons = new Button[][] {
@@ -85,7 +91,7 @@ public class TicTacToeController {
             if (resultOfTicTacToe == GameResult.WIN){
                 UUID winningPlayer = (UUID) backendUpdate.get("PlayerWon");
                 String nameOfWinningPlayer = getUsernameFromUUID(String.valueOf(winningPlayer));
-                // playerStatus.setText(STR."Player \{nameOfWinningPlayer} won the game!");
+                playerStatus.setText(String.format("Player %s won the game!",nameOfWinningPlayer));
                 if (winningPlayer.equals(playerOne)){
                     playerStatus.setTextFill(Color.GREEN);
                 }
@@ -130,12 +136,12 @@ public class TicTacToeController {
             }
             if (newTurn.equals(playerTwo)){
                 String nameOfOpponentPlayer = getUsernameFromUUID(String.valueOf(newTurn));
-                // playerStatus.setText(STR."It's \{nameOfOpponentPlayer}'s turn!");
+                playerStatus.setText(String.format("It's %s's turn!", nameOfOpponentPlayer));
                 playerStatus.setTextFill(Color.BLUE);
             }
             else{
                 String nameOfMainPlayer = getUsernameFromUUID(String.valueOf(newTurn));
-                // playerStatus.setText(STR."It's \{nameOfMainPlayer}'s turn!");
+                playerStatus.setText(String.format("It's %s's turn!", "It's %s's turn!"));
                 playerStatus.setTextFill(Color.RED);
             }
         }
@@ -184,10 +190,7 @@ public class TicTacToeController {
             }
             ticTacToeJSON.put("New Position", new Vector2(row, col));
             ticTacToeJSON.put("gameType", GameTypes.TICTACTOE);
-            numberOfPiecesOnBoard += 1;
-            System.out.println(ticTacToeJSON);
-            JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(ticTacToeJSON);
-            // NetworkManager.getNetworkInstance().receiveGameDataFromClient();
+            NetworkManager.getNetworkInstance().receiveGameDataFromClient(ticTacToeJSON);
         }
     }
 
@@ -204,10 +207,37 @@ public class TicTacToeController {
                 }
             }
         } catch (Exception e) {
-            // System.err.println(STR."Error reading leaderboard.json: \{e.getMessage()}");
+            System.err.println(String.format("Error reading leaderboard.json: %s", e.getMessage()));
         }
         return null;
     }
+
+    @FXML
+    public void onForfeitBtnClick() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
+        alert.setTitle("Forfeit");
+
+        Optional<ButtonType> choice = alert.showAndWait();
+        if (choice.isPresent() && choice.get() == ButtonType.OK) {
+            onForfeitYesClick();
+        } else if (choice.isPresent() && choice.get() == ButtonType.CANCEL) {
+            System.out.println("No");
+        }
+    }
+    @FXML
+    public void onForfeitYesClick() {
+        System.out.println("Forfeit confirmed. Closing the application window...");
+
+        // Close the current window
+        Stage stage = (Stage) forfeitBtn.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void onForfeitNoClick() {
+        System.out.println("Forfeit canceled. The window remains open.");
+    }
+
 }
 
 
