@@ -41,7 +41,7 @@ public class CheckersHomeMenuController {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ProfileGame.fxml"));
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        window.setTitle("Select your game");
+        window.setTitle("Condensation Appliance -  Games Menu");
         window.setScene(scene);
         window.setMinWidth(700);
         window.setMinHeight(530);
