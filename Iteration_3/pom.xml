@@ -111,6 +111,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -134,7 +139,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                ca.ucalgary.seng300.p4.condensation.condensation/ca.ucalgary.seng300.p4.condensation.condensation.HelloApplication
+                                ca.ucalgary.seng300.p4.condensation.condensation/ca.ucalgary.seng300.p4.condensation.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
