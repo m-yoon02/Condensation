@@ -1,0 +1,104 @@
+.main-pane {
+    -fx-font-family: Arial;
+    -fx-background-color: #091856;
+    -fx-pref-width: 700;
+    -fx-pref-height: 500;
+}
+.main-pane Button {
+    -fx-font-size: 18;
+    -fx-background-color: #2415E2;
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: White;
+    -fx-border-radius: 0;
+}
+.main-pane Label {
+    -fx-font-size: 18;
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: White;
+}
+
+
+/* chat */
+.chat-v-box {
+    -fx-pref-width: 250;
+}
+.chat-scroll-pane {
+    -fx-pref-width: 250;
+    -fx-pref-height: 300;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+    -fx-border-color: white;
+}
+.chat-scroll-pane .scroll-bar {
+
+}
+#paneInsideScrollPane {
+    -fx-background-color: #191e26;
+}
+.chat-container {
+    -fx-pref-width: 250;
+    -fx-pref-height: 25;
+}
+#chatBox {
+    -fx-pref-width: 150;
+    -fx-pref-height: 25;
+}
+#sendBtn {
+    -fx-pref-width: 50;
+    -fx-pref-height: 25;
+    -fx-font-size: 12;
+}
+
+/* version 1 */
+.this-bubble {
+    -fx-min-width: 50;
+    -fx-pref-width: 50;
+    -fx-max-width: 200;
+    -fx-background-color: #2415E2;
+    -fx-background-radius: 10;
+}
+.other-bubble {
+    -fx-max-width: 200;
+    -fx-background-color: #15bce2;
+    -fx-background-radius: 10;
+}
+/*           */
+
+
+/* version 2 */
+.message-h-box {
+    -fx-pref-width: 50;
+    -fx-max-width: 200;
+}
+
+.sender-name {
+    -fx-font-size: 13;
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: White;
+    -fx-font-weight: bold;
+}
+.message {
+    -fx-font-size: 12;
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: White;
+}
+/*           */
+
+
+.game-v-box {
+    -fx-pref-width: 350;
+}
+
+#titleLabel {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
+
+
+.chessboard {
+    -fx-alignment: center;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+    -fx-pref-width: 320;
+    -fx-pref-height: 320;
+}

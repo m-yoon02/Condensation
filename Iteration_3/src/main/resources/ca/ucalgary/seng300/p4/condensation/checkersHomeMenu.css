@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+.main-pane {
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-background-color: #091856;
+    -fx-pref-width: 700;
+    -fx-pref-height: 500;
+}
+.main-pane Button {
+    -fx-font-size: 20;
+    -fx-background-color: #2415E2;
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: White;
+    -fx-border-radius: 0;
+}
+
+.v-box {
+    -fx-pref-width: 700;
+    -fx-pref-height: 500;
+    -fx-background-color: #091856;
+}
+
+.h-box {
+    -fx-pref-width: 700;
+    -fx-pref-height: 470;
+    -fx-background-color: #091856;
+}
+
+
+.menu-container {
+    -fx-background-color: #2415E2;
+    -fx-pref-width: 700;
+    -fx-pref-height: 30;
+}
+.menu-container Button{
+    -fx-font-size: 11;
+}
+
+
+
+.game-container {
+    -fx-alignment: top-center;
+    -fx-pref-width: 300;
+    -fx-pref-height: 470;
+}
+#nameLabel {
+    -fx-alignment: left;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-text-fill: White;
+}
+.game-container Imageview {
+    -fx-alignment: top;
+}
+#playBtn {
+    -fx-pref-width: 100;
+    -fx-pref-height: 40;
+    -fx-font-size: 20;
+}
+#leaderboardBtn {
+    /*-fx-pref-width: 180;*/
+    /*-fx-pref-height: 30;*/
+    -fx-font-size: 11;
+}
+#howToPlayBtn {
+    /*-fx-pref-width: 180;*/
+    /*-fx-pref-height: 30;*/
+    -fx-font-size: 11;
+}
