@@ -36,7 +36,7 @@ public class CloudManager {
      * Initialize connection to the Cloud Service
      * @return boolean indicating successful connection
      */
-    public boolean initializeConncection(){
+    public boolean initializeConnection(){
         if(!isConnected){
             System.out.println("Cloud connection established successfully.");
             isConnected = true;
@@ -99,7 +99,7 @@ public class CloudManager {
         }
 
 
-        // if there is a game state and connected to the cloudx
+        // if there is a game state and connected to the cloud
         if (currentGameState == null) {
             return null;
         }
@@ -114,7 +114,7 @@ public class CloudManager {
      * @return boolean indicating successful sync
      */
 
-    public boolean syncPLayerData(List<UUID> playerIDS) {
+    public boolean syncPlayerData(List<UUID> playerIDS) {
 
 
     if (!isConnected) {
@@ -128,7 +128,7 @@ public class CloudManager {
 
     syncedPlayerIDs.clear();
     syncedPlayerIDs.addAll(playerIDS);
-    System.out.println("Syncrhonized " + playerIDS.size() + "player(s) to the cloud");
+    System.out.println("Synchronized " + playerIDS.size() + "player(s) to the cloud");
     return true;
 
 
