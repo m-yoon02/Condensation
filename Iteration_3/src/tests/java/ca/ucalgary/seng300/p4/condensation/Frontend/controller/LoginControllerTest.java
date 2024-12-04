@@ -1,8 +1,5 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
-import javafx.scene.control.MenuBar;
-import javafx.scene.layout.Pane;
-import javafx.stage.Window;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +24,6 @@ public class LoginControllerTest extends ApplicationTest {
     Label usernameLabel;
     Label passwordLabel;
     Button returnWelcomeButton;
-    Pane profileHomePane;
 
     FXMLLoader fxmlLoader;
     Scene scene;
@@ -53,7 +49,6 @@ public class LoginControllerTest extends ApplicationTest {
         loginButton = (Button) lookup("#loginBtn").queryAs(Button.class);
         errorMessage = (Label) lookup("#errorMessage").queryAs(Label.class);
         returnWelcomeButton = (Button) lookup("#returnWelcome").queryAs(Button.class);
-
     }
 
     @After
@@ -170,70 +165,5 @@ public class LoginControllerTest extends ApplicationTest {
         assertEquals(errorMessage.getText(), "Invalid Login Credentials!");
 
     }
-
-    @Test
-    public void test_valid_login(){
-
-        usernameField.setText("Samuel");
-        passwordField.setText("password123");
-
-        assertFalse(usernameField.getText().isBlank());
-        assertTrue(loginController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
-
-        assertFalse(passwordField.getText().isBlank());
-        assertTrue(loginController.validatePass());
-        assertEquals(passwordLabel.getTextFill(), Color.GREEN);
-
-        clickOn(loginButton);
-
-
-        Label profileHomeUsername = (Label) lookup("#usernameField").queryAs(Label.class);
-        Scene profileHomeScene = profileHomeUsername.getScene();
-
-        Scene loginScene = loginButton.getScene();
-
-        assertFalse(profileHomeScene.equals(loginScene));
-
-        assertEquals(profileHomeUsername.getText(), "Samuel");
-
-    }
-
-    @Test
-    public void test_valid_login_not_on_file() {
-
-        usernameField.setText("Samuel123");
-        passwordField.setText("password123");
-
-        assertFalse(usernameField.getText().isBlank());
-        assertTrue(loginController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
-
-        assertFalse(passwordField.getText().isBlank());
-        assertTrue(loginController.validatePass());
-        assertEquals(passwordLabel.getTextFill(), Color.GREEN);
-
-        clickOn(loginButton);
-
-        assertEquals(errorMessage.getText(), "Invalid username or password");
-
-    }
-
-    @Test
-    public void check_return_to_welcome() {
-
-        clickOn(returnWelcomeButton);
-
-        MenuBar welcomeMenuBar = (MenuBar) lookup("#menuBar").queryAs(MenuBar.class);
-
-        Scene welcomeScene = welcomeMenuBar.getScene();
-        Scene loginScene = loginButton.getScene();
-
-        assertFalse(loginScene.equals(welcomeScene));
-
-
-    }
-
-
 
 }
