@@ -16,23 +16,12 @@ public class ClientReceiver {
 
     private static final ArrayList<RecieverListener> receiverListeners = new ArrayList<>();
 
-    private static UUID clientPlayerID = null;
-
-    static {
-        try (FileReader fileReader = new FileReader(NetworkManager.PLAYER_ID_FILE)) {
-            JSONObject jsonObject = (JSONObject) new JSONParser().parse(fileReader);
-            clientPlayerID = UUID.fromString((String) jsonObject.get("playerID"));
-        } catch (IOException | ParseException e){
-            e.printStackTrace();
-        }
-    }
-
     public static void addClientReceiver(RecieverListener recieverListener){
         receiverListeners.add(recieverListener);
     }
 
     public static void receive(UUID clientID, GameTypes gameType, JSONObject payload) throws IOException {
-        if (!clientPlayerID.equals(clientID))
+        if (!clientID.equals(getCurrentClientPlayerID()))
             return;
         if (payload.get("Changes") != null){
             try {
@@ -44,6 +33,15 @@ public class ClientReceiver {
         }
         for (RecieverListener listener : receiverListeners) {
             listener.receive(gameType, payload);
+        }
+    }
+
+    private static UUID getCurrentClientPlayerID() {
+        try (FileReader fileReader = new FileReader(NetworkManager.PLAYER_ID_FILE)) {
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(fileReader);
+            return UUID.fromString((String) jsonObject.get("playerID"));
+        } catch (IOException | ParseException e){
+            throw new RuntimeException(e);
         }
     }
 
