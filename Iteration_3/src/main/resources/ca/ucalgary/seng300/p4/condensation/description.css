@@ -1,0 +1,59 @@
+.main-pane {
+    -fx-font-family: Arial;
+    -fx-background-color: #ffffff;
+    -fx-pref-width: 600;
+    -fx-pref-height: 400;
+}
+
+
+.menu-container {
+    -fx-background-color: #000000;
+    -fx-pref-width: 600;
+    -fx-pref-height: 30;
+}
+.menu-container Button{
+    -fx-font-size: 12;
+}
+
+
+.detail-scroll-container {
+    -fx-border-color: transparent;
+    -fx-background-color: #ffffff;
+    -fx-pref-width: 300;
+    -fx-pref-height: 370;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+.detail-container {
+    -fx-background-color: #ffffff;
+    -fx-pref-width: 370;
+}
+.detail-container Label {
+    -fx-alignment: left;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+.detail-container TextArea {
+    -fx-alignment: left;
+    -fx-pref-width: 200;
+    -fx-pref-height: 150;
+    -fx-border-color: transparent;
+    -fx-background-color: #ffffff;
+    -fx-font-size: 16;
+}
+.detail-container TextArea .content {
+    -fx-background-color: #ffffff;
+    -fx-cursor: default;
+}
+#rulesArea {
+    -fx-pref-height: 200;
+    -fx-font-size: 16;
+}
+#citationArea {
+    -fx-pref-height: 50;
+    -fx-font-size: 12;
+}
+#citationArea .scroll-bar:vertical:disabled {
+    -fx-pref-width: 1;
+    -fx-opacity: 0;
+}

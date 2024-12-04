@@ -1,9 +1,15 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.DTO;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.controller.CheckersController;
+import ca.ucalgary.seng300.p4.condensation.Frontend.controller.ConnectFourController;
+import ca.ucalgary.seng300.p4.condensation.Frontend.controller.TicTacToeController;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
+import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Listeners.GameDataListener;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.IOException;
 import java.util.UUID;
 
 public class Client implements GameDataListener {
@@ -19,16 +25,36 @@ public class Client implements GameDataListener {
     }
 
 
-
-
     @Override
-    public void onGameEvent(GameEventType eventType, JSONObject payload) {
-        if(eventType == GameEventType.CHAT_MESSAGE_RECEIVED){
-            // will recieve message information from the frontend
+    public void onChatEvent(GameEventType gameEventType, JSONArray clientResponsePayload){
+        
+    }
 
-        }else{
 
-            // we can call a frontend recieveMethod(JSONObject gameData) that client will directly call
+
+    /**
+     * Handles a game event by delegating the payload to the appropriate game controller
+     * based on the game type.
+     * @param eventType The type of game event being handled.
+     * @param payload   The {@link JSONObject} containing the event data to process.
+     * @param gameType  The type of game the event is associated with.
+     * @throws IOException If an error occurs while processing the event.
+     */
+    @Override
+    public void onGameEvent(GameEventType eventType, JSONObject payload, GameTypes gameType) throws IOException {
+
+        // we can call a frontend recieveMethod(JSONObject gameData) that client will directly call
+
+        switch(gameType) {
+            case CHECKERS -> {
+                CheckersController.receiveCheckers(payload);
+            }
+            case TICTACTOE -> {
+                TicTacToeController.receiveFromBackendTicTacToe(payload);
+            }
+            case CONNECT4 -> {
+                ConnectFourController.receiveConnectFour(payload);
+            }
         }
 
     }

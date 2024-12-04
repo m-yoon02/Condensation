@@ -18,9 +18,10 @@ public class MatchmakingService {
     }
 
     /**
-     * This method basically loops through the pool of players and looks to match players with each other
-     * if "player2" is within the rankThreshold of "player1", a match is found and a game session is created.
-     * @return a game session for player 1 and player 2
+     * Matches players from the queue based on their game type and Elo rating.
+     * Creates a new game session when a suitable match is found.
+     * @return A {@link GameSession} object representing the matched players.
+     * @throws RuntimeException If no suitable match is found.
      */
     public GameSession findAndMatchPlayers() {
         //get the pool of players
@@ -50,7 +51,7 @@ public class MatchmakingService {
                 }
 
                 //if player1 and player2 are not the same player, check if it could be a possible match
-                if (player1 != player2) {
+                if (!player1.equals(player2)) {
                     //check if that player can be a possible match
                     if (player2.Elo() >= minRank && player2.Elo() <= maxRank) {
                         //match found!
