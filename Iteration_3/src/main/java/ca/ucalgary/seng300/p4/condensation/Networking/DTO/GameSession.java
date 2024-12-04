@@ -155,7 +155,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
         JSONObject responseClientPayload = new JSONObject();
         responseClientPayload.put("UpdateType", "TURN_END");
         responseClientPayload.put("SessionID", sessionId);
-        responseClientPayload.put("PlayerTurnID", playersTurnID);
+        responseClientPayload.put("PlayerTurn", playersTurnID);
         responseClientPayload.put("Changes", gameStateJson);
 
         try {
