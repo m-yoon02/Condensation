@@ -37,7 +37,8 @@ public class CheckersController {
 
     // Checkers instance
     @FXML
-    static GridPane chessboardGrid;
+    static GridPane chessboardGrid = new GridPane();
+
 
     static final int BOARD_DIM = 8;
     static String white = "-fx-background-color: #ffffff;" +

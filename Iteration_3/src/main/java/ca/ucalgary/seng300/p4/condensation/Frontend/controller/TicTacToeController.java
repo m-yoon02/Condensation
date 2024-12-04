@@ -6,11 +6,13 @@ import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessio
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -23,26 +25,33 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 public class TicTacToeController {
-    private static Button btn00;
-    private static Button btn01;
-    private static Button btn02;
-    private static Button btn10;
-    private static Button btn11;
-    private static Button btn12;
-    private static Button btn20;
-    private static Button btn21;
-    private static Button btn22;
+    @FXML
+    private static Button btn00 = new Button();
+    @FXML
+    private static Button btn01 = new Button();
+    @FXML
+    private static Button btn02 = new Button();
+    @FXML
+    private static Button btn10 = new Button();
+    @FXML
+    private static Button btn11 = new Button();
+    @FXML
+    private static Button btn12 = new Button();
+    @FXML
+    private static Button btn20 = new Button();
+    @FXML
+    private static Button btn21 = new Button();
+    @FXML
+    private static Button btn22= new Button();
+
+    //https://stackoverflow.com/questions/71050567/why-is-the-button-null
     public int numberOfPiecesOnBoard = 0;
-    static Button[][] buttons = new Button[][] {
-        {btn00, btn01, btn02},
-        {btn10, btn11, btn12},
-        {btn20, btn21, btn22}
-    };
 
     public static final int NUMBER_OF_ROWS = 3;
     public static final int NUMBER_OF_COLS = 3;
@@ -53,21 +62,30 @@ public class TicTacToeController {
     public static UUID newTurn;
 
     @FXML
-    private static Stage stage;
-    @FXML
-    public static Label playerStatus;
+    public static GridPane board = new GridPane();
+
+    static Button[][] buttons = new Button[][] {
+            {btn00, btn01, btn02},
+            {btn10, btn11, btn12},
+            {btn20, btn21, btn22}
+    };
 
     @FXML
-    public static Button forfeitBtn;
+    private static Stage stage;
+    @FXML
+    public static Label playerStatus = new Label();
+
+    @FXML
+    public static Button forfeitBtn = new Button();
 
     @FXML
     public void initialize() throws IOException, ParseException {
 
-        buttons = new Button[][] {
-                {btn00, btn01, btn02},
-                {btn10, btn11, btn12},
-                {btn20, btn21, btn22}
-        };
+        for (Button[] button : buttons) {
+            for (Button specific_button : button) {
+                board.add(specific_button, 1, 1);
+            }
+        }
 
         GameSessionRecord gameSessionRecord = GameSessionRecord.getGameSessionRecord();
         playerOne = gameSessionRecord.getPlayer1ID();
@@ -75,7 +93,7 @@ public class TicTacToeController {
         newTurn = gameSessionRecord.getCurrentPlayerID();
         sessionID = gameSessionRecord.getSessionID();
 
-        playerStatus.setText("RED TURN - YOUR TURN");
+        playerStatus.setText("X - PLAY FIRST");
         playerStatus.setTextFill(Color.RED);
     }
 
@@ -151,7 +169,9 @@ public class TicTacToeController {
     }
 
     @FXML
-    public void returnToBackendTicTacToe(javafx.event.ActionEvent event) throws IOException, ParseException {
+    public void returnToBackendTicTacToe(ActionEvent event) throws IOException, ParseException {
+        System.out.println("hi!");
+
         Button clickedButton = (Button) event.getSource();
 
         int row = -1;
@@ -163,7 +183,6 @@ public class TicTacToeController {
                 break;
             }
             for (int j = 0; j < NUMBER_OF_COLS; j++) {
-                System.out.println(buttons[i][j]);
                 if (buttons[i][j].equals(clickedButton)) {
                     row = i;
                     col = j;

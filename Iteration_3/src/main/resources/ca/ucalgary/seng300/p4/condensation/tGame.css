@@ -6,9 +6,8 @@
 }
 .main-pane Button {
     -fx-font-size: 18;
-    -fx-background-color: #2415E2;
+    -fx-background-color: #12b3e5;
     -fx-font-family: "Oswald", sans-serif;
-    -fx-text-fill: White;
     -fx-border-radius: 0;
 }
 .main-pane Label {
