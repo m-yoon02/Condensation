@@ -120,6 +120,8 @@ public class Leaderboard {
         user.put("winsInTicTacToe", 0);
         user.put("lossInTicTacToe", 0);
 
+        System.out.println((String) user.get("winsInCheckers"));
+
         // Initialize an empty list of recent matches
         JSONArray recentMatches = new JSONArray();
         user.put("recentMatches", recentMatches);
