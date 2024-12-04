@@ -57,7 +57,6 @@ public class WelcomeScreenController {
         scene = new Scene(root);
         window.setScene(scene);
         // Set the window and scene to the login screen
-        window.setScene(scene);
         window.show();
     }
 

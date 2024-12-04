@@ -11,20 +11,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class CheckersQueueController {
+
+    private Stage stage;
+
     private Button leaveQueue;
 
     @FXML
@@ -35,17 +34,12 @@ public class CheckersQueueController {
     @FXML
     private Scene createScene;
 
-    @FXML
-    private Stage stage;
 
-
-    @FXML
-    public void initialize() throws IOException, ParseException, InterruptedException {
+    public void start(Stage stage) throws IOException, ParseException, InterruptedException {
         // Allows user to leave
-        TimeUnit.SECONDS.sleep(3);
+        this.stage = stage;
         sendToBackendCheckers();
     }
-
 
     protected void returnToProfile(Event event) throws IOException
     {
@@ -73,6 +67,8 @@ public class CheckersQueueController {
         GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        CheckersController checkersController = fxmlLoader.getController();
+        checkersController.setStage(stage);
         stage.setTitle("Checkers");
         stage.setScene(scene);
         stage.show();

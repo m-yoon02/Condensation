@@ -2,6 +2,8 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.ClientReceiver;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.RecieverListener;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -9,7 +11,6 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -33,41 +34,57 @@ import java.util.*;
 
 
 public class CheckersController {
-    static Stage stage;
-
     // Checkers instance
     @FXML
-    static GridPane chessboardGrid;
+    private GridPane chessboardGrid;
 
-    static final int BOARD_DIM = 8;
-    static String white = "-fx-background-color: #ffffff;" +
+    private Stage stage;
+
+    private final int BOARD_DIM = 8;
+    private String white = "-fx-background-color: #ffffff;" +
             "-fx-alignment: center;" +
             "-fx-background-radius: 0;";
-    static String black = "-fx-background-color: #000000;" +
+    private String black = "-fx-background-color: #000000;" +
             "-fx-alignment: center;" +
             "-fx-background-radius: 0;";
 
-    static Button[][] chessboard = new Button[8][8];
+    private Button[][] chessboard = new Button[8][8];
 
-    static Button[] blackPieces = new Button[12];
-    static Button[] redPieces = new Button[12];
+    private Button[] blackPieces = new Button[12];
+    private Button[] redPieces = new Button[12];
 
-    public static UUID playerOne;
-    public static UUID playerTwo;
-    public static UUID sessionID;
-    public static UUID newTurn;
+    private UUID playerOne;
+    private UUID playerTwo;
+    private UUID sessionID;
+    private UUID newTurn;
 
-    public List<List<Integer>> coordinatesOfTwoClicks = new ArrayList<>();
+    private List<List<Integer>> coordinatesOfTwoClicks = new ArrayList<>();
 
-    public static List<List<Integer>> locationOfBlackPieces = new ArrayList<>();
+    private List<List<Integer>> locationOfBlackPieces = new ArrayList<>();
 
-    public static List<List<Integer>> locationOfRedPieces = new ArrayList<>();
+    private List<List<Integer>> locationOfRedPieces = new ArrayList<>();
 
-    static Image BLACK_IMAGE =  new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/black2.png")).toExternalForm());
-    static Image RED_IMAGE = new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/red.png")).toExternalForm());
+    private static final Image BLACK_IMAGE =  new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/black2.png")).toExternalForm());
+    private static final Image RED_IMAGE = new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/red.png")).toExternalForm());
 
     @FXML
-    public static Label turnLabel;
+    private Label turnLabel;
+
+    private class CheckersRecieverListener extends RecieverListener {
+
+        public CheckersRecieverListener() {
+            super(GameTypes.CHECKERS);
+        }
+
+        @Override
+        public void onReceive(JSONObject payload) throws IOException {
+            receiveCheckers(payload);
+        }
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     @FXML
     public void initialize() throws IOException, ParseException {
@@ -158,9 +175,10 @@ public class CheckersController {
                 chessboardGrid.add(square, c, r, 1, 1); // add square to grid pane
             }
         }
+        ClientReceiver.addClientReceiver(new CheckersRecieverListener());
     }
 
-    public static void receiveCheckers(JSONObject payload) throws IOException {
+    public void receiveCheckers(JSONObject payload) throws IOException {
         String gameResult = (String) payload.get("UPDATE_TYPE");
 
         if (Objects.equals(gameResult, "TURN_END")){
@@ -171,13 +189,13 @@ public class CheckersController {
         }
     }
 
-    private static void handleTurnEnd(JSONObject payload){
+    private void handleTurnEnd(JSONObject payload){
         sessionID = (UUID) payload.get("SessionID");
         newTurn = (UUID) payload.get("PlayerTurn");
         updateBoardAndPieces((JSONArray) payload.get("Changes"));
     }
 
-    private static void updateBoardAndPieces(JSONArray allUpdatedPieces){
+    private void updateBoardAndPieces(JSONArray allUpdatedPieces){
         locationOfBlackPieces = new ArrayList<>();
         locationOfRedPieces = new ArrayList<>();
         chessboardGrid.getChildren().clear();
@@ -221,12 +239,12 @@ public class CheckersController {
         }
     }
 
-    private static void handleGameEnd(JSONObject payload) throws IOException {
+    private void handleGameEnd(JSONObject payload) throws IOException {
         String gameState = (String) payload.get("GameState");
         if ("WIN".equals(gameState)) {
             String playerWon = (String) payload.get("PlayerWon");
             turnLabel.setText(String.format("Player %s won the game!", playerWon));
-            if (playerWon.equals(playerOne)){
+            if (UUID.fromString(playerWon).equals(playerOne)){
                 turnLabel.setTextFill(Color.GREEN);
             }
             else{
@@ -316,28 +334,28 @@ public class CheckersController {
 
     // chat
     @FXML
-    TextArea chatBox;
+    private TextArea chatBox;
 
     @FXML
-    Button sendBtn;
+    private Button sendBtn;
 
     @FXML
-    ScrollPane chatScrollPane;
+    private ScrollPane chatScrollPane;
 
     @FXML
-    VBox paneInsideScrollPane;
+    private VBox paneInsideScrollPane;
 
-    String messageHBoxStyle = "    -fx-pref-width: 50;\n" +
+    private String messageHBoxStyle = "    -fx-pref-width: 50;\n" +
             "    -fx-max-width: 200;";
-    String senderNameStyle = "-fx-font-size: 13;\n" +
+    private String senderNameStyle = "-fx-font-size: 13;\n" +
             "    -fx-font-family: \"Oswald\", sans-serif;\n" +
             "    -fx-text-fill: White;\n" +
             "    -fx-font-weight: bold;";
-    String timeSentStyle = "-fx-font-size: 8;\n" +
+    private String timeSentStyle = "-fx-font-size: 8;\n" +
             "    -fx-font-family: \"Oswald\", sans-serif;\n" +
             "    -fx-text-fill: White;\n";
-    String nameTimeHBoxStyle = "-fx-alignment: CENTER_LEFT";
-    String messageStyle = "-fx-font-size: 12;\n" +
+    private String nameTimeHBoxStyle = "-fx-alignment: CENTER_LEFT";
+    private String messageStyle = "-fx-font-size: 12;\n" +
             "    -fx-font-family: \"Oswald\", sans-serif;\n" +
             "    -fx-text-fill: White;";
 
@@ -432,7 +450,7 @@ public class CheckersController {
         }
     }
 
-    private static String getUsernameFromUUID(String playerUUID) {
+    private String getUsernameFromUUID(String playerUUID) {
         try {
             File file = new File(NetworkManager.LEADERBOARD_FILE);
             JSONParser parser = new JSONParser();
@@ -450,7 +468,7 @@ public class CheckersController {
         return null;
     }
 
-    private static void disableAllButtons() { //when game ends
+    private void disableAllButtons() { //when game ends
         for (Button[] buttonRow : chessboard) {
             for (Button button : buttonRow) {
                 button.setDisable(true);

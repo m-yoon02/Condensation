@@ -1,13 +1,9 @@
 package ca.ucalgary.seng300.p4.condensation;
 
-import ca.ucalgary.seng300.p4.condensation.Frontend.controller.CheckersController;
-import ca.ucalgary.seng300.p4.condensation.Frontend.controller.CheckersHomeMenuController;
-import ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileGameController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
