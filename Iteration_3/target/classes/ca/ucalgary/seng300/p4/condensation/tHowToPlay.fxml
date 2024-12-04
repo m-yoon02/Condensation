@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane stylesheets="@tHowToPlay.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.tHowToPlayController">
+
+    <top>
+        <VBox alignment="CENTER" spacing="10" BorderPane.alignment="CENTER">
+            <Label styleClass="title" text="Tic Tac Toe - How to Play" />
+            <ImageView fitWidth="200" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@tictac.png" />
+                </image>
+            </ImageView>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" spacing="20" styleClass="rules-container">
+                <Text styleClass="heading" text="Game Objective:" />
+                <Text styleClass="rule-text" text="Be the first player to form a horizontal, vertical, or diagonal line of three of your own marks (X or O)." />
+
+                <Text styleClass="heading" text="Rules:" />
+                <Text styleClass="rule-text" text="1. Players take turns placing their mark (X or O) in any empty square on the 3x3 grid." />
+                <Text styleClass="rule-text" text="2. The first player to align three of their marks horizontally, vertically, or diagonally wins." />
+                <Text styleClass="rule-text" text="3. If all squares are filled and there is no winner, the game is a draw." />
+
+                <Text styleClass="heading" text="Tips:" />
+                <Text styleClass="rule-text" text="• Think ahead and block your opponent from getting three in a row." />
+                <Text styleClass="rule-text" text="• Try to control the center square for more opportunities to win." />
+                <Text styleClass="rule-text" text="• Pay attention to diagonal lines and look for opportunities to create two winning paths at once." />
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="bottom-bar" BorderPane.alignment="CENTER_LEFT">
+            <Button fx:id="backbutton" onAction="#initialize" styleClass="nav-button" text="Back" />
+        </HBox>
+    </bottom>
+</BorderPane>
