@@ -65,14 +65,16 @@ public class ConnectFourQueueController {
     // https://dzone.com/articles/how-can-we-read-a-json-file-in-java
     public void sendToBackendConnectFour() throws IOException, ParseException {
         JSONObject playerInfoForGame = new JSONObject();
-        Object newplayerJSONFileObject = new JSONParser().parse(new FileReader(NetworkManager.PLAYER_ID_FILE));
+        Object newplayerJSONFileObject = new JSONParser().parse(new FileReader("Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json"));
         JSONObject newplayerJSONFile = (JSONObject) newplayerJSONFileObject;
         playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID"));
         playerInfoForGame.put("gameType", GameTypes.CONNECT4);
         String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
         GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
+
+        // Directing to the board
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("Condensation Appliance - Connect Four");
         stage.setScene(scene);
         stage.show();
