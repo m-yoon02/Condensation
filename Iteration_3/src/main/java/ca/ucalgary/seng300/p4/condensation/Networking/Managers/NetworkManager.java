@@ -471,7 +471,8 @@ public class NetworkManager {
      */
     public void receiveGameDataFromClient(JSONObject receiveClientPayload){
 
-        UUID SessionID = (UUID) receiveClientPayload.get("SessionID");
+        //Treat this as a String, or it will become a malformed JSON string
+        UUID SessionID = UUID.fromString((String)receiveClientPayload.get("SessionID"));
         String moveDataPayload  = receiveClientPayload.toJSONString();
 
         // this receive the current gameSession from the sessions hashmap which should still be active
