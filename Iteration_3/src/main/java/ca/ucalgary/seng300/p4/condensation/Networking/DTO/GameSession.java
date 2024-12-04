@@ -99,17 +99,17 @@ public class GameSession implements GameEndListener, TurnEndListener {
         GameEventType gameEventType = GameEventType.GAME_END;
         // we need to make the response payload here as well
         JSONObject gameEndPayload = new JSONObject();
-        gameEndPayload.put("UpdateType", gameEventType);
+        gameEndPayload.put("UpdateType", gameEventType.toString());
 
         // This handles the payload information of if some player wins
         // I can use ternary to make this cleaner lol.
         if(gameResult == GameResult.WIN){
-            gameEndPayload.put("GameState", GameResult.WIN);
+            gameEndPayload.put("GameState", GameResult.WIN.toString());
             if (winnerPlayer.equals(this.player1ID)) {
                 Leaderboard.getInstance().updateEloForWinningPlayer(this.player1ID, this.gameType, this.sessionId);
                 Leaderboard.getInstance().updateEloForLosingPlayer(this.player2ID, this.gameType, this.sessionId);
-                gameEndPayload.put("PlayerWon", this.player1ID);
-                gameEndPayload.put("PlayerLost", this.player2ID);
+                gameEndPayload.put("PlayerWon", this.player1ID.toString());
+                gameEndPayload.put("PlayerLost", this.player2ID.toString());
 
 
                 // as winner and player 2 as loser
@@ -117,12 +117,12 @@ public class GameSession implements GameEndListener, TurnEndListener {
                 // update leaderboard for player 2 winner, and player 1 as loser
                 Leaderboard.getInstance().updateEloForWinningPlayer(this.player2ID, this.gameType, this.sessionId);
                 Leaderboard.getInstance().updateEloForLosingPlayer(this.player1ID, this.gameType, this.sessionId);
-                gameEndPayload.put("PlayerWon", this.player2ID);
-                gameEndPayload.put("PlayerLost", this.player1ID);
+                gameEndPayload.put("PlayerWon", this.player2ID.toString());
+                gameEndPayload.put("PlayerLost", this.player1ID.toString());
             }
         }else{
             Leaderboard.getInstance().updateForTieGame(this.player1ID, this.player2ID, this.sessionId, this.gameType);
-            gameEndPayload.put("GameState", GameResult.TIE);
+            gameEndPayload.put("GameState", GameResult.TIE.toString());
             // Player fields will not exist and elo's will not change.
 
         }
