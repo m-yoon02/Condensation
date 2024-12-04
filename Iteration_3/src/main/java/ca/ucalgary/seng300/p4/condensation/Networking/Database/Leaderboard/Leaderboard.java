@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
@@ -16,9 +17,10 @@ import org.json.simple.JSONObject;
  */
 public class Leaderboard {
     private static Leaderboard instance; // Singleton instance
-    private String DATA_FILE = Paths.get("Iteration_3", "src", "main", "java", "ca", "ucalgary", "seng300", "p4", "condensation", "Networking", "Database", "Leaderboard", "Leaderboard.json").toString();
+    private static final Path ABSOLUTE_PATH = Path.of("").toAbsolutePath();
+    private String DATA_FILE = Paths.get(ABSOLUTE_PATH.toString(), "src", "main", "java", "ca", "ucalgary", "seng300", "p4", "condensation", "Networking", "Database", "Leaderboard", "Leaderboard.json").toString();
     private JSONArray users;
-     private JSONObject playerInGame;
+    private JSONObject playerInGame;
 
     /**
      * Constructs a new Leaderboard instance and loads data from the specified file.
