@@ -18,14 +18,18 @@ public class CheckersHandler extends GameHandler {
 
     public CheckersHandler(UUID player1ID, UUID player2ID) {
         super(player1ID, player2ID, COLORS);
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 3; i++){
             for (int j = 0; j < board.getColumnSize(); j++){
-                board.placePiece(new CheckersPiece(PieceColor.BLACK), new Vector2(j, i));
+                if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)) {
+                    board.placePiece(new CheckersPiece(PieceColor.BLACK), new Vector2(j, i));
+                }
             }
         }
-        for (int i = board.getRowSize() - 2; i < board.getRowSize(); i++){
+        for (int i = board.getRowSize() - 3; i < board.getRowSize(); i++){
             for (int j = 0; j < board.getColumnSize(); j++) {
-                board.placePiece(new CheckersPiece(PieceColor.RED), new Vector2(j, i));
+                if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)) {
+                    board.placePiece(new CheckersPiece(PieceColor.RED), new Vector2(j, i));
+                }
             }
         }
     }
