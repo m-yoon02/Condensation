@@ -131,5 +131,14 @@ public class CloudManagerTest {
         else
             assertNotNull("Synced players list should not be null after connection", syncedPlayers);
     }
+    @Test
+    public void testInitializeConnectionAlreadyConnected() {
+        cloudManager.initializeConncection(); // First call to establish connection
+        assertTrue("isConnected should be true after the first connection", cloudManager.isConnected());
+
+        boolean result = cloudManager.initializeConncection(); // Second call
+        assertFalse("The second call should interrupt the connection", result);
+        assertFalse("isConnected should be false after the second call", cloudManager.isConnected());
+    }
 
 }
