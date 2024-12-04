@@ -145,11 +145,6 @@ public class Leaderboard {
         return null;
     }
 
-    public JSONObject validateUser(JSONObject user ){
-
-
-
-    }
 
 
 
