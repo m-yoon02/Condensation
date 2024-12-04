@@ -48,9 +48,10 @@ public class CheckersQueueController {
 
     protected void returnToProfile(Event event) throws IOException
     {
-        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Profile.fxml")));
+        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("checkersHomeMenu.fxml")));
         createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         createScene = new Scene(origin);
+        createWindow.setTitle("Condensation Appliance - Checkers");
         createWindow.setScene(createScene);
         createWindow.show();
     }

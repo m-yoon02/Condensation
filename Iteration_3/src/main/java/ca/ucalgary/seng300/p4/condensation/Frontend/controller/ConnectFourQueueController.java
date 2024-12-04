@@ -53,6 +53,7 @@ public class ConnectFourQueueController {
         origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ConnectFourHomeMenu.fxml")));
         createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         createScene = new Scene(origin);
+        createWindow.setTitle("Condensation Appliance - Connect Four");
         createWindow.setScene(createScene);
         createWindow.show();
     }

@@ -18,7 +18,7 @@ public class CheckersHowToPlayController {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersHomeMenu.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Checkers Home Menu");
+        stage.setTitle("Condensation Appliance - Checkers");
         stage.setScene(scene);
         stage.setMinWidth(700);
         stage.setMinHeight(530);
