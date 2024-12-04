@@ -99,5 +99,16 @@ public class CloudManagerTest {
         assertFalse("isConnected() should return false after disconnection", cloudManager.isConnected());
     }
 
+    @Test
+    public void testGetSyncedPlayersWithoutConnection() {
+        // Ensure the connection is not active
+        cloudManager.disconnect();
+
+        // Retrieve the list of synced players
+        List<UUID> syncedPlayers = cloudManager.getSyncedPlayers();
+
+        // Verify the result is an empty list
+        assertTrue("getSyncedPlayers() should return an empty list when not connected", syncedPlayers.isEmpty());
+    }
 
 }
