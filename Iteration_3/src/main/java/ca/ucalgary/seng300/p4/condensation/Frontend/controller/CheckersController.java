@@ -128,12 +128,10 @@ public class CheckersController {
         }
     }
 
-    private void handleTurnEnd(JSONObject payload){
+    private void handleTurnEnd(JSONObject payload) {
         sessionID = (UUID) payload.get("SessionID");
         newTurn = (UUID) payload.get("PlayerTurn");
         // Here we will update the board representation from payload
-        // ! This might error depending on what Networking sends us
-        System.out.println(payload.get("Changes"));
         updateBoardRepresentationFromJSON((JSONArray) payload.get("Changes"));
         updateUIToMatchBoardRepresentation();
     }
