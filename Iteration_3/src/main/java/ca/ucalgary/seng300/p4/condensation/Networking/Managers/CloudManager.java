@@ -141,7 +141,7 @@ public class CloudManager {
     public List<UUID> getSyncedPlayers() {
 
         if (!isConnected) {
-            System.err.println("Can't retrieve synced players. Please check your connection with the cloud");
+            System.out.println("Can't retrieve synced players. Please check your connection with the cloud");
             return new ArrayList<>();
         }
         
@@ -159,7 +159,7 @@ public class CloudManager {
     public boolean authenticateUser(String username, String password) {
 
         if (!isConnected) {
-            System.err.println("Can't authenticate user. Please check your connection with the cloud");
+            System.out.println("Can't authenticate user. Please check your connection with the cloud");
         }
         // simulate user authentication
         return true;        // since it is a stub, just return true

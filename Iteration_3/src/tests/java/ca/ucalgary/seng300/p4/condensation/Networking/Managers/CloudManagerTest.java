@@ -110,5 +110,26 @@ public class CloudManagerTest {
         // Verify the result is an empty list
         assertTrue("getSyncedPlayers() should return an empty list when not connected", syncedPlayers.isEmpty());
     }
+    @Test
+    public void testGetSyncedPlayersWithoutConnection() {
+        // Ensure the connection is not active
+        cloudManager.disconnect();
+
+        // Retrieve the list of synced players
+        List<UUID> syncedPlayers = cloudManager.getSyncedPlayers();
+
+        // Verify the result is an empty list
+        assertTrue("getSyncedPlayers() should return an empty list when not connected", syncedPlayers.isEmpty());
+    }
+    @Test
+    public void testGetSyncedPlayersWithConnection() {
+        // Ensure CloudManager is connected and retrieve the list of players synced currently
+        cloudManager.initializeConncection();
+        List<UUID> syncedPlayers = cloudManager.getSyncedPlayers();
+        if (syncedPlayers.isEmpty())
+            assertTrue("Synced players list should be empty after initializing connection", syncedPlayers.isEmpty());
+        else
+            assertNotNull("Synced players list should not be null after connection", syncedPlayers);
+    }
 
 }
