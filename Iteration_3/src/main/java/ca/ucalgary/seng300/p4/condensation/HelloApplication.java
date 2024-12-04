@@ -15,14 +15,14 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 781, 479);
 
 //        Image appIcon = new Image(getClass().getResourceAsStream("logo.png"));
 //        stage.getIcons().add(appIcon);
-
-        stage.setResizable(false);
-        stage.setTitle("Condensation Application");
+//
+//        stage.setResizable(false);
+//        stage.setTitle("Condensation Application");
         stage.setScene(scene);
         stage.show();
     }
