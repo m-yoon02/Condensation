@@ -35,7 +35,7 @@ public class GameSessionManager {
      * @return The {@link GameSession} object associated with the given session ID, or {@code null} if not found.
      */
     public GameSession getGameSessionBySessionID(UUID SessionID){
-
+        System.out.println("GAMESESSION IS IN HERE" + SessionID);
         GameSession gameSession = sessionsMap.get(SessionID);
         return gameSession;     // should return the gameSession object
     }
@@ -47,8 +47,9 @@ public class GameSessionManager {
     public void addGameSession(GameSession gameSession){
         // add gameSession object to the hashmap
         UUID sessionID = gameSession.getSessionId();
+        System.out.println("add Session ID: " +  sessionID);
         System.out.println(gameSessionManager);
-        gameSessionManager.sessionsMap.put(sessionID, gameSession);
+        sessionsMap.put(sessionID, gameSession);
 
     }
 

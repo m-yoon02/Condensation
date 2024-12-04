@@ -30,6 +30,10 @@ public abstract class GameHandler implements IGameHandler{
     }
 
     public GameHandler(UUID player1ID, UUID player2ID, PieceColor[] colors){
+        System.out.println("IN HANDLER");
+        System.out.println(player1ID);
+        System.out.println(player2ID);
+        System.out.println(colors);
         Random rnd = new Random();
         int player1ColorIndex = rnd.nextInt(2);
         int player2ColorIndex = player1ColorIndex == 0 ? 1 : 0;

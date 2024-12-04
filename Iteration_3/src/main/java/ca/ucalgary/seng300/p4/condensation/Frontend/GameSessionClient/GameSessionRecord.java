@@ -60,5 +60,10 @@ public class GameSessionRecord {
         player1ID = UUID.fromString((String) jsonObject.get("player1ID"));
         player2ID = UUID.fromString((String) jsonObject.get("player2ID"));
         currentPlayerID = UUID.fromString((String) jsonObject.get("currentPlayerTurn"));
+        System.out.println("PARSED:");
+        System.out.println("SessionID: " + sessionID);
+        System.out.println("Player1ID: " + player1ID);
+        System.out.println("Player2ID: " + player2ID);
+        System.out.println("currentP: " + currentPlayerID);
     }
 }

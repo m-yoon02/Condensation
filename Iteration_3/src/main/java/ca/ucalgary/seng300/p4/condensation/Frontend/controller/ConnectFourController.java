@@ -97,6 +97,8 @@ public class ConnectFourController {
         playerTwo = gameSessionRecord.getPlayer2ID();
         newTurn = gameSessionRecord.getCurrentPlayerID();
         sessionID = gameSessionRecord.getSessionID();
+        System.out.println("SESSION ID:    ");
+        System.out.println(sessionID);
     }
 
     @FXML
@@ -149,7 +151,6 @@ public class ConnectFourController {
 
         try {
             String updateType = (String) payload.get("UpdateType");
-
             switch (updateType) {
                 case "GAME_END":
                     controller.handleGameEnd(payload);
@@ -250,10 +251,11 @@ public class ConnectFourController {
     }
 
     public void returnConnectFour(MouseEvent event, int row, int col) throws IOException, ParseException {
-        if (sessionID == null || playerID == null) {
-            System.err.println("Session ID or Player ID is missing!");
-            return;
-        }
+        System.out.println(row + col);
+//        if (sessionID == null || playerID == null) {
+//            System.err.println("Session ID or Player ID is missing!");
+//            return;
+//        }
 
         JSONObject move = new JSONObject();
         move.put("SessionID", sessionID.toString());

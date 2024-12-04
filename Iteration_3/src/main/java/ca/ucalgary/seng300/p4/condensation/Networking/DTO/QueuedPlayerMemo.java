@@ -12,4 +12,15 @@ import java.util.UUID;
  * @param gameType The type of game the player wants to play.
  * @param Elo      The player's Elo rating for matchmaking purposes.
  */
-public record QueuedPlayerMemo (UUID PlayerID, GameTypes gameType, int Elo) {}
+public record QueuedPlayerMemo (UUID PlayerID, GameTypes gameType, int Elo) {
+
+    @Override
+    public String toString() {
+        return "QueuedPlayerMemo{" +
+                "field1=" + PlayerID +
+                ", field2=" + gameType +
+                ", field3=" + Elo +
+                '}';
+    }
+}
+

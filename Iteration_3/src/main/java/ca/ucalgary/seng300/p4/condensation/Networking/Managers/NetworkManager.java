@@ -388,6 +388,10 @@ public class NetworkManager {
         UUID player2UUID = matchedGameSession.getPlayer2ID();
         UUID getFirstPlayerID = matchedGameSession.getGameHandler().getFirstPlayerID();  // waiting on backend to implement this in gameHandler
 
+        System.out.println("MATCHMAKING:");
+        System.out.println(player1UUID);
+        System.out.println(player2UUID);
+
         // preparing the json payload to be sent to the frontEnd
         JSONObject matchedSessionResponse = new JSONObject();
         matchedSessionResponse.put("sessionID", sessionID.toString());
@@ -398,6 +402,7 @@ public class NetworkManager {
 
         // also everytime client sends network a payload they will need to give sessionID so we can find the gameSession object and update the game handler field in the GameSession's object.
         // This way this.gamehandler recieves a payload and should then notify the frontend using the client listeners.
+        System.out.println("llolololol" + matchedSessionResponse.toJSONString());
         return matchedSessionResponse.toJSONString();
     }
 
@@ -508,11 +513,21 @@ public class NetworkManager {
         try {
             // parse the JASONObject
             UUID sessionID = (UUID) recievePlayerMessage.get("SessionID");
-            UUID player1ID = (UUID) recievePlayerMessage.get("Player1D");
+            UUID player1ID = (UUID) recievePlayerMessage.get("Player1ID");
             String player1Message = (String) recievePlayerMessage.get("Message");
+
+            System.out.println("SessionId" + sessionID);
+            System.out.println("Player1ID" + player1ID);
+            System.out.println("Message" + player1Message);
+
 
             // get the game session along with player 2's UUID associated w that game session
             GameSession gameSession = gameSessionManager.getGameSessionBySessionID(sessionID);
+            if (gameSession != null) {
+                System.out.println("GAmesession yes");
+            } else {
+                System.out.println("gamesession null");
+            }
             UUID player2ID = gameSession.getPlayer2ID();
             JSONObject player1 = Leaderboard.getInstance().findUserById(player1ID);
             JSONObject player2 = Leaderboard.getInstance().findUserById(player2ID);

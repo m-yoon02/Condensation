@@ -27,6 +27,7 @@ public class MatchmakingService {
         //get the pool of players
         List<QueuedPlayerMemo> players = pool.getPool();
         GameSession ourGamesession;
+        System.out.println(pool.getPool().toString());
 
 
         //first for loop will go through all the players starting with the first player in queue
@@ -60,7 +61,11 @@ public class MatchmakingService {
                         pool.removePlayer(player1);
                         pool.removePlayer(player2);
 
-                         ourGamesession = new GameSession(player1, player2);
+                        System.out.println("Player1IDM:" + player1.PlayerID());
+                        System.out.println("Player2IDM:" + player2.PlayerID());
+
+
+                        ourGamesession = new GameSession(player1, player2);
                          return ourGamesession;
 
                     }
