@@ -501,7 +501,7 @@ public class NetworkManager {
         try {
             // parse the JASONObject
             UUID sessionID = (UUID) recievePlayerMessage.get("SessionID");
-            UUID player1ID = (UUID) recievePlayerMessage.get("Player1D");
+            UUID player1ID = (UUID) recievePlayerMessage.get("Player1ID");
             String player1Message = (String) recievePlayerMessage.get("Message");
 
             // get the game session along with player 2's UUID associated w that game session
