@@ -15,6 +15,14 @@ public class ClientReceiver {
     }
 
     public static void receive(GameTypes gameType, JSONObject payload) throws IOException {
+        if (payload.get("Changes") != null){
+            try {
+                JSONArray jsonArray = (JSONArray) new JSONParser().parse((String) payload.get("Changes"));
+                payload.put("Changes", jsonArray);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         for (RecieverListener listener : receiverListeners) {
             listener.receive(gameType, payload);
         }
