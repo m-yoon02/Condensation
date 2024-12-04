@@ -97,6 +97,7 @@ public class Leaderboard {
     public void createUser(String name, String password) throws IOException {
         JSONObject user = new JSONObject(); // Create a new user object
 
+
         // Assign random UUID and user credentials
         user.put("playerUUID", UUID.randomUUID().toString());
         user.put("username", name);
@@ -122,12 +123,8 @@ public class Leaderboard {
         // Initialize an empty list of recent matches
         JSONArray recentMatches = new JSONArray();
         user.put("recentMatches", recentMatches);
-
-        // Add the new user to the list of users
         users.add(user);
 
-        // Save the data
-        this.saveData();
     }
     /**
      * Finds a user by their username.
