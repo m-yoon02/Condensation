@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
@@ -29,13 +30,16 @@ import java.io.IOException;
 public class LoginController {
 
     // Path to the json file for storing the username and UUID
-    public static final String DEFAULT_PLAYER_ID_FILE = "/Users/nateshoad/Desktop/University /Java_Files/SENG300F24P/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json";
+    public static final String DEFAULT_PLAYER_ID_FILE = "Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json";
+
+    @FXML
+    public Button loginBtn;
 
 
     // FXML Elements
 
     @FXML
-    private TextField passwordField;
+    public TextField passwordField;
 
     @FXML
     private Label passwordLabel;
@@ -159,6 +163,7 @@ public class LoginController {
                     window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     scene = new Scene(root);
                     window.setScene(scene);
+                    window.setResizable(false);
                     window.show();
                 } catch (IOException e) {
                     // Catch exception and print call stack
@@ -239,6 +244,34 @@ public class LoginController {
             return false;
         }
 
+
+    }
+
+    /**
+     * Method: returnBack
+     * @param event Triggered by the mouseclick
+     * @throws IOException Exception for when the FXML file does not exist
+     *
+     * Returns the user back to the welcome screen
+     */
+    @FXML
+    void returnBack(MouseEvent event) throws IOException {
+
+        try {
+            // Load the WelcomeScreen.fxml file to change scene
+            loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/WelcomeScreen.fxml"));
+            root = loader.load();
+
+            // Set the window and scene to the login screen
+            window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            window.setScene(scene);
+            window.setResizable(false);
+            window.show();
+        } catch (IOException e) {
+            // Catch exception and print call stack
+            e.printStackTrace();
+        }
 
     }
 

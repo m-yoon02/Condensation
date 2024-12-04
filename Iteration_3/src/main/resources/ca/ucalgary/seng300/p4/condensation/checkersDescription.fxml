@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@checkersDescription.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.CheckersHowToPlayController">
+   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+          <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" styleClass="menu-container" stylesheets="@checkersDescription.css" VBox.vgrow="NEVER">
+              <children>
+                  <Button fx:id="howToPlayBackBtn" mnemonicParsing="false" onAction="#onHowToPlayBackBtnClick" text="Back" HBox.hgrow="ALWAYS">
+                      <HBox.margin>
+                          <Insets bottom="3.0" left="15.0" top="3.0" />
+                      </HBox.margin>
+               </Button>
+              </children>
+          </HBox>
+          <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="738.0" prefWidth="512.0" styleClass="detail-scroll-container" VBox.vgrow="ALWAYS">
+              <content>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1278.0" prefWidth="700.0" styleClass="detail-container">
+                      <children>
+                          <Label text="About">
+                        <VBox.margin>
+                           <Insets left="5.0" />
+                        </VBox.margin></Label>
+                          <TextArea editable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0" text="Checkers, also known as draughts, is a classic strategy board game played between two players. It is played on an 8x8 square board, similar to a chessboard, but only the dark squares are used. Each player starts with 12 pieces, typically black and white or red and black, placed on the dark squares of the three rows closest to them." wrapText="true" VBox.vgrow="ALWAYS">
+                              <VBox.margin>
+                                  <Insets left="10.0" right="10.0" />
+                              </VBox.margin>
+                              <cursor>
+                                  <Cursor fx:constant="NONE" />
+                              </cursor>
+                          </TextArea>
+                          <Label layoutX="10.0" layoutY="46.0" text="Rules">
+                        <VBox.margin>
+                           <Insets left="5.0" />
+                        </VBox.margin></Label>
+                          <TextArea fx:id="rulesArea" editable="false" layoutX="10.0" layoutY="46.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0" text="1. Movement: Pieces move diagonally forward to an adjacent empty square.&#10;2. Capturing: A piece can “jump” over an opponent’s piece diagonally to an empty square immediately beyond it, capturing the opponent’s piece. Multiple jumps are allowed in one turn if possible.&#10;3. King Pieces: When a piece reaches the opponent’s back row, it becomes a “king” and gains the ability to move diagonally both forward and backward.&#10;4. Winning: The game ends when a player captures all of the opponent’s pieces or blocks them so they cannot make a legal move." wrapText="true" VBox.vgrow="ALWAYS">
+                              <cursor>
+                                  <Cursor fx:constant="NONE" />
+                              </cursor>
+                              <VBox.margin>
+                                  <Insets left="10.0" right="10.0" />
+                              </VBox.margin>
+                          </TextArea>
+                     <TextArea fx:id="citationArea" editable="false" layoutX="20.0" layoutY="262.0" minHeight="-Infinity" minWidth="-Infinity" text="OpenAI. (2024). ChatGPT (November 29 version) [Large language model]. https://openai.com/chat/&#10;" wrapText="true">
+                        <cursor>
+                           <Cursor fx:constant="NONE" />
+                        </cursor>
+                        <font>
+                           <Font size="12.0" />
+                        </font>
+                        <VBox.margin>
+                           <Insets top="20.0" />
+                        </VBox.margin>
+                     </TextArea>
+                      </children>
+                  </VBox>
+              </content>
+          </ScrollPane>
+      </children>
+   </VBox>
+
+</AnchorPane>

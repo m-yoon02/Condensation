@@ -72,7 +72,7 @@ public class TicTacToeQueueController {
         Object newplayerJSONFileObject = new JSONParser().parse(new FileReader("playerID.json"));
         JSONObject newplayerJSONFile = (JSONObject) newplayerJSONFileObject;
 
-        playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID"));
+        playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID "));
         playerInfoForGame.put("gameType", GameTypes.TICTACTOE);
         JSONObject startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
 
@@ -81,7 +81,7 @@ public class TicTacToeQueueController {
         fileWriter.flush();
         fileWriter.close();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tictactoe.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("Condensation Application - Tic Tac Toe");
         stage.setScene(scene);

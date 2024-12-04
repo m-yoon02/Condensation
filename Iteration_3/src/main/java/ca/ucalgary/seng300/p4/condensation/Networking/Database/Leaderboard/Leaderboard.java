@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
@@ -15,7 +16,7 @@ import org.json.simple.JSONObject;
  */
 public class Leaderboard {
     private static Leaderboard instance; // Singleton instance
-    private String DATA_FILE = "Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
+    private String DATA_FILE = Paths.get("Iteration_3", "src", "main", "java", "ca", "ucalgary", "seng300", "p4", "condensation", "Networking", "Database", "Leaderboard", "Leaderboard.json").toString();
     private JSONArray users;
      private JSONObject playerInGame;
 
@@ -158,6 +159,8 @@ public class Leaderboard {
     public JSONObject findUserByPassword(String pwd) {
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
+            System.out.println(user);
+            System.out.println(user.get("password"));
             if (user.get("password").equals(pwd)) {
                 return user;
             }

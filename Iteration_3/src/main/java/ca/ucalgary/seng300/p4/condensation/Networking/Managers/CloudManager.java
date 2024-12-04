@@ -25,7 +25,7 @@ public class CloudManager {
 
 
     // want to get the singleton instance of CloudManager
-    public static  synchronized CloudManager getInstance() {
+    public static synchronized CloudManager getInstance() {
         if (instance == null) {
             instance = new CloudManager();
         }
@@ -39,10 +39,11 @@ public class CloudManager {
     public boolean initializeConncection(){
         if(!isConnected){
             System.out.println("Cloud connection established successfully.");
+            isConnected = true;
             return true;
         }
         else{
-            System.err.println("Connection initialization interrupted.");
+            System.out.println("Connection initialization interrupted.");
             isConnected = false;
             return false;
         }
@@ -69,7 +70,6 @@ public class CloudManager {
         }
     }
 
-
     /**
      * we want to simulate the cloud saving the game state of a game session
      * @param gameState is a JSONObject that represents the current game
@@ -78,16 +78,15 @@ public class CloudManager {
 
     public boolean saveGameState(JSONObject gameState) {
         if (!isConnected) {
-            System.err.println("Game could not be saved. Please check your connection again");
+            System.out.println("Game could not be saved. Please check your connection again");
         }
-        // if it is connected, then continue with saving game state
-        this.currentGameState = new JSONObject(gameState);
-        System.out.println("Game state has been saved successfully.");
+        else{
+            // if it is connected, then continue with saving game state
+            this.currentGameState = new JSONObject(gameState);
+            System.out.println("Game state has been saved successfully.");
+        }
         return true;
-
     }
-
-
 
     /**
      * This method retrieves the last saved game 
@@ -95,18 +94,17 @@ public class CloudManager {
      */
     public JSONObject retrieveGameState() {
         if (!isConnected) {
-            System.err.println("Can't retrieve game state. Please check your connection with the cloud.");
+            System.out.println("Can't retrieve game state. Please check your connection with the cloud.");
             return null; // returning null if there was no game state
         }
 
-        // if there is a game state and connected to the cloud
 
+        // if there is a game state and connected to the cloudx
         if (currentGameState == null) {
             return null;
         }
 
         return new JSONObject(currentGameState);
-
     }
 
 
@@ -120,7 +118,7 @@ public class CloudManager {
 
 
     if (!isConnected) {
-        System.err.println("Cannot sync player data. Please check your connection with the cloud");
+        System.out.println("Cannot sync player data. Please check your connection with the cloud");
         return false;
     }
 
