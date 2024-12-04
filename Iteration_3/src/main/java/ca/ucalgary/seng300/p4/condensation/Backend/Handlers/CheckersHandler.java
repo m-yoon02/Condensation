@@ -140,10 +140,10 @@ public class CheckersHandler extends GameHandler {
     }
 
     /**
-     * checks if a piece at a given position can move to another position in the board's current state
+     * Checks if a piece at a given position can move to another position in the board's current state
      *
-     * @param oldPos, the piece's original position
-     * @param newPos, the target destination position
+     * @param oldPos the piece's original position
+     * @param newPos the target destination position
      * @return true if the move is valid, false otherwise
      */
     private boolean isValidMove(Vector2 oldPos, Vector2 newPos){
@@ -172,17 +172,17 @@ public class CheckersHandler extends GameHandler {
         return false;
     }
     /**
-     * Checks if a player is able to make further moves
+     * Checks if a player is able to make further moves, or has any pieces
      *
-     * @param color of pieces of the player to check
+     * @param color the color of the pieces of the player to check
      * @return true if game cannot continue, false otherwise
      */
     private boolean checkForGameEnd(PieceColor color){
         for(int i = 0; i < BOARD_SIZE[0]; i++){
             for(int j = 0; j < BOARD_SIZE[1]; j++){
                 Vector2 pos = new Vector2(j, i);
-                if(board.getAt(pos).getColor().equals(color)){
-                    if(canMove(pos) || canJump(pos)){
+                if (board.getAt(pos) != null && board.getAt(pos).getColor().equals(color)) {
+                    if (canMove(pos) || canJump(pos)) {
                         return false;
                     }
                 }
@@ -191,54 +191,26 @@ public class CheckersHandler extends GameHandler {
         return true;
     }
     /**
-     *A helper method to check if a piece at a position can move 1 tile ahead. Doesn't check jumps
+     * A helper method to check if a piece at a position can move 1 tile ahead. Doesn't check jumps
      *
-     * @param pos of the piece that is being checked
+     * @param pos the color of the piece that is being checked
      * @return true if piece is able to move
      */
     private boolean canMove(Vector2 pos){
-        if(pos.x() == 0){
-            if(pos.y() == 7){
-                if(board.getAt(pos.x()+1, pos.y()-1) == null
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())){
-                    return true;
-                }
-            } else {
-                if((board.getAt(pos.x()+1, pos.y()+1) == null && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
-                        || (board.getAt(pos.x()+1, pos.y()-1) == null) && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())){
-                    return true;
-                }
-            }
-        } else if(pos.x() == 7){
-            if(pos.y() == 0){
-                if(board.getAt(pos.x()-1, pos.y()+1) == null
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing())){
-                    return true;
-                }
-            } else {
-                if((board.getAt(pos.x()-1, pos.y()+1) == null&& (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
-                        || (board.getAt(pos.x()-1, pos.y()-1) == null && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing()))){
-                    return true;
-                }
-            }
-        } else{
-            if(pos.y() == 0){
-                if((board.getAt(pos.x()-1, pos.y()+1) == null || board.getAt(pos.x()+1, pos.y()+1) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing())){
-                    return true;
-                }
-            } else if(pos.y() == 7){
-                if((board.getAt(pos.x()-1, pos.y()-1) == null || board.getAt(pos.x()+1, pos.y()-1) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())){
-                    return true;
-                }
-            } else {
-                if((board.getAt(pos.x()-1, pos.y()+1) == null || board.getAt(pos.x()+1, pos.y()+1) == null
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
-                        || (board.getAt(pos.x()+1, pos.y()-1) == null || board.getAt(pos.x()-1, pos.y()-1) == null
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing()))){
-                    return true;
-                }
+        CheckersPiece piece = board.getAt(pos);
+        if (piece == null) {
+            return false;
+        }
+
+        int[][] directions = getDirections(piece);
+
+        // Checks all possible moves
+        for (int[] dir : directions) {
+            Vector2 movePos = new Vector2(pos.x() + dir[0], pos.y() + dir[1]);
+
+            // Position to move is within board and no piece there
+            if (board.positionWithinBounds(movePos) && board.getAt(movePos) == null) {
+                return true;
             }
         }
         return false;
@@ -247,93 +219,29 @@ public class CheckersHandler extends GameHandler {
     /**
      * A helper method to check if a piece can jump over another piece from a given position
      *
-     * @param pos
-     * @return boolean
+     * @param pos the position of the piece being checked
+     * @return true if the piece can jump, false otherwise
      */
     private boolean canJump(Vector2 pos){
-        if(pos.x() == 0 || pos.x() == 1){
-            if(pos.y() == 0 || pos.y() == 1){
-                if ((board.getAt(pos.x()+1, pos.y()+1) != null
-                        && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing())) {
-                    return true;
-                }
-            } else if(pos.y() == 6 || pos.y() == 7){
-                if ((board.getAt(pos.x()+1, pos.y()-1) != null
-                        && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())) {
-                    return true;
-                }
-            } else{
-                if(((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
-                        && ((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing()))){
-                    return true;
-                }
-            }
-        } else if(pos.x() == 1){
-            if(pos.y() == 0){
-                if((board.getAt(pos.x()+1, pos.y()+1) != null
-                        && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing())){
-                    return true;
-                }
-            } else if(pos.y() == 6){
-                if((board.getAt(pos.x()+1, pos.y()-1) != null
-                        && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())){
-                    return true;
-                }
-            } else{
-                if(((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
-                        && ((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing()))){
-                    return true;
-                }
-            }
-        } else if(pos.x() == 6 || pos.x() == 7){
-            if(pos.y() == 0 || pos.y() == 1){
-                if ((board.getAt(pos.x()-1, pos.y()+1) != null
-                        && board.getAt(pos.x()-2, pos.y()+2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing())) {
-                    return true;
-                }
-            } else if(pos.y() == 6 || pos.y() == 7){
-                if ((board.getAt(pos.x()-1, pos.y()-1) != null
-                        && board.getAt(pos.x()-2, pos.y()-2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())) {
-                    return true;
-                }
-            } else{
-                if(((board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
-                        || ((board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing()))){
-                    return true;
-                }
-            }
-        } else {
-            if(pos.y() == 0 || pos.y() == 1){
-                if(((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null))
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing())){
-                    return true;
-                }
-            }  else if(pos.y() == 6 || pos.y() == 7){
-                if(((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null))
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing())){
-                    return true;
-                }
-            } else{
-                if(((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.BLACK || board.getAt(pos).isKing()))
-                        || ((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)
-                        && (board.getAt(pos).getColor() == PieceColor.RED || board.getAt(pos).isKing()))){
+        CheckersPiece piece = board.getAt(pos);
+        if (piece == null) {
+            return false;
+        }
+
+        int[][] directions = getDirections(piece);
+
+        // Checks each direction for a jump move
+        for (int[] dir : directions) {
+            Vector2 capturePos = new Vector2(pos.x() + dir[0], pos.y() + dir[1]);
+            Vector2 jumpPos = new Vector2(pos.x() + 2 * dir[0], pos.y() + 2 * dir[1]);
+
+            // Position to jump and middle position are in board
+            if (board.positionWithinBounds(capturePos) && board.positionWithinBounds(jumpPos)) {
+                CheckersPiece capturePiece = board.getAt(capturePos);
+                CheckersPiece jumpPiece = board.getAt(jumpPos);
+
+                // Middle position has an enemy piece and jump position is empty
+                if (capturePiece != null && capturePiece.getColor() != piece.getColor() && jumpPiece == null) {
                     return true;
                 }
             }
