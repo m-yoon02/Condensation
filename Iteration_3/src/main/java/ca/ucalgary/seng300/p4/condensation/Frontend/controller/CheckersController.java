@@ -119,12 +119,11 @@ public class CheckersController {
     }
 
     public void receiveCheckers(JSONObject payload) throws IOException {
-        String gameResult = (String) payload.get("UPDATE_TYPE");
+        String gameResult = (String) payload.get("UpdateType");
 
-        if (Objects.equals(gameResult, "TURN_END")){
+        if (gameResult.equals("TURN_END")){
             handleTurnEnd(payload);
-        }
-        else{
+        } else{
             handleGameEnd(payload);
         }
     }
@@ -134,6 +133,7 @@ public class CheckersController {
         newTurn = (UUID) payload.get("PlayerTurn");
         // Here we will update the board representation from payload
         // ! This might error depending on what Networking sends us
+        System.out.println(payload.get("Changes"));
         updateBoardRepresentationFromJSON((JSONArray) payload.get("Changes"));
         updateUIToMatchBoardRepresentation();
     }
