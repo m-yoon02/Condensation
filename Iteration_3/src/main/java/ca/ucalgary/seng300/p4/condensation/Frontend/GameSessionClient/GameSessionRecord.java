@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -60,5 +61,28 @@ public class GameSessionRecord {
         player1ID = UUID.fromString((String) jsonObject.get("player1ID"));
         player2ID = UUID.fromString((String) jsonObject.get("player2ID"));
         currentPlayerID = UUID.fromString((String) jsonObject.get("currentPlayerTurn"));
+    }
+
+    public static JSONObject parseMoveData(UUID sessionID, UUID playerID, int[] newPosition){
+        return parseMoveData(sessionID, playerID, newPosition, null);
+    }
+
+    public static JSONObject parseMoveData(UUID sessionID, UUID playerID, int[] newPosition, int[] oldPosition) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("SessionID", sessionID.toString());
+        jsonObject.put("PlayerID", playerID.toString());
+        jsonObject.put("NewPosition", convertIntArrayToJSONArray(newPosition));
+        if (oldPosition != null) {
+            jsonObject.put("OldPosition", convertIntArrayToJSONArray(oldPosition));
+        }
+        return jsonObject;
+    }
+
+    private static JSONArray convertIntArrayToJSONArray(int[] position){
+        JSONArray jsonArray = new JSONArray();
+        for (int i : position){
+            jsonArray.add(i);
+        }
+        return jsonArray;
     }
 }

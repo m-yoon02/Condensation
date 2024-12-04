@@ -35,26 +35,19 @@ public class GameSession implements GameEndListener, TurnEndListener {
      */
 
     public GameSession(QueuedPlayerMemo playerMemo1, QueuedPlayerMemo playerMemo2) {
-        GameHandler gameHandler1 = null;
         this.sessionId = UUID.randomUUID();
         this.player1ID =  playerMemo1.PlayerID();
         this.player2ID =  playerMemo2.PlayerID();
         this.gameType = playerMemo1.gameType();
 
         GameTypes gameType = playerMemo1.gameType();
-            switch (gameType) {
-                // since we basically handle the state of backend we would pass into gameHandler the PlayerIDs, and we simply send client payload to this.gamehandler
+        this.gameHandler = switch (gameType) {
+            // since we basically handle the state of backend we would pass into gameHandler the PlayerIDs, and we simply send client payload to this.gamehandler
+            case CHECKERS -> new CheckersHandler(this.player1ID, this.player2ID);
+            case TICTACTOE -> new TicTacToeHandler(this.player1ID, this.player2ID);
+            case CONNECT4 -> new Connect4Handler(this.player1ID, this.player2ID);
+        };
 
-                case CHECKERS :
-                    gameHandler1 = new CheckersHandler(this.player1ID, this.player2ID);
-                case TICTACTOE:
-                    gameHandler1 = new TicTacToeHandler(this.player1ID, this.player2ID);
-                case CONNECT4:
-                    gameHandler1 = new TicTacToeHandler(this.player1ID, this.player2ID);
-          }
-
-        // adding gameSession to listen to TurnEnd and GameEnd
-        this.gameHandler = gameHandler1;
         this.gameHandler.addTurnEndListener(this);
         this.gameHandler.addGameEndListener(this);
 
@@ -162,7 +155,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
         JSONObject responseClientPayload = new JSONObject();
         responseClientPayload.put("UpdateType", "TURN_END");
         responseClientPayload.put("SessionID", sessionId);
-        responseClientPayload.put("PlayerTurnID", playersTurnID);
+        responseClientPayload.put("PlayerTurn", playersTurnID);
         responseClientPayload.put("Changes", gameStateJson);
 
         try {

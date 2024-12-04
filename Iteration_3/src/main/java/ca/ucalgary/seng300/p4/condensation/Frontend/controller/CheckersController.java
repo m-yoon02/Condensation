@@ -1,7 +1,9 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.ClientReceiver;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.RecieverListener;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -9,12 +11,10 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -22,7 +22,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -33,41 +32,53 @@ import java.util.*;
 
 
 public class CheckersController {
-    static Stage stage;
+    private static final String[] COLORS = {PieceColor.RED.toString(), PieceColor.BLACK.toString()};
 
     // Checkers instance
     @FXML
-    static GridPane chessboardGrid;
+    private GridPane chessboardGrid;
 
-    static final int BOARD_DIM = 8;
-    static String white = "-fx-background-color: #ffffff;" +
+    private Stage stage;
+
+    private final int BOARD_DIM = 8;
+    private final String white = "-fx-background-color: #ffffff;" +
             "-fx-alignment: center;" +
             "-fx-background-radius: 0;";
-    static String black = "-fx-background-color: #000000;" +
+    private final String black = "-fx-background-color: #000000;" +
             "-fx-alignment: center;" +
             "-fx-background-radius: 0;";
 
-    static Button[][] chessboard = new Button[8][8];
+    private final Button[][] chessboard = new Button[BOARD_DIM][BOARD_DIM];
 
-    static Button[] blackPieces = new Button[12];
-    static Button[] redPieces = new Button[12];
+    private UUID playerOne;
+    private UUID playerTwo;
+    private UUID sessionID;
+    private UUID newTurn;
 
-    public static UUID playerOne;
-    public static UUID playerTwo;
-    public static UUID sessionID;
-    public static UUID newTurn;
+    private final String[][] boardRepresentation = new String[BOARD_DIM][BOARD_DIM];
+    private int[] lastClickedPosition = null;
 
-    public List<List<Integer>> coordinatesOfTwoClicks = new ArrayList<>();
-
-    public static List<List<Integer>> locationOfBlackPieces = new ArrayList<>();
-
-    public static List<List<Integer>> locationOfRedPieces = new ArrayList<>();
-
-    static Image BLACK_IMAGE =  new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/black2.png")).toExternalForm());
-    static Image RED_IMAGE = new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/red.png")).toExternalForm());
+    private static final Image BLACK_IMAGE =  new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/black2.png")).toExternalForm());
+    private static final Image RED_IMAGE = new Image((CheckersController.class.getResource("/ca/ucalgary/seng300/p4/condensation/red.png")).toExternalForm());
 
     @FXML
-    public static Label turnLabel;
+    private Label turnLabel;
+
+    private class CheckersRecieverListener extends RecieverListener {
+
+        public CheckersRecieverListener() {
+            super(GameTypes.CHECKERS);
+        }
+
+        @Override
+        public void onReceive(JSONObject payload) throws IOException {
+            receiveCheckers(payload);
+        }
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     @FXML
     public void initialize() throws IOException, ParseException {
@@ -79,154 +90,58 @@ public class CheckersController {
         sessionID = gameSessionRecord.getSessionID();
         newTurn = gameSessionRecord.getCurrentPlayerID();
 
-        int blackCount = 0;
-        int redCount = 0;
         for (int r = 0; r < BOARD_DIM; r++) {   // loop through rows
             for (int c = 0; c < BOARD_DIM; c++) {   // loop through columns
                 Button square = new Button();
+                int finalR = r;
+                int finalC = c;
                 square.setPrefSize(40, 40);
                 square.setPadding(new Insets(1, 1, 1, 1));
-
-                if (r % 2 == 0) {   // even rows
-                    if (c % 2 == 0) {   // even columns
-                        square.setStyle(black);
-                    } else {    // odd columns
-                        square.setStyle(white);
-                    }
-                } else {    // odd rows
-                    if (c % 2 == 0) {   // even columns
-                        square.setStyle(white);
-                    } else {    // odd columns
-                        square.setStyle(black);
-                    }
+                if ((r % 2 == 0 && c % 2 == 0) || (r % 2 != 0 && c % 2 != 0)){
+                    square.setStyle(black);
+                } else {
+                    square.setStyle(white);
                 }
-
-                if (r <= 2) {   // first 3 rows
-                    if (r % 2 == 0) { // 0 and 2
-                        if (c % 2 == 0) {
-                            addPieceToSquare(BLACK_IMAGE, square);
-                            blackPieces[blackCount] = square;
-                            blackCount++;
-                        }
-                    } else { // 1
-                        if (c % 2 != 0) {
-                            addPieceToSquare(BLACK_IMAGE, square);
-                            blackPieces[blackCount] = square;
-                            blackCount++;
-                        }
-                    }
-                    List<Integer> coordinateForBlacks = new ArrayList<>();
-                    coordinateForBlacks.add(r);
-                    coordinateForBlacks.add(c);
-                    locationOfBlackPieces.add(coordinateForBlacks);
-                }
-                if (r >= 5) {   // last 3 rows
-                    if (r % 2 == 0) { // 6
-                        if (c % 2 == 0) {
-                            addPieceToSquare(RED_IMAGE, square);
-                            redPieces[redCount] = square;
-                            redCount++;
-                        }
-                    } else { // 5 and 7
-                        if (c % 2 != 0) {
-                            addPieceToSquare(RED_IMAGE, square);
-                            redPieces[redCount] = square;
-                            redCount++;
-                        }
-                    }
-                    List<Integer> coordinateForReds = new ArrayList<>();
-                    coordinateForReds.add(r);
-                    coordinateForReds.add(c);
-                    locationOfRedPieces.add(coordinateForReds);
-                }
-
-                final int finalRow = r;
-                final int finalCol = c;
                 square.setOnMouseClicked(event -> {
                     try {
-                        List<Integer> coordinate = new ArrayList<>();
-                        coordinate.add(finalRow);
-                        coordinate.add(finalCol);
-                        coordinatesOfTwoClicks.add(coordinate);
-                        returnToBackendCheckers(event);
+                        onCheckersButtonClick(finalR, finalC);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
-
-                chessboard[c][r] = square;  // add square to chessboard array
+                chessboard[r][c] = square;  // add square to chessboard array
                 chessboardGrid.add(square, c, r, 1, 1); // add square to grid pane
             }
         }
+        initializeBoardRepresentation();
+        updateUIToMatchBoardRepresentation();
+        ClientReceiver.addClientReceiver(new CheckersRecieverListener());
     }
 
-    public static void receiveCheckers(JSONObject payload) throws IOException {
-        String gameResult = (String) payload.get("UPDATE_TYPE");
+    public void receiveCheckers(JSONObject payload) throws IOException {
+        String gameResult = (String) payload.get("UpdateType");
 
-        if (Objects.equals(gameResult, "TURN_END")){
+        if (gameResult.equals("TURN_END")){
             handleTurnEnd(payload);
-        }
-        else{
+        } else{
             handleGameEnd(payload);
         }
     }
 
-    private static void handleTurnEnd(JSONObject payload){
+    private void handleTurnEnd(JSONObject payload) {
         sessionID = (UUID) payload.get("SessionID");
         newTurn = (UUID) payload.get("PlayerTurn");
-        updateBoardAndPieces((JSONArray) payload.get("Changes"));
+        // Here we will update the board representation from payload
+        updateBoardRepresentationFromJSON((JSONArray) payload.get("Changes"));
+        updateUIToMatchBoardRepresentation();
     }
 
-    private static void updateBoardAndPieces(JSONArray allUpdatedPieces){
-        locationOfBlackPieces = new ArrayList<>();
-        locationOfRedPieces = new ArrayList<>();
-        chessboardGrid.getChildren().clear();
-        // Removes all the buttons in the grid pane for now
-        // https://stackoverflow.com/questions/11147788/clean-gridpane-in-javafx-and-maintain-the-grid-line
-        for (int row = 0; row < allUpdatedPieces.size(); row++) {
-            JSONArray rowArray = (JSONArray) allUpdatedPieces.get(row);
-            for (int col = 0; col < rowArray.size(); col++) {
-                String state = (String) rowArray.get(col);
-                Button newButton = chessboard[col][row];
-                if (row % 2 == 0) {   // even rows
-                    if (col % 2 == 0) {   // even columns
-                        newButton.setStyle(black);
-                    } else {    // odd columns
-                        newButton.setStyle(white);
-                    }
-                } else {    // odd rows
-                    if (col % 2 == 0) {   // even columns
-                        newButton.setStyle(white);
-                    } else {    // odd columns
-                        newButton.setStyle(black);
-                    }
-                }
-                if(state.equals("RED")){
-                    addPieceToSquare(RED_IMAGE, newButton);
-                    List<Integer> newRedCoordinates = new ArrayList<>();
-                    newRedCoordinates.add(row);
-                    newRedCoordinates.add(col);
-                    locationOfRedPieces.add(newRedCoordinates);
-                }
-                else if (state.equals("BLACK")){
-                    addPieceToSquare(BLACK_IMAGE, newButton);
-                    List<Integer> newBlackCoordinates = new ArrayList<>();
-                    newBlackCoordinates.add(row);
-                    newBlackCoordinates.add(col);
-                    locationOfBlackPieces.add(newBlackCoordinates);
-                }
-                chessboard[col][row] = newButton;
-                chessboardGrid.add(newButton, col, row, 1, 1);
-            }
-        }
-    }
-
-    private static void handleGameEnd(JSONObject payload) throws IOException {
+    private void handleGameEnd(JSONObject payload) throws IOException {
         String gameState = (String) payload.get("GameState");
         if ("WIN".equals(gameState)) {
             String playerWon = (String) payload.get("PlayerWon");
             turnLabel.setText(String.format("Player %s won the game!", playerWon));
-            if (playerWon.equals(playerOne)){
+            if (UUID.fromString(playerWon).equals(playerOne)){
                 turnLabel.setTextFill(Color.GREEN);
             }
             else{
@@ -243,41 +158,6 @@ public class CheckersController {
         stage.show();
     }
 
-    @FXML
-    public void returnToBackendCheckers(MouseEvent event) throws IOException, ParseException {
-        List<Integer> firstMove = coordinatesOfTwoClicks.getFirst();
-        List<Integer> secondMove = coordinatesOfTwoClicks.getLast();
-        int firstMoveIndex = -1;
-        int secondMoveIndex = -1;
-
-        if (newTurn.equals(playerOne)){
-            firstMoveIndex = locationOfRedPieces.indexOf(firstMove);
-            secondMoveIndex = locationOfBlackPieces.indexOf(secondMove);
-        }
-        else{
-            firstMoveIndex = locationOfBlackPieces.indexOf(firstMove);
-            secondMoveIndex = locationOfRedPieces.indexOf(secondMove);
-        }
-        if (coordinatesOfTwoClicks.size() == 2 && (firstMoveIndex >= 0 && secondMoveIndex >= 0)){
-            JSONObject checkersJSON = new JSONObject();
-            checkersJSON.put("SessionID", sessionID);
-            if (newTurn.equals(playerOne)){
-                checkersJSON.put("playerID", playerOne.toString());
-            }
-            else{
-                checkersJSON.put("playerID", playerTwo.toString());
-            }
-            checkersJSON.put("OldPosition", new Vector2(firstMove.getFirst(), firstMove.getLast()));
-            checkersJSON.put("NewPosition", new Vector2(secondMove.getFirst(), secondMove.getLast()));
-            checkersJSON.put("gameType", GameTypes.CHECKERS);
-            NetworkManager.getNetworkInstance().receiveGameDataFromClient(checkersJSON);
-        }
-        coordinatesOfTwoClicks.removeFirst();
-        coordinatesOfTwoClicks.removeFirst();
-
-    }
-
-
     private static void addPieceToSquare(Image image, Button square) {
         ImageView piece = new ImageView();
         piece.setFitWidth(36);
@@ -287,13 +167,13 @@ public class CheckersController {
     }
 
     @FXML
-    Button forfeitBtn;
+    private Button forfeitBtn;
 
     @FXML
-    Button forfeitYesBtn;
+    private Button forfeitYesBtn;
 
     @FXML
-    Button forfeitNoBtn;
+    private Button forfeitNoBtn;
 
     @FXML
     public void onForfeitBtnClick() {
@@ -316,28 +196,28 @@ public class CheckersController {
 
     // chat
     @FXML
-    TextArea chatBox;
+    private TextArea chatBox;
 
     @FXML
-    Button sendBtn;
+    private Button sendBtn;
 
     @FXML
-    ScrollPane chatScrollPane;
+    private ScrollPane chatScrollPane;
 
     @FXML
-    VBox paneInsideScrollPane;
+    private VBox paneInsideScrollPane;
 
-    String messageHBoxStyle = "    -fx-pref-width: 50;\n" +
+    private String messageHBoxStyle = "    -fx-pref-width: 50;\n" +
             "    -fx-max-width: 200;";
-    String senderNameStyle = "-fx-font-size: 13;\n" +
+    private String senderNameStyle = "-fx-font-size: 13;\n" +
             "    -fx-font-family: \"Oswald\", sans-serif;\n" +
             "    -fx-text-fill: White;\n" +
             "    -fx-font-weight: bold;";
-    String timeSentStyle = "-fx-font-size: 8;\n" +
+    private String timeSentStyle = "-fx-font-size: 8;\n" +
             "    -fx-font-family: \"Oswald\", sans-serif;\n" +
             "    -fx-text-fill: White;\n";
-    String nameTimeHBoxStyle = "-fx-alignment: CENTER_LEFT";
-    String messageStyle = "-fx-font-size: 12;\n" +
+    private String nameTimeHBoxStyle = "-fx-alignment: CENTER_LEFT";
+    private String messageStyle = "-fx-font-size: 12;\n" +
             "    -fx-font-family: \"Oswald\", sans-serif;\n" +
             "    -fx-text-fill: White;";
 
@@ -432,7 +312,7 @@ public class CheckersController {
         }
     }
 
-    private static String getUsernameFromUUID(String playerUUID) {
+    private String getUsernameFromUUID(String playerUUID) {
         try {
             File file = new File(NetworkManager.LEADERBOARD_FILE);
             JSONParser parser = new JSONParser();
@@ -450,11 +330,75 @@ public class CheckersController {
         return null;
     }
 
-    private static void disableAllButtons() { //when game ends
+    private void disableAllButtons() { //when game ends
         for (Button[] buttonRow : chessboard) {
             for (Button button : buttonRow) {
                 button.setDisable(true);
             }
+        }
+    }
+
+    private void initializeBoardRepresentation() {
+        for (String[] strings : boardRepresentation)
+            Arrays.fill(strings, "EMPTY");
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < BOARD_DIM; j++){
+                if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)) {
+                    boardRepresentation[i][j] = "BLACK";
+                }
+            }
+        }
+        for (int i = BOARD_DIM - 3; i < BOARD_DIM; i++){
+            for (int j = 0; j < BOARD_DIM; j++) {
+                if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)) {
+                    boardRepresentation[i][j] = "RED";
+                }
+            }
+        }
+    }
+
+    private void updateBoardRepresentationFromJSON(JSONArray jsonArray) {
+        for (String[] strings : boardRepresentation)
+            Arrays.fill(strings, "EMPTY");
+        for (int i = 0; i < BOARD_DIM; i++) {
+            JSONArray outer = (JSONArray) jsonArray.get(i);
+            for (int j = 0; j < BOARD_DIM; j++) {
+                String color = (String) outer.get(j);
+                if (!color.equals("EMPTY")) {
+                    boardRepresentation[i][j] = color;
+                }
+            }
+        }
+    }
+
+    private void updateUIToMatchBoardRepresentation() {
+        for (int r = 0; r < BOARD_DIM; r++) {   // loop through rows
+            for (int c = 0; c < BOARD_DIM; c++) {   // loop through columns
+                Button square = chessboard[r][c];
+                square.setGraphic(null);
+                if (boardRepresentation[r][c].equals("RED")) {
+                    addPieceToSquare(RED_IMAGE, square);
+                } else if (boardRepresentation[r][c].equals("BLACK")){
+                    addPieceToSquare(BLACK_IMAGE, square);
+                }
+            }
+        }
+    }
+
+    private void onCheckersButtonClick(int i, int j) throws IOException, ParseException {
+        if (lastClickedPosition == null){
+            int checkIndex = newTurn.equals(playerOne) ? 0 : 1;
+            if (boardRepresentation[i][j].equals(COLORS[checkIndex])){
+                lastClickedPosition = new int[]{j, i};
+            }
+        } else {
+            NetworkManager.getNetworkInstance().receiveGameDataFromClient(GameSessionRecord.parseMoveData(
+                    sessionID,
+                    newTurn,
+                    new int[]{j, i},
+                    lastClickedPosition
+            ));
+            lastClickedPosition = null;
         }
     }
 }
