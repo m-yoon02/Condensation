@@ -77,7 +77,7 @@ public class CheckersHandler extends GameHandler {
         }
 
         // Move is a capture
-        int moveDistance = abs(newPosition.x() - oldPosition.x());
+        int moveDistance = abs(newPosition.y() - oldPosition.y());
         if (moveDistance == 2 && canCapture(board.getAt(oldPosition))){
             processCaptureOnMove(oldPosition, newPosition);
         }
@@ -99,8 +99,8 @@ public class CheckersHandler extends GameHandler {
     }
 
     private boolean captureIsPossible(PieceColor color) {
-        for (int x = 0; x < BOARD_SIZE[0]; x++) {
-            for (int y = 0; y < BOARD_SIZE[1]; y ++) {
+        for (int y = 0; y < BOARD_SIZE[0]; y++) {
+            for (int x = 0; x < BOARD_SIZE[1]; x ++) {
                 CheckersPiece piece = board.getAt(x, y);
                 if(piece != null && piece.getColor() == color && canCapture(piece)){
                     return true;
@@ -132,10 +132,10 @@ public class CheckersHandler extends GameHandler {
         }
         // Assuming red is on the bottom and black is on the top
         else if (piece.getColor() == PieceColor.RED){
-            return new int[][]{{-1, -1}, {-1, 1}};
+            return new int[][]{{-1, -1}, {1, -1}};
         }
         else{
-            return new int[][]{{1, 1}, {1, -1}};
+            return new int[][]{{1, 1}, {-1, 1}};
         }
     }
 
@@ -147,20 +147,20 @@ public class CheckersHandler extends GameHandler {
      * @return true if the move is valid, false otherwise
      */
     private boolean isValidMove(Vector2 oldPos, Vector2 newPos){
-        int distanceX = abs(newPos.x()) - abs(oldPos.x());
-        int distanceY = abs(newPos.y()) - abs(oldPos.y());
+        int distanceCol = abs(newPos.x()) - abs(oldPos.x());
+        int distanceRow = abs(newPos.y()) - abs(oldPos.y());
         // return false if there's a piece at newPos,
         // or if there is no piece to jump over if the piece is trying to travel 2 tiles away
-        if(board.getAt(newPos) != null || (abs(distanceX) == 2 && board.getAt(oldPos.x()+(distanceX/2), oldPos.y()+(distanceY/2)) == null)){
+        if(board.getAt(newPos) != null || (abs(distanceCol) == 2 && board.getAt(oldPos.x()+(distanceCol/2), oldPos.y()+(distanceRow/2)) == null)){
             return false;
         }
         //if destination is 2 tiles away,
         // divide both distances by two to compare to the piece's possible directions
-        if(distanceX > 1 || distanceX < -1){
-            distanceX = distanceX/2;
-            distanceY = distanceY/2;
+        if(distanceCol > 1 || distanceCol < -1){
+            distanceCol = distanceCol/2;
+            distanceRow = distanceRow/2;
         }
-        int[] directionOfTravel = {distanceX, distanceY};
+        int[] directionOfTravel = {distanceCol, distanceRow};
         int[][] directions = getDirections(board.getAt(oldPos));
         //iterates through each possible direction of travel for the piece and compares it with the
         //actual direction of travel. Returns true if they are equal
@@ -180,7 +180,7 @@ public class CheckersHandler extends GameHandler {
     private boolean checkForGameEnd(PieceColor color){
         for(int i = 0; i < BOARD_SIZE[0]; i++){
             for(int j = 0; j < BOARD_SIZE[1]; j++){
-                Vector2 pos = new Vector2(i, j);
+                Vector2 pos = new Vector2(j, i);
                 if(board.getAt(pos).getColor().equals(color)){
                     if(canMove(pos) || canJump(pos)){
                         return false;
@@ -360,7 +360,7 @@ public class CheckersHandler extends GameHandler {
             finalRow = 7;
         }
 
-        if (pos.x() == finalRow && !piece.isKing()){
+        if (pos.y() == finalRow && !piece.isKing()){
             piece.promoteToKing();
         }
     }
@@ -372,9 +372,9 @@ public class CheckersHandler extends GameHandler {
      */
     private void processCaptureOnMove(Vector2 oldPos, Vector2 newPos) {
         // Calculated by using midpoint, and assuming kings capture with finite range
-        int capturedPieceRow = (oldPos.x() + newPos.x()) / 2;
-        int capturedPieceCol = (oldPos.y() + newPos.y()) / 2;
-        Vector2 capturedPiecePos = new Vector2(capturedPieceRow, capturedPieceCol);
+        int capturedPieceCol = (oldPos.x() + newPos.x()) / 2;
+        int capturedPieceRow = (oldPos.y() + newPos.y()) / 2;
+        Vector2 capturedPiecePos = new Vector2(capturedPieceCol, capturedPieceRow);
 
         board.removePiece(capturedPiecePos);
     }
