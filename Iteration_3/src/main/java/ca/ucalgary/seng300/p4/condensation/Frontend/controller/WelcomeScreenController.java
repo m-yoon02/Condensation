@@ -55,7 +55,7 @@ public class WelcomeScreenController {
         // Set the window to the current viewing screen
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        window.setScene(scene);
+
         // Set the window and scene to the login screen
         window.setScene(scene);
         window.show();
@@ -79,7 +79,7 @@ public class WelcomeScreenController {
         // Set the window to the current viewing screen
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        window.setResizable(false);
+
         // Set the window and scene to the login screen
         window.setScene(scene);
         window.show();
@@ -127,6 +127,5 @@ public class WelcomeScreenController {
         Desktop.getDesktop().browse(new URI("https://csgit.ucalgary.ca/ssafe/seng300-f24-project/-/blob/main/README.md?ref_type=heads"));
 
     }
-
 
 }

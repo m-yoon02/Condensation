@@ -1,6 +1,5 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -26,18 +25,18 @@ public class tMenuController {
 
     @FXML
     public void initialize() {
-        playButton.setOnAction(event -> navigateTo("Condensation Appliance - Tic Tac Toe Queue", "tictactoequeue.fxml"));
-        leaderboardButton.setOnAction(event -> navigateTo("Condensation Appliance - Tic Tac Toe Leaderboard", "tLeaderboard.fxml"));
-        howToPlayButton.setOnAction(event -> navigateTo("Condensation Appliance - How to Play Tic Tac Toe", "tHowToPlay.fxml"));
-        goBack.setOnAction(event -> navigateTo("Condensation Appliance - Games Menu", "ProfileGame.fxml"));
+        playButton.setOnAction(event -> navigateTo("tGame.fxml"));
+        leaderboardButton.setOnAction(event -> navigateTo("tLeaderboard.fxml"));
+        howToPlayButton.setOnAction(event -> navigateTo("tHowToPlay.fxml"));
+        //backButton.setOnAction(event -> navigateTo("login page.fxml"));
     }
 
-    private void navigateTo(String title, String fxmlFile) {
+    private void navigateTo(String fxmlFile) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
             Stage stage = (Stage) playButton.getScene().getWindow();
-            Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-            stage.setTitle(title);
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            stage.setTitle("Games Menu");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
