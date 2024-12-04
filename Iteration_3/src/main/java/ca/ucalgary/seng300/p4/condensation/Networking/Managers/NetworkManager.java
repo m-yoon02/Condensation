@@ -21,8 +21,6 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class NetworkManager {
-
-
     /**
      * Network Manager acts as facade which abstracts a way syncing between game, chat and other elements.
      * Network manager implements singleton design pattern for network
@@ -39,11 +37,21 @@ public class NetworkManager {
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final ChatService chatService;
 
-    private static final String ABSOLUTE_PATH = Path.of("").toAbsolutePath().toString();
-    private static final String LEADERBOARD_DIR = Paths.get(ABSOLUTE_PATH, "src", "main", "java", "ca", "ucalgary", "seng300", "p4", "condensation", "Networking", "Database", "Leaderboard").toString();
-    public static final String LEADERBOARD_FILE = Paths.get(LEADERBOARD_DIR,"Leaderboard.json").toString();
-    public static final String PLAYER_ID_FILE = Paths.get(LEADERBOARD_DIR, "playerID.json").toString();
-    public static final String NEW_GAME_FILE = Paths.get(LEADERBOARD_DIR, "newgame.json").toString();
+    private static final String ABSOLUTE_PATH;
+    private static final String LEADERBOARD_DIR;
+    public static final String LEADERBOARD_FILE;
+    public static final String PLAYER_ID_FILE;
+
+    static {
+        Path basePath = Paths.get("").toAbsolutePath();
+        if (!basePath.endsWith("Iteration_3")) {
+            basePath = basePath.resolve("Iteration_3");
+        }
+        ABSOLUTE_PATH = basePath.normalize().toString();
+        LEADERBOARD_DIR = Paths.get(ABSOLUTE_PATH, "src", "main", "java", "ca", "ucalgary", "seng300", "p4", "condensation", "Networking", "Database", "Leaderboard").toString();
+        LEADERBOARD_FILE = Paths.get(LEADERBOARD_DIR, "Leaderboard.json").toString();
+        PLAYER_ID_FILE = Paths.get(LEADERBOARD_DIR, "playerID.json").toString();
+    }
 
     /**
      * constructor for network manager instance, when creating a new one
