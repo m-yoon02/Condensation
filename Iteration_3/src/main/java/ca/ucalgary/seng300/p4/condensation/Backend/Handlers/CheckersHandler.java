@@ -98,6 +98,7 @@ public class CheckersHandler extends GameHandler {
         notifyTurnEnd(opponentID, board.toJSONString());
     }
 
+    // TODO: This method, we never used. Could possibly remove.
     private boolean captureIsPossible(PieceColor color) {
         for (int y = 0; y < BOARD_SIZE[0]; y++) {
             for (int x = 0; x < BOARD_SIZE[1]; x ++) {
@@ -110,6 +111,12 @@ public class CheckersHandler extends GameHandler {
         return false;
     }
 
+    /**
+     * Checks if a piece can make a capture move
+     *
+     * @param piece the piece that is being checked for if it is a capturing piece
+     * @return true if the piece can capture, false otherwise
+     */
     private boolean canCapture(CheckersPiece piece) {
         int[][] directions = getDirections(piece);
         for (int[] dir: directions){
@@ -126,6 +133,12 @@ public class CheckersHandler extends GameHandler {
         return false;
     }
 
+    /**
+     * Provides the possible directions that a given piece can go in
+     *
+     * @param piece the piece that is having the directions taken
+     * @return 2D array of the possible moves/directions of the piece
+     */
     private int[][] getDirections(CheckersPiece piece){
         if (piece.isKing()){
             return new int[][]{{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
@@ -193,7 +206,7 @@ public class CheckersHandler extends GameHandler {
     /**
      * A helper method to check if a piece at a position can move 1 tile ahead. Doesn't check jumps
      *
-     * @param pos the color of the piece that is being checked
+     * @param pos the position of the piece being checked
      * @return true if piece is able to move
      */
     private boolean canMove(Vector2 pos){
