@@ -1,4 +1,4 @@
-package java.ca.ucalgary.seng300.p4.condensation.Frontend.controller;
+package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Frontend.controller.ConnectFourHomeMenuController;
 import ca.ucalgary.seng300.p4.condensation.Frontend.controller.ConnectFourLeaderboard;
