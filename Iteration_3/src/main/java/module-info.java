@@ -19,6 +19,4 @@ module ca.ucalgary.seng300.p4.condensation {
     exports ca.ucalgary.seng300.p4.condensation;
     exports ca.ucalgary.seng300.p4.condensation.Frontend.controller;
     opens ca.ucalgary.seng300.p4.condensation.Frontend.controller to javafx.fxml;
-    exports ca.ucalgary.seng300.p4.condensation.Frontend.profile;
-    opens ca.ucalgary.seng300.p4.condensation.Frontend.profile to javafx.fxml;
 }

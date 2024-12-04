@@ -50,12 +50,12 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="game-v-box" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label fx:id="turnLabel" text="Label" VBox.vgrow="ALWAYS">
+                                <Label fx:id="playerStatus" text="Play First" VBox.vgrow="ALWAYS">
                                     <VBox.margin>
                                         <Insets bottom="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <GridPane fx:id="chessboardGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="560.0" styleClass="chessboard">
+                                <GridPane fx:id="board" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="560.0" styleClass="chessboard">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -67,15 +67,15 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                            <children>
-                              <Button fx:id="btn00" mnemonicParsing="false" prefHeight="151.0" prefWidth="262.0" />
-                              <Button fx:id="btn01" mnemonicParsing="false" prefHeight="160.0" prefWidth="524.0" GridPane.columnIndex="1" />
-                              <Button fx:id="btn02" mnemonicParsing="false" prefHeight="179.0" prefWidth="328.0" GridPane.columnIndex="2" />
-                              <Button fx:id="btn10" mnemonicParsing="false" prefHeight="173.0" prefWidth="391.0" GridPane.rowIndex="1" />
-                              <Button fx:id="btn11" mnemonicParsing="false" prefHeight="153.0" prefWidth="615.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button fx:id="btn12" mnemonicParsing="false" prefHeight="284.0" prefWidth="440.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Button fx:id="btn20" mnemonicParsing="false" prefHeight="293.0" prefWidth="528.0" GridPane.rowIndex="2" />
-                              <Button fx:id="btn21" mnemonicParsing="false" prefHeight="135.0" prefWidth="292.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Button fx:id="btn22" mnemonicParsing="false" prefHeight="165.0" prefWidth="487.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Button fx:id="btn00" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="151.0" prefWidth="262.0" />
+                              <Button fx:id="btn01" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="160.0" prefWidth="524.0" GridPane.columnIndex="1" />
+                              <Button fx:id="btn02" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="179.0" prefWidth="328.0" GridPane.columnIndex="2" />
+                              <Button fx:id="btn10" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="173.0" prefWidth="391.0" GridPane.rowIndex="1" />
+                              <Button fx:id="btn11" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="153.0" prefWidth="615.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button fx:id="btn12" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="284.0" prefWidth="440.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="btn20" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="293.0" prefWidth="528.0" GridPane.rowIndex="2" />
+                              <Button fx:id="btn21" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="135.0" prefWidth="129.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="btn22" mnemonicParsing="false" onAction="#returnToBackendTicTacToe" prefHeight="138.0" prefWidth="105.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                            </children>
                                     <!--
                                    <children>

@@ -36,13 +36,12 @@ public class CheckersQueueController {
     private Scene createScene;
 
     @FXML
-    private Stage stage;
+    private Stage stage = new Stage();
 
 
     @FXML
     public void initialize() throws IOException, ParseException, InterruptedException {
         // Allows user to leave
-        TimeUnit.SECONDS.sleep(3);
         sendToBackendCheckers();
     }
 
@@ -61,7 +60,8 @@ public class CheckersQueueController {
     // based of game -> enumeration (json payload) key->game type
 
     // https://dzone.com/articles/how-can-we-read-a-json-file-in-java
-    public void sendToBackendCheckers() throws IOException, ParseException {
+    public void sendToBackendCheckers() throws IOException, ParseException, InterruptedException {
+        TimeUnit.SECONDS.sleep(5);
         JSONObject playerInfoForGame = new JSONObject();
 
         Object newplayerJSONFileObject = new JSONParser().parse(new FileReader(NetworkManager.PLAYER_ID_FILE));

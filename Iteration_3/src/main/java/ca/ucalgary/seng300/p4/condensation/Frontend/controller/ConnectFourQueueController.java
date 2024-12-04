@@ -37,20 +37,18 @@ public class ConnectFourQueueController {
     private Scene createScene;
 
     @FXML
-    private Stage stage;
+    private Stage stage = new Stage();
 
 
     @FXML
     public void initialize() throws IOException, ParseException, InterruptedException {
         // Allows user to leave
-        TimeUnit.SECONDS.sleep(3);
         sendToBackendConnectFour();
     }
 
 
     @FXML
-    protected void returnToConnectFourPage(Event event) throws IOException
-    {
+    protected void returnToConnectFourPage(Event event) throws IOException, InterruptedException {
         origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ConnectFourHomeMenu.fxml")));
         createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         createScene = new Scene(origin);
@@ -63,7 +61,8 @@ public class ConnectFourQueueController {
     // based of game -> enumeration (json payload) key->game type
 
     // https://dzone.com/articles/how-can-we-read-a-json-file-in-java
-    public void sendToBackendConnectFour() throws IOException, ParseException {
+    public void sendToBackendConnectFour() throws IOException, ParseException, InterruptedException {
+        TimeUnit.SECONDS.sleep(5);
         JSONObject playerInfoForGame = new JSONObject();
         Object newplayerJSONFileObject = new JSONParser().parse(new FileReader(NetworkManager.PLAYER_ID_FILE));
         JSONObject newplayerJSONFile = (JSONObject) newplayerJSONFileObject;
