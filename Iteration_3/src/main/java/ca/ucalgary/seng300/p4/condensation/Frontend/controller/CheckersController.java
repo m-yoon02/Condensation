@@ -397,8 +397,8 @@ public class CheckersController {
             NetworkManager.getNetworkInstance().receiveGameDataFromClient(GameSessionRecord.parseMoveData(
                     sessionID,
                     newTurn,
-                    lastClickedPosition,
-                    new int[]{j, i}
+                    new int[]{j, i},
+                    lastClickedPosition
             ));
             lastClickedPosition = null;
         }
