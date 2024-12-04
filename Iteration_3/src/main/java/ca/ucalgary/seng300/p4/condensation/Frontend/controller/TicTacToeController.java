@@ -3,27 +3,28 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
+import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import javafx.scene.control.Label;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 public class TicTacToeController {
@@ -57,9 +58,6 @@ public class TicTacToeController {
     public static Label playerStatus;
 
     @FXML
-    public static Button forfeitBtn;
-
-    @FXML
     public void initialize() throws IOException, ParseException {
 
         buttons = new Button[][] {
@@ -87,7 +85,7 @@ public class TicTacToeController {
             if (resultOfTicTacToe == GameResult.WIN){
                 UUID winningPlayer = (UUID) backendUpdate.get("PlayerWon");
                 String nameOfWinningPlayer = getUsernameFromUUID(String.valueOf(winningPlayer));
-                playerStatus.setText(String.format("Player %s won the game!",nameOfWinningPlayer));
+                // playerStatus.setText(STR."Player \{nameOfWinningPlayer} won the game!");
                 if (winningPlayer.equals(playerOne)){
                     playerStatus.setTextFill(Color.GREEN);
                 }
@@ -132,12 +130,12 @@ public class TicTacToeController {
             }
             if (newTurn.equals(playerTwo)){
                 String nameOfOpponentPlayer = getUsernameFromUUID(String.valueOf(newTurn));
-                playerStatus.setText(String.format("It's %s's turn!", nameOfOpponentPlayer));
+                // playerStatus.setText(STR."It's \{nameOfOpponentPlayer}'s turn!");
                 playerStatus.setTextFill(Color.BLUE);
             }
             else{
                 String nameOfMainPlayer = getUsernameFromUUID(String.valueOf(newTurn));
-                playerStatus.setText(String.format("It's %s's turn!", nameOfMainPlayer));
+                // playerStatus.setText(STR."It's \{nameOfMainPlayer}'s turn!");
                 playerStatus.setTextFill(Color.RED);
             }
         }
@@ -186,7 +184,10 @@ public class TicTacToeController {
             }
             ticTacToeJSON.put("New Position", new Vector2(row, col));
             ticTacToeJSON.put("gameType", GameTypes.TICTACTOE);
-            NetworkManager.getNetworkInstance().receiveGameDataFromClient(ticTacToeJSON);
+            numberOfPiecesOnBoard += 1;
+            System.out.println(ticTacToeJSON);
+            JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(ticTacToeJSON);
+            // NetworkManager.getNetworkInstance().receiveGameDataFromClient();
         }
     }
 
@@ -203,82 +204,10 @@ public class TicTacToeController {
                 }
             }
         } catch (Exception e) {
-            System.err.printf("Error reading leaderboard.json: %s%n", e.getMessage());
+            // System.err.println(STR."Error reading leaderboard.json: \{e.getMessage()}");
         }
         return null;
     }
-
-    @FXML
-    public void onForfeitBtnClick() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
-        alert.setTitle("Forfeit");
-
-        Optional<ButtonType> choice = alert.showAndWait();
-        if (choice.isPresent() && choice.get() == ButtonType.OK) {
-            onForfeitYesClick();
-        } else if (choice.isPresent() && choice.get() == ButtonType.CANCEL) {
-            System.out.println("No");
-        }
-    }
-    @FXML
-    public void onForfeitYesClick() {
-        System.out.println("Forfeit confirmed. Closing the application window...");
-
-        // Close the current window
-        Stage stage = (Stage) forfeitBtn.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    public void onForfeitNoClick() {
-        System.out.println("Forfeit canceled. The window remains open.");
-    }
-
-    @FXML
-    TextArea chatBox;
-
-    @FXML
-    Button sendBtn;
-
-    @FXML
-    ScrollPane chatScrollPane;
-
-    @FXML
-    VBox paneInsideScrollPane;
-
-
-    String username = "Me";
-    // TODOL: Connect
-    public void onSendBtnClick() {
-        String messageStr = chatBox.getText();
-        if (!messageStr.isEmpty()) {
-            HBox messageHBox = new HBox();
-            messageHBox.setStyle("    -fx-pref-width: 50;\n" +
-                    "    -fx-max-width: 200;");
-            messageHBox.setPadding(new Insets(5, 10, 5, 5));
-            messageHBox.setMaxHeight(Integer.MAX_VALUE);
-            Label senderName = new Label(username);
-            senderName.setStyle("-fx-font-size: 13;\n" +
-                    "    -fx-font-family: \"Oswald\", sans-serif;\n" +
-                    "    -fx-text-fill: White;\n" +
-                    "    -fx-font-weight: bold;");
-            senderName.setPadding(new Insets(0, 0, -3, 0));
-            Label message = new Label(messageStr);
-            message.setStyle("-fx-font-size: 12;\n" +
-                    "    -fx-font-family: \"Oswald\", sans-serif;\n" +
-                    "    -fx-text-fill: White;");
-            message.setWrapText(true);
-            message.setLineSpacing(-5);
-            VBox vBox = new VBox(senderName, message);
-            vBox.setMaxHeight(Integer.MAX_VALUE);
-            messageHBox.getChildren().addAll(vBox);
-            paneInsideScrollPane.getChildren().add(messageHBox);
-            chatBox.setText("");
-            chatScrollPane.setVvalue(1.0);
-        }
-    }
 }
-
-
 
 

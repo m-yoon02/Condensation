@@ -48,10 +48,9 @@ public class CheckersQueueController {
 
     protected void returnToProfile(Event event) throws IOException
     {
-        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("checkersHomeMenu.fxml")));
+        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Profile.fxml")));
         createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         createScene = new Scene(origin);
-        createWindow.setTitle("Condensation Appliance - Checkers");
         createWindow.setScene(createScene);
         createWindow.show();
     }
@@ -76,9 +75,9 @@ public class CheckersQueueController {
         fileWriter.flush();
         fileWriter.close();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ticTacToeGame.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Checkers");
+        stage.setTitle("TicTacToe");
         stage.setScene(scene);
         stage.show();
     }
