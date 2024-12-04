@@ -40,6 +40,6 @@ public class Client implements GameDataListener {
      */
     @Override
     public void onGameEvent(GameEventType eventType, JSONObject payload, GameTypes gameType) throws IOException {
-        ClientReceiver.receive(gameType, payload);
+        ClientReceiver.receive(playerId, gameType, payload);
     }
 }
