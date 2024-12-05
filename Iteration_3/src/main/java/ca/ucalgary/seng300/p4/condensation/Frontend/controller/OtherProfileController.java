@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,15 +14,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -112,6 +115,7 @@ public class OtherProfileController {
     void onSearchButtonClicked(ActionEvent event) throws IOException, ParseException {
         // Get the entered username
         String username = usernameTextField.getText().trim();
+
         if (username.isEmpty()) {
             statusMessage.setText("Please enter a username to search.");
             return;
@@ -142,6 +146,51 @@ public class OtherProfileController {
 
         // Populate the recent matches table
         displayRecentMatches(username);
+    }
+
+
+    public void challengePlayer(ActionEvent event) throws IOException, ParseException {
+
+        String playerUser = usernameTextField.getText().strip();
+        FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
+        JSONParser jsonParser = new JSONParser();
+        JSONObject loginUser = (JSONObject) jsonParser.parse(reader);
+        String uuid  = (String) loginUser.get("PlayerUUID");
+        UUID uuidToString = UUID.fromString(uuid);
+
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Challenging Player");
+        alert.setContentText("Challenging " + playerUser + "...");
+        alert.showAndWait();
+
+        ButtonType connect4Button = new ButtonType("Connect4");
+        ButtonType checkersButton = new ButtonType("Checkers");
+        ButtonType ticTacToeButton = new ButtonType("TicTacToe");
+        ButtonType cancelButton = ButtonType.CANCEL;
+
+        // Add buttons to the alert
+        alert.getButtonTypes().setAll(connect4Button, checkersButton, ticTacToeButton, cancelButton);
+
+        // Wait for user selection
+        alert.showAndWait().ifPresent(response -> {
+            GameTypes gameTypes;
+            if (response == connect4Button) {
+                gameTypes = GameTypes.CONNECT4;
+
+            } else if (response == checkersButton) {
+                gameTypes = GameTypes.CHECKERS;
+
+            } else if (response == ticTacToeButton) {
+                gameTypes = GameTypes.TICTACTOE;
+
+            } else if (response == cancelButton) {
+                System.out.println("Challenge canceled.");
+                // Handle cancel logic if necessary
+            }
+        });
+
+
     }
 
     /**
