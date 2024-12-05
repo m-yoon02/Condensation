@@ -523,4 +523,9 @@ public class NetworkManager {
 
         return null;
     }
+
+    //getter methods for testing
+    public Map<UUID, Client> getLoggedInClients() {
+        return loggedInClients;
+    }
 }
