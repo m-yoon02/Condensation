@@ -80,6 +80,9 @@ public class TicTacToeQueueController {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tGame.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        TicTacToeController ticTacToeController = fxmlLoader.getController();
+        ticTacToeController.start(stage);
+        stage.setResizable(true);
         stage.setTitle("Condensation Application - Tic Tac Toe");
         stage.setScene(scene);
         stage.show();
