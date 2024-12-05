@@ -125,6 +125,7 @@ public class Leaderboard {
         JSONArray recentMatches = new JSONArray();
         user.put("recentMatches", recentMatches);
         users.add(user);
+        this.saveData();
 
     }
     /**
