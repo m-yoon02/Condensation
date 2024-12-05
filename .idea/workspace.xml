@@ -6,12 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="001368e3-7b82-4739-8dd4-a7c35b2b7fcc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/AftermathController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/AftermathController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/CheckersQueueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/CheckersQueueController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/TicTacToeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/TicTacToeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Enums/GameTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Enums/GameTypes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/Connect4HandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/Connect4HandlerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/TicTacToeHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/TicTacToeHandlerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,11 +95,22 @@
       <updated>1733180192039</updated>
       <workItem from="1733180202959" duration="622000" />
       <workItem from="1733358294863" duration="319000" />
-      <workItem from="1733358647802" duration="3456000" />
+      <workItem from="1733358647802" duration="11847000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/AftermathController.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -20,6 +20,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
@@ -101,13 +102,16 @@ public class ProfileHomeController {
             e.printStackTrace();
         }
 
-        // Load player data for a dummy UUID
         try {
-            UUID playerUUID = UUID.fromString("123e4567-e89b-12d3-a456-426614174123");
-            JSONObject poo = Leaderboard.getInstance().findUserById(playerUUID);
-            String name = (String) poo.get("username");
-            displayPlayerStats(playerUUID);
-            displayRecentMatches(name);
+            FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
+            JSONParser parser = new JSONParser();
+            JSONObject object = (JSONObject) parser.parse(reader);
+            String playerIDString = (String) object.get("playerID");
+            UUID playerID = UUID.fromString(playerIDString);
+            String username = (String) object.get("username");
+
+            displayPlayerStats(playerID);
+            displayRecentMatches(username);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -161,6 +165,7 @@ public class ProfileHomeController {
         try {
             Leaderboard leaderboard = Leaderboard.getInstance();
             JSONObject user = leaderboard.findUserByName(username);
+            System.out.println("User gotten from profile home" + user);
 
             if (user != null) {
                 JSONArray recentMatches = (JSONArray) user.get("recentMatches");

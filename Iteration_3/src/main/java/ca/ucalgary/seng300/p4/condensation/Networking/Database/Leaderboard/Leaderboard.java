@@ -397,6 +397,8 @@ public class Leaderboard {
             if (JsonUser.get("playerUUID").equals(playerID.toString())) {
 
                 Number winsInCheckers = (Number) JsonUser.get("winsInCheckers") ; // update wins in gamet
+                Number totalCheckerGames = (Number) JsonUser.get("gamesPlayedCheckers");
+                totalCheckerGames = totalCheckerGames.intValue() + 1;
                 winsInCheckers = winsInCheckers.intValue() + 1;
                 Number currentElo = (Number) JsonUser.get("checkersElo");
                 currentElo = currentElo.intValue() + 100;
@@ -410,6 +412,7 @@ public class Leaderboard {
 
                 JsonUser.put("checkersElo", currentElo);
                 JsonUser.put("winsInCheckers", winsInCheckers);
+                JsonUser.put("gamesPlayedCheckers", totalCheckerGames);
                 JsonUser.put("recentMatches", recentMatches);
 
                 // update the game history
