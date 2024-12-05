@@ -33,6 +33,11 @@ public class MatchmakingPool {
         System.out.println("Player Added: " + player.PlayerID());
     }
 
+    // added for testing
+    public void clearPool() {
+        pool.clear();
+    }
+
 
     public String removePlayerFromMatchmakingPool(UUID playerID) {
         QueuedPlayerMemo playerToRemove = null;
