@@ -51,6 +51,7 @@
     "JUnit.ProfileHomeControllerTest.initializeTest.executor": "Run",
     "JUnit.ProfileHomeControllerTest.onGamesButtonClickedTest.executor": "Run",
     "JUnit.ProfileHomeControllerTest.onLeaderboardButtonClickedTest.executor": "Run",
+    "JUnit.ProfileHomeControllerTest.onPlayerProfilesButtonClickedTest.executor": "Run",
     "JUnit.ProfileHomeControllerTest.onlogOutButtonClickedTest.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -64,7 +65,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.ProfileHomeControllerTest.onGamesButtonClickedTest">
+  <component name="RunManager" selected="JUnit.ProfileHomeControllerTest.onPlayerProfilesButtonClickedTest">
     <configuration name="ProfileHomeControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="condensation" />
       <extension name="coverage">
@@ -76,22 +77,6 @@
       <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
       <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileHomeControllerTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProfileHomeControllerTest.initializeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="condensation" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
-      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileHomeControllerTest" />
-      <option name="METHOD_NAME" value="initializeTest" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -128,6 +113,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProfileHomeControllerTest.onPlayerProfilesButtonClickedTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileHomeControllerTest" />
+      <option name="METHOD_NAME" value="onPlayerProfilesButtonClickedTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProfileHomeControllerTest.onlogOutButtonClickedTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="condensation" />
       <extension name="coverage">
@@ -146,11 +147,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ProfileHomeControllerTest.onPlayerProfilesButtonClickedTest" />
         <item itemvalue="JUnit.ProfileHomeControllerTest.onGamesButtonClickedTest" />
         <item itemvalue="JUnit.ProfileHomeControllerTest.onLeaderboardButtonClickedTest" />
         <item itemvalue="JUnit.ProfileHomeControllerTest.onlogOutButtonClickedTest" />
         <item itemvalue="JUnit.ProfileHomeControllerTest" />
-        <item itemvalue="JUnit.ProfileHomeControllerTest.initializeTest" />
       </list>
     </recent_temporary>
   </component>

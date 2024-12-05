@@ -201,12 +201,27 @@ public class ProfileHomeControllerTest extends ApplicationTest {
         assertFalse(tMenuScene.equals(profileGameScene));
     }
 
+    /**
+     * Finished this test
+     */
     @Test
     public void onPlayerProfilesButtonClickedTest(){
-        System.out.println(gameColumn.getColumns().get(0).toString());
+        FxRobot robot = new FxRobot();
 
-        // on action do button.fire()
-        // on mouse clicked use clickedOn()
+        // Simulate clicking the leaderboard button
+        robot.clickOn("#playerProfilesButton");
+
+        // Get the current scene
+        Scene tMenuScene = gamesButton.getScene();
+
+        // Find the button on the new scene (check the corresponding fxml file)
+        Button searchButton = lookup("#searchButton").queryAs(Button.class);
+
+        // Retrieve the scene from the new element
+        Scene otherProfileScene = searchButton.getScene();
+
+        // The starting scene should not be equal to the new scene
+        assertFalse(tMenuScene.equals(otherProfileScene));
     }
 
     @Test
