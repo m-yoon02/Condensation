@@ -64,6 +64,7 @@ public class ProfileGameController {
 
         // Get the current stage and set the new scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("Condensation Appliance - Tic Tac Toe");
         window.setScene(homeScene);
         window.show();
     }
@@ -81,6 +82,7 @@ public class ProfileGameController {
 
         // Get the current stage and set the new scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("Condensation Appliance - Connect Four");
         window.setScene(homeScene);
         window.show();
     }
@@ -98,6 +100,7 @@ public class ProfileGameController {
 
         // Get the current stage and set the new scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("Condensation Appliance - Checkers");
         window.setScene(homeScene);
         window.show();
     }
@@ -118,6 +121,7 @@ public class ProfileGameController {
 
         // Get the current stage and set the new scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("Condensation Appliance - Profile");
         window.setScene(homeScene);
         window.show();
     }
