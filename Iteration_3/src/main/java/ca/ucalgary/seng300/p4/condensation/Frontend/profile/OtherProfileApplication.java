@@ -32,7 +32,7 @@ public class OtherProfileApplication extends Application {
 
         // Set the scene to the stage and show the application
         stage.setScene(scene);
-       // stage.setTitle("Other Profile Lookup"); // Set the window title
+        stage.setTitle("Other Profile Lookup"); // Set the window title
         stage.show();
     }
 }

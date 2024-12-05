@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="001368e3-7b82-4739-8dd4-a7c35b2b7fcc" name="Changes" comment="">
+    <list default="true" id="001368e3-7b82-4739-8dd4-a7c35b2b7fcc" name="Changes" comment="fixed minor full board checking error">
+      <change afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Frontend/profile/ProfileGameControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/profile/OtherProfileApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/profile/OtherProfileApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Frontend/profile/OtherProfileApplicationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/seng300-f24-project/ca/ucalgary/seng300/p4/condensation/condensation/Networking/Database/Database.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/seng300-f24-project/main/notes/guide_document.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/seng300-f24-project/main/notes/json_format.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/seng300-f24-project/main/notes/planning_notes.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/seng300-f24-project/main/resources/ca/ucalgary/seng300/p4/condensation/hello-view.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +22,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="fix_everything_lol" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitLabMergeRequestFiltersHistory">{
@@ -49,19 +61,25 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.OtherProfileApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OtherProfileApplicationTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OtherProfileApplicationTest.testFXMLLoad.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;fix__aftermath&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;liz__test&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.5634167&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.OtherProfileApplicationTest.testFXMLLoad">
     <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.HelloApplication" />
       <module name="condensation" />
@@ -75,8 +93,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="OtherProfileApplicationTest.testFXMLLoad" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Frontend.profile.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.profile" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.profile.OtherProfileApplicationTest" />
+      <option name="METHOD_NAME" value="testFXMLLoad" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.OtherProfileApplicationTest.testFXMLLoad" />
         <item itemvalue="Application.HelloApplication" />
       </list>
     </recent_temporary>
@@ -93,11 +128,27 @@
       <workItem from="1733358294863" duration="319000" />
       <workItem from="1733358647802" duration="11847000" />
       <workItem from="1733378818526" duration="778000" />
+      <workItem from="1733421706300" duration="2072000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixed minor full board checking error" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed minor full board checking error" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
