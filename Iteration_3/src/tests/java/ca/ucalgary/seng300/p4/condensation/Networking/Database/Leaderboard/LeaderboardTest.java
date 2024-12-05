@@ -41,6 +41,9 @@ public class LeaderboardTest {
         user1.put("winsInConnect4", 1);
         user1.put("connect4Elo", 1200);
         user1.put("elo", 1200);
+        user1.put("lossInCheckers", 0);
+        user1.put("lossInTicTacToe", 0);
+        user1.put("lossInConnect4", 0);
 
         mockData.add(user1);
 
@@ -140,14 +143,14 @@ public class LeaderboardTest {
     public void testLoadData() throws IOException, ParseException {
         leaderboard.loadData();
         JSONArray users = leaderboard.getAllUsers();
-        assertEquals(2, users.size());
+        assertEquals(5, users.size());
     }
 
     @Test
     public void testCreateUser() throws IOException {
         leaderboard.createUser("player3", "password3");
         JSONArray users = leaderboard.getAllUsers();
-        assertEquals(3, users.size());
+        assertEquals(6, users.size());
     }
 
     @Test
@@ -360,8 +363,142 @@ public class LeaderboardTest {
 
     }
 
+    @Test
+    public void testUpdateEloForLosingPlayerUsingMockDataForCheckers() throws IOException {
+        // retrieve an existing player
+        JSONObject user1 = leaderboard.findUserByName("player1");
+
+        // verify that the existing player is not null
+        assertNotNull("Player1 should exist in the leaderboard", user1);
+
+        // Extract player details
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        Number initialElo = (Number) user1.get("checkersElo");
+        Number initialLosses = (Number) user1.get("lossInCheckers");
+        Number initialGamesPlayed = (Number) user1.get("gamesPlayedCheckers");
+
+        // create sessionID
+        UUID sessionID = UUID.randomUUID();
+
+        // update Elo for losing a game
+        leaderboard.updateEloForLosingPlayerCheckers(player1ID, sessionID);
+
+        // reload the user data to verify updates
+        JSONObject updatedUser1 = leaderboard.findUserByName("player1");
+
+        // verify that Elo has decreased by 100
+        Number updatedElo = (Number) updatedUser1.get("checkersElo");
+        assertEquals("The Elo score should decrease by 100", initialElo.intValue() - 100, updatedElo.intValue());
+
+        // verify that losses have increased by 1
+        Number updatedLosses = (Number) updatedUser1.get("lossInCheckers");
+        assertEquals("Losses should increase by 1", initialLosses.intValue() + 1, updatedLosses.intValue());
+
+        // verify that games played have increased by 1
+        Number updatedGamesPlayed = (Number) updatedUser1.get("gamesPlayedCheckers");
+        assertEquals("Games played should increase by 1", initialGamesPlayed.intValue() + 1, updatedGamesPlayed.intValue());
+
+        // verify the recent matches
+        JSONArray recentMatches = (JSONArray) updatedUser1.get("recentMatches");
+        assertEquals("Recent matches should contain one game", 1, recentMatches.size());
+        JSONObject recentMatch = (JSONObject) recentMatches.get(0);
+        assertEquals("The match ID should match the session ID.", sessionID.toString(), recentMatch.get("matchID"));
+        assertEquals("The game type should be CHECKERS.", GameTypes.CHECKERS.toString(), recentMatch.get("gameType"));
+        assertEquals("The outcome should be 'L' for loss.", "L", recentMatch.get("outcome"));
+        assertEquals("The Elo score should match the updated Elo.", updatedElo, recentMatch.get("currentElo"));
+    }
 
 
+    @Test
+    public void testUpdateEloForLosingPlayerUsingMockDataForTicTacToe() throws IOException {
+        // retrieve an existing player
+        JSONObject user1 = leaderboard.findUserByName("player1");
+
+        // verify that the existing player is not null
+        assertNotNull("Player1 should exist in the leaderboard", user1);
+
+        // Extract player details
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        Number initialElo = (Number) user1.get("tictactoeElo");
+        Number initialLosses = (Number) user1.get("lossInTicTacToe");
+        Number initialGamesPlayed = (Number) user1.get("gamesPlayedTicTacToe");
+
+        // create sessionID
+        UUID sessionID = UUID.randomUUID();
+
+        // update Elo for losing a game
+        leaderboard.updateEloForLosingPlayerTictactoe(player1ID, sessionID);
+
+        // reload the user data to verify updates
+        JSONObject updatedUser1 = leaderboard.findUserByName("player1");
+
+        // verify that Elo has decreased by 100
+        Number updatedElo = (Number) updatedUser1.get("tictactoeElo");
+        assertEquals("The Elo score should decrease by 100", initialElo.intValue() - 100, updatedElo.intValue());
+
+        // verify that losses have increased by 1
+        Number updatedLosses = (Number) updatedUser1.get("lossInTicTacToe");
+        assertEquals("Losses should increase by 1", initialLosses.intValue() + 1, updatedLosses.intValue());
+
+        // verify that games played have increased by 1
+        Number updatedGamesPlayed = (Number) updatedUser1.get("gamesPlayedTicTacToe");
+        assertEquals("Games played should increase by 1", initialGamesPlayed.intValue() + 1, updatedGamesPlayed.intValue());
+
+        // verify the recent matches
+        JSONArray recentMatches = (JSONArray) updatedUser1.get("recentMatches");
+        assertEquals("Recent matches should contain one game", 1, recentMatches.size());
+        JSONObject recentMatch = (JSONObject) recentMatches.get(0);
+        assertEquals("The match ID should match the session ID.", sessionID.toString(), recentMatch.get("matchID"));
+        assertEquals("The game type should be TICTACTOE.", GameTypes.TICTACTOE.toString(), recentMatch.get("gameType"));
+        assertEquals("The outcome should be 'L' for loss.", "L", recentMatch.get("outcome"));
+        assertEquals("The Elo score should match the updated Elo.", updatedElo, recentMatch.get("currentElo"));
+    }
+
+
+    @Test
+    public void testUpdateEloForLosingPlayerUsingMockDataForConnect4() throws IOException {
+        // retrieve an existing player
+        JSONObject user1 = leaderboard.findUserByName("player1");
+
+        // verify that the existing player is not null
+        assertNotNull("Player1 should exist in the leaderboard", user1);
+
+        // Extract player details
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        Number initialElo = (Number) user1.get("tictactoeElo");
+        Number initialLosses = (Number) user1.get("lossInTicTacToe");
+        Number initialGamesPlayed = (Number) user1.get("gamesPlayedTicTacToe");
+
+        // create sessionID
+        UUID sessionID = UUID.randomUUID();
+
+        // update Elo for losing a game
+        leaderboard.updateEloForLosingPlayerConnect4(player1ID, sessionID);
+
+        // reload the user data to verify updates
+        JSONObject updatedUser1 = leaderboard.findUserByName("player1");
+
+        // verify that Elo has decreased by 100
+        Number updatedElo = (Number) updatedUser1.get("connect4Elo");
+        assertEquals("The Elo score should decrease by 100", initialElo.intValue() - 100, updatedElo.intValue());
+
+        // verify that losses have increased by 1
+        Number updatedLosses = (Number) updatedUser1.get("lossInConnect4");
+        assertEquals("Losses should increase by 1", initialLosses.intValue() + 1, updatedLosses.intValue());
+
+        // verify that games played have increased by 1
+        Number updatedGamesPlayed = (Number) updatedUser1.get("gamesPlayedConnect4");
+        assertEquals("Games played should increase by 1", initialGamesPlayed.intValue() + 1, updatedGamesPlayed.intValue());
+
+        // verify the recent matches
+        JSONArray recentMatches = (JSONArray) updatedUser1.get("recentMatches");
+        assertEquals("Recent matches should contain one game", 1, recentMatches.size());
+        JSONObject recentMatch = (JSONObject) recentMatches.get(0);
+        assertEquals("The match ID should match the session ID.", sessionID.toString(), recentMatch.get("matchID"));
+        assertEquals("The game type should be CONNECT4.", GameTypes.CONNECT4.toString(), recentMatch.get("gameType"));
+        assertEquals("The outcome should be 'L' for loss.", "L", recentMatch.get("outcome"));
+        assertEquals("The Elo score should match the updated Elo.", updatedElo, recentMatch.get("currentElo"));
+    }
 
 
 

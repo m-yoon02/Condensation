@@ -587,7 +587,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who lost the game.
      * @param sessionID The UUID of the game session where the loss occurred.
      */
-    private void updateEloForLosingPlayerCheckers(UUID playerID, UUID sessionID) {
+    public void updateEloForLosingPlayerCheckers(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -605,7 +605,7 @@ public class Leaderboard {
                 JSONObject currentMatch = new JSONObject();
                 currentMatch.put("matchID", StringID);
                 currentMatch.put("gameType", GameTypes.CHECKERS.toString());
-                currentMatch.put("outcome", "W");
+                currentMatch.put("outcome", "L");
                 currentMatch.put("currentElo", currentElo);
                 recentMatches.add(currentMatch);
 
@@ -632,7 +632,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who lost the game.
      * @param sessionID The UUID of the game session where the loss occurred.
      */
-    private void updateEloForLosingPlayerTictactoe(UUID playerID, UUID sessionID) {
+    public void updateEloForLosingPlayerTictactoe(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -649,8 +649,8 @@ public class Leaderboard {
                 JSONArray recentMatches = (JSONArray) JsonUser.get("recentMatches");
                 JSONObject currentMatch = new JSONObject();
                 currentMatch.put("matchID", StringID);
-                currentMatch.put("gameType", GameTypes.CHECKERS.toString());
-                currentMatch.put("outcome", "W");
+                currentMatch.put("gameType", GameTypes.TICTACTOE.toString());
+                currentMatch.put("outcome", "L");
                 currentMatch.put("currentElo", currentElo);
                 recentMatches.add(currentMatch);
 
@@ -676,7 +676,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who lost the game.
      * @param sessionID The UUID of the game session where the loss occurred.
      */
-    private void updateEloForLosingPlayerConnect4(UUID playerID, UUID sessionID) {
+    public void updateEloForLosingPlayerConnect4(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -693,8 +693,8 @@ public class Leaderboard {
                 JSONArray recentMatches = (JSONArray) JsonUser.get("recentMatches");
                 JSONObject currentMatch = new JSONObject();
                 currentMatch.put("matchID", StringID);
-                currentMatch.put("gameType", GameTypes.CHECKERS.toString());
-                currentMatch.put("outcome", "W");
+                currentMatch.put("gameType", GameTypes.CONNECT4.toString());
+                currentMatch.put("outcome", "L");
                 currentMatch.put("currentElo", currentElo);
                 recentMatches.add(currentMatch);
 
