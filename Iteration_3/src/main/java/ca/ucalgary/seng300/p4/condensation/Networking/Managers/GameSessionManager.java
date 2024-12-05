@@ -48,7 +48,7 @@ public class GameSessionManager {
         // add gameSession object to the hashmap
         UUID sessionID = gameSession.getSessionId();
         System.out.println(gameSessionManager);
-        gameSessionManager.sessionsMap.put(sessionID, gameSession);
+        sessionsMap.put(sessionID, gameSession);
 
     }
 
@@ -58,7 +58,7 @@ public class GameSessionManager {
      */
     public void removeGameSession(UUID sessionID) {
         // remove gameSession object from hashmap
-        gameSessionManager.sessionsMap.remove(sessionID);
+        sessionsMap.remove(sessionID);
     }
 
 

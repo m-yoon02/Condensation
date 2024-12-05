@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
 /* General root background */
 .root {
-    -fx-background-color: black;
+    -fx-background-color: #091856;
 }
 
 /* Title styling */
@@ -10,6 +13,7 @@
     -fx-fill: white;
     -fx-text-alignment: center;
     -fx-padding: 30px;
+    -fx-font-family: "Oswald", sans-serif;
 }
 
 /* Buttons styling */
@@ -25,6 +29,7 @@
     -fx-border-width: 1px;
     -fx-border-radius: 8px;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-font-family: "Oswald", sans-serif;
 }
 
 .menu-button:hover {
@@ -43,6 +48,7 @@
     -fx-border-color: white;
     -fx-border-width: 1px;
     -fx-border-radius: 8px;
+    -fx-font-family: "Oswald", sans-serif;
 }
 
 .back-button:hover {

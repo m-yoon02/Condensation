@@ -152,17 +152,10 @@ public class NetworkManager {
     public JSONObject validateUserCredentials(String username, String password) throws IOException, ParseException {
 
         JSONObject jsonUsername = Leaderboard.getInstance().findUserByName(username);
-
-        JSONObject jsonPassword =Leaderboard.getInstance().findUserByPassword(password);
-
+        String databasePassword = (String) jsonUsername.get("password");
         // return null because user does not exist, probably a better way to handle but we need to iterate fas
-        if(jsonUsername != null && jsonPassword != null){
-
-            if(jsonUsername.equals(jsonPassword)) {
-                return jsonPassword;
-            }
-
-            return null;
+        if(databasePassword.equals(password)){
+            return jsonUsername;
         }
 
         return null;
@@ -478,7 +471,8 @@ public class NetworkManager {
      */
     public void receiveGameDataFromClient(JSONObject receiveClientPayload){
 
-        UUID SessionID = (UUID) receiveClientPayload.get("SessionID");
+        //Treat this as a String, or it will become a malformed JSON string
+        UUID SessionID = UUID.fromString((String)receiveClientPayload.get("SessionID"));
         String moveDataPayload  = receiveClientPayload.toJSONString();
 
         // this receive the current gameSession from the sessions hashmap which should still be active
@@ -508,7 +502,7 @@ public class NetworkManager {
         try {
             // parse the JASONObject
             UUID sessionID = (UUID) recievePlayerMessage.get("SessionID");
-            UUID player1ID = (UUID) recievePlayerMessage.get("Player1D");
+            UUID player1ID = (UUID) recievePlayerMessage.get("Player1ID");
             String player1Message = (String) recievePlayerMessage.get("Message");
 
             // get the game session along with player 2's UUID associated w that game session

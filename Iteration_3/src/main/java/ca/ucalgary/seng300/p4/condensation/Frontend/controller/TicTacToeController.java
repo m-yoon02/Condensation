@@ -1,8 +1,10 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.ClientReceiver;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.RecieverListener;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -17,132 +19,117 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 public class TicTacToeController {
-    private static Button btn00;
-    private static Button btn01;
-    private static Button btn02;
-    private static Button btn10;
-    private static Button btn11;
-    private static Button btn12;
-    private static Button btn20;
-    private static Button btn21;
-    private static Button btn22;
-    public int numberOfPiecesOnBoard = 0;
-    static Button[][] buttons = new Button[][] {
-        {btn00, btn01, btn02},
-        {btn10, btn11, btn12},
-        {btn20, btn21, btn22}
-    };
+    @FXML
+    private Button btn00;
+
+    @FXML
+    private Button btn01;
+
+    @FXML
+    private Button btn02;
+
+    @FXML
+    private Button btn10;
+
+    @FXML
+    private Button btn11;
+
+    @FXML
+    private Button btn12;
+
+    @FXML
+    private Button btn20;
+
+    @FXML
+    private Button btn21;
+
+    @FXML
+    private Button btn22;
+
+    private Button[][] buttons;
+
+    private String[][] boardRepresentation = new String[NUMBER_OF_ROWS][NUMBER_OF_COLS];
 
     public static final int NUMBER_OF_ROWS = 3;
     public static final int NUMBER_OF_COLS = 3;
-    public static GameResult resultOfTicTacToe;
-    public static UUID playerOne;
-    public static UUID playerTwo;
-    public static UUID sessionID;
-    public static UUID newTurn;
+    private static final String[] COLORS = {PieceColor.RED.toString(), PieceColor.BLUE.toString()};
+
+    private UUID playerOne;
+    private UUID playerTwo;
+    private UUID sessionID;
+    private UUID newTurn;
+
+    private Stage stage;
 
     @FXML
-    private static Stage stage;
-    @FXML
-    public static Label playerStatus;
+    public Button forfeitBtn;
 
-    @FXML
-    public static Button forfeitBtn;
+    private class TicTacToeReceiver extends RecieverListener {
 
-    @FXML
-    public void initialize() throws IOException, ParseException {
+        public TicTacToeReceiver() {
+            super(GameTypes.TICTACTOE);
+        }
 
-        buttons = new Button[][] {
-                {btn00, btn01, btn02},
-                {btn10, btn11, btn12},
-                {btn20, btn21, btn22}
-        };
+        @Override
+        public void onReceive(JSONObject payload) throws IOException {
+            receiveFromBackendTicTacToe(payload);
+        }
+    }
 
+    public void start(Stage newStage) throws IOException, ParseException {
         GameSessionRecord gameSessionRecord = GameSessionRecord.getGameSessionRecord();
+        ClientReceiver.addClientReceiver(new TicTacToeReceiver());
+        stage = newStage;
         playerOne = gameSessionRecord.getPlayer1ID();
         playerTwo = gameSessionRecord.getPlayer2ID();
         newTurn = gameSessionRecord.getCurrentPlayerID();
         sessionID = gameSessionRecord.getSessionID();
-
-        playerStatus.setText("RED TURN - YOUR TURN");
-        playerStatus.setTextFill(Color.RED);
+        buttons = new Button[][] {
+            {btn00, btn01, btn02},
+            {btn10, btn11, btn12},
+            {btn20, btn21, btn22}
+        };
+        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+            for (int j = 0; j < NUMBER_OF_COLS; j++) {
+                int fi = i;
+                int fj = j;
+                buttons[i][j].setOnMouseClicked(_ -> {
+                    try {
+                        onTicTacToeButtonPress(fi, fj);
+                    } catch (IOException | ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+        }
+        for (String[] strings : boardRepresentation){
+            Arrays.fill(strings, "EMPTY");
+        }
     }
 
-    public static void receiveFromBackendTicTacToe(JSONObject backendUpdate) throws IOException {
+    public void receiveFromBackendTicTacToe(JSONObject backendUpdate) throws IOException {
         String win_or_not_win = (String) backendUpdate.get("UpdateType");
         if (Objects.equals(win_or_not_win, "GAME_END")){
-            resultOfTicTacToe = (GameResult) backendUpdate.get("GameState");
-            if (resultOfTicTacToe == GameResult.WIN){
-                UUID winningPlayer = (UUID) backendUpdate.get("PlayerWon");
-                String nameOfWinningPlayer = getUsernameFromUUID(String.valueOf(winningPlayer));
-                playerStatus.setText(String.format("Player %s won the game!",nameOfWinningPlayer));
-                if (winningPlayer.equals(playerOne)){
-                    playerStatus.setTextFill(Color.GREEN);
-                }
-                else{
-                    playerStatus.setTextFill(Color.RED);
-                }
-            }
-            else{
-                playerStatus.setText("The game ended in a tie!");
-                playerStatus.setTextFill(Color.BLACK);
-            }
             disableAllButtons();
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Aftermath.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             stage.setTitle("Condensation Application - Aftermath");
             stage.setScene(scene);
             stage.show();
-        }
-        else{
-            sessionID = (UUID) backendUpdate.get("SessionID");
-            newTurn = (UUID) backendUpdate.get("PlayerTurn");
-            String[][] connectFourBackendBoard = (String[][]) backendUpdate.get("Changes");
-            int rowIndex = 0;
-            int colIndex;
-            for (String[] strings : connectFourBackendBoard) {
-                colIndex = 0;
-                for (String piece : strings) {
-                    Button buttonForBoard = buttons[rowIndex][colIndex];
-                    if (Objects.equals(piece, "RED")){
-                        buttonForBoard.setText("X");
-                        buttonForBoard.setTextFill(Color.RED);
-                    }
-                    else if (Objects.equals(piece, "BLUE")){
-                        buttonForBoard.setText("O");
-                        buttonForBoard.setTextFill(Color.BLUE);
-                    }
-                    else{
-                        buttonForBoard.setText("");
-                    }
-                }
-                rowIndex += 1;
-            }
-            if (newTurn.equals(playerTwo)){
-                String nameOfOpponentPlayer = getUsernameFromUUID(String.valueOf(newTurn));
-                playerStatus.setText(String.format("It's %s's turn!", nameOfOpponentPlayer));
-                playerStatus.setTextFill(Color.BLUE);
-            }
-            else{
-                String nameOfMainPlayer = getUsernameFromUUID(String.valueOf(newTurn));
-                playerStatus.setText(String.format("It's %s's turn!", nameOfMainPlayer));
-                playerStatus.setTextFill(Color.RED);
-            }
+        } else{
+            onTurnEnd(backendUpdate);
         }
     }
 
-    private static void disableAllButtons() { //when game ends
+    private void disableAllButtons() { //when game ends
         for (Button[] buttonRow : buttons) {
             for (Button button : buttonRow) {
                 button.setDisable(true);
@@ -150,61 +137,37 @@ public class TicTacToeController {
         }
     }
 
-    @FXML
-    public void returnToBackendTicTacToe(javafx.event.ActionEvent event) throws IOException, ParseException {
-        Button clickedButton = (Button) event.getSource();
-
-        int row = -1;
-        int col = -1;
-
-        boolean buttonFound = false;
+    private void onTurnEnd(JSONObject jsonObject) {
+        sessionID = (UUID) jsonObject.get("SessionID");
+        newTurn = (UUID) jsonObject.get("PlayerTurn");
+        GameSessionRecord.updateBoardRepresentationFromJSON(boardRepresentation, (JSONArray) jsonObject.get("Changes"));
         for (int i = 0; i < NUMBER_OF_ROWS; i++) {
-            if (buttonFound){
-                break;
-            }
             for (int j = 0; j < NUMBER_OF_COLS; j++) {
-                System.out.println(buttons[i][j]);
-                if (buttons[i][j].equals(clickedButton)) {
-                    row = i;
-                    col = j;
-                    buttonFound = true;
-                    break;
-                }
+                setButtonToPiece(boardRepresentation[i][j], buttons[i][j]);
             }
-        }
-
-        if (row >= 0 && col >= 0){
-
-            JSONObject ticTacToeJSON = new JSONObject();
-            ticTacToeJSON.put("SessionID", sessionID);
-            if (newTurn == playerOne){
-                ticTacToeJSON.put("playerID", playerOne.toString());
-            }
-            else{
-                ticTacToeJSON.put("playerID", playerTwo.toString());
-            }
-            ticTacToeJSON.put("New Position", new Vector2(row, col));
-            ticTacToeJSON.put("gameType", GameTypes.TICTACTOE);
-            NetworkManager.getNetworkInstance().receiveGameDataFromClient(ticTacToeJSON);
         }
     }
 
-    private static String getUsernameFromUUID(String playerUUID) {
-        try {
-            File file = new File(NetworkManager.LEADERBOARD_FILE);
-            JSONParser parser = new JSONParser();
-            JSONArray leaderboard = (JSONArray) parser.parse(new FileReader(file));
-
-            for (Object obj : leaderboard) {
-                JSONObject player = (JSONObject) obj;
-                if (playerUUID.equals(player.get("playerUUID"))) {
-                    return (String) player.get("username");
-                }
-            }
-        } catch (Exception e) {
-            System.err.printf("Error reading leaderboard.json: %s%n", e.getMessage());
+    private void onTicTacToeButtonPress(int i, int j) throws IOException, ParseException {
+        if (boardRepresentation[i][j].equals("EMPTY")) {
+            NetworkManager.getNetworkInstance().receiveGameDataFromClient(GameSessionRecord.parseMoveData(
+                    sessionID,
+                    newTurn,
+                    new int[] {j, i}
+            ));
         }
-        return null;
+    }
+
+    private void setButtonToPiece(String color, Button buttonForBoard) {
+        if (color.equals("RED")) {
+            buttonForBoard.setTextFill(Color.RED);
+            buttonForBoard.setText("X");
+        } else if (color.equals("BLUE")) {
+            buttonForBoard.setTextFill(Color.BLUE);
+            buttonForBoard.setText("O");
+        } else {
+            buttonForBoard.setText("");
+        }
     }
 
     @FXML
@@ -234,19 +197,19 @@ public class TicTacToeController {
     }
 
     @FXML
-    TextArea chatBox;
+    private TextArea chatBox;
 
     @FXML
-    Button sendBtn;
+    private Button sendBtn;
 
     @FXML
-    ScrollPane chatScrollPane;
+    private ScrollPane chatScrollPane;
 
     @FXML
-    VBox paneInsideScrollPane;
+    private VBox paneInsideScrollPane;
 
+    private String username = "Me";
 
-    String username = "Me";
     // TODOL: Connect
     public void onSendBtnClick() {
         String messageStr = chatBox.getText();

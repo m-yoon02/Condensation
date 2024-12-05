@@ -1,7 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import ca.ucalgary.seng300.p4.condensation.Backend.Handlers.CheckersHandler;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,12 +9,13 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class CheckersHomeMenuController {
-
-    Stage stage;
 
     @FXML
     Button leaderboardBtn;
@@ -55,8 +56,10 @@ public class CheckersHomeMenuController {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        CheckersQueueController checkersQueueController = fxmlLoader.getController();
         window.setScene(scene);
         window.show();
+        checkersQueueController.start(window);
     }
 
     // leaderboard

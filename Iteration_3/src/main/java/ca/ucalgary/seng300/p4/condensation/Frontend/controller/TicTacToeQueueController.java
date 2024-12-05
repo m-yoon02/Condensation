@@ -4,6 +4,7 @@ import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessio
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
+import javafx.animation.PauseTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -34,17 +36,21 @@ public class TicTacToeQueueController {
     @FXML
     private Scene createScene;
 
-    @FXML
     private Stage stage;
 
-
-    @FXML
-    public void initialize() throws IOException, ParseException, InterruptedException {
+    public void start(Stage stage) {
         // Allows user to leave
-        TimeUnit.SECONDS.sleep(3);
-        sendToBackendTicTacToe();
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        this.stage = stage;
+        delay.setOnFinished(e -> {
+            try {
+                sendToBackendTicTacToe();
+            } catch (IOException | ParseException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        delay.play();
     }
-
 
     @FXML
     protected void returnToTicTacToeMenu(Event event) throws IOException
@@ -73,7 +79,10 @@ public class TicTacToeQueueController {
         GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tGame.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 650);
+        TicTacToeController ticTacToeController = fxmlLoader.getController();
+        ticTacToeController.start(stage);
+        stage.setResizable(true);
         stage.setTitle("Condensation Application - Tic Tac Toe");
         stage.setScene(scene);
         stage.show();
