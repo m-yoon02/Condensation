@@ -528,4 +528,8 @@ public class NetworkManager {
     public Map<UUID, Client> getLoggedInClients() {
         return loggedInClients;
     }
+
+    public Map<UUID, List<GameDataListener>> getSessionListeners() {
+        return sessionListeners;
+    }
 }
