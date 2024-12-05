@@ -269,6 +269,28 @@ public class ProfileHomeController {
         }
     }
 
+    @FXML
+    void onEditUserButtonClicked(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("editUser.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 400, 300);
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.setTitle("Edit Username");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    void onEditPassButtonClicked(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("editPass.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 400, 300);
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.setTitle("Edit Username");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     /**
      * Navigates to the specified screen.
      * @param event The ActionEvent triggered by the navigation.

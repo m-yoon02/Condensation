@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -21,6 +22,8 @@ public class HelloApplication extends Application {
         stage.setTitle("Condensation Application");
         stage.setScene(scene);
         stage.show();
+
+        stage.setOnCloseRequest(e -> Platform.exit());
     }
 
     public static void main(String[] args) {
