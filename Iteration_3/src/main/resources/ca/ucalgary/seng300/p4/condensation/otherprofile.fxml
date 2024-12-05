@@ -48,7 +48,7 @@
                 <Label layoutX="12.0" layoutY="286.0" styleClass="white" text="Player recent matches" />
             <Label layoutX="12.0" layoutY="122.0" prefHeight="21.0" prefWidth="41.0" text="Status:" textFill="#faf6f6" />
             <Text fx:id="playerStatus" fill="#73cf70" layoutX="53.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="227.2216033935547" />
-            <Button fx:id="homeButton1" layoutX="15.0" layoutY="449.0" mnemonicParsing="false" onAction="#onHomeButtonClicked" prefHeight="36.0" prefWidth="174.0" styleClass="lookup-button" text="Challenge">
+            <Button fx:id="challengeButton" layoutX="15.0" layoutY="449.0" mnemonicParsing="false" onAction="#onChallenegeClick" prefHeight="36.0" prefWidth="174.0" styleClass="lookup-button" text="Challenge">
                <font>
                   <Font size="4.0" />
                </font>
