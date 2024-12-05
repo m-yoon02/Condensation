@@ -5,8 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc99c478-ea5d-43df-bf08-01098b9abd2c" name="Changes" comment="fixed minor full board checking error">
+      <change afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/TicTacToeHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Backend/Handlers/TicTacToeHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileLeaderBController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileLeaderBController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/DTO/GameSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/DTO/GameSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/DatabaseBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/DatabaseBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Services/MatchmakingPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Services/MatchmakingPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/Login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/SignUp.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/SignUp.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/checkersHomeMenu.css" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/checkersHomeMenu.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/checkersHomeMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/checkersHomeMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/checkersInstance.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/checkersInstance.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/otherprofile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/otherprofile.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/placeholderCheckers.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/profileGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/profileGame.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/profileHome.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/profileHome.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/profileLeaderB.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/target/classes/ca/ucalgary/seng300/p4/condensation/profileLeaderB.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,17 +36,64 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.HelloApplication.executor": "Run",
-    "git-widget-placeholder": "tic-tac-toe",
-    "last_opened_file_path": "/home/abach/Documents/UniversityWork/SENG_300/seng300-f24-project/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/profileHome.fxml",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "two.files.diff.last.used.file": "/home/abach/Documents/UniversityWork/SENG_300/seng300-f24-project/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/profileHome.fxml"
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;victoria.piquer&quot;,
+      &quot;fullname&quot;: &quot;Victoria piquer&quot;
+    }
   }
-}]]></component>
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;https://csgit.ucalgary.ca/ssafe/seng300-f24-project.git&quot;,
+    &quot;second&quot;: &quot;7737ded6-d364-4e10-af66-8f26da38f84d&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2pdr2m7LVzxhtYNX64GC7R6wrsx" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.ProfileHomeControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;victoria__test&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/abach/Documents/UniversityWork/SENG_300/seng300-f24-project/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/profileHome.fxml&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;/home/abach/Documents/UniversityWork/SENG_300/seng300-f24-project/Iteration_3/src/main/resources/ca/ucalgary/seng300/p4/condensation/profileHome.fxml&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dc99c478-ea5d-43df-bf08-01098b9abd2c" name="Changes" comment="fixed minor full board checking error" />
+      <created>1733106589172</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733106589172</updated>
+    </task>
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

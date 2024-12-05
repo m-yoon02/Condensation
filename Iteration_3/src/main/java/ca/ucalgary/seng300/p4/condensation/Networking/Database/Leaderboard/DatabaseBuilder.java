@@ -8,7 +8,7 @@ import java.util.UUID;
 public class DatabaseBuilder {
     public static void main(String[] args) {
         try {
-            Leaderboard leaderboard = new Leaderboard("\\C:\\Users\\Richa\\IdeaProjects\\demo6\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json\\");
+            Leaderboard leaderboard = new Leaderboard("C:\\Users\\victo\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json");
 
             System.out.println(leaderboard.findUserByName("Michelle"));
             UUID id = UUID.fromString("345e6789-e89d-45d5-a678-627836485231");

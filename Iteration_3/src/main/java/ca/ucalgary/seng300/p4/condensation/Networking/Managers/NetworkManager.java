@@ -34,7 +34,7 @@ public class NetworkManager {
 
     // client listener lists mapped to specific to their gameSessions
 
-    private final String DATA_FILE = "\\C:\\Users\\Richa\\IdeaProjects\\demo6\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json\\";
+    private final String DATA_FILE = "C:\\Users\\victo\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json";
     private Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final ChatService chatService;

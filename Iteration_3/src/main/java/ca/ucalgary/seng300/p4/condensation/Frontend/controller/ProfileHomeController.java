@@ -130,7 +130,7 @@ public class ProfileHomeController {
     public void displayRecentMatches(UUID playerUUID) {
         try {
             // Fetch the user from the Leaderboard
-            Leaderboard leaderboard = Leaderboard.getInstance("C:\\Users\\Richa\\IdeaProjects\\demo6\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca");
+            Leaderboard leaderboard = Leaderboard.getInstance("C:\\Users\\victo\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json");
             JSONObject user = leaderboard.findUserById(playerUUID);
 
             if (user != null) {
