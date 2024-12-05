@@ -66,13 +66,14 @@ public class AftermathController {
         JSONObject lastMatch = (JSONObject) recentMatches.getLast();
 
         String resultOfMatch = (String) lastMatch.get("outcome");
-        GameTypes typeOfMatch = GameTypes.valueOf((String) lastMatch.get("gameType"));
+        GameTypes typeOfMatch = (GameTypes) lastMatch.get("gameType");
+//        GameTypes typeOfMatch = GameTypes.valueOf(gameTypeString);
 
         if (Objects.equals(resultOfMatch, "L")) {
             gameResultLabel.setText("You Lost.");
         } else if (Objects.equals(resultOfMatch, "W")) {
             gameResultLabel.setText("You Won!");
-        } else {
+        } else if (Objects.equals(resultOfMatch, "T")){
             gameResultLabel.setText("You Tied.");
         }
 
