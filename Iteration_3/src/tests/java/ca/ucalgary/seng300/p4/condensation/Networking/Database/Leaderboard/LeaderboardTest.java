@@ -161,26 +161,39 @@ public class LeaderboardTest {
     }
 
     @Test
-    public void testUpdateForTieGame() {
-        UUID player1ID = UUID.randomUUID();
-        UUID player2ID = UUID.randomUUID();
+    public void testUpdateForTieGame() throws IOException {
+        // Create and add players to the leaderboard
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        JSONObject user2 = leaderboard.findUserByName("player2");
+
         UUID sessionID = UUID.randomUUID();
 
-        leaderboard.updateForTieGame(player1ID, player2ID, sessionID, GameTypes.CHECKERS);
+        // Update for tie game
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        UUID player2ID = UUID.fromString((String) user2.get("playerUUID"));
+        leaderboard.updateForTieGameCheckers(player1ID, player2ID, sessionID);
 
-        JSONObject player1 = leaderboard.findUserById(player1ID);
-        JSONObject player2 = leaderboard.findUserById(player2ID);
+        // update players
+        user1 = leaderboard.findUserByName("player1");
+        user2 = leaderboard.findUserByName("player2");
 
-        assertNotNull(player1);
-        assertNotNull(player2);
+        // Retrieve players from the leaderboard
+        // Verify players are not null
+        assertNotNull(user1);
+        assertNotNull(user2);
 
-        JSONArray recentMatches1 = (JSONArray) player1.get("recentMatches");
-        JSONArray recentMatches2 = (JSONArray) player2.get("recentMatches");
+        // Verify recent matches
+        JSONArray recentMatches1 = (JSONArray) user1.get("recentMatches");
 
-        assertEquals(1, recentMatches1.size());
-        assertEquals(1, recentMatches2.size());
+        assertEquals(2, recentMatches1.size());
+
+        // Verify the match details
+        JSONObject recentMatch1 = (JSONObject) recentMatches1.getFirst();
+
+        assertEquals(sessionID.toString(), recentMatch1.get("matchID"));
+        assertEquals(GameTypes.CHECKERS.toString(), recentMatch1.get("gameType"));
+        assertEquals("T", recentMatch1.get("outcome"));
     }
-
 
 
 
