@@ -41,15 +41,6 @@ public class tLeaderboardControllerTest extends ApplicationTest {
         // Perform setup actions if needed before each test
     }
 
-    @After
-    public void tearDown() {
-        // Clean up after each test
-        fxmlLoader = null;
-        scene = null;
-        controller = null;
-        backToMenu = null;
-    }
-
     @Test
     public void testControllerInitialization() {
         // Ensure the controller is properly initialized
