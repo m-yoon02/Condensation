@@ -159,7 +159,7 @@ public class OtherProfileController {
         CheckersQueueController checkersQueueController = fxmlLoader.getController();
         window.setScene(scene);
         window.show();
-        checkersQueueController.start(window);
+        checkersQueueController.start();
     }
 
 
