@@ -457,7 +457,7 @@ public class Leaderboard {
                 JSONArray recentMatches = (JSONArray) JsonUser.get("recentMatches");
                 JSONObject currentMatch = new JSONObject();
                 currentMatch.put("matchID", StringID);
-                currentMatch.put("gameType", GameTypes.CHECKERS.toString());
+                currentMatch.put("gameType", GameTypes.TICTACTOE.toString());
                 currentMatch.put("outcome", "W");
                 currentMatch.put("currentElo", currentElo);
                 recentMatches.add(currentMatch);
@@ -502,7 +502,7 @@ public class Leaderboard {
                 JSONArray recentMatches = (JSONArray) JsonUser.get("recentMatches");
                 JSONObject currentMatch = new JSONObject();
                 currentMatch.put("matchID", StringID);
-                currentMatch.put("gameType", GameTypes.CHECKERS.toString());
+                currentMatch.put("gameType", GameTypes.CONNECT4.toString());
                 currentMatch.put("outcome", "W");
                 currentMatch.put("currentElo", currentElo);
                 recentMatches.add(currentMatch);
