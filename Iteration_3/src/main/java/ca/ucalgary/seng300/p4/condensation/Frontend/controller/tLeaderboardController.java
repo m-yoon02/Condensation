@@ -23,7 +23,7 @@ public class tLeaderboardController {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
             Stage stage = (Stage) backToMenu.getScene().getWindow();
             Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-            stage.setTitle("Leaderboard for Tic Tac Toe!");
+            stage.setTitle("Condensation Appliance - Tic Tac Toe");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
