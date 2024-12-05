@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -23,7 +24,7 @@ public class EditPassController {
     public static UUID playerUUID;
 
     @FXML
-    void onConfirmClicked() throws IOException, ParseException {
+    void onConfirmClicked(ActionEvent event) throws IOException, ParseException {
         boolean changed = false;
         if (validatePass()) {
             changed =  Leaderboard.getInstance().changePassword(playerUUID, newPassField.getText());

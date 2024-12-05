@@ -182,11 +182,12 @@ public class Leaderboard {
         return null;
     }
 
-    public boolean changeName(UUID playerID, String newName) {
+    public boolean changeName(UUID playerID, String newName) throws IOException {
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
             if (user.get("playerUUID").equals(playerID.toString())) {
                 user.put("username", newName);
+                saveData();
                 return true;
 //                break;
             }
