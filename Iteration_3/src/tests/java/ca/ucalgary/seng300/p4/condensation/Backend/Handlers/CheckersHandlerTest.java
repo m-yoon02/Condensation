@@ -317,4 +317,12 @@ public class CheckersHandlerTest {
 
         assertNull("No piece should be at the invalid target position", checkersHandler.getBoard().getAt(newPosition));
     }
+
+    @Test
+    public void testMakeMove_WhenMoveIsValid() {
+        CheckersMoveData md = new CheckersMoveData(checkersHandler.getFirstPlayerID(), new Vector2(4, 4), new Vector2(3, 3));
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(3, 3));
+
+        checkersHandler.makeMove(md);
+    }
 }

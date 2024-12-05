@@ -274,4 +274,15 @@ public class GameBoardTest {
 
         assertNotNull("JSON string should not be null", jsonString);
     }
+
+    @Test
+    public void testIsBoardFull_MinimalBoard_Full() {
+        GameBoard<TestGamePiece> minimalGb = new GameBoard<>(1, 1);
+        TestGamePiece piece = new TestGamePiece(PieceColor.BLUE);
+        minimalGb.placePiece(piece, new Vector2(0, 0));
+
+        boolean result = minimalGb.isBoardFull();
+
+        assertTrue("Minimal board should be full when the only position is occupied", result);
+    }
 }

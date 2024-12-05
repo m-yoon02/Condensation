@@ -166,62 +166,18 @@ public class GameHandlerTest {
         assertTrue(listenerCalled[0]);
     }
 
-//    @Test
-//    public void testStartGame_SuccessfulStart() {
-//        try {
-//            // Act
-//            gameHandler.startGame();
-//
-//            // Assert
-//            assertTrue("startTimer should have been called", testGameTimer.wasStartCalled());
-//        } catch (Exception e) {
-//            fail("No exception should be thrown during successful game start");
-//        }
-//    }
-//
-//    @Test(expected = RuntimeException.class)
-//    public void testStartGame_InterruptedExceptionHandling() {
-//        // Arrange: Configure timer to throw InterruptedException
-//        testGameTimer.setShouldThrowInterrupted(true);
-//
-//        // Act & Assert: Should throw RuntimeException
-//        gameHandler.startGame();
-//    }
-//
-//    @Test
-//    public void testStartGame_RuntimeExceptionContainsOriginalCause() {
-//        // Arrange: Configure timer to throw InterruptedException
-//        testGameTimer.setShouldThrowInterrupted(true);
-//
-//        try {
-//            // Act
-//            gameHandler.startGame();
-//            fail("Expected RuntimeException was not thrown");
-//        } catch (RuntimeException e) {
-//            // Assert
-//            assertTrue("Cause should be InterruptedException",
-//                    e.getCause() instanceof InterruptedException);
-//            assertEquals("Simulated interruption", e.getCause().getMessage());
-//        }
-//    }
+    @Test
+    public void testStartGame_SuccessfulStart() {
+        try {
+            // Act
+            gameHandler.startGame();
 
-
-//
-//    @Test
-//    public void addGameEndListener() {
-//    }
-//
-//    @Test
-//    public void addTurnEndListener() {
-//    }
-//
-//    @Test
-//    public void notifyTurnEnd() {
-//    }
-//
-//    @Test
-//    public void notifyGameEnd() {
-//    }
+            // Assert
+            assertTrue("startTimer should have been called", testGameTimer.wasStartCalled());
+        } catch (Exception e) {
+            fail("No exception should be thrown during successful game start");
+        }
+    }
 
     @Test
     public void testGetPlayerMemoFromUUID() {
