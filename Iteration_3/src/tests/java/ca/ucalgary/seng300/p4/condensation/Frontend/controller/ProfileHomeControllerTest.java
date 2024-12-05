@@ -92,9 +92,6 @@ public class ProfileHomeControllerTest extends ApplicationTest {
         leaderboardButton = (Button) lookup("#leaderboardButton").queryAs((Button.class));
         playerProfilesButton = (Button) lookup("#playerProfilesButton").queryAs((Button.class));
         gamesButton = (Button) lookup("#gamesButton").queryAs((Button.class));
-
-
-
     }
 
     @After
@@ -108,52 +105,15 @@ public class ProfileHomeControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void initializeTest(){
-        System.out.println(gameColumn.getColumns().get(0).toString());
+    public void emptyUserTest() throws IOException, ParseException {
+        String user = "";
+        profileHomeController.displayRecentMatches(user);
 
-        // on action do button.fire()
-        // on mouse clicked use clickedOn()
+        String output = outputStream.toString().trim();
+        assertTrue("The message 'User not found.' was not printed.", output.contains("User not found."));
+
     }
 
-    @Test
-    public void emptyLeaderBoardTest(){
-        leaderboard = null;
-
-        //test if user is null
-        //make playerUIDD nul
-
-        // on action do button.fire()
-        // on mouse clicked use clickedOn()
-    }
-    @Test
-    public void displayPlayerStatsTest(){
-        System.out.println(gameColumn.getColumns().get(0).toString());
-
-        //test if user is null
-        //make playerUIDD null
-        UUID id = null;
-
-
-
-        // on action do button.fire()
-        // on mouse clicked use clickedOn()
-    }
-
-    @Test
-    public void createGameStatsTest(){
-        System.out.println(gameColumn.getColumns().get(0).toString());
-
-        // on action do button.fire()
-        // on mouse clicked use clickedOn()
-    }
-
-    @Test
-    public void displayRecentMatchesTest(){
-        System.out.println(gameColumn.getColumns().get(0).toString());
-
-        // on action do button.fire()
-        // on mouse clicked use clickedOn()
-    }
 
     /**
      * Finished this test
@@ -232,14 +192,10 @@ public class ProfileHomeControllerTest extends ApplicationTest {
         String output = outputStream.toString().trim();
         assertTrue("The message 'Logged out' was not printed.", output.contains("Logged out"));
 
-        // Verify the logout handler was called
+        // check what happens when theres an io exception
 
     }
 
-    @Test
-    public void navigateToScreenTest(){
-        //dont know
-    }
 
 
 
