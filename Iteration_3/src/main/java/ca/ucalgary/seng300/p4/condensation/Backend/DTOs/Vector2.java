@@ -1,5 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.DTOs;
 
+import java.util.Arrays;
+
 public record Vector2(int x, int y) {
     public static Vector2 ZERO = new Vector2(0, 0);
 
@@ -38,5 +40,10 @@ public record Vector2(int x, int y) {
      */
     public int[] toArray() {
         return new int[] {x, y};
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(toArray());
     }
 }

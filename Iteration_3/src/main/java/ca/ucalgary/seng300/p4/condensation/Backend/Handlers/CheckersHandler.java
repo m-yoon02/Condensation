@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Handlers;
 
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.CheckersMoveData;
@@ -17,6 +18,20 @@ public class CheckersHandler extends GameHandler {
 
     public CheckersHandler(UUID player1ID, UUID player2ID) {
         super(player1ID, player2ID, COLORS);
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < board.getColumnSize(); j++){
+                if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)) {
+                    board.placePiece(new CheckersPiece(PieceColor.BLACK), new Vector2(j, i));
+                }
+            }
+        }
+        for (int i = board.getRowSize() - 3; i < board.getRowSize(); i++){
+            for (int j = 0; j < board.getColumnSize(); j++) {
+                if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)) {
+                    board.placePiece(new CheckersPiece(PieceColor.RED), new Vector2(j, i));
+                }
+            }
+        }
     }
 
     /**
@@ -37,13 +52,68 @@ public class CheckersHandler extends GameHandler {
     // You are to use the move data and translate it to the GameBoard
     // You are also required to check for game winning scenarios here
     // This will also notify when the game has ended, and which player's turn it is after the move
+    /**
+     * Processes a move made by a player for Checkers, whenever a move is made.
+     * This method:
+     * <ul>
+     * <li>Checks if the moving piece exists,</li>
+     * <li>If the move is valid,</li>
+     * <li>If the move is a capture it captures the jumped piece,</li>
+     * <li>Moves the piece,</li>
+     * <li>Checks for promotion and promotes if available,</li>
+     * <li>Checks if the game is won,</li>
+     * <li>And if not, ends the turn of the player.</li>
+     * </ul>
+     * @param checkersMoveData a CheckersMoveData containing move details (Player ID, Old position, New position)
+     */
     public void makeMove(CheckersMoveData checkersMoveData) {
-        //USE THIS MOVE DATA WHEN MAKING MOVES IT CONTAINS DATA
+        // Initializing
+        UUID playerID = checkersMoveData.getPlayerID();
+        UUID opponentID = getOtherPlayerUUID(playerID);
+        Vector2 oldPosition = checkersMoveData.getOldPosition();
+        Vector2 newPosition = checkersMoveData.getMovePosition();
+
+        // Piece exists, is the players' piece
+        CheckersPiece movingPiece = board.getAt(oldPosition);
+        if (movingPiece == null || movingPiece.getColor() != getPlayerColorFromUUID(playerID)){
+            // Notifies that move invalid, allows the player to try again
+            notifyTurnEnd(playerID, board.toJSONString());
+            return;
+        }
+
+        // Move is valid (generally)
+        if (!isValidMove(oldPosition, newPosition)){
+            // Notifies that move invalid, allows the player to try again
+            notifyTurnEnd(playerID, board.toJSONString());
+            return;
+        }
+
+        // Move is a capture
+        int moveDistance = abs(newPosition.y() - oldPosition.y());
+        if (moveDistance == 2 && canCapture(board.getAt(oldPosition))){
+            processCaptureOnMove(oldPosition, newPosition);
+        }
+
+        // Moves piece
+        board.movePiece(oldPosition, newPosition);
+
+        // Checks for promotion
+        checkForPromotion(newPosition);
+
+        // Checks if game ended in a win (for the moving player)
+        if (checkForGameEnd(getPlayerColorFromUUID(opponentID))){
+            notifyGameEnd(GameResult.WIN, playerID);
+            return;
+        }
+
+        // Otherwise, notify the next turn to start
+        notifyTurnEnd(opponentID, board.toJSONString());
     }
 
+    // TODO: This method, we never used. Could possibly remove.
     public boolean captureIsPossible(PieceColor color) {
-        for (int x = 0; x < BOARD_SIZE[0]; x++) {
-            for (int y = 0; y < BOARD_SIZE[1]; y ++) {
+        for (int y = 0; y < BOARD_SIZE[0]; y++) {
+            for (int x = 0; x < BOARD_SIZE[1]; x ++) {
                 CheckersPiece piece = board.getAt(x, y);
                 if(piece != null && piece.getColor() == color && canCapture(piece)){
                     return true;
@@ -53,6 +123,12 @@ public class CheckersHandler extends GameHandler {
         return false;
     }
 
+    /**
+     * Checks if a piece can make a capture move
+     *
+     * @param piece the piece that is being checked for if it is a capturing piece
+     * @return true if the piece can capture, false otherwise
+     */
     public boolean canCapture(CheckersPiece piece) {
         int[][] directions = getDirections(piece);
         for (int[] dir: directions){
@@ -69,50 +145,69 @@ public class CheckersHandler extends GameHandler {
         return false;
     }
 
+    /**
+     * Provides the possible directions that a given piece can go in
+     *
+     * @param piece the piece that is having the directions taken
+     * @return 2D array of the possible moves/directions of the piece
+     */
     public int[][] getDirections(CheckersPiece piece){
         if (piece.isKing()){
             return new int[][]{{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
         }
         // Assuming red is on the bottom and black is on the top
         else if (piece.getColor() == PieceColor.RED){
-            return new int[][]{{-1, -1}, {-1, 1}};
+            return new int[][]{{-1, -1}, {1, -1}};
         }
         else{
-            return new int[][]{{1, 1}, {1, -1}};
+            return new int[][]{{1, 1}, {-1, 1}};
         }
     }
 
     /**
-     * checks if a piece at a given position can move to another position in the board's current state
+     * Checks if a piece at a given position can move to another position in the board's current state
      *
-     * @param oldPos, the piece's original position
-     * @param newPos, the target destination position
+     * @param oldPos the piece's original position
+     * @param newPos the target destination position
      * @return true if the move is valid, false otherwise
      */
     public boolean isValidMove(Vector2 oldPos, Vector2 newPos){
-        int distanceX = abs(newPos.x()) - abs(oldPos.x());
-        int distanceY = abs(newPos.y()) - abs(oldPos.y());
-        if(abs(distanceX) > 2 || abs(distanceY) > 2 || abs(distanceX) < 1 || abs(distanceY) < 1
-                || abs(distanceY) != abs(distanceX) || board.getAt(newPos) != null){
+        int distanceCol = abs(newPos.x()) - abs(oldPos.x());
+        int distanceRow = abs(newPos.y()) - abs(oldPos.y());
+        // return false if there's a piece at newPos,
+        // or if there is no piece to jump over if the piece is trying to travel 2 tiles away
+        if(board.getAt(newPos) != null || (abs(distanceCol) == 2 && board.getAt(oldPos.x()+(distanceCol/2), oldPos.y()+(distanceRow/2)) == null)){
             return false;
         }
-        if(abs(distanceX) == 2 && board.getAt(oldPos.x()+(distanceX/2), oldPos.y()+(distanceY/2)) == null){
-            return false;
+        //if destination is 2 tiles away,
+        // divide both distances by two to compare to the piece's possible directions
+        if(distanceCol > 1 || distanceCol < -1){
+            distanceCol = distanceCol/2;
+            distanceRow = distanceRow/2;
         }
-        return true;
+        int[] directionOfTravel = {distanceCol, distanceRow};
+        int[][] directions = getDirections(board.getAt(oldPos));
+        //iterates through each possible direction of travel for the piece and compares it with the
+        //actual direction of travel. Returns true if they are equal
+        for(int[] dir: directions){
+            if(dir[0] == directionOfTravel[0] && dir[1] == directionOfTravel[1]){
+                return true;
+            }
+        }
+        return false;
     }
     /**
-     * Checks if a player is able to make further moves
+     * Checks if a player is able to make further moves, or has any pieces
      *
-     * @param color of pieces of the player to check
+     * @param color the color of the pieces of the player to check
      * @return true if game cannot continue, false otherwise
      */
     public boolean checkForGameEnd(PieceColor color){
         for(int i = 0; i < BOARD_SIZE[0]; i++){
             for(int j = 0; j < BOARD_SIZE[1]; j++){
-                Vector2 pos = new Vector2(i, j);
-                if(board.getAt(pos).getColor().equals(color)){
-                    if(canMove(pos) || canJump(pos)){
+                Vector2 pos = new Vector2(j, i);
+                if (board.getAt(pos) != null && board.getAt(pos).getColor().equals(color)) {
+                    if (canMove(pos) || canJump(pos)) {
                         return false;
                     }
                 }
@@ -121,50 +216,26 @@ public class CheckersHandler extends GameHandler {
         return true;
     }
     /**
-     *A helper method to check if a piece at a position can move 1 tile ahead. Doesn't check jumps
+     * A helper method to check if a piece at a position can move 1 tile ahead. Doesn't check jumps
      *
-     * @param pos of the piece that is being checked
+     * @param pos the position of the piece being checked
      * @return true if piece is able to move
      */
     public boolean canMove(Vector2 pos){
-        if(pos.x() == 0){
-            if(pos.y() == 7){
-                if(board.getAt(pos.x()+1, pos.y()-1) == null){
-                    return true;
-                }
-            } else {
-                if(board.getAt(pos.x()+1, pos.y()+1) == null
-                        || board.getAt(pos.x()+1, pos.y()-1) == null){
-                    return true;
-                }
-            }
-        } else if(pos.x() == 7){
-            if(pos.y() == 0){
-                if(board.getAt(pos.x()-1, pos.y()+1) == null){
-                    return true;
-                }
-            } else {
-                if(board.getAt(pos.x()-1, pos.y()+1) == null
-                        || board.getAt(pos.x()-1, pos.y()-1) == null){
-                    return true;
-                }
-            }
-        } else{
-            if(pos.y() == 0){
-                if(board.getAt(pos.x()-1, pos.y()+1) == null
-                        || board.getAt(pos.x()+1, pos.y()+1) == null){
-                    return true;
-                }
-            } else if(pos.y() == 7){
-                if(board.getAt(pos.x()-1, pos.y()-1) == null
-                        || board.getAt(pos.x()+1, pos.y()-1) == null){
-                    return true;
-                }
-            } else {
-                if(board.getAt(pos.x()-1, pos.y()+1) == null || board.getAt(pos.x()+1, pos.y()-1) == null
-                || board.getAt(pos.x()+1, pos.y()+1) == null || board.getAt(pos.x()-1, pos.y()-1) == null){
-                    return true;
-                }
+        CheckersPiece piece = board.getAt(pos);
+        if (piece == null) {
+            return false;
+        }
+
+        int[][] directions = getDirections(piece);
+
+        // Checks all possible moves
+        for (int[] dir : directions) {
+            Vector2 movePos = new Vector2(pos.x() + dir[0], pos.y() + dir[1]);
+
+            // Position to move is within board and no piece there
+            if (board.positionWithinBounds(movePos) && board.getAt(movePos) == null) {
+                return true;
             }
         }
         return false;
@@ -173,77 +244,29 @@ public class CheckersHandler extends GameHandler {
     /**
      * A helper method to check if a piece can jump over another piece from a given position
      *
-     * @param pos
-     * @return boolean
+     * @param pos the position of the piece being checked
+     * @return true if the piece can jump, false otherwise
      */
     public boolean canJump(Vector2 pos){
-        if(pos.x() == 0 || pos.x() == 1){
-            if(pos.y() == 0 || pos.y() == 1){
-                if (board.getAt(pos.x()+1, pos.y()+1) != null
-                        && board.getAt(pos.x()+2, pos.y()+2) == null) {
-                    return true;
-                }
-            } else if(pos.y() == 6 || pos.y() == 7){
-                if (board.getAt(pos.x()+1, pos.y()-1) != null
-                        && board.getAt(pos.x()+2, pos.y()-2) == null) {
-                    return true;
-                }
-            } else{
-                if((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)){
-                    return true;
-                }
-            }
-        } else if(pos.x() == 1){
-            if(pos.y() == 0){
-                if(board.getAt(pos.x()+1, pos.y()+1) != null
-                        && board.getAt(pos.x()+2, pos.y()+2) == null){
-                    return true;
-                }
-            } else if(pos.y() == 6){
-                if(board.getAt(pos.x()+1, pos.y()-1) != null
-                        && board.getAt(pos.x()+2, pos.y()-2) == null){
-                    return true;
-                }
-            } else{
-                if((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)){
-                    return true;
-                }
-            }
-        } else if(pos.x() == 6 || pos.x() == 7){
-            if(pos.y() == 0 || pos.y() == 1){
-                if (board.getAt(pos.x()-1, pos.y()+1) != null
-                        && board.getAt(pos.x()-2, pos.y()+2) == null) {
-                    return true;
-                }
-            } else if(pos.y() == 6 || pos.y() == 7){
-                if (board.getAt(pos.x()-1, pos.y()-1) != null
-                        && board.getAt(pos.x()-2, pos.y()-2) == null) {
-                    return true;
-                }
-            } else{
-                if((board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)){
-                    return true;
-                }
-            }
-        } else {
-            if(pos.y() == 0 || pos.y() == 1){
-                if((board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)){
-                    return true;
-                }
-            }  else if(pos.y() == 6 || pos.y() == 7){
-                if((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)){
-                    return true;
-                }
-            } else{
-                if((board.getAt(pos.x()+1, pos.y()-1) != null && board.getAt(pos.x()+2, pos.y()-2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()-1) != null && board.getAt(pos.x()-2, pos.y()-2) == null)
-                        || (board.getAt(pos.x()+1, pos.y()+1) != null && board.getAt(pos.x()+2, pos.y()+2) == null)
-                        || (board.getAt(pos.x()-1, pos.y()+1) != null && board.getAt(pos.x()-2, pos.y()+2) == null)){
+        CheckersPiece piece = board.getAt(pos);
+        if (piece == null) {
+            return false;
+        }
+
+        int[][] directions = getDirections(piece);
+
+        // Checks each direction for a jump move
+        for (int[] dir : directions) {
+            Vector2 capturePos = new Vector2(pos.x() + dir[0], pos.y() + dir[1]);
+            Vector2 jumpPos = new Vector2(pos.x() + 2 * dir[0], pos.y() + 2 * dir[1]);
+
+            // Position to jump and middle position are in board
+            if (board.positionWithinBounds(capturePos) && board.positionWithinBounds(jumpPos)) {
+                CheckersPiece capturePiece = board.getAt(capturePos);
+                CheckersPiece jumpPiece = board.getAt(jumpPos);
+
+                // Middle position has an enemy piece and jump position is empty
+                if (capturePiece != null && capturePiece.getColor() != piece.getColor() && jumpPiece == null) {
                     return true;
                 }
             }
@@ -270,7 +293,7 @@ public class CheckersHandler extends GameHandler {
             finalRow = 7;
         }
 
-        if (pos.x() == finalRow && !piece.isKing()){
+        if (pos.y() == finalRow && !piece.isKing()){
             piece.promoteToKing();
         }
     }
@@ -282,9 +305,9 @@ public class CheckersHandler extends GameHandler {
      */
     public void processCaptureOnMove(Vector2 oldPos, Vector2 newPos) {
         // Calculated by using midpoint, and assuming kings capture with finite range
-        int capturedPieceRow = (oldPos.x() + newPos.x()) / 2;
-        int capturedPieceCol = (oldPos.y() + newPos.y()) / 2;
-        Vector2 capturedPiecePos = new Vector2(capturedPieceRow, capturedPieceCol);
+        int capturedPieceCol = (oldPos.x() + newPos.x()) / 2;
+        int capturedPieceRow = (oldPos.y() + newPos.y()) / 2;
+        Vector2 capturedPiecePos = new Vector2(capturedPieceCol, capturedPieceRow);
 
         board.removePiece(capturedPiecePos);
     }

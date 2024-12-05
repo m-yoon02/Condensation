@@ -5,12 +5,9 @@ import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.GameTimer.GameTimer;
 import ca.ucalgary.seng300.p4.condensation.Backend.GameTimer.TimerEndListener;
-import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.UUID;
 
 public abstract class GameHandler implements IGameHandler{
@@ -25,20 +22,20 @@ public abstract class GameHandler implements IGameHandler{
 
     private class EndGameOnTimerEndListener implements TimerEndListener {
         @Override
-        public void onTimerEnd(UUID winnerPlayerID) throws IOException, ParseException {
+        public void onTimerEnd(UUID winnerPlayerID)
+        {
             notifyGameEnd(GameResult.WIN, winnerPlayerID);
         }
     }
 
     public GameHandler(UUID player1ID, UUID player2ID, PieceColor[] colors){
-        Random rnd = new Random();
-        int player1ColorIndex = rnd.nextInt(2);
-        int player2ColorIndex = player1ColorIndex == 0 ? 1 : 0;
+        int player1ColorIndex = 0;
+        int player2ColorIndex = 1;
         playerMemoHashMap.put(player1ID, new PlayerMemo(player1ID, colors[player1ColorIndex]));
         playerMemoHashMap.put(player2ID, new PlayerMemo(player2ID, colors[player2ColorIndex]));
         firstPlayerID = getPlayerMemoFromPieceColor(colors[0]).playerID();
         gameTimer = new GameTimer(player1ID, player2ID, DEFAULT_TIME);
-        gameTimer.setTimerTo(player1ColorIndex == 0 ? player1ID : player2ID);
+        gameTimer.setTimerTo(player1ID);
         gameTimer.addTimerEndListener(new EndGameOnTimerEndListener());
     }
 
@@ -78,7 +75,7 @@ public abstract class GameHandler implements IGameHandler{
      * @param gameResult the game result
      * @param winnerID the ID of the winner player if the game has ended on a win
      */
-    protected void notifyGameEnd(GameResult gameResult, UUID winnerID) throws IOException, ParseException {
+    protected void notifyGameEnd(GameResult gameResult, UUID winnerID) {
         //Stop the timer when the game ends obviously
         gameTimer.stopTimer();
         for (GameEndListener listener: gameEndListeners){

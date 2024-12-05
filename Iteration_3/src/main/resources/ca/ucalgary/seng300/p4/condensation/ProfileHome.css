@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+/* Main pane styling */
+.main-pane {
+    -fx-background-color: #051958;
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-font-weight: 500;
+}
+
+/* Labels and Titles */
+.titleText, .white {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+#usernameField, #usernameField1 {
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-font-size: 26px;
+    -fx-text-fill: white;
+}
+
+
+/* Buttons */
+Button {
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-font-size: 16px;
+    -fx-background-color: #0e27e6;
+    -fx-text-fill: white;
+    -fx-font-weight: 500;
+    -fx-background-radius: 10px;
+    -fx-pref-height: 39px;
+}
+
+Button:hover {
+    -fx-background-color: #294af3;
+}
+
+.lookup-button {
+    -fx-font-size: 13px;
+    -fx-pref-width: 95px;
+    -fx-pref-height: 20px;
+}
+
+/* Containers */
+.v-box {
+    -fx-pref-width: 600;
+    -fx-pref-height: 400;
+    -fx-background-color: #ffffff;
+}
+
+.h-box {
+    -fx-pref-width: 600;
+    -fx-pref-height: 370;
+    -fx-background-color: #ffffff;
+}
+
+.menu-container {
+    -fx-background-color: #000000;
+    -fx-pref-width: 600;
+    -fx-pref-height: 30;
+}
+
+.menu-container Button {
+    -fx-font-size: 12;
+}
+
+/* Game container */
+.game-container {
+    -fx-alignment: top-center;
+    -fx-pref-width: 300;
+    -fx-pref-height: 370;
+}
+
+.game-container ImageView {
+    -fx-alignment: top;
+}
+
+/* Specific Button styles */
+#playBtn, #leaderboardBtn, #howToPlayBtn {
+    -fx-pref-width: 100px;
+    -fx-pref-height: 40px;
+    -fx-font-size: 20px;
+}
+
+#leaderboardBtn, #howToPlayBtn {
+    -fx-font-size: 16px;
+}
+
+#nameLabel {
+    -fx-alignment: left;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
