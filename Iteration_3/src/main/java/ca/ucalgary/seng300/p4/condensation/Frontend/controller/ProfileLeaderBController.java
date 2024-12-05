@@ -157,10 +157,6 @@ public class ProfileLeaderBController {
         System.out.println("Home button clicked...redirecting to home.");
         Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileHome.fxml"));
         Scene homeScene = new Scene(homeParent);
-
-        // Get the current stage and set the new scene
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
+        HelloApplication.setActiveScene(homeScene);
     }
 }

@@ -153,10 +153,8 @@ public class CheckersController {
         }
         disableAllButtons();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Aftermath.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Condensation Application - Aftermath");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Condensation Application - Aftermath");
     }
 
     private static void addPieceToSquare(Image image, Button square) {
