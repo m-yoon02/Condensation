@@ -83,6 +83,30 @@ public class MatchmakingPoolTest {
     }
 
     @Test
+    public void testRemovePlayerFromMatchmakingPoolNotFound() {
+        UUID playerID = UUID.randomUUID();
+        String result = matchmakingPool.removePlayerFromMatchmakingPool(playerID);
+
+        assertEquals("Player does not exist.", "Player not found in matchmaking pool: "+ playerID, result);
+    }
+
+    @Test
+    public void testRemovePlayer() {
+        UUID playerID = UUID.randomUUID();
+        QueuedPlayerMemo player = new QueuedPlayerMemo(playerID, GameTypes.CHECKERS, 1500);
+
+        matchmakingPool.addPlayer(player);
+
+        List<QueuedPlayerMemo> prevPool = matchmakingPool.getPool();
+        int addedPoolSize = prevPool.size();
+
+        matchmakingPool.removePlayer(player);
+
+        List<QueuedPlayerMemo> pool = matchmakingPool.getPool();
+        assertEquals("Pool should have one less player after removal", addedPoolSize - 1,pool.size());
+    }
+
+    @Test
     public void testFetch4RandomPlayers() throws IOException, ParseException {
         matchmakingPool.clearPool();
 
