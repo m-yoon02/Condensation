@@ -1,6 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.ClientReceiver;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.RecieverListener;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -14,14 +16,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.input.MouseEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -29,42 +28,41 @@ import java.util.UUID;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+
 public class ConnectFourController {
 
     @FXML
     private GridPane connectFourGrid;
 
     @FXML
-    private Text forfeitButton;
+    private Label playerTurnText;
 
-    @FXML
-    private static Label playerTurnText;
-
-    private static final Button[][] buttons = new Button[6][7];
+    private final Button[][] buttons = new Button[6][7];
 
     public static final int NUMBER_OF_ROWS = 6;
     public static final int NUMBER_OF_COLS = 7;
 
-    public static UUID playerOne;
-    public static UUID playerTwo;
-    public static UUID sessionID;
-    public static UUID newTurn;
+    public UUID playerOne;
+    public UUID playerTwo;
+    public UUID sessionID;
+    public UUID newTurn;
 
-    public static UUID playerID;
+    private Stage stage;
 
-    private static Stage stage;
+    private class ConnectFourReceiver extends RecieverListener {
 
-    // Singleton instance
-    private static ConnectFourController instance;
-    // Singleton instance
+        public ConnectFourReceiver() {
+            super(GameTypes.CONNECT4);
+        }
 
-    public ConnectFourController() {
-        // Store the singleton instance
-        instance = this;
+        @Override
+        public void onReceive(JSONObject payload) throws IOException {
+            receiveConnectFour(payload);
+        }
     }
 
-    public static ConnectFourController getInstance() {
-        return instance;
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     @FXML
@@ -80,7 +78,7 @@ public class ConnectFourController {
                     int finalCol = col;
                     button.setOnMouseClicked(event -> {
                         try {
-                            returnConnectFour(event, finalRow, finalCol);
+                            returnConnectFour(finalRow, finalCol);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -89,72 +87,24 @@ public class ConnectFourController {
             }
         }
 
-        Object newPlayerJSONFileObject = new JSONParser().parse(new FileReader("newplayer.json"));
-        JSONObject newPlayerJSONFile = (JSONObject) newPlayerJSONFileObject;
+        GameSessionRecord gameSessionRecord = GameSessionRecord.getGameSessionRecord();
+        ClientReceiver.addClientReceiver(new ConnectFourReceiver());
 
-        playerOne = (UUID) newPlayerJSONFile.get("Player1ID");
-        playerTwo = (UUID) newPlayerJSONFile.get("player2ID");
-        newTurn =  (UUID) newPlayerJSONFile.get("currentPlayerTurn");
-        sessionID = (UUID) newPlayerJSONFile.get("sessionID");
+        playerOne = gameSessionRecord.getPlayer1ID();
+        playerTwo = gameSessionRecord.getPlayer2ID();
+        newTurn = gameSessionRecord.getCurrentPlayerID();
+        sessionID = gameSessionRecord.getSessionID();
     }
 
-    @FXML
-    public void returnToBackendConnectFour(javafx.event.ActionEvent event) throws IOException, ParseException {
-        Button clickedButton = (Button) event.getSource();
-
-        int row = -1;
-        int col = -1;
-
-        boolean buttonFound = false;
-        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
-            if (buttonFound){
-                break;
-            }
-            for (int j = 0; j < NUMBER_OF_COLS; j++) {
-                System.out.println(buttons[i][j]);
-                if (buttons[i][j].equals(clickedButton)) {
-                    row = i;
-                    col = j;
-                    buttonFound = true;
-                    break;
-                }
-            }
-        }
-
-        if (row >= 0 && col >= 0){
-
-            JSONObject connectFourJSON = new JSONObject();
-            connectFourJSON.put("SessionID", sessionID);
-            if (newTurn == playerOne){
-                connectFourJSON.put("playerID", playerOne.toString());
-            }
-            else{
-                connectFourJSON.put("playerID", playerTwo.toString());
-            }
-            connectFourJSON.put("New Position", new Vector2(row, col));
-            connectFourJSON.put("gameType", GameTypes.CONNECT4);
-            NetworkManager.getNetworkInstance().receiveGameDataFromClient(connectFourJSON);
-        }
-    }
-
-    public static void receiveConnectFour(JSONObject payload) {
-        // Access the singleton instance
-        ConnectFourController controller = ConnectFourController.getInstance();
-
-        if (controller == null) {
-            System.err.println("Controller instance is not initialized!");
-            return;
-        }
-
+    public void receiveConnectFour(JSONObject payload) {
         try {
             String updateType = (String) payload.get("UpdateType");
-
             switch (updateType) {
                 case "GAME_END":
-                    controller.handleGameEnd(payload);
+                    handleGameEnd(payload);
                     break;
                 case "TURN_END":
-                    controller.handleTurnEnd(payload);
+                    handleTurnEnd(payload);
                     break;
                 default:
                     System.out.println("Unknown UpdateType: " + updateType);
@@ -164,7 +114,7 @@ public class ConnectFourController {
         }
     }
 
-    private static void handleGameEnd(JSONObject update) throws IOException {
+    private void handleGameEnd(JSONObject update) throws IOException {
         String gameState = (String) update.get("GameState");
         if ("WIN".equals(gameState)) {
             String playerWon = (String) update.get("PlayerWon");
@@ -180,10 +130,10 @@ public class ConnectFourController {
         stage.show();
     }
 
-    private static void handleTurnEnd(JSONObject update) {
+    private void handleTurnEnd(JSONObject update) {
         sessionID = (UUID) update.get("SessionID");
-        playerID = (UUID) update.get("PlayerTurn");
-        String playerTurnName = getUsernameFromUUID(String.valueOf(playerID));
+        newTurn = (UUID) update.get("PlayerTurn");
+        String playerTurnName = getUsernameFromUUID(newTurn.toString());
         playerTurnText.setText(String.format("It's %s's turn!", playerTurnName));
 
         JSONArray changes = (JSONArray) update.get("Changes");
@@ -192,7 +142,7 @@ public class ConnectFourController {
 
     private static String getUsernameFromUUID(String playerUUID) {
         try {
-            File file = new File("Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+            File file = new File(NetworkManager.LEADERBOARD_FILE);
             JSONParser parser = new JSONParser();
             JSONArray leaderboard = (JSONArray) parser.parse(new FileReader(file));
 
@@ -208,7 +158,7 @@ public class ConnectFourController {
         return null;
     }
 
-    private static void updateBoard(JSONArray changes) {
+    private void updateBoard(JSONArray changes) {
         for (int row = 0; row < changes.size(); row++) {
             JSONArray rowArray = (JSONArray) changes.get(row);
             for (int col = 0; col < rowArray.size(); col++) {
@@ -218,7 +168,7 @@ public class ConnectFourController {
         }
     }
 
-    private static void handleForfeit() throws IOException {
+    private void handleForfeit() throws IOException {
         disableAllButtons();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Aftermath.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
@@ -248,26 +198,15 @@ public class ConnectFourController {
         }
     }
 
-    public void returnConnectFour(MouseEvent event, int row, int col) throws IOException, ParseException {
-        if (sessionID == null || playerID == null) {
-            System.err.println("Session ID or Player ID is missing!");
-            return;
-        }
-
-        JSONObject move = new JSONObject();
-        move.put("SessionID", sessionID);
-        move.put("PlayerID", playerID);
-
-        Vector2 newPosition = new Vector2(row, col);
-        move.put("NewPosition", newPosition);
-
-        System.out.println("Sending move to backend: " + move.toJSONString());
-
-        JSONObject backendResponse = NetworkManager.getNetworkInstance().handleQueuePlayer(move);
-        receiveConnectFour(backendResponse);
+    public void returnConnectFour(int row, int col) throws IOException, ParseException {
+        NetworkManager.getNetworkInstance().receiveGameDataFromClient(GameSessionRecord.parseMoveData(
+                sessionID,
+                newTurn,
+                new int[]{col, row}
+        ));
     }
 
-    private static void disableAllButtons() {
+    private void disableAllButtons() {
         for (Button[] row : buttons) {
             for (Button button : row) {
                 button.setDisable(true);
@@ -275,7 +214,7 @@ public class ConnectFourController {
         }
     }
 
-//chat
+    //chat
     @FXML
     private TextArea chatBox;
 

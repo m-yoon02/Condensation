@@ -12,7 +12,7 @@ public class GameSessionManager {
 
     // GameSession Manager will be a singleton like Network and will keep a hashmap called sessions
 
-    private static GameSessionManager gameSessionManager;
+    private static final GameSessionManager gameSessionManager = new GameSessionManager();
     private final Map<UUID, GameSession> sessionsMap;
     private Player player2;
 
@@ -25,9 +25,6 @@ public class GameSessionManager {
      * @return
      */
     public static GameSessionManager getInstance() {
-        if (gameSessionManager == null) {
-            gameSessionManager = new GameSessionManager();
-        }
         return gameSessionManager;
     }
 
@@ -51,7 +48,7 @@ public class GameSessionManager {
         // add gameSession object to the hashmap
         UUID sessionID = gameSession.getSessionId();
         System.out.println(gameSessionManager);
-        gameSessionManager.sessionsMap.put(sessionID, gameSession);
+        sessionsMap.put(sessionID, gameSession);
 
     }
 
@@ -61,7 +58,7 @@ public class GameSessionManager {
      */
     public void removeGameSession(UUID sessionID) {
         // remove gameSession object from hashmap
-        gameSessionManager.sessionsMap.remove(sessionID);
+        sessionsMap.remove(sessionID);
     }
 
 
