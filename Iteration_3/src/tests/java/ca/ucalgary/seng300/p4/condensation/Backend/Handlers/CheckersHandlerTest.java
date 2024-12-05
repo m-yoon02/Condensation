@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Backend.Handlers;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
+import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.CheckersMoveData;
 import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.CheckersPiece;
 import org.junit.Before;
 import org.junit.Test;
@@ -103,11 +104,12 @@ public class CheckersHandlerTest {
 
     @Test
     public void testIsValidMove_ValidNonCaptureMove() {
-        CheckersPiece redPiece = new CheckersPiece(new Vector2(5, 2), PieceColor.RED);
-        checkersHandler.getBoard().placePiece(redPiece, redPiece.getPosition());
-        Vector2 newPos = new Vector2(4, 1);
+        CheckersPiece redPiece = new CheckersPiece(PieceColor.RED);
+        Vector2 initialPos = new Vector2(4, 2);
+        Vector2 newPos = new Vector2(3, 3);
+        checkersHandler.getBoard().placePiece(redPiece, initialPos);
 
-        boolean isValid = checkersHandler.isValidMove(redPiece.getPosition(), newPos);
+        boolean isValid = checkersHandler.isValidMove(initialPos, newPos);
 
         assertTrue(isValid);
     }
@@ -172,26 +174,6 @@ public class CheckersHandlerTest {
     }
 
     @Test
-    public void testCanJump_PieceCannotJump() {
-        CheckersPiece redPiece = new CheckersPiece(new Vector2(0, 0), PieceColor.RED);
-        checkersHandler.getBoard().placePiece(redPiece, redPiece.getPosition());
-
-        boolean canJump = checkersHandler.canJump(redPiece.getPosition());
-
-        assertFalse(canJump);
-    }
-
-    @Test
-    public void testCheckForPromotion_PieceShouldPromote() {
-        CheckersPiece redPiece = new CheckersPiece(new Vector2(0, 1), PieceColor.RED);
-        checkersHandler.getBoard().placePiece(redPiece, redPiece.getPosition());
-
-        checkersHandler.checkForPromotion(redPiece.getPosition());
-
-        assertTrue(redPiece.isKing());
-    }
-
-    @Test
     public void testCheckForPromotion_PieceShouldNotPromote() {
         CheckersPiece redPiece = new CheckersPiece(new Vector2(1, 2), PieceColor.RED);
         checkersHandler.getBoard().placePiece(redPiece, redPiece.getPosition());
@@ -228,14 +210,111 @@ public class CheckersHandlerTest {
     }
 
     @Test
-    public void testMakeMove_ValidMove() {
-        // Since makeMove is not implemented, this test cannot be performed fully.
-        // Once makeMove is implemented, add appropriate assertions here.
+    public void testCanMoveWhenMoveIsPossible() {
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(2, 2));
+
+        assertTrue(checkersHandler.canMove(new Vector2(2, 2)));
+    }
+
+    @Test
+    public void testCanMoveWhenBlocked() {
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(2, 2));
+
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(1, 1));
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(1, 2));
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(1, 3));
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(2, 1));
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(2, 3));
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(3, 1));
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(3, 2));
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(3, 3));
+
+        assertFalse(checkersHandler.canMove(new Vector2(2, 2)));
+    }
+
+    @Test
+    public void testCanJumpWhenJumpIsPossible() {
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(2, 2));
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.BLACK), new Vector2(3, 3)); // Opponent's piece
+
+        assertTrue(checkersHandler.canJump(new Vector2(2, 2)));
+    }
+
+    @Test
+    public void testCanJumpWhenNoOpponent() {
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(2, 2));
+
+        assertFalse(checkersHandler.canJump(new Vector2(2, 2)));
+    }
+
+    @Test
+    public void testCheckForPromotionWhenNoPromotion() {
+        Vector2 nonPromotionPos = new Vector2(1, 1);
+        CheckersPiece piece = new CheckersPiece(PieceColor.RED);
+        checkersHandler.getBoard().placePiece(piece, nonPromotionPos);
+
+        checkersHandler.checkForPromotion(nonPromotionPos);
+        assertFalse(piece.isKing());
+    }
+
+    @Test
+    public void testMakeMove_InvalidPiece() {
+        Vector2 oldPos = new Vector2(3, 3);
+        Vector2 newPos = new Vector2(4, 4);
+
+        CheckersMoveData moveData = new CheckersMoveData(checkersHandler.getFirstPlayerID(), oldPos, newPos);
+        checkersHandler.makeMove(moveData);
+
+        assertNull(checkersHandler.getBoard().getAt(newPos));
+    }
+
+    @Test
+    public void testCanMove_BlockedMoves() {
+        Vector2 pos = new Vector2(3, 3);
+        CheckersPiece piece = new CheckersPiece(PieceColor.RED);
+        checkersHandler.getBoard().placePiece(piece, pos);
+
+        int[][] directions = {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+        for (int[] dir : directions) {
+            checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.BLACK),
+                    new Vector2(pos.x() + dir[0], pos.y() + dir[1]));
+        }
+
+        assertFalse(checkersHandler.canMove(pos));
+    }
+
+    @Test
+    public void testCanJump_PossibleJump() {
+        Vector2 pos = new Vector2(3, 3);
+        CheckersPiece jumper = new CheckersPiece(PieceColor.RED);
+        checkersHandler.getBoard().placePiece(jumper, pos);
+
+        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.BLACK), new Vector2(4, 4));
+
+        assertTrue(checkersHandler.canJump(pos));
+    }
+
+    @Test
+    public void testCanJump_NoJumpPossible() {
+        Vector2 pos = new Vector2(3, 3);
+        CheckersPiece piece = new CheckersPiece(PieceColor.RED);
+        checkersHandler.getBoard().placePiece(piece, pos);
+
+        assertFalse(checkersHandler.canJump(pos));
     }
 
     @Test
     public void testMakeMove_InvalidMove() {
-        // Since makeMove is not implemented, this test cannot be performed fully.
-        // Once makeMove is implemented, add appropriate assertions here.
+        Vector2 oldPosition = new Vector2(0, 0);
+        Vector2 newPosition = new Vector2(2, 3);
+
+        CheckersPiece piece = new CheckersPiece(PieceColor.RED);
+        checkersHandler.getBoard().placePiece(piece, oldPosition);
+
+        boolean isValid = checkersHandler.isValidMove(oldPosition, newPosition);
+
+        assertFalse("The move should be marked as invalid", isValid);
+
+        assertNull("No piece should be at the invalid target position", checkersHandler.getBoard().getAt(newPosition));
     }
 }

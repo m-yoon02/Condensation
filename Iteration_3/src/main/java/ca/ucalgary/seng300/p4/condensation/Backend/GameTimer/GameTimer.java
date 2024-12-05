@@ -53,14 +53,6 @@ public class GameTimer{
     }
 
     /**
-     * Overloaded switchTimer method that alternates between players without needing to specify
-     * current player
-     */
-    public void switchTimer(){
-        this.currentPlayerID = getOtherPlayerID(currentPlayerID);
-    }
-
-    /**
      * Sets the current timer to the player ID of playerIDTOSet
      * @param playerIDToSet the player ID to set to
      */
