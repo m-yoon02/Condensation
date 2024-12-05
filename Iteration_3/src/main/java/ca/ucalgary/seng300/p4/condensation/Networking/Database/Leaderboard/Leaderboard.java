@@ -196,7 +196,7 @@ public class Leaderboard {
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
             if (user.get("playerUUID").equals(playerID.toString())) {
-                user.put("username", newPass);
+                user.put("password", newPass);
                 return true;
 //                break;
             }

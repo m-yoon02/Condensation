@@ -26,7 +26,7 @@ public class EditPassController {
     void onConfirmClicked() throws IOException, ParseException {
         boolean changed = false;
         if (validatePass()) {
-            changed =  Leaderboard.getInstance().changeName(playerUUID, newPassField.getText());
+            changed =  Leaderboard.getInstance().changePassword(playerUUID, newPassField.getText());
         }
         if (changed) {
             messageLabel.setText("Changed Password successfully");

@@ -293,6 +293,7 @@ public class ProfileHomeController {
         JSONObject object = (JSONObject) parser.parse(reader);
         String playerIDString = (String) object.get("playerID");
         EditUserController.setPlayerUUID(UUID.fromString(playerIDString));
+
     }
 
     @FXML
@@ -334,12 +335,7 @@ public class ProfileHomeController {
         window.setScene(scene);
         window.show();
     }
-
-
-    public Label getUsernameField() {
-        return usernameField;
-    }
-    public static void setUsernameField(Label username) {
-
-    }
+//    public static void setUsername(String username) {
+//        ProfileHomeController.usernameField.setText();
+//    }
 }

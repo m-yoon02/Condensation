@@ -22,6 +22,8 @@ public class EditUserController {
 
     public static UUID playerUUID;
 
+    public static String newUsername;
+
     @FXML
     void onConfirmClicked() throws IOException, ParseException {
         boolean changed = false;
@@ -32,6 +34,7 @@ public class EditUserController {
             messageLabel.setText("Changed Username successfully");
             messageLabel.setTextFill(Color.GREEN);
 
+            newUsername = newUserNameField.getText();
             // TODO change ProfileHomeController.usernameField
         }
     }
