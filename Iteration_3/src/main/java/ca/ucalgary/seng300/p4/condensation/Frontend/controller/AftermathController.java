@@ -1,5 +1,5 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
-import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
@@ -10,21 +10,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import javafx.fxml.FXMLLoader;
-
-import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Objects;
-
-import static ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes.*;
 
 public class AftermathController {
     @FXML
@@ -42,13 +35,9 @@ public class AftermathController {
     @FXML
     public Label eloRanking;
 
-    public static GameTypes gameType;
-
     @FXML
     public Button playAgainButton;
 
-    @FXML
-    public Stage stage;
 
     @FXML
     public void initialize() throws IOException, ParseException {
@@ -146,31 +135,43 @@ public class AftermathController {
         eloRanking.setText(elo);
     }
 
+    private Stage getGlobalStage() {
+        return (Stage) gameResultLabel.getScene().getWindow();
+    }
+
     public void handlePlayAgain(ActionEvent event) throws IOException {
-        if (gameType == TICTACTOE){
+        Stage stage = getGlobalStage();
+        GameTypes gameType = GameSessionRecord.getGameSessionRecord().getGameType();
+        if (gameType == GameTypes.TICTACTOE){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tictactoequeue.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            TicTacToeQueueController ticTacToeQueueController = fxmlLoader.getController();
             stage.setTitle("Condensation Application - Queue");
             stage.setScene(scene);
             stage.show();
+            ticTacToeQueueController.start(stage);
         }
-        else if (gameType == CONNECT4){
+        else if (gameType == GameTypes.CONNECT4){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connectfourqueue.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            ConnectFourQueueController connectFourQueueController = fxmlLoader.getController();
             stage.setTitle("Condensation Application - Queue");
             stage.setScene(scene);
             stage.show();
-        }
-        else{
+            connectFourQueueController.start(stage);
+        } else {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            CheckersQueueController checkersQueueController = fxmlLoader.getController();
             stage.setTitle("Condensation Application - Queue");
             stage.setScene(scene);
             stage.show();
+            checkersQueueController.start(stage);
         }
     }
 
     public void handleReturnToProfile(ActionEvent event) throws IOException {
+        Stage stage = getGlobalStage();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ProfileHome.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("Condensation Application - Profile");

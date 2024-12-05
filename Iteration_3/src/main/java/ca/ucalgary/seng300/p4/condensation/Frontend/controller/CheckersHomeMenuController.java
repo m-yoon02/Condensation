@@ -57,17 +57,9 @@ public class CheckersHomeMenuController {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         CheckersQueueController checkersQueueController = fxmlLoader.getController();
-        PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        delay.setOnFinished(e -> {
-            try {
-                checkersQueueController.start(window);
-            } catch (IOException | ParseException | InterruptedException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
         window.setScene(scene);
         window.show();
-        delay.play();
+        checkersQueueController.start(window);
     }
 
     // leaderboard

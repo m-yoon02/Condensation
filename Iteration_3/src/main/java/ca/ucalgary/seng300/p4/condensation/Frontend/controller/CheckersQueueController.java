@@ -4,6 +4,7 @@ import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessio
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
+import javafx.animation.PauseTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -35,10 +37,18 @@ public class CheckersQueueController {
     private Scene createScene;
 
 
-    public void start(Stage stage) throws IOException, ParseException, InterruptedException {
+    public void start(Stage stage) {
         // Allows user to leave
         this.stage = stage;
-        sendToBackendCheckers();
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished(e -> {
+            try {
+                sendToBackendCheckers();
+            } catch (IOException | ParseException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        delay.play();
     }
 
     protected void returnToProfile(Event event) throws IOException

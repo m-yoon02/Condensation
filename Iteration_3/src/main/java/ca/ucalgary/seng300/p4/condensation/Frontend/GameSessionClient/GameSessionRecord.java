@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient;
 
+import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,6 +15,7 @@ public class GameSessionRecord {
     private UUID currentPlayerID;
     private UUID player1ID;
     private UUID player2ID;
+    private GameTypes gameType;
 
     private static final GameSessionRecord gameSessionRecord = new GameSessionRecord();
 
@@ -39,6 +41,10 @@ public class GameSessionRecord {
         return sessionID;
     }
 
+    public GameTypes getGameType() {
+        return gameType;
+    }
+
     public boolean isInitialized() {
         return initialized;
     }
@@ -62,6 +68,7 @@ public class GameSessionRecord {
         player1ID = UUID.fromString((String) jsonObject.get("player1ID"));
         player2ID = UUID.fromString((String) jsonObject.get("player2ID"));
         currentPlayerID = UUID.fromString((String) jsonObject.get("currentPlayerTurn"));
+        gameType = GameTypes.valueOf((String) jsonObject.get("gameType"));
     }
 
     public static JSONObject parseMoveData(UUID sessionID, UUID playerID, int[] newPosition){
