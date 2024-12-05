@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -174,23 +175,23 @@ public class ProfileHomeController {
                 for (Object match : recentMatches) {
                     JSONObject matchObject = (JSONObject) match;
 
-                    String gameType = (String) matchObject.get("gameType");
+                    GameTypes gameType =  GameTypes.valueOf((String) matchObject.get("gameType"));
 
                     int totalWins = 0;
                     int gamesPlayed = 0;
 
                     switch (gameType) {
-                        case "TICTACTOE":
-                            totalWins = (int) user.get("winsInTicTacToe");
-                            gamesPlayed = (int) user.get("gamesPlayedTicTacToe");
+                        case TICTACTOE:
+                            totalWins = ((Number) user.get("winsInTicTacToe")).intValue();
+                            gamesPlayed = ((Number) user.get("gamesPlayedTicTacToe")).intValue();
                             break;
-                        case "CHECKERS":
-                            totalWins = (int) user.get("winsInCheckers");
-                            gamesPlayed = (int) user.get("gamesPlayedCheckers");
+                        case CHECKERS:
+                            totalWins = ((Number) user.get("winsInCheckers")).intValue();
+                            gamesPlayed = ((Number) user.get("gamesPlayedCheckers")).intValue();
                             break;
-                        case "CONNECT4":
-                            totalWins = (int) user.get("winsInConnect4");
-                            gamesPlayed = (int) user.get("gamesPlayedConnect4");
+                        case CONNECT4:
+                            totalWins = ((Number) user.get("winsInConnect4")).intValue();
+                            gamesPlayed = ((Number) user.get("gamesPlayedConnect4")).intValue();
                             break;
                     }
 
