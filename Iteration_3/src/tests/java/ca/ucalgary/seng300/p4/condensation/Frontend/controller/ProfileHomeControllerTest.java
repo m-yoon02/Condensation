@@ -17,41 +17,17 @@ import static org.junit.Assert.*;
 public class ProfileHomeControllerTest extends ApplicationTest {
     
     private TableView<JSONObject> tableView;
-
-    
     private TableColumn<JSONObject, String> gameColumn;
-
-    
     private TableColumn<JSONObject, String> outcomeColumn;
-
-    
     private TableColumn<JSONObject, Number> currentEloColumn;
-
-    
     private TableColumn<JSONObject, Number> totalWinsColumn;
-
-    
     private TableColumn<JSONObject, Number> gamesPlayedColumn;
-
-
-    
     private TextField profileTitle;
-
-    
     private Label usernameField;
-
-    
     private Button logoutButton;
-
-    
     private Button leaderboardButton;
-
-    
     private Button playerProfilesButton;
-
-    
     private Button gamesButton;
-
     FXMLLoader fxmlLoader;
     Scene scene;
     ProfileHomeController profileHomeController;
@@ -66,18 +42,32 @@ public class ProfileHomeControllerTest extends ApplicationTest {
     @Before
     public void setUp() throws Exception {
         usernameField = (Label)lookup("#usernameField").queryAs((Label.class));
+        profileTitle = (TextField)lookup("#profileTitle").queryAs((TextField.class));
+        logoutButton = (Button) lookup("#logoutButton").queryAs((Button.class));
+        leaderboardButton = (Button) lookup("#leaderboardButton").queryAs((Button.class));
+        playerProfilesButton = (Button) lookup("#playerProfilesButton").queryAs((Button.class));
+        gamesButton = (Button) lookup("#gamesButton").queryAs((Button.class));
 
+      //  tableView = (TableView<JSONObject>)
+       // gameColumn.setCellValueFactory();
 
     }
 
     @After
     public void tearDown(){
         usernameField = null;
+        profileTitle = null;
+        logoutButton = null;
+        leaderboardButton = null;
+        playerProfilesButton = null;
+        gamesButton = null;
+
     }
 
     @Test
-    public void test1(){
-        System.out.println(usernameField.getText());
+    public void initializeTest(){
+        System.out.println(gameColumn.getColumns().get(0).toString());
+
         // on action do button.fire()
         // on mouse clicked use clickedOn()
     }
