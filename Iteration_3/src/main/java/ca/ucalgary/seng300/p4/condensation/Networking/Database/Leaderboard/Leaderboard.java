@@ -63,6 +63,7 @@ public class Leaderboard {
             users = (JSONArray) parser.parse(reader);
             printLeaderboard();
         } catch (Exception e) {
+
             e.printStackTrace();
         }
     }
@@ -255,8 +256,8 @@ public class Leaderboard {
         JSONArray player1RecentMatches = (JSONArray) player1.get("recentMatches");
         String player1Elo = (String) player1.get("checkersElo");
         JSONObject player1CurrentMatch = new JSONObject();
-        player1CurrentMatch.put("matchID", sessionID);
-        player1CurrentMatch.put("gameType", GameTypes.CHECKERS);
+        player1CurrentMatch.put("matchID", String.valueOf(sessionID));
+        player1CurrentMatch.put("gameType", String.valueOf(GameTypes.CHECKERS));
         player1CurrentMatch.put("outcome", "T");
         player1CurrentMatch.put("currentElo", player1Elo);
         player1RecentMatches.add(player1CurrentMatch);
@@ -368,7 +369,7 @@ public class Leaderboard {
      * @param gameType  The type of game played (e.g., CHECKERS, TICTACTOE, CONNECT4).
      * @param sessionID The UUID of the game session where the win occurred.
      */
-    public void updateEloForWinningPlayer(UUID playerID, GameTypes gameType, UUID sessionID) {
+    public void updateEloForWinningPlayer(UUID playerID, GameTypes gameType, UUID sessionID) throws IOException {
         switch (gameType) {
             case CHECKERS -> {
                 updateEloForWinningPlayerCheckers(playerID, sessionID);
@@ -388,30 +389,44 @@ public class Leaderboard {
      * @param sessionID The UUID of the game session where the win occurred.
      */
     private void updateEloForWinningPlayerCheckers(UUID playerID, UUID sessionID) throws IOException {
-        if (findUserById(playerID) == null) {
-            return;
+        String StringID = sessionID.toString();
+        System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
+
+        for (Object user : users) {
+            JSONObject JsonUser = (JSONObject) user;
+            if (JsonUser.get("playerUUID").equals(playerID.toString())) {
+
+                Number winsInCheckers = (Number) JsonUser.get("winsInCheckers") ; // update wins in gamet
+                winsInCheckers = winsInCheckers.intValue() + 1;
+                Number currentElo = (Number) JsonUser.get("checkersElo");
+                currentElo = currentElo.intValue() + 100;
+                JSONArray recentMatches = (JSONArray) JsonUser.get("recentMatches");
+                JSONObject currentMatch = new JSONObject();
+                currentMatch.put("matchID",StringID);
+                currentMatch.put("gameType", GameTypes.CHECKERS.toString());
+                currentMatch.put("outcome", "W");
+                currentMatch.put("currentElo", currentElo);
+                recentMatches.add(currentMatch);
+
+                JsonUser.put("checkersElo", currentElo);
+                JsonUser.put("winsInCheckers", winsInCheckers);
+                JsonUser.put("recentMatches", recentMatches);
+
+                // update the game history
+                try {
+                    saveData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return;
+            }
+            System.out.println("Cant find plater lmao");
         }
 
-        JSONObject winningPlayer = findUserById(playerID);
-        Number winsInCheckers = (Number) winningPlayer.get("winsInCheckers") ; // update wins in gamet
-        winsInCheckers = winsInCheckers.intValue() + 1;
-        Number currentElo = (Number) winningPlayer.get("checkersElo");
-        currentElo = currentElo.intValue() + 100;
-
-        // update the game history
-        JSONArray recentMatches = (JSONArray) winningPlayer.get("recentMatches");
-        JSONObject currentMatch = new JSONObject();
-        currentMatch.put("matchID",sessionID);
-        currentMatch.put("gameType", GameTypes.CHECKERS);
-        currentMatch.put("outcome", "W");
-        currentMatch.put("currentElo", currentElo);
-        recentMatches.add(currentMatch);
 
 
-        winningPlayer.put("checkersElo", currentElo);
-        winningPlayer.put("winsInCheckers", winsInCheckers);
-        winningPlayer.put("recentMatches", recentMatches);
-        saveData();
+
+
 
 
 
@@ -459,7 +474,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who won the game.
      * @param sessionID The UUID of the game session where the win occurred.
      */
-    private void updateEloForWinningPlayerConnect4(UUID playerID, UUID sessionID) {
+    private void updateEloForWinningPlayerConnect4(UUID playerID, UUID sessionID) throws IOException {
         if (findUserById(playerID) == null) {
             return;
         }
@@ -484,6 +499,8 @@ public class Leaderboard {
         winningPlayer.put("winsInConnect4", winsInConnect4);
         winningPlayer.put("recentMatches", recentMatches);
 
+        // Some method to be able to update values
+        saveData();
 
         System.out.println("Elo has been updated for winning player with PlayerID: " + playerID);
     }

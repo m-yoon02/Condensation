@@ -310,19 +310,26 @@
     "gamesPlayedCheckers": 40
   },
   {
-    "checkersElo": 1200,
+    "checkersElo": 1700,
     "lossInTicTacToe": 0,
     "leaderBoardPosition": 0,
     "lossInConnect4": 0,
     "tictactoeElo": 1200,
     "connect4Elo": 1200,
-    "winsInCheckers": 0,
+    "winsInCheckers": 5,
     "winsInTicTacToe": 0,
     "playerUUID": "df36131a-da08-4528-83cc-511eb3d99dbe",
     "password": "2345",
     "gamesPlayedConnect4": 0,
     "winsInConnect4": 0,
-    "recentMatches": [],
+    "recentMatches": [
+      {
+        "gameType": "CHECKERS",
+        "currentElo": 1700,
+        "matchID": "b7d00b5f-5ebb-43e9-90cf-a8aad6fd0d82",
+        "outcome": "W"
+      }
+    ],
     "gamesPlayedTicTacToe": 0,
     "lossInCheckers": 0,
     "username": "Ryan",
