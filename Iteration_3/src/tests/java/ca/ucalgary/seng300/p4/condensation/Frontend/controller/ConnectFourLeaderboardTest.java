@@ -36,7 +36,7 @@ public class ConnectFourLeaderboardTest {
     }
 
     /**
-     * Test the initializaiton of Columns. Make sure when initialization is called,
+     * Test the initialization of Columns. Make sure when initialization is called,
      * the values being created are not null.
      */
     @Test
