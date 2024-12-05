@@ -1,8 +1,10 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
+import javafx.animation.PauseTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,16 +12,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import javafx.scene.layout.Pane;
-
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,17 +36,21 @@ public class TicTacToeQueueController {
     @FXML
     private Scene createScene;
 
-    @FXML
     private Stage stage;
 
-
-    @FXML
-    public void initialize() throws IOException, ParseException, InterruptedException {
+    public void start(Stage stage) {
         // Allows user to leave
-        TimeUnit.SECONDS.sleep(3);
-        sendToBackendTicTacToe();
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        this.stage = stage;
+        delay.setOnFinished(e -> {
+            try {
+                sendToBackendTicTacToe();
+            } catch (IOException | ParseException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        delay.play();
     }
-
 
     @FXML
     protected void returnToTicTacToeMenu(Event event) throws IOException
@@ -69,20 +70,19 @@ public class TicTacToeQueueController {
     public void sendToBackendTicTacToe() throws IOException, ParseException {
         JSONObject playerInfoForGame = new JSONObject();
 
-        Object newplayerJSONFileObject = new JSONParser().parse(new FileReader("playerID.json"));
+        Object newplayerJSONFileObject = new JSONParser().parse(new FileReader(NetworkManager.PLAYER_ID_FILE));
         JSONObject newplayerJSONFile = (JSONObject) newplayerJSONFileObject;
 
-        playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID "));
+        playerInfoForGame.put("playerID", newplayerJSONFile.get("playerID"));
         playerInfoForGame.put("gameType", GameTypes.TICTACTOE);
-        JSONObject startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
+        String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
+        GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
 
-        FileWriter fileWriter = new FileWriter("src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/newgame.json");
-        fileWriter.write(startGameInfoPayload.toJSONString());
-        fileWriter.flush();
-        fileWriter.close();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tictactoe.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tGame.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        TicTacToeController ticTacToeController = fxmlLoader.getController();
+        ticTacToeController.start(stage);
+        stage.setResizable(true);
         stage.setTitle("Condensation Application - Tic Tac Toe");
         stage.setScene(scene);
         stage.show();

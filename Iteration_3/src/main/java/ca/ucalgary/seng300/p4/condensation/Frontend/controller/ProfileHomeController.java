@@ -20,6 +20,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
@@ -101,13 +102,16 @@ public class ProfileHomeController {
             e.printStackTrace();
         }
 
-        // Load player data for a dummy UUID
         try {
-            UUID playerUUID = UUID.fromString("123e4567-e89b-12d3-a456-426614174123");
-            JSONObject poo = Leaderboard.getInstance().findUserById(playerUUID);
-            String name = (String) poo.get("username");
-            displayPlayerStats(playerUUID);
-            displayRecentMatches(name);
+            FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
+            JSONParser parser = new JSONParser();
+            JSONObject object = (JSONObject) parser.parse(reader);
+            String playerIDString = (String) object.get("playerID");
+            UUID playerID = UUID.fromString(playerIDString);
+            String username = (String) object.get("username");
+
+            displayPlayerStats(playerID);
+            displayRecentMatches(username);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -161,6 +165,7 @@ public class ProfileHomeController {
         try {
             Leaderboard leaderboard = Leaderboard.getInstance();
             JSONObject user = leaderboard.findUserByName(username);
+            System.out.println("User gotten from profile home" + user);
 
             if (user != null) {
                 JSONArray recentMatches = (JSONArray) user.get("recentMatches");
@@ -176,16 +181,16 @@ public class ProfileHomeController {
 
                     switch (gameType) {
                         case "TICTACTOE":
-                            totalWins = ((Long) user.get("winsInTicTacToe")).intValue();
-                            gamesPlayed = ((Long) user.get("gamesPlayedTicTacToe")).intValue();
+                            totalWins = (int) user.get("winsInTicTacToe");
+                            gamesPlayed = (int) user.get("gamesPlayedTicTacToe");
                             break;
                         case "CHECKERS":
-                            totalWins = ((Long) user.get("winsInCheckers")).intValue();
-                            gamesPlayed = ((Long) user.get("gamesPlayedCheckers")).intValue();
+                            totalWins = (int) user.get("winsInCheckers");
+                            gamesPlayed = (int) user.get("gamesPlayedCheckers");
                             break;
                         case "CONNECT4":
-                            totalWins = ((Long) user.get("winsInConnect4")).intValue();
-                            gamesPlayed = ((Long) user.get("gamesPlayedConnect4")).intValue();
+                            totalWins = (int) user.get("winsInConnect4");
+                            gamesPlayed = (int) user.get("gamesPlayedConnect4");
                             break;
                     }
 
@@ -242,7 +247,7 @@ public class ProfileHomeController {
         System.out.println("Logged out");
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("C:\\Users\\M.Y\\OneDrive - University of Calgary\\Documents\\Fall 2024\\SENG300\\Final Project\\iteration 3\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\playerID.json"));
+            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(NetworkManager.PLAYER_ID_FILE));
 
             String playerID = (String) jsonObject.get("playerID");
             UUID playerUUID = UUID.fromString(playerID);
