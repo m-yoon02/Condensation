@@ -47,8 +47,6 @@ public class ConnectFourController {
     public UUID sessionID;
     public UUID newTurn;
 
-    private Stage stage;
-
     private class ConnectFourReceiver extends RecieverListener {
 
         public ConnectFourReceiver() {
@@ -59,10 +57,6 @@ public class ConnectFourController {
         public void onReceive(JSONObject payload) throws IOException {
             receiveConnectFour(payload);
         }
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
     }
 
     @FXML
@@ -124,10 +118,8 @@ public class ConnectFourController {
         }
         disableAllButtons();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Aftermath.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Condensation Application - Aftermath");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Condensation Application - Aftermath");
     }
 
     private void handleTurnEnd(JSONObject update) {
