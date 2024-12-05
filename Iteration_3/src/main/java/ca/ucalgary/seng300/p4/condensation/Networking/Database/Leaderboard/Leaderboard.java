@@ -125,6 +125,7 @@ public class Leaderboard {
         JSONArray recentMatches = new JSONArray();
         user.put("recentMatches", recentMatches);
         users.add(user);
+        this.saveData();
 
     }
     /**
@@ -186,6 +187,7 @@ public class Leaderboard {
             JSONObject user = (JSONObject) object;
             if (user.get("playerUUID").equals(playerID.toString())) {
                 user.put("username", newName);
+                break;
             }
         }
     }
@@ -194,8 +196,10 @@ public class Leaderboard {
             JSONObject user = (JSONObject) object;
             if (user.get("playerUUID").equals(playerID.toString())) {
                 user.put("username", newPass);
+                break;
             }
         }
+
     }
 
     /**
@@ -249,31 +253,39 @@ public class Leaderboard {
      */
     public void updateForTieGameCheckers(UUID player1ID, UUID player2ID, UUID sessionID){
 
+        for (Object user : users) {
+            JSONObject JsonUser = (JSONObject) user;
+            if (JsonUser.get("playerUUID").equals(player1ID.toString())) {
+                JSONObject player1 = findUserById(player1ID);
+                JSONArray player1RecentMatches = (JSONArray) player1.get("recentMatches");
+                Number player1Elo = ((Number) player1.get("checkersElo")).intValue();
+                JSONObject player1CurrentMatch = new JSONObject();
+                player1CurrentMatch.put("matchID", String.valueOf(sessionID));
+                player1CurrentMatch.put("gameType", String.valueOf(GameTypes.CHECKERS));
+                player1CurrentMatch.put("outcome", "T");
+                player1CurrentMatch.put("currentElo", player1Elo);
+                player1RecentMatches.add(player1CurrentMatch);
+                JsonUser.put("recentMatches", player1RecentMatches);
+
+            }
+        }
         // I need to the player 1 json object then I need to simply add a tied update\
-        JSONObject player1 = findUserById(player1ID);
-        JSONArray player1RecentMatches = (JSONArray) player1.get("recentMatches");
-        String player1Elo = (String) player1.get("checkersElo");
-        JSONObject player1CurrentMatch = new JSONObject();
-        player1CurrentMatch.put("matchID", String.valueOf(sessionID));
-        player1CurrentMatch.put("gameType", String.valueOf(GameTypes.CHECKERS));
-        player1CurrentMatch.put("outcome", "T");
-        player1CurrentMatch.put("currentElo", player1Elo);
-        player1RecentMatches.add(player1CurrentMatch);
-        player1.put("recentMatches", player1RecentMatches);
 
-
-        // add user to the database
-
-        JSONObject player2 = findUserById(player1ID);
-        JSONArray player2RecentMatches = (JSONArray) player1.get("recentMatches");
-        String player2Elo = (String) player1.get("checkersElo");
-        JSONObject player2CurrentMatch = new JSONObject();
-        player2CurrentMatch.put("matchID", sessionID);
-        player2CurrentMatch.put("gameType", GameTypes.CHECKERS);
-        player2CurrentMatch.put("outcome", "T");
-        player2CurrentMatch.put("currentElo", player1Elo);
-        player2RecentMatches.add(player2CurrentMatch);
-        player2.put("recentMatches", player2RecentMatches);
+        for (Object user : users) {
+            JSONObject JsonUser = (JSONObject) user;
+            if (JsonUser.get("playerUUID").equals(player1ID.toString())) {
+                JSONObject player2 = findUserById(player1ID);
+                JSONArray player2RecentMatches = (JSONArray) player2.get("recentMatches");
+                Number player2Elo = ((Number) player2.get("checkersElo")).intValue();
+                JSONObject player2CurrentMatch = new JSONObject();
+                player2CurrentMatch.put("matchID", sessionID);
+                player2CurrentMatch.put("gameType", GameTypes.CHECKERS);
+                player2CurrentMatch.put("outcome", "T");
+                player2CurrentMatch.put("currentElo", player2Elo);
+                player2RecentMatches.add(player2CurrentMatch);
+                JsonUser.put("recentMatches", player2RecentMatches);
+            }
+        }
 
     }
 
@@ -287,32 +299,39 @@ public class Leaderboard {
      */
     public void updateForTieGameTicTacToe(UUID player1ID, UUID player2ID, UUID sessionID){
 
+        for (Object user : users) {
+            JSONObject JsonUser = (JSONObject) user;
+            if (JsonUser.get("playerUUID").equals(player1ID.toString())) {
+                JSONObject player1 = findUserById(player1ID);
+                JSONArray player1RecentMatches = (JSONArray) player1.get("recentMatches");
+                Number player1Elo = ((Number) player1.get("tictactoeElo")).intValue();
+                JSONObject player1CurrentMatch = new JSONObject();
+                player1CurrentMatch.put("matchID", String.valueOf(sessionID));
+                player1CurrentMatch.put("gameType", String.valueOf(GameTypes.TICTACTOE));
+                player1CurrentMatch.put("outcome", "T");
+                player1CurrentMatch.put("currentElo", player1Elo);
+                player1RecentMatches.add(player1CurrentMatch);
+                JsonUser.put("recentMatches", player1RecentMatches);
+
+            }
+        }
         // I need to the player 1 json object then I need to simply add a tied update\
-        JSONObject player1 = findUserById(player1ID);
-        JSONArray player1RecentMatches = (JSONArray) player1.get("recentMatches");
-        String player1Elo = (String) player1.get("tictactoeElo");
-        JSONObject player1CurrentMatch = new JSONObject();
-        player1CurrentMatch.put("matchID", sessionID);
-        player1CurrentMatch.put("gameType", GameTypes.TICTACTOE);
-        player1CurrentMatch.put("outcome", "T");
-        player1CurrentMatch.put("currentElo", player1Elo);
-        player1RecentMatches.add(player1CurrentMatch);
-        player1.put("recentMatches", player1RecentMatches);
 
-
-        // add user to the database
-
-        JSONObject player2 = findUserById(player1ID);
-        JSONArray player2RecentMatches = (JSONArray) player1.get("recentMatches");
-        String player2Elo = (String) player1.get("tictactoeElo");
-        JSONObject player2CurrentMatch = new JSONObject();
-        player2CurrentMatch.put("matchID", sessionID);
-        player2CurrentMatch.put("gameType", GameTypes.TICTACTOE);
-        player2CurrentMatch.put("outcome", "T");
-        player2CurrentMatch.put("currentElo", player1Elo);
-        player2RecentMatches.add(player2CurrentMatch);
-        player2.put("recentMatches", player2RecentMatches);
-
+        for (Object user : users) {
+            JSONObject JsonUser = (JSONObject) user;
+            if (JsonUser.get("playerUUID").equals(player1ID.toString())) {
+                JSONObject player2 = findUserById(player1ID);
+                JSONArray player2RecentMatches = (JSONArray) player2.get("recentMatches");
+                Number player2Elo = ((Number) player2.get("tictactoeElo")).intValue();
+                JSONObject player2CurrentMatch = new JSONObject();
+                player2CurrentMatch.put("matchID", sessionID);
+                player2CurrentMatch.put("gameType", GameTypes.TICTACTOE);
+                player2CurrentMatch.put("outcome", "T");
+                player2CurrentMatch.put("currentElo", player2Elo);
+                player2RecentMatches.add(player2CurrentMatch);
+                JsonUser.put("recentMatches", player2RecentMatches);
+            }
+        }
 
 
 
@@ -329,30 +348,40 @@ public class Leaderboard {
      */
     public void updateForTieGameConnect4(UUID player1ID, UUID player2ID, UUID sessionID){
 
+        for (Object user : users) {
+            JSONObject JsonUser = (JSONObject) user;
+            if (JsonUser.get("playerUUID").equals(player1ID.toString())) {
+                JSONObject player1 = findUserById(player1ID);
+                JSONArray player1RecentMatches = (JSONArray) player1.get("recentMatches");
+                Number player1Elo = ((Number) player1.get("connect4Elo")).intValue();
+                JSONObject player1CurrentMatch = new JSONObject();
+                player1CurrentMatch.put("matchID", String.valueOf(sessionID));
+                player1CurrentMatch.put("gameType", String.valueOf(GameTypes.CONNECT4));
+                player1CurrentMatch.put("outcome", "T");
+                player1CurrentMatch.put("currentElo", player1Elo);
+                player1RecentMatches.add(player1CurrentMatch);
+                JsonUser.put("recentMatches", player1RecentMatches);
+
+            }
+        }
         // I need to the player 1 json object then I need to simply add a tied update\
-        JSONObject player1 = findUserById(player1ID);
-        JSONArray player1RecentMatches = (JSONArray) player1.get("recentMatches");
-        String player1Elo = (String) player1.get("connect4Elo");
-        JSONObject player1CurrentMatch = new JSONObject();
-        player1CurrentMatch.put("matchID", sessionID);
-        player1CurrentMatch.put("gameType", GameTypes.CONNECT4);
-        player1CurrentMatch.put("outcome", "T");
-        player1CurrentMatch.put("currentElo", player1Elo);
-        player1RecentMatches.add(player1CurrentMatch);
-        player1.put("recentMatches", player1RecentMatches);
 
-        // add user to the database
+        for (Object user : users) {
+            JSONObject JsonUser = (JSONObject) user;
+            if (JsonUser.get("playerUUID").equals(player1ID.toString())) {
+                JSONObject player2 = findUserById(player1ID);
+                JSONArray player2RecentMatches = (JSONArray) player2.get("recentMatches");
+                Number player2Elo = ((Number) player2.get("connect4Elo")).intValue();
+                JSONObject player2CurrentMatch = new JSONObject();
+                player2CurrentMatch.put("matchID", sessionID);
+                player2CurrentMatch.put("gameType", GameTypes.CONNECT4);
+                player2CurrentMatch.put("outcome", "T");
+                player2CurrentMatch.put("currentElo", player2Elo);
+                player2RecentMatches.add(player2CurrentMatch);
+                JsonUser.put("recentMatches", player2RecentMatches);
+            }
+        }
 
-        JSONObject player2 = findUserById(player1ID);
-        JSONArray player2RecentMatches = (JSONArray) player1.get("recentMatches");
-        String player2Elo = (String) player1.get("connect4Elo");
-        JSONObject player2CurrentMatch = new JSONObject();
-        player2CurrentMatch.put("matchID", sessionID);
-        player2CurrentMatch.put("gameType", GameTypes.CONNECT4);
-        player2CurrentMatch.put("outcome", "T");
-        player2CurrentMatch.put("currentElo", player1Elo);
-        player2RecentMatches.add(player2CurrentMatch);
-        player2.put("recentMatches", player2RecentMatches);
 
 
 
@@ -457,7 +486,7 @@ public class Leaderboard {
                 JSONArray recentMatches = (JSONArray) JsonUser.get("recentMatches");
                 JSONObject currentMatch = new JSONObject();
                 currentMatch.put("matchID", StringID);
-                currentMatch.put("gameType", GameTypes.CHECKERS.toString());
+                currentMatch.put("gameType", GameTypes.TICTACTOE.toString());
                 currentMatch.put("outcome", "W");
                 currentMatch.put("currentElo", currentElo);
                 recentMatches.add(currentMatch);
@@ -502,7 +531,7 @@ public class Leaderboard {
                 JSONArray recentMatches = (JSONArray) JsonUser.get("recentMatches");
                 JSONObject currentMatch = new JSONObject();
                 currentMatch.put("matchID", StringID);
-                currentMatch.put("gameType", GameTypes.CHECKERS.toString());
+                currentMatch.put("gameType", GameTypes.CONNECT4.toString());
                 currentMatch.put("outcome", "W");
                 currentMatch.put("currentElo", currentElo);
                 recentMatches.add(currentMatch);
@@ -605,7 +634,7 @@ public class Leaderboard {
                 JSONObject currentMatch = new JSONObject();
                 currentMatch.put("matchID", StringID);
                 currentMatch.put("gameType", GameTypes.CHECKERS.toString());
-                currentMatch.put("outcome", "W");
+                currentMatch.put("outcome", "L");
                 currentMatch.put("currentElo", currentElo);
                 recentMatches.add(currentMatch);
 
@@ -649,8 +678,8 @@ public class Leaderboard {
                 JSONArray recentMatches = (JSONArray) JsonUser.get("recentMatches");
                 JSONObject currentMatch = new JSONObject();
                 currentMatch.put("matchID", StringID);
-                currentMatch.put("gameType", GameTypes.CHECKERS.toString());
-                currentMatch.put("outcome", "W");
+                currentMatch.put("gameType", GameTypes.TICTACTOE.toString());
+                currentMatch.put("outcome", "L");
                 currentMatch.put("currentElo", currentElo);
                 recentMatches.add(currentMatch);
 
@@ -693,8 +722,8 @@ public class Leaderboard {
                 JSONArray recentMatches = (JSONArray) JsonUser.get("recentMatches");
                 JSONObject currentMatch = new JSONObject();
                 currentMatch.put("matchID", StringID);
-                currentMatch.put("gameType", GameTypes.CHECKERS.toString());
-                currentMatch.put("outcome", "W");
+                currentMatch.put("gameType", GameTypes.CONNECT4.toString());
+                currentMatch.put("outcome", "L");
                 currentMatch.put("currentElo", currentElo);
                 recentMatches.add(currentMatch);
 

@@ -185,10 +185,11 @@ public class TicTacToeController {
     @FXML
     public void onForfeitYesClick() {
         System.out.println("Forfeit confirmed. Closing the application window...");
-
-        // Close the current window
-        Stage stage = (Stage) forfeitBtn.getScene().getWindow();
-        stage.close();
+        try {
+            NetworkManager.getNetworkInstance().forfeitGame(sessionID, playerOne);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

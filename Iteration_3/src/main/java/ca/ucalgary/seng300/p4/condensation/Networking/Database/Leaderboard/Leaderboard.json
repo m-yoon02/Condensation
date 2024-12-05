@@ -89,12 +89,12 @@
   },
   {
     "checkersElo": 1854,
-    "lossInTicTacToe": 13,
+    "lossInTicTacToe": 19,
     "leaderBoardPosition": 3,
     "lossInConnect4": 4,
     "tictactoeElo": 1864,
     "winsInCheckers": 20,
-    "winsInTicTacToe": 20,
+    "winsInTicTacToe": 26,
     "connect4Elo": 1548,
     "playerUUID": "345e6789-e89d-45d5-a678-627836285321",
     "password": "mypassword",
@@ -136,9 +136,81 @@
         "currentElo": 1864,
         "matchID": "fead0e92-5461-4a24-9fb3-79225b7f2b8e",
         "outcome": "W"
+      },
+      {
+        "gameType": "CHECKERS",
+        "currentElo": 1964,
+        "matchID": "423b18e9-5195-4e56-8743-df5514de6922",
+        "outcome": "W"
+      },
+      {
+        "gameType": "CHECKERS",
+        "currentElo": 2064,
+        "matchID": "30f71e9d-a4b9-4b48-9aca-0d2542cd0b1a",
+        "outcome": "W"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "currentElo": 1964,
+        "matchID": "18b6db58-11c0-4c05-a69c-24c0144cf8c4",
+        "outcome": "L"
+      },
+      {
+        "gameType": "CHECKERS",
+        "currentElo": 2064,
+        "matchID": "eab69953-9092-44ae-93e6-097206606b79",
+        "outcome": "W"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "currentElo": 1964,
+        "matchID": "7349a14b-da0d-4633-a323-f9d41104f05a",
+        "outcome": "L"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "currentElo": 1864,
+        "matchID": "47a4f010-f13f-461c-8d7c-5241dae785ca",
+        "outcome": "L"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "currentElo": 1764,
+        "matchID": "7cff7c15-3666-40fa-b220-260ae554a863",
+        "outcome": "L"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "currentElo": 1864,
+        "matchID": "70cca25d-c0ee-4e41-9cf3-26889219f876",
+        "outcome": "W"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "currentElo": 1964,
+        "matchID": "c6e20929-d8a5-412c-b116-40adde79c866",
+        "outcome": "W"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "currentElo": 1864,
+        "matchID": "172932ef-fb17-4103-a93e-defdef897468",
+        "outcome": "L"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "currentElo": 1964,
+        "matchID": "2bf78e93-b0c4-464d-8ac0-d19456c09561",
+        "outcome": "W"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "currentElo": 1864,
+        "matchID": "bd530e50-7a6a-4301-8cb5-b867d0ee0724",
+        "outcome": "L"
       }
     ],
-    "gamesPlayedTicTacToe": 33,
+    "gamesPlayedTicTacToe": 45,
     "lossInCheckers": 20,
     "username": "Tysen",
     "gamesPlayedCheckers": 40
@@ -341,13 +413,13 @@
   },
   {
     "checkersElo": 3500,
-    "lossInTicTacToe": 1,
+    "lossInTicTacToe": 7,
     "leaderBoardPosition": 0,
     "lossInConnect4": 0,
     "tictactoeElo": 1100,
     "connect4Elo": 1200,
     "winsInCheckers": 23,
-    "winsInTicTacToe": 0,
+    "winsInTicTacToe": 6,
     "playerUUID": "df36131a-da08-4528-83cc-511eb3d99dbe",
     "password": "2345",
     "gamesPlayedConnect4": 0,
@@ -507,12 +579,108 @@
       },
       {
         "gameType": "CHECKERS",
+        "totalWins": 23,
+        "gamesPlayed": 43,
         "currentElo": 1100,
         "matchID": "fead0e92-5461-4a24-9fb3-79225b7f2b8e",
         "outcome": "W"
+      },
+      {
+        "gameType": "CHECKERS",
+        "totalWins": 23,
+        "gamesPlayed": 43,
+        "currentElo": 1000,
+        "matchID": "423b18e9-5195-4e56-8743-df5514de6922",
+        "outcome": "W"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "totalWins": 5,
+        "gamesPlayed": 12,
+        "currentElo": 900,
+        "matchID": "30f71e9d-a4b9-4b48-9aca-0d2542cd0b1a",
+        "outcome": "L"
+      },
+      {
+        "gameType": "CHECKERS",
+        "totalWins": 23,
+        "gamesPlayed": 43,
+        "currentElo": 1000,
+        "matchID": "18b6db58-11c0-4c05-a69c-24c0144cf8c4",
+        "outcome": "W"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "totalWins": 5,
+        "gamesPlayed": 12,
+        "currentElo": 900,
+        "matchID": "eab69953-9092-44ae-93e6-097206606b79",
+        "outcome": "L"
+      },
+      {
+        "gameType": "CHECKERS",
+        "totalWins": 23,
+        "gamesPlayed": 43,
+        "currentElo": 1000,
+        "matchID": "7349a14b-da0d-4633-a323-f9d41104f05a",
+        "outcome": "W"
+      },
+      {
+        "gameType": "CHECKERS",
+        "totalWins": 23,
+        "gamesPlayed": 43,
+        "currentElo": 1100,
+        "matchID": "47a4f010-f13f-461c-8d7c-5241dae785ca",
+        "outcome": "W"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "totalWins": 5,
+        "gamesPlayed": 12,
+        "currentElo": 1200,
+        "matchID": "7cff7c15-3666-40fa-b220-260ae554a863",
+        "outcome": "W"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "totalWins": 5,
+        "gamesPlayed": 12,
+        "currentElo": 1100,
+        "matchID": "70cca25d-c0ee-4e41-9cf3-26889219f876",
+        "outcome": "L"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "totalWins": 5,
+        "gamesPlayed": 12,
+        "currentElo": 1000,
+        "matchID": "c6e20929-d8a5-412c-b116-40adde79c866",
+        "outcome": "L"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "totalWins": 5,
+        "gamesPlayed": 12,
+        "currentElo": 1100,
+        "matchID": "172932ef-fb17-4103-a93e-defdef897468",
+        "outcome": "W"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "totalWins": 5,
+        "gamesPlayed": 12,
+        "currentElo": 1000,
+        "matchID": "2bf78e93-b0c4-464d-8ac0-d19456c09561",
+        "outcome": "L"
+      },
+      {
+        "gameType": "TICTACTOE",
+        "currentElo": 1100,
+        "matchID": "bd530e50-7a6a-4301-8cb5-b867d0ee0724",
+        "outcome": "W"
       }
     ],
-    "gamesPlayedTicTacToe": 1,
+    "gamesPlayedTicTacToe": 13,
     "lossInCheckers": 10,
     "username": "Ryan",
     "gamesPlayedCheckers": 43
@@ -617,6 +785,25 @@
     "gamesPlayedTicTacToe": 1,
     "lossInCheckers": 0,
     "username": "player1",
+    "gamesPlayedCheckers": 0
+  },
+  {
+    "checkersElo": 1200,
+    "lossInTicTacToe": 0,
+    "leaderBoardPosition": 0,
+    "lossInConnect4": 0,
+    "tictactoeElo": 1200,
+    "connect4Elo": 1200,
+    "winsInCheckers": 0,
+    "winsInTicTacToe": 0,
+    "playerUUID": "12bec549-c491-4ef0-86cb-13ad4c3f6ddb",
+    "password": "1234",
+    "gamesPlayedConnect4": 0,
+    "winsInConnect4": 0,
+    "recentMatches": [],
+    "gamesPlayedTicTacToe": 0,
+    "lossInCheckers": 0,
+    "username": "Steve",
     "gamesPlayedCheckers": 0
   }
 ]
