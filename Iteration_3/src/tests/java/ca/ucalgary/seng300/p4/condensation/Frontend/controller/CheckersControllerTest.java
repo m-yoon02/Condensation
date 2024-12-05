@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import org.json.simple.parser.ParseException;
 import org.testfx.framework.junit.ApplicationTest;
@@ -103,17 +104,15 @@ public class CheckersControllerTest extends ApplicationTest {
 
     @Test
     public void testInitializeChessboardGrid() throws IOException, ParseException {
-        //checkersController.initialize();
-        assertTrue(true);
-//        assertNotNull(chessboardGrid);
-//        assertEquals(8, chessboardGrid.getRowCount());
-//        assertEquals(8, chessboardGrid.getColumnCount());
-//
-//        for (Node node : chessboardGrid.getChildren()) {
-//            // Ensure the node is a Button
-//            assertNotNull(node);  // Check that the node is not null
-//            assertTrue(node instanceof Button);  // Check that the node is a Button
-//        }
+        assertNotNull(chessboardGrid);
+        assertEquals(8, chessboardGrid.getRowCount());
+        assertEquals(8, chessboardGrid.getColumnCount());
+
+        for (Node node : chessboardGrid.getChildren()) {
+            // Ensure the node is a Button
+            assertNotNull(node);  // Check that the node is not null
+            assertTrue(node instanceof Button);  // Check that the node is a Button
+        }
     }
 
     @Test
