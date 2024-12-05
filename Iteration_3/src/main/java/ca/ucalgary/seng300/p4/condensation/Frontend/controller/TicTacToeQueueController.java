@@ -79,7 +79,7 @@ public class TicTacToeQueueController {
         GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tGame.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 650);
         TicTacToeController ticTacToeController = fxmlLoader.getController();
         ticTacToeController.start(stage);
         stage.setResizable(true);
