@@ -170,11 +170,11 @@ public class ConnectFourController {
 
     private void handleForfeit() throws IOException {
         disableAllButtons();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Aftermath.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Condensation Application - Aftermath");
-        stage.setScene(scene);
-        stage.show();
+        try {
+            NetworkManager.getNetworkInstance().forfeitGame(sessionID, playerOne);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void updateButtonState(Button button, String state) {

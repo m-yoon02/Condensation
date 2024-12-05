@@ -165,4 +165,8 @@ public class GameSession implements GameEndListener, TurnEndListener {
         }
 
     }
+
+    public void processForfeit(UUID forfeitedPlayerID) {
+        onGameEnd(GameResult.WIN, player1ID.equals(forfeitedPlayerID) ? player2ID : player1ID);
+    }
 }
