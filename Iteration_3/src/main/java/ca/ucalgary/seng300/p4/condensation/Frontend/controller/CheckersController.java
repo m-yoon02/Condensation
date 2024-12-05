@@ -195,7 +195,11 @@ public class CheckersController {
 
     @FXML
     public void onForfeitYesClick() {
-        System.out.println("Yes");
+        try {
+            NetworkManager.getNetworkInstance().forfeitGame(sessionID, playerOne);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
