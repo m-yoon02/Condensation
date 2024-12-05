@@ -45,7 +45,7 @@ public class MatchmakingPool {
         for (QueuedPlayerMemo queuedPlayer : pool) {
             if (queuedPlayer.PlayerID().equals(playerID)) {
                 pool.remove(queuedPlayer);
-                return String.format("You have successfully logged outm see you later ");                 // Exit loop after finding the player
+                return String.format("You have successfully logged out see you later ");                 // Exit loop after finding the player
             }
         }
         return String.format("Player not found in matchmaking pool: "+ playerID);
