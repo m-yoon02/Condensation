@@ -42,6 +42,10 @@ public class GameSessionManagerTest {
 
     @After
     public void tearDown() throws Exception {
+        // reset any game sessions for testing purposes
+
+        manager.removeGameSession(testSessionID1);
+        manager.removeGameSession(testSessionID2);
 
     }
 
@@ -56,13 +60,43 @@ public class GameSessionManagerTest {
 
     @Test
     public void getGameSessionBySessionID() {
+        // adding testGameSession1 to manager
+        manager.addGameSession(testGameSession1);
+
+        // now we want to retrieve the session by its ID
+        GameSession retrievedGameSession = manager.getGameSessionBySessionID(testSessionID1);
+
+        // want to check if the retrieved game session matches with the original
+        assertNotNull("Retrieved GameSession should not be null", retrievedGameSession);
+        assertEquals("Retrieved GameSession should match the added GameSession", testGameSession1, retrievedGameSession);
     }
 
     @Test
     public void addGameSession() {
+        // add a test GameSession to manager
+        manager.addGameSession(testGameSession2);
+        // retrieve the session by its ID
+        GameSession retrievedGameSession2 = manager.getGameSessionBySessionID(testSessionID2);
+
+        // checking if the added game session is correctly stored
+        assertNotNull("Added GameSession should be retrievable", retrievedGameSession2);
+        assertEquals("Added GameSession should match the stored GameSession", testGameSession2, retrievedGameSession2);
     }
 
     @Test
     public void removeGameSession() {
+
+        // add a game session to manager
+        manager.addGameSession(testGameSession1);
+
+        // now remove the same game session by using its ID
+        manager.removeGameSession(testSessionID1);
+
+        // verify
+
+        GameSession retrievedGameSession3 = manager.getGameSessionBySessionID(testSessionID1);
+        assertNull("Removed GameSession should not be retrievable", retrievedGameSession3);
+
+
     }
 }
