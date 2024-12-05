@@ -217,6 +217,7 @@ public class ProfileHomeController {
     @FXML
     void onLeaderboardButtonClicked(ActionEvent event) throws IOException {
         navigateToScreen(event, "ProfileLeaderB.fxml");
+
     }
 
     /**
