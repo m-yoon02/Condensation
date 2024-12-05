@@ -373,10 +373,7 @@ public class OtherProfileController {
     void onHomeButtonClicked(ActionEvent event) throws IOException {
         Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileHome.fxml"));
         Scene homeScene = new Scene(homeParent);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
+        HelloApplication.setActiveScene(homeScene);
     }
 
     /**

@@ -42,28 +42,22 @@ public class ConnectFourHomeMenuController {
 
     private void navigateToQueue(String fxml) {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxml));
-        Stage stage = (Stage) playButton.getScene().getWindow();
         Scene scene;
         try {
-            scene = new Scene(fxmlLoader.load(), 700, 500);
+            scene = new Scene(fxmlLoader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         ConnectFourQueueController connectFourQueueController = fxmlLoader.getController();
-        stage.setTitle("Connect Four Queue");
-        stage.setScene(scene);
-        stage.show();
-        connectFourQueueController.start(stage);
+        HelloApplication.setActiveScene(scene, "Connect Four Queue");
+        connectFourQueueController.start();
     }
 
     private void navigateTo(String fxmlFile) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
-            Stage stage = (Stage) playButton.getScene().getWindow();
-            Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-            stage.setTitle("Games Menu");
-            stage.setScene(scene);
-            stage.show();
+            Scene scene = new Scene(fxmlLoader.load());
+            HelloApplication.setActiveScene(scene, "Games Menu");
         } catch (IOException e) {
             e.printStackTrace();
         }

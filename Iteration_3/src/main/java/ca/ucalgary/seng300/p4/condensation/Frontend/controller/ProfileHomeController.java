@@ -258,11 +258,8 @@ public class ProfileHomeController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/WelcomeScreen.fxml"));
             Pane root = loader.load();
 
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
-            window.setScene(scene);
-            window.setResizable(false);
-            window.show();
+            HelloApplication.setActiveScene(scene);
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -278,8 +275,6 @@ public class ProfileHomeController {
     private void navigateToScreen(ActionEvent event, String fxml) throws IOException {
         Parent parent = FXMLLoader.load(HelloApplication.class.getResource(fxml));
         Scene scene = new Scene(parent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        HelloApplication.setActiveScene(scene);
     }
 }

@@ -67,8 +67,6 @@ public class TicTacToeController {
     private UUID sessionID;
     private UUID newTurn;
 
-    private Stage stage;
-
     @FXML
     public Button forfeitBtn;
 
@@ -84,10 +82,9 @@ public class TicTacToeController {
         }
     }
 
-    public void start(Stage newStage) throws IOException, ParseException {
+    public void start() throws IOException, ParseException {
         GameSessionRecord gameSessionRecord = GameSessionRecord.getGameSessionRecord();
         ClientReceiver.addClientReceiver(new TicTacToeReceiver());
-        stage = newStage;
         playerOne = gameSessionRecord.getPlayer1ID();
         playerTwo = gameSessionRecord.getPlayer2ID();
         newTurn = gameSessionRecord.getCurrentPlayerID();
@@ -120,10 +117,8 @@ public class TicTacToeController {
         if (Objects.equals(win_or_not_win, "GAME_END")){
             disableAllButtons();
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Aftermath.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-            stage.setTitle("Condensation Application - Aftermath");
-            stage.setScene(scene);
-            stage.show();
+            Scene scene = new Scene(fxmlLoader.load());
+            HelloApplication.setActiveScene(scene, "Condensation Application - Aftermath");
         } else{
             onTurnEnd(backendUpdate);
         }
