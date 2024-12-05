@@ -64,10 +64,11 @@ public class AftermathController {
 
         JSONArray recentMatches = (JSONArray) playerInfoForGame.get("recentMatches");
         JSONObject lastMatch = (JSONObject) recentMatches.getLast();
-
+        System.out.println("Class of gameType: " + lastMatch.get("gameType").getClass().getSimpleName());
+        System.out.println("Value of gameType: " + lastMatch.get("gameType"));
         String resultOfMatch = (String) lastMatch.get("outcome");
-        GameTypes typeOfMatch = (GameTypes) lastMatch.get("gameType");
-//        GameTypes typeOfMatch = GameTypes.valueOf(gameTypeString);
+        String typeOfMatch = String.valueOf(lastMatch.get("gameType"));
+        System.out.println("GAME TYPE INTO ENUM: " + GameTypes.valueOf(typeOfMatch).getClass().getSimpleName());
 
         if (Objects.equals(resultOfMatch, "L")) {
             gameResultLabel.setText("You Lost.");
@@ -107,12 +108,13 @@ public class AftermathController {
         return String.format("%d\\%d (%.2f)%s", wins, gamesPlayed, roundedRatio, "%");
     }
 
-    private void updateGameStats(GameTypes typeOfMatch, JSONObject playerInfoForGame) {
+    private void updateGameStats(String typeOfMatch, JSONObject playerInfoForGame) {
         int totalWins;
         int totalGamesPlayed;
         String elo;
+        GameTypes poo = GameTypes.valueOf(typeOfMatch);
 
-        switch (typeOfMatch) {
+        switch (poo) {
             case TICTACTOE -> {
                 totalWins = ((Number) playerInfoForGame.get("winsInTicTacToe")).intValue();
                 totalGamesPlayed = ((Number) playerInfoForGame.get("gamesPlayedTicTacToe")).intValue();
