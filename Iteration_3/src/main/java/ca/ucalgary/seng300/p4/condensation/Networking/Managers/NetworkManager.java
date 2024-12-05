@@ -421,16 +421,15 @@ public class NetworkManager {
                 player1Elo = (Number) player1User.get("checkersElo");
                 player2Elo = (Number) player2User.get("checkersElo");
 
-
             }
             case TICTACTOE -> {
                 player1Elo = (Number) player1User.get("tictactoeElo");
-                player2Elo = (Number) player2User.get("checkersElo");
+                player2Elo = (Number) player2User.get("tictactoeElo");
 
             }
             case CONNECT4 -> {
                 player1Elo = (Number) player1User.get("connect4Elo");
-                player2Elo = (Number) player2User.get("checkersElo");
+                player2Elo = (Number) player2User.get("tictactoeElo");
 
             }
         }
