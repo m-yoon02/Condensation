@@ -1,6 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -148,6 +150,18 @@ public class OtherProfileController {
         displayRecentMatches(username);
     }
 
+    // so this is where onChallenge
+    @FXML
+    public void on(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        CheckersQueueController checkersQueueController = fxmlLoader.getController();
+        window.setScene(scene);
+        window.show();
+        checkersQueueController.start(window);
+    }
+
 
     public void challengePlayer(ActionEvent event) throws IOException, ParseException {
 
@@ -172,18 +186,56 @@ public class OtherProfileController {
         // Add buttons to the alert
         alert.getButtonTypes().setAll(connect4Button, checkersButton, ticTacToeButton, cancelButton);
 
+
         // Wait for user selection
         alert.showAndWait().ifPresent(response -> {
             GameTypes gameTypes;
             if (response == connect4Button) {
-                gameTypes = GameTypes.CONNECT4;
+              gameTypes = GameTypes.CONNECT4;
+              JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
+              String Jsonresponse = null;
+              try {
+                    Jsonresponse = NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+              } catch (ParseException e) {
+                    throw new RuntimeException(e);
+              }
+
+
+
+
+
+
 
             } else if (response == checkersButton) {
                 gameTypes = GameTypes.CHECKERS;
+                JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
+                String Jsonresponse = null;
+                try {
+                    Jsonresponse = NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
 
             } else if (response == ticTacToeButton) {
                 gameTypes = GameTypes.TICTACTOE;
+                JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
+                String Jsonresponse = null;
+                try {
+                    Jsonresponse = NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
 
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+                GameSessionRecord.getGameSessionRecord().fromJSON(Jsonresponse);
             } else if (response == cancelButton) {
                 System.out.println("Challenge canceled.");
                 // Handle cancel logic if necessary
@@ -191,6 +243,17 @@ public class OtherProfileController {
         });
 
 
+    }
+
+
+    public JSONObject makeChallengePayload(GameTypes gameTypes, UUID uuid, String username) {
+        JSONObject payload = new JSONObject();
+        payload.put("Player1ID", uuid);
+        payload.put("Player2Username", username);
+        payload.put("gameType", gameTypes);
+
+
+        return  payload;
     }
 
     /**
