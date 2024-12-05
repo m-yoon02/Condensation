@@ -37,9 +37,9 @@ public class CheckersQueueControllerTest extends ApplicationTest {
     @Before
     public void setUp() {
         origin = (Parent) lookup("#origin").queryAs(Parent.class);
-        createWindow = (Stage) lookup("#createWindow").queryAs(Stage.class);
-        createScene = (Scene) lookup("#createScene").queryAs(Scene.class);
-        stage = (Stage) lookup("#stage").queryAs(Stage.class);
+//        createWindow = (Stage) lookup("#createWindow").queryAs(Stage.class);
+//        createScene = (Scene) lookup("#createScene").queryAs(Scene.class);
+//        stage = (Stage) lookup("#stage").queryAs(Stage.class);
     }
 
     @After

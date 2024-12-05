@@ -177,15 +177,19 @@ public class CheckersController {
     private Button forfeitNoBtn;
 
     @FXML
+    Alert alert;
+
+    @FXML
     public void onForfeitBtnClick() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
+        alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
         alert.setTitle("Forfeit");
 
         Optional<ButtonType> choice = alert.showAndWait();
+
         if (choice.isPresent() && choice.get() == ButtonType.OK) {
             onForfeitYesClick();
         } else if (choice.isPresent() && choice.get() == ButtonType.CANCEL) {
-            System.out.println("No");
+            onForfeitNoClick();
         }
     }
 
@@ -194,6 +198,14 @@ public class CheckersController {
         System.out.println("Yes");
     }
 
+    @FXML
+    public void onForfeitNoClick() {
+        System.out.println("No");
+    }
+
+    public Alert getAlert() {
+        return alert;
+    }
 
     // chat
     @FXML

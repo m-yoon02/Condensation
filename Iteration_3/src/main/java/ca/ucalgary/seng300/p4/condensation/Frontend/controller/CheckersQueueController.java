@@ -36,7 +36,6 @@ public class CheckersQueueController {
     @FXML
     private Scene createScene;
 
-
     public void start(Stage stage) {
         // Allows user to leave
         this.stage = stage;
