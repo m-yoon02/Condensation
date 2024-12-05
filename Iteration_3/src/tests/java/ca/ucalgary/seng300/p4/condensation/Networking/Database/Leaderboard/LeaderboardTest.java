@@ -19,6 +19,7 @@ public class LeaderboardTest {
     private NetworkManager networkManager;
     private Leaderboard leaderboard;
     private static final String MOCK_LEADERBOARD_FILE = "mockLeaderboard.json";
+    private static final String TEMP_PLAYER_FILE = "tempPlayers.json";
 
     @Before
     public void setUp() throws Exception {
@@ -87,6 +88,16 @@ public class LeaderboardTest {
         // Initialize the leaderboard with the mock file
         networkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE;
         leaderboard = Leaderboard.getInstance();
+
+        // create a mock JSON file for fetchUserFromNewPLayerJSON test
+        JSONObject playerData = new JSONObject();
+        playerData.put("username", "testPlayer");
+
+        try (FileWriter writer = new FileWriter(TEMP_PLAYER_FILE)) {
+            writer.write(playerData.toJSONString());
+
+        }
+        networkManager.PLAYER_ID_FILE = TEMP_PLAYER_FILE;
     }
 
     @After
@@ -103,6 +114,7 @@ public class LeaderboardTest {
         }
 
         NetworkManager.LEADERBOARD_FILE = null;
+        NetworkManager.PLAYER_ID_FILE = null;
     }
 
 
@@ -516,6 +528,35 @@ public class LeaderboardTest {
         assertEquals("The fourth player should be player2", "player2", ((JSONObject) users.get(3)).get("username"));
         assertEquals("The fifth player should be player1", "player1", ((JSONObject) users.get(4)).get("username"));
     }
+
+
+    @Test
+    public void testFetchUserFromNewPLayerJson() {
+        try {
+            String username = leaderboard.fetchUserFromNewPlayerJson();
+        } catch (Exception e) {
+            fail("Exception occured" + e.getMessage());
+        }
+    }
+
+
+    @Test(expected = FileNotFoundException.class) // this annotation helps assert that specified exception. Cited by https://stackoverflow.com/questions/156503/how-do-you-assert-that-a-certain-exception-is-thrown-in-junit-tests
+    public void testFetchUserFromNewPlayerJsonWithNoFile() throws FileNotFoundException {
+
+        // setting the PLAYER_ID_FILE to be non existent
+        NetworkManager.PLAYER_ID_FILE = "nonExistentFile.json";
+
+        leaderboard.fetchUserFromNewPlayerJson();
+
+
+
+    }
+
+
+
+
+
+
 
 
 
