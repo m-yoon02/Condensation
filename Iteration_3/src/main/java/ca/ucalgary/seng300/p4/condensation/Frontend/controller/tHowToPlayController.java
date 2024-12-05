@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,7 +20,7 @@ public class tHowToPlayController {
 
     private void navigateTo(String fxmlFile) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
             Stage stage = (Stage) backbutton.getScene().getWindow();
             Scene scene = new Scene(fxmlLoader.load(), 700, 500);
             stage.setTitle("How to Play Tic Tac Toe!");

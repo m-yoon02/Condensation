@@ -1,6 +1,5 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.Services;
 
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Player;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
@@ -15,11 +14,6 @@ import java.util.UUID;
 
 public class MatchmakingPool {
     private static List<QueuedPlayerMemo> pool = new ArrayList<>();
-    private final String DATA_FILE = "/Users/anmolgill/IdeaProjects/seng300-f24-project/seng300-f24-project/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json";
-
-
-
-
 
     public MatchmakingPool() throws IOException, ParseException {
         this.fetch4RandomPlayers();
