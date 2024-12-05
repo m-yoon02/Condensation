@@ -3,14 +3,14 @@
     -fx-background-color: #091856; /* Set the background color to #091856 (a shade of blue) */
     -fx-padding: 20px;
     -fx-alignment: center;
-    -fx-font-family: Arial, sans-serif; /* Apply a gaming-inspired font */
-    -fx-text-fill: white; /* Set text color to white */
+    -fx-font-family: "Oswald", sans-serif;
 }
 .splitpane {
     -fx-background-color: #091856;
 }
 /* Title styling */
 .title-text {
+    -fx-font-family: "Oswald", sans-serif;
     -fx-font-size: 36px;
     -fx-font-weight: bold;
     -fx-fill: white; /* Use -fx-fill for Text nodes */
@@ -39,6 +39,7 @@
     -fx-shape: "M0,30a30,30 0 1,1 60,0a30,30 0 1,1 -60,0"; /* Circular button */
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 8, 0.5, 0, 2);
+    -fx-font-family: "Oswald", sans-serif;
 }
 
 /* Hover effect for game buttons */
@@ -74,6 +75,7 @@
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
     -fx-cursor: hand;
+    -fx-font-family: "Oswald", sans-serif;
 }
 
 /* Hover effect for the forfeit button */
@@ -102,6 +104,7 @@
 .chat-container {
     -fx-pref-width: 250;
     -fx-pref-height: 25;
+    -fx-font-family: "Oswald", sans-serif;
 }
 /* Label styling */
 .label {
@@ -111,6 +114,7 @@
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-font-size: 16px;
+    -fx-font-family: "Oswald", sans-serif;
 }
 
 /* Chatbox container border styling */
@@ -120,7 +124,8 @@
     -fx-border-width: 2px;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
-    -fx-background-color: transparent; /* Transparent background for styling flexibility */
+    -fx-background-color: transparent;
+    -fx-font-family: "Oswald", sans-serif;/* Transparent background for styling flexibility */
 }
 
 /*!* Chatbox styling *!*/
@@ -145,6 +150,11 @@
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-cursor: hand;
+    -fx-font-family: "Oswald", sans-serif;
+}
+
+.playerTurnText {
+    -fx-font-family: "Oswald", sans-serif;
 }
 
 /* Hover effect for Send button */
