@@ -57,6 +57,27 @@ public class LeaderboardTest {
         if (file.exists()) {
             file.delete();
         }
+
+        // point the NetworkManger's leaderboard file to the mock file
+        NetworkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE;
+
+    }
+
+
+    @Test
+    public void testGetInstanceLeaderboard() throws IOException, ParseException {
+        // get the first instance
+        Leaderboard firstInstance = Leaderboard.getInstance();
+        // get the second instance
+        Leaderboard secondInstance = Leaderboard.getInstance();
+
+        // both instances should be the same
+
+        assertNotNull("the first instance should not be null", firstInstance);
+        assertNotNull("the second instance should not be null", secondInstance);
+        assertEquals("Both instances should be the same", firstInstance, secondInstance);
+
+
     }
 
     @Test
