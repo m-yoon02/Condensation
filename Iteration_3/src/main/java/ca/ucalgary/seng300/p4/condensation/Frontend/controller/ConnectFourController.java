@@ -31,6 +31,7 @@ import java.util.UUID;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+
 public class ConnectFourController {
 
     @FXML
@@ -101,44 +102,44 @@ public class ConnectFourController {
         System.out.println(sessionID);
     }
 
-    @FXML
-    public void returnToBackendConnectFour(javafx.event.ActionEvent event) throws IOException, ParseException {
-        Button clickedButton = (Button) event.getSource();
-
-        int row = -1;
-        int col = -1;
-
-        boolean buttonFound = false;
-        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
-            if (buttonFound){
-                break;
-            }
-            for (int j = 0; j < NUMBER_OF_COLS; j++) {
-                System.out.println(buttons[i][j]);
-                if (buttons[i][j].equals(clickedButton)) {
-                    row = i;
-                    col = j;
-                    buttonFound = true;
-                    break;
-                }
-            }
-        }
-
-        if (row >= 0 && col >= 0){
-
-            JSONObject connectFourJSON = new JSONObject();
-            connectFourJSON.put("SessionID", sessionID);
-            if (newTurn == playerOne){
-                connectFourJSON.put("playerID", playerOne.toString());
-            }
-            else{
-                connectFourJSON.put("playerID", playerTwo.toString());
-            }
-            connectFourJSON.put("New Position", new Vector2(row, col));
-            connectFourJSON.put("gameType", GameTypes.CONNECT4);
-            NetworkManager.getNetworkInstance().receiveGameDataFromClient(connectFourJSON);
-        }
-    }
+//    @FXML
+//    public void returnToBackendConnectFour(javafx.event.ActionEvent event) throws IOException, ParseException {
+//        Button clickedButton = (Button) event.getSource();
+//
+//        int row = -1;
+//        int col = -1;
+//
+//        boolean buttonFound = false;
+//        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+//            if (buttonFound){
+//                break;
+//            }
+//            for (int j = 0; j < NUMBER_OF_COLS; j++) {
+//                System.out.println(buttons[i][j]);
+//                if (buttons[i][j].equals(clickedButton)) {
+//                    row = i;
+//                    col = j;
+//                    buttonFound = true;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        if (row >= 0 && col >= 0){
+//
+//            JSONObject connectFourJSON = new JSONObject();
+//            connectFourJSON.put("SessionID", sessionID);
+//            if (newTurn == playerOne){
+//                connectFourJSON.put("playerID", playerOne.toString());
+//            }
+//            else{
+//                connectFourJSON.put("playerID", playerTwo.toString());
+//            }
+//            connectFourJSON.put("New Position", new Vector2(row, col));
+//            connectFourJSON.put("gameType", GameTypes.CONNECT4);
+//            NetworkManager.getNetworkInstance().receiveGameDataFromClient(connectFourJSON);
+//        }
+//    }
 
     public static void receiveConnectFour(JSONObject payload) {
         // Access the singleton instance
@@ -251,18 +252,20 @@ public class ConnectFourController {
     }
 
     public void returnConnectFour(MouseEvent event, int row, int col) throws IOException, ParseException {
-        System.out.println(row + col);
-//        if (sessionID == null || playerID == null) {
-//            System.err.println("Session ID or Player ID is missing!");
-//            return;
-//        }
+        if (sessionID == null) {
+            System.err.println("Session ID is missing!");
+            return;
+        }
+        if (playerID == null) {
+            playerID = playerOne;
+        }
 
         JSONObject move = new JSONObject();
-        move.put("SessionID", sessionID.toString());
-        move.put("PlayerID", playerID.toString());
+        move.put("SessionID", sessionID);
+        move.put("PlayerID", playerID);
 
         Vector2 newPosition = new Vector2(row, col);
-        move.put("NewPosition", newPosition.toString());
+        move.put("NewPosition", newPosition);
 
         System.out.println("Sending move to backend: " + move.toJSONString());
 
@@ -277,7 +280,7 @@ public class ConnectFourController {
         }
     }
 
-//chat
+    //chat
     @FXML
     private TextArea chatBox;
 

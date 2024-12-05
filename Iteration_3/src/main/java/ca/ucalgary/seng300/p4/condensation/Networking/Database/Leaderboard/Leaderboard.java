@@ -53,7 +53,7 @@ public class Leaderboard {
      * @throws ParseException if there is an error parsing the JSON data.
      */
     public void loadData() throws IOException, ParseException {
-        File file = new File(NetworkManager.LEADERBOARD_FILE);
+        File file = new File("Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
         if (!file.exists()) {
             throw new FileNotFoundException("Leaderboard.json not found in the working directory: " + file.getAbsolutePath());
         }
