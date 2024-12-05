@@ -1,7 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,15 +13,9 @@ import javafx.stage.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Order;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.util.WaitForAsyncUtils;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.IOException;;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -77,7 +70,6 @@ public class WelcomeScreenControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(1)
     public void click_on_signup(){
 
         clickOn(signUpButton);
@@ -93,7 +85,6 @@ public class WelcomeScreenControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(2)
     public void click_on_login(){
 
         clickOn(loginButton);
@@ -109,7 +100,6 @@ public class WelcomeScreenControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(3)
     public void click_on_team(){
 
         clickOn("#teamMenu").clickOn("#team");
@@ -117,7 +107,6 @@ public class WelcomeScreenControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(4)
     public void click_on_about(){
 
         clickOn("#aboutMenu").clickOn("#about");
@@ -125,7 +114,6 @@ public class WelcomeScreenControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(5)
     public void click_on_prog(){
 
         clickOn("#progMenu").clickOn("#prog");
