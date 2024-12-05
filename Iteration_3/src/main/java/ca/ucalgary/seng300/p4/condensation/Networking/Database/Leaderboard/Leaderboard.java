@@ -387,7 +387,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who won the game.
      * @param sessionID The UUID of the game session where the win occurred.
      */
-    private void updateEloForWinningPlayerCheckers(UUID playerID, UUID sessionID) {
+    private void updateEloForWinningPlayerCheckers(UUID playerID, UUID sessionID) throws IOException {
         if (findUserById(playerID) == null) {
             return;
         }
@@ -411,6 +411,7 @@ public class Leaderboard {
         winningPlayer.put("checkersElo", currentElo);
         winningPlayer.put("winsInCheckers", winsInCheckers);
         winningPlayer.put("recentMatches", recentMatches);
+        saveData();
 
 
 
@@ -574,6 +575,8 @@ public class Leaderboard {
         losingPlayer.put("checkersElo", currentElo);
         losingPlayer.put("lossInCheckers", lossInCheckers);
         losingPlayer.put("recentMatches", recentMatches);
+
+        // how do we replace this player in the json array
 
 
         System.out.println("Elo has been updated for losing player with PlayerID: " + playerID);
