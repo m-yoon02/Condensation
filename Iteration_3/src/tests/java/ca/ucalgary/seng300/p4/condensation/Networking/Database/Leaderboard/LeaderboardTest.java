@@ -501,6 +501,23 @@ public class LeaderboardTest {
     }
 
 
+    @Test
+    public void testRefreshLeaderboard() {
+        // call the method to refresh the leaderboard
+        leaderboard.refreshLeaderboard();
+
+        // retrieve the sorted users directly from the leaderboard
+        JSONArray users = leaderboard.getAllUsers();
+
+        // verify the leaderboard is sorted in descending order based off of elo
+        assertEquals("The first player should be player5", "player5", ((JSONObject) users.get(0)).get("username"));
+        assertEquals("The second player should be player4", "player4", ((JSONObject) users.get(1)).get("username"));
+        assertEquals("The third player should be player3", "player3", ((JSONObject) users.get(2)).get("username"));
+        assertEquals("The fourth player should be player2", "player2", ((JSONObject) users.get(3)).get("username"));
+        assertEquals("The fifth player should be player1", "player1", ((JSONObject) users.get(4)).get("username"));
+    }
+
+
 
 
 
