@@ -73,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1733353929016</updated>
       <workItem from="1733353930641" duration="3596000" />
-      <workItem from="1733358193457" duration="6357000" />
+      <workItem from="1733358193457" duration="9907000" />
     </task>
     <servers />
   </component>
@@ -90,20 +90,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.java</url>
-          <line>662</line>
-          <properties class="ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard" method="updateEloForLosingPlayerTictactoe">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
