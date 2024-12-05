@@ -126,4 +126,5 @@ public class MatchmakingServiceTest {
         // Verify the match
         assertNull("Game session should not null", session);
     }
+
 }

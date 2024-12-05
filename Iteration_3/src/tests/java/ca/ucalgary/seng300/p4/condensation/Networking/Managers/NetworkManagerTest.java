@@ -119,7 +119,7 @@ public class NetworkManagerTest {
     @Test
     public void testSendChatToClient() {
 
-        NetworkManager.getNetworkInstance().handleQueuePlayer()
+        // NetworkManager.getNetworkInstance().handleQueuePlayer();
         //create a new JSON object
         JSONArray clientResponsePayload = new JSONArray();
         clientResponsePayload.add("Hello!");
