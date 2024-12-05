@@ -61,6 +61,10 @@ public class ConnectFourController {
         }
     }
 
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
     @FXML
     public void initialize() throws ParseException, IOException {
         for (int row = 0; row < NUMBER_OF_ROWS; row++) {

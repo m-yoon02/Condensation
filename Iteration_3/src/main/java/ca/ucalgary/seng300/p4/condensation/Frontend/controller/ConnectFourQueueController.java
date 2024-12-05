@@ -79,6 +79,8 @@ public class ConnectFourQueueController {
         // Directing to the board
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        ConnectFourController connectFourController = fxmlLoader.getController();
+        connectFourController.setStage(stage);
         stage.setResizable(true);
         stage.setTitle("Condensation Appliance - Connect Four");
         stage.setScene(scene);

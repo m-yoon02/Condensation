@@ -66,8 +66,9 @@ public class CheckersQueueController {
         String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
         GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 650);
         CheckersController checkersController = fxmlLoader.getController();
+        stage.setResizable(true);
         checkersController.setStage(stage);
         stage.setTitle("Checkers");
         stage.setScene(scene);
