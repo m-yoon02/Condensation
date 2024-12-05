@@ -522,7 +522,7 @@ public class Leaderboard {
                 }
                 return;
             }
-            System.out.println("Cant find plater lmao");
+            System.out.println("Cant find plater lmaoe");
         }
     }
 
