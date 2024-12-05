@@ -204,7 +204,7 @@ public class Connect4Handler extends GameHandler {
         // 4. Frontslash diagonal (`/`) win (bottom-left to top-right).
         // Return true if any win condition is satisfied.
         // Return false if no win condition is satisfied.
-        return winInColumn(column, pieceColor) || winInRow(column, pieceColor) || winInDiagonalBackslash(row, column, pieceColor) || winInDiagonalFrontslash(row, column, pieceColor);
+        return winInColumn(column, pieceColor) || winInRow(row, pieceColor) || winInDiagonalBackslash(row, column, pieceColor) || winInDiagonalFrontslash(row, column, pieceColor);
     }
 
     /**

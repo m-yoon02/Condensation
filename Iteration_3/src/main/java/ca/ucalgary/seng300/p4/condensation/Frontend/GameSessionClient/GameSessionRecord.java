@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class GameSessionRecord {
@@ -76,6 +77,20 @@ public class GameSessionRecord {
             jsonObject.put("OldPosition", convertIntArrayToJSONArray(oldPosition));
         }
         return jsonObject;
+    }
+
+    public static void updateBoardRepresentationFromJSON(String[][] boardRepresentation, JSONArray jsonArray) {
+        for (String[] strings : boardRepresentation)
+            Arrays.fill(strings, "EMPTY");
+        for (int i = 0; i < boardRepresentation.length; i++) {
+            JSONArray outer = (JSONArray) jsonArray.get(i);
+            for (int j = 0; j < boardRepresentation[i].length; j++) {
+                String color = (String) outer.get(j);
+                if (!color.equals("EMPTY")) {
+                    boardRepresentation[i][j] = color;
+                }
+            }
+        }
     }
 
     private static JSONArray convertIntArrayToJSONArray(int[] position){

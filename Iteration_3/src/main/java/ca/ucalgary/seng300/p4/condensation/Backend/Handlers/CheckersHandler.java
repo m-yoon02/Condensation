@@ -73,11 +73,6 @@ public class CheckersHandler extends GameHandler {
         Vector2 oldPosition = checkersMoveData.getOldPosition();
         Vector2 newPosition = checkersMoveData.getMovePosition();
 
-        if (true) {
-            notifyGameEnd(GameResult.WIN, playerID);
-            return;
-        }
-
         // Piece exists, is the players' piece
         CheckersPiece movingPiece = board.getAt(oldPosition);
         if (movingPiece == null || movingPiece.getColor() != getPlayerColorFromUUID(playerID)){
