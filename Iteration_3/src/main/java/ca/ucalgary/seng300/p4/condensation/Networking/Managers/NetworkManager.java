@@ -400,13 +400,67 @@ public class NetworkManager {
      * @param challengeQueuedPlayer
      * @return
      */
-    public String handleChallengedQueuePlayer(JSONObject challengeQueuedPlayer){
+    public String handleChallengedQueuePlayer(JSONObject challengeQueuedPlayer) throws IOException, ParseException {
 
-        // Pseudocode :
-        // 1. The frontend will have a button in the player lookup which essentially allows you to challenge a player if they are online.
-        //
-        //
-        return null;
+        // I need player1ID this is the logged in player from the playerId.json
+        // we need a player2ID
+        UUID player1ID = UUID.fromString((String) challengeQueuedPlayer.get("Player1"));
+        JSONObject player1User = Leaderboard.getInstance().findUserById(player1ID);
+        GameTypes gameType = (GameTypes) challengeQueuedPlayer.get("gameType");
+
+        String usernamePlayer2 = (String) challengeQueuedPlayer.get("Player2Username");
+        JSONObject player2User = Leaderboard.getInstance().findUserByName(usernamePlayer2);
+        UUID player2ID = UUID.fromString((String) player2User.get("playerUUID"));
+
+
+
+        Number player1Elo = 0;
+        Number player2Elo = 0;
+        switch(gameType){
+            case CHECKERS -> {
+                player1Elo = (Number) player1User.get("checkersElo");
+                player2Elo = (Number) player2User.get("checkersElo");
+
+            }
+            case TICTACTOE -> {
+                player1Elo = (Number) player1User.get("tictactoeElo");
+                player2Elo = (Number) player2User.get("tictactoeElo");
+
+            }
+            case CONNECT4 -> {
+                player1Elo = (Number) player1User.get("connect4Elo");
+                player2Elo = (Number) player2User.get("tictactoeElo");
+
+            }
+        }
+
+
+
+        // create QueuedPlayerMemos for player1 and player 2
+        QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo(player1ID, gameType,  player1Elo.intValue());
+        QueuedPlayerMemo queuedPlayerMemo2 = new QueuedPlayerMemo(player2ID, gameType,  player2Elo.intValue());
+
+
+        //  now we need to bypass matchmaking and go directly create the game
+        GameSession matchedGameSession = new GameSession(queuedPlayerMemo1, queuedPlayerMemo2);
+        network.sendCreatedGameSession(matchedGameSession);
+        UUID sessionID = matchedGameSession.getSessionId();
+        UUID getFirstPlayerID = matchedGameSession.getGameHandler().getFirstPlayerID();
+
+        JSONObject matchedSessionResponse = new JSONObject();
+
+        // send session data to frontend
+
+        matchedSessionResponse.put("sessionID", sessionID.toString());
+        matchedSessionResponse.put("player1ID", player1ID.toString());
+        matchedSessionResponse.put("player2ID", player2ID.toString());
+        matchedSessionResponse.put("currentPlayerTurn", getFirstPlayerID.toString());
+        matchedSessionResponse.put("gameType", gameType.toString());
+
+        // also everytime client sends network a payload they will need to give sessionID so we can find the gameSession object and update the game handler field in the GameSession's object.
+        // This way this.gamehandler recieves a payload and should then notify the frontend using the client listeners.
+        return matchedSessionResponse.toJSONString();
+
     }
 
     /**
@@ -522,5 +576,14 @@ public class NetworkManager {
         }
 
         return null;
+    }
+
+    public void forfeitGame(UUID sessionID, UUID forfeitedPlayerID) {
+        GameSession gameSession = gameSessionManager.getGameSessionBySessionID(sessionID);
+        if (gameSession != null) {
+            gameSession.processForfeit(forfeitedPlayerID);
+        } else {
+            throw new NullPointerException("GameSession instance is null!");
+        }
     }
 }
