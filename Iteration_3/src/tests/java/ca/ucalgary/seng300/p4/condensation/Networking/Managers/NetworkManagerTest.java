@@ -7,6 +7,7 @@ import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Player;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
+import ca.ucalgary.seng300.p4.condensation.Networking.Listeners.GameDataListener;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,6 +16,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -30,6 +33,8 @@ public class NetworkManagerTest {
     private QueuedPlayerMemo playerMemo1;
     private QueuedPlayerMemo playerMemo2;
     private GameSession gameSession;
+
+    private GameDataListener gameDataListener; //mocking the GameDataListener interface
 
 
     @Before
@@ -104,12 +109,27 @@ public class NetworkManagerTest {
         assertNotEquals(player2.getPlayerId(), currentPlayerTurn);  //now it should be player 2's turn
     }
 
+    //helper method to mock sessionListeners map in NetworkManager
+    private HashMap<UUID, List<GameDataListener>> mockSessionListenersMap() {
+        HashMap<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();
+        sessionListeners.put(gameSession.getSessionId(), List.of(gameDataListener)); // Add a single mock listener to the session
+        return sessionListeners;
+    }
+
     @Test
     public void testSendChatToClient() {
-        //create a new JSON object
-        JSONArray chatMessage = new JSONArray();
-        chatMessage.add("Player 1: Hello!");
 
+        NetworkManager.getNetworkInstance().handleQueuePlayer()
+        //create a new JSON object
+        JSONArray clientResponsePayload = new JSONArray();
+        clientResponsePayload.add("Hello!");
+
+
+        //call networkManager to send this chat data
+        networkManager.sendChatDataToClients(clientResponsePayload, gameSession.getSessionId(), GameEventType.CHAT_MESSAGE_RECEIVED);
+
+        //
+        GameSession session = gameSessionManager.getGameSessionBySessionID(gameSession.getSessionId());
 
     }
 }
