@@ -34,10 +34,26 @@ public class ConnectFourHomeMenuController {
         connect4Image.setImage(new Image(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/connect4.png").toExternalForm()));
 
         // Button navigation
-        playButton.setOnAction(event -> navigateTo("/ca/ucalgary/seng300/p4/condensation/connectfourqueue.fxml"));
+        playButton.setOnAction(event -> navigateToQueue("/ca/ucalgary/seng300/p4/condensation/connectfourqueue.fxml"));
         leaderboardButton.setOnAction(event -> navigateTo("/ca/ucalgary/seng300/p4/condensation/ConnectFourLeaderboard.fxml"));
         howToPlayButton.setOnAction(event -> navigateTo("/ca/ucalgary/seng300/p4/condensation/howToPlayConnect4.fxml"));
         backButton.setOnAction(event -> navigateTo("ProfileGame.fxml")); // Update with the actual previous page
+    }
+
+    private void navigateToQueue(String fxml) {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxml));
+        Stage stage = (Stage) playButton.getScene().getWindow();
+        Scene scene;
+        try {
+            scene = new Scene(fxmlLoader.load(), 700, 500);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ConnectFourQueueController connectFourQueueController = fxmlLoader.getController();
+        stage.setTitle("Connect Four Queue");
+        stage.setScene(scene);
+        stage.show();
+        connectFourQueueController.start(stage);
     }
 
     private void navigateTo(String fxmlFile) {
