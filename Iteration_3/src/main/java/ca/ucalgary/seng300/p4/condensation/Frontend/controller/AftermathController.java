@@ -138,47 +138,34 @@ public class AftermathController {
         eloRanking.setText(elo);
     }
 
-    private Stage getGlobalStage() {
-        return (Stage) gameResultLabel.getScene().getWindow();
-    }
-
     public void handlePlayAgain(ActionEvent event) throws IOException, ParseException, InterruptedException {
-        Stage stage = getGlobalStage();
         GameTypes gameType = GameSessionRecord.getGameSessionRecord().getGameType();
+        String queueString = "Condensation Application - Queue";
         if (gameType == GameTypes.TICTACTOE){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tictactoequeue.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            Scene scene = new Scene(fxmlLoader.load());
             TicTacToeQueueController ticTacToeQueueController = fxmlLoader.getController();
-            stage.setTitle("Condensation Application - Queue");
-            stage.setScene(scene);
-            stage.show();
-            ticTacToeQueueController.start(stage);
+            HelloApplication.setActiveScene(scene, queueString);
+            ticTacToeQueueController.start();
         }
         else if (gameType == GameTypes.CONNECT4){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connectfourqueue.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            Scene scene = new Scene(fxmlLoader.load());
             ConnectFourQueueController connectFourQueueController = fxmlLoader.getController();
-            stage.setTitle("Condensation Application - Queue");
-            stage.setScene(scene);
-            stage.show();
-            connectFourQueueController.start(stage);
+            HelloApplication.setActiveScene(scene, queueString);
+            connectFourQueueController.start();
         } else {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            Scene scene = new Scene(fxmlLoader.load());
             CheckersQueueController checkersQueueController = fxmlLoader.getController();
-            stage.setTitle("Condensation Application - Queue");
-            stage.setScene(scene);
-            stage.show();
-            checkersQueueController.start(stage);
+            HelloApplication.setActiveScene(scene, queueString);
+            checkersQueueController.start();
         }
     }
 
     public void handleReturnToProfile(ActionEvent event) throws IOException {
-        Stage stage = getGlobalStage();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ProfileHome.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Condensation Application - Profile");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Condensation Application - Profile");
     }
 }

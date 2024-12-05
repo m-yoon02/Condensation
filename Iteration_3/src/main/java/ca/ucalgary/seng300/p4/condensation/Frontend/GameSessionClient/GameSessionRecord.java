@@ -56,6 +56,19 @@ public class GameSessionRecord {
         initialized = false;
     }
 
+    /**
+     * Randomizes the GameSessionRecord for testing
+     * @param chosenGame the GameType to test for
+     */
+    public void randomize(GameTypes chosenGame) {
+        initialized = true;
+        sessionID = UUID.randomUUID();
+        player1ID = UUID.randomUUID();
+        player2ID = UUID.randomUUID();
+        currentPlayerID = player1ID;
+        gameType = chosenGame;
+    }
+
     public void fromJSON(String jsonString) {
         JSONObject jsonObject;
         try {

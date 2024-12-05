@@ -26,21 +26,8 @@ public class ConnectFourQueueController {
     @FXML
     private Button leaveQueue;
 
-    @FXML
-    private Parent origin;
-
-    @FXML
-    private Stage createWindow;
-    @FXML
-    private Scene createScene;
-
-    @FXML
-    private Stage stage;
-
-
-    public void start(Stage stage) {
+    public void start() {
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        this.stage = stage;
         delay.setOnFinished(_ -> {
             try {
                 sendToBackendConnectFour();
@@ -55,12 +42,9 @@ public class ConnectFourQueueController {
     @FXML
     protected void returnToConnectFourPage(Event event) throws IOException
     {
-        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ConnectFourHomeMenu.fxml")));
-        createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        createScene = new Scene(origin);
-        createWindow.setTitle("Condensation Appliance - Connect Four");
-        createWindow.setScene(createScene);
-        createWindow.show();
+        Parent origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ConnectFourHomeMenu.fxml")));
+        Scene createScene = new Scene(origin);
+        HelloApplication.setActiveScene(createScene);
     }
 
     // get player id
@@ -79,12 +63,7 @@ public class ConnectFourQueueController {
 
         // Directing to the board
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-        ConnectFourController connectFourController = fxmlLoader.getController();
-        connectFourController.setStage(stage);
-        stage.setResizable(true);
-        stage.setTitle("Condensation Appliance - Connect Four");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Condensation Appliance - Connect Four");
     }
 }

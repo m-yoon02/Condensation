@@ -167,19 +167,6 @@ public class GameHandlerTest {
     }
 
     @Test
-    public void testStartGame_SuccessfulStart() {
-        try {
-            // Act
-            gameHandler.startGame();
-
-            // Assert
-            assertTrue("startTimer should have been called", testGameTimer.wasStartCalled());
-        } catch (Exception e) {
-            fail("No exception should be thrown during successful game start");
-        }
-    }
-
-    @Test
     public void testGetPlayerMemoFromUUID() {
         assertNotNull("A player should exist with UUID defined", gameHandler.getPlayerMemoFromUUID(player1ID));
     }

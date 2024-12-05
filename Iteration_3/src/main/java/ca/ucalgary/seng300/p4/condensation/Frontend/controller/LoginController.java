@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
 
@@ -55,9 +56,6 @@ public class LoginController {
 
     @FXML
     private Pane root;
-
-    @FXML
-    private Stage window;
 
     @FXML
     private Scene scene;
@@ -157,11 +155,8 @@ public class LoginController {
                     root = loader.load();
 
                     // Set the window and scene to the login screen
-                    window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     scene = new Scene(root);
-                    window.setScene(scene);
-                    window.setResizable(false);
-                    window.show();
+                    HelloApplication.setActiveScene(scene);
                 } catch (IOException e) {
                     // Catch exception and print call stack
                     e.printStackTrace();
@@ -260,11 +255,8 @@ public class LoginController {
             root = loader.load();
 
             // Set the window and scene to the login screen
-            window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
-            window.setScene(scene);
-            window.setResizable(false);
-            window.show();
+            HelloApplication.setActiveScene(scene);
         } catch (IOException e) {
             // Catch exception and print call stack
             e.printStackTrace();

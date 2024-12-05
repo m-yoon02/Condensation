@@ -52,8 +52,6 @@ public class CheckersLeaderboard {
 
     private ObservableList<Player> playerList;
 
-    private Stage stage;
-
     @FXML
     public void initialize() {
         // Bind each column's preferred width to a percentage of the table's total width
@@ -129,13 +127,8 @@ public class CheckersLeaderboard {
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Condensation Appliance - Checkers");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
+        Scene scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Checkers Home Menu");
     }
 
 
