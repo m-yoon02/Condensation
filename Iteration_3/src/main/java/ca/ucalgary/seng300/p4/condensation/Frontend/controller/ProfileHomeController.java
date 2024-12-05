@@ -285,14 +285,14 @@ public class ProfileHomeController {
         Scene scene = new Scene(root, 400, 300);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.showAndWait(); // Block interaction with the parent window
+        stage.show();
 
 
         FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(reader);
         String playerIDString = (String) object.get("playerID");
-        EditUserController.playerUUID = UUID.fromString(playerIDString);
+        EditUserController.setPlayerUUID(UUID.fromString(playerIDString));
     }
 
     @FXML
@@ -310,14 +310,14 @@ public class ProfileHomeController {
         Scene scene = new Scene(root, 400, 300);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.showAndWait(); // Block interaction with the parent window
+        stage.show();
 
 
         FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(reader);
         String playerIDString = (String) object.get("playerID");
-        EditUserController.playerUUID = UUID.fromString(playerIDString);
+        EditPassController.setPlayerUUID(UUID.fromString(playerIDString));
     }
 
 

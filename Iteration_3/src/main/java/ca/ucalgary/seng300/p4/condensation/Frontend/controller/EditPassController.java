@@ -29,7 +29,7 @@ public class EditPassController {
             changed =  Leaderboard.getInstance().changeName(playerUUID, newPassField.getText());
         }
         if (changed) {
-            messageLabel.setText("Changed Username successfully");
+            messageLabel.setText("Changed Password successfully");
             messageLabel.setTextFill(Color.GREEN);
         }
     }
@@ -37,6 +37,7 @@ public class EditPassController {
     /**
      * Method: validatePass()
      * @return boolean: returns true if password field is not blank and at least three characters, false otherwise
+     * @author Natesh
      *
      * Processes the password field for validity
      */
@@ -66,6 +67,9 @@ public class EditPassController {
             return true;
 
         }
+    }
 
+    public static void setPlayerUUID(UUID uuid) {
+        EditPassController.playerUUID = uuid;
     }
 }

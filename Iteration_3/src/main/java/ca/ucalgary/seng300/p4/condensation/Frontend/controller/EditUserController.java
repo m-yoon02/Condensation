@@ -70,6 +70,9 @@ public class EditUserController {
             usernameLabel.setTextFill(Color.GREEN);
             return true;
         }
+    }
 
+    public static void setPlayerUUID(UUID uuid) {
+        EditUserController.playerUUID = uuid;
     }
 }
