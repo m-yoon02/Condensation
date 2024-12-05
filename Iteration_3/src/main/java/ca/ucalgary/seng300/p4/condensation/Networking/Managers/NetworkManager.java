@@ -577,4 +577,13 @@ public class NetworkManager {
 
         return null;
     }
+
+    public void forfeitGame(UUID sessionID, UUID forfeitedPlayerID) {
+        GameSession gameSession = gameSessionManager.getGameSessionBySessionID(sessionID);
+        if (gameSession != null) {
+            gameSession.processForfeit(forfeitedPlayerID);
+        } else {
+            throw new NullPointerException("GameSession instance is null!");
+        }
+    }
 }
