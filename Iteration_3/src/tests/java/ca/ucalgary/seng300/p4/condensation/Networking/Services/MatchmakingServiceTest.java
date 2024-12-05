@@ -25,7 +25,7 @@ public class MatchmakingServiceTest {
 
     @After
     public void tearDown() {
-        pool = null;
+        pool.clearPool();
     }
 
 
@@ -66,6 +66,7 @@ public class MatchmakingServiceTest {
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
+        // match will be null because there is not enough players
         GameSession session = matchmakingService.findAndMatchPlayers();
 
         // Verify the match
@@ -92,9 +93,37 @@ public class MatchmakingServiceTest {
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
+        // match will be null because GameTypes are different
         GameSession session = matchmakingService.findAndMatchPlayers();
 
         // Verify the match
-        assertNull("Game session should not be null", session);
+        assertNull("Game session should not null", session);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testFindAndMatchPlayers_EloGap() throws IOException, org.json.simple.parser.ParseException {
+        // Add players to the pool
+        QueuedPlayerMemo player1 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CHECKERS, 1000);
+        QueuedPlayerMemo player2 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CHECKERS, 6500);
+        QueuedPlayerMemo player3 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CHECKERS, 12000);
+
+        // add 3 players because there is 13 already in the pool
+        pool.addPlayer(player1);
+        pool.addPlayer(player2);
+        pool.addPlayer(player3);
+
+        // Find and match players
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
+        // match will be null because of the elo gap
+        GameSession session = matchmakingService.findAndMatchPlayers();
+
+        // Verify the match
+        assertNull("Game session should not null", session);
     }
 }
