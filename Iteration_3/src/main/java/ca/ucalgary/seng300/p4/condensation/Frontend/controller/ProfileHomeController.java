@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -271,25 +272,40 @@ public class ProfileHomeController {
 
     @FXML
     void onEditUserButtonClicked(ActionEvent event) throws IOException {
+        // Load the FXML for editing the username
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("editUser.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 400, 300);
+        Parent root = fxmlLoader.load();
+
+        // Create a new Stage for the popup
         Stage stage = new Stage();
-        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL); // Make it a modal dialog
         stage.setTitle("Edit Username");
+
+        // Set the scene for the popup
+        Scene scene = new Scene(root, 400, 300);
         stage.setScene(scene);
-        stage.show();
+        stage.setResizable(false);
+        stage.showAndWait(); // Block interaction with the parent window
     }
 
     @FXML
     void onEditPassButtonClicked(ActionEvent event) throws IOException {
+        // Load the FXML for editing the password
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("editPass.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 400, 300);
+        Parent root = fxmlLoader.load();
+
+        // Create a new Stage for the popup
         Stage stage = new Stage();
-        stage.setResizable(false);
-        stage.setTitle("Edit Username");
+        stage.initModality(Modality.APPLICATION_MODAL); // Make it a modal dialog
+        stage.setTitle("Edit Password");
+
+        // Set the scene for the popup
+        Scene scene = new Scene(root, 400, 300);
         stage.setScene(scene);
-        stage.show();
+        stage.setResizable(false);
+        stage.showAndWait(); // Block interaction with the parent window
     }
+
 
     /**
      * Navigates to the specified screen.
