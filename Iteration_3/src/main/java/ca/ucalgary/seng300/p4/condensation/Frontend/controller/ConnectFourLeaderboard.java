@@ -132,7 +132,7 @@ public class ConnectFourLeaderboard {
     private void handleBackButton(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/ca/ucalgary/seng300/p4/condensation/ConnectFourHomeMenu.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(fxmlLoader.load(), 800, 600);
+        scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("Connect 4 - Menu");
         stage.setScene(scene);
         stage.show();
