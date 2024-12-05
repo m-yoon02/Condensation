@@ -8,6 +8,7 @@ import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import ca.ucalgary.seng300.p4.condensation.Networking.Services.ChatService;
+import static ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord.updateBoardRepresentationFromJSON;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -132,7 +133,7 @@ public class CheckersController {
         sessionID = (UUID) payload.get("SessionID");
         newTurn = (UUID) payload.get("PlayerTurn");
         // Here we will update the board representation from payload
-        updateBoardRepresentationFromJSON((JSONArray) payload.get("Changes"));
+        updateBoardRepresentationFromJSON(boardRepresentation, (JSONArray) payload.get("Changes"));
         updateUIToMatchBoardRepresentation();
     }
 
@@ -352,20 +353,6 @@ public class CheckersController {
             for (int j = 0; j < BOARD_DIM; j++) {
                 if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)) {
                     boardRepresentation[i][j] = "RED";
-                }
-            }
-        }
-    }
-
-    private void updateBoardRepresentationFromJSON(JSONArray jsonArray) {
-        for (String[] strings : boardRepresentation)
-            Arrays.fill(strings, "EMPTY");
-        for (int i = 0; i < BOARD_DIM; i++) {
-            JSONArray outer = (JSONArray) jsonArray.get(i);
-            for (int j = 0; j < BOARD_DIM; j++) {
-                String color = (String) outer.get(j);
-                if (!color.equals("EMPTY")) {
-                    boardRepresentation[i][j] = color;
                 }
             }
         }
