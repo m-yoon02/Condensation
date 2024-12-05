@@ -772,4 +772,9 @@ public class Leaderboard {
        }
       return null;
    }
+
+   //setter for testing
+    public static void setInstance(Leaderboard instance) {
+        Leaderboard.instance = instance;
+    }
 }
