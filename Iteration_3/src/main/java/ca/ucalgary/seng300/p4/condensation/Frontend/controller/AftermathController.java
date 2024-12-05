@@ -139,7 +139,7 @@ public class AftermathController {
         return (Stage) gameResultLabel.getScene().getWindow();
     }
 
-    public void handlePlayAgain(ActionEvent event) throws IOException {
+    public void handlePlayAgain(ActionEvent event) throws IOException, ParseException, InterruptedException {
         Stage stage = getGlobalStage();
         GameTypes gameType = GameSessionRecord.getGameSessionRecord().getGameType();
         if (gameType == GameTypes.TICTACTOE){

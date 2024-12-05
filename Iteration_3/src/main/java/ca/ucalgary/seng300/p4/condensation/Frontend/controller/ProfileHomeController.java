@@ -181,16 +181,16 @@ public class ProfileHomeController {
 
                     switch (gameType) {
                         case "TICTACTOE":
-                            totalWins = ((Long) user.get("winsInTicTacToe")).intValue();
-                            gamesPlayed = ((Long) user.get("gamesPlayedTicTacToe")).intValue();
+                            totalWins = (int) user.get("winsInTicTacToe");
+                            gamesPlayed = (int) user.get("gamesPlayedTicTacToe");
                             break;
                         case "CHECKERS":
-                            totalWins = ((Long) user.get("winsInCheckers")).intValue();
-                            gamesPlayed = ((Long) user.get("gamesPlayedCheckers")).intValue();
+                            totalWins = (int) user.get("winsInCheckers");
+                            gamesPlayed = (int) user.get("gamesPlayedCheckers");
                             break;
                         case "CONNECT4":
-                            totalWins = ((Long) user.get("winsInConnect4")).intValue();
-                            gamesPlayed = ((Long) user.get("gamesPlayedConnect4")).intValue();
+                            totalWins = (int) user.get("winsInConnect4");
+                            gamesPlayed = (int) user.get("gamesPlayedConnect4");
                             break;
                     }
 
