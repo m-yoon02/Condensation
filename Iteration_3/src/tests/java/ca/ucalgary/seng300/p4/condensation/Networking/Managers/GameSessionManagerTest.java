@@ -96,6 +96,7 @@ public class GameSessionManagerTest {
 
         GameSession retrievedGameSession3 = manager.getGameSessionBySessionID(testSessionID1);
         assertNull("Removed GameSession should not be retrievable", retrievedGameSession3);
+        //
 
 
     }
