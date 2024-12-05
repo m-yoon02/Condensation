@@ -3,6 +3,7 @@ package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
