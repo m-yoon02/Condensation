@@ -1,9 +1,14 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
+import java.util.UUID;
 
 public class EditUserController {
     @FXML
@@ -15,10 +20,19 @@ public class EditUserController {
     @FXML
     TextField newUserNameField;
 
-    @FXML
-    void onConfirmClicked() {
-        if (validateUser()) {
+    public static UUID playerUUID;
 
+    @FXML
+    void onConfirmClicked() throws IOException, ParseException {
+        boolean changed = false;
+        if (validateUser()) {
+            changed =  Leaderboard.getInstance().changeName(playerUUID, newUserNameField.getText());
+        }
+        if (changed) {
+            messageLabel.setText("Changed Username successfully");
+            messageLabel.setTextFill(Color.GREEN);
+
+            // TODO change ProfileHomeController.usernameField
         }
     }
 
@@ -30,6 +44,7 @@ public class EditUserController {
      * Processes the username field for validity
      */
 
+    @FXML
     boolean validateUser() {
 
         // Check if the username field is blank

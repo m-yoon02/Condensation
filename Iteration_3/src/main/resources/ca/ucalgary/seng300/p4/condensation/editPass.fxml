@@ -11,18 +11,18 @@
     <children>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label text="Type your new Password">
+                <Label fx:id="passwordLabel" text="Type your new Password">
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </Label>
-                <TextField fx:id="newUserPassField" promptText="New Password">
+                <TextField fx:id="newPassField" onKeyTyped="#validatePass" promptText="New Password">
                     <VBox.margin>
                         <Insets bottom="5.0" left="70.0" right="70.0" top="10.0" />
                     </VBox.margin>
                 </TextField>
                 <Label fx:id="messageLabel" text="Label" />
-                <Button fx:id="confirmButton" mnemonicParsing="false" text="Button">
+                <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmClicked" text="Confirm">
                     <VBox.margin>
                         <Insets top="5.0" />
                     </VBox.margin>

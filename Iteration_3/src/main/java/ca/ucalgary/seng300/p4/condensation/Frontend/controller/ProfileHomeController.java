@@ -271,7 +271,7 @@ public class ProfileHomeController {
     }
 
     @FXML
-    void onEditUserButtonClicked(ActionEvent event) throws IOException {
+    void onEditUserButtonClicked(ActionEvent event) throws IOException, ParseException {
         // Load the FXML for editing the username
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("editUser.fxml"));
         Parent root = fxmlLoader.load();
@@ -286,11 +286,18 @@ public class ProfileHomeController {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.showAndWait(); // Block interaction with the parent window
+
+
+        FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
+        JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(reader);
+        String playerIDString = (String) object.get("playerID");
+        EditUserController.playerUUID = UUID.fromString(playerIDString);
     }
 
     @FXML
-    void onEditPassButtonClicked(ActionEvent event) throws IOException {
-        // Load the FXML for editing the password
+    void onEditPassButtonClicked(ActionEvent event) throws IOException, ParseException {
+        // Load the FXML for editing the username
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("editPass.fxml"));
         Parent root = fxmlLoader.load();
 
@@ -304,6 +311,13 @@ public class ProfileHomeController {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.showAndWait(); // Block interaction with the parent window
+
+
+        FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
+        JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(reader);
+        String playerIDString = (String) object.get("playerID");
+        EditUserController.playerUUID = UUID.fromString(playerIDString);
     }
 
 
@@ -319,5 +333,13 @@ public class ProfileHomeController {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
+    }
+
+
+    public Label getUsernameField() {
+        return usernameField;
+    }
+    public static void setUsernameField(Label username) {
+
     }
 }

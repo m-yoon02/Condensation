@@ -181,24 +181,27 @@ public class Leaderboard {
         return null;
     }
 
-    public void changeName(UUID playerID, String newName) {
+    public boolean changeName(UUID playerID, String newName) {
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
             if (user.get("playerUUID").equals(playerID.toString())) {
                 user.put("username", newName);
-                break;
+                return true;
+//                break;
             }
         }
+        return false;
     }
-    public void changePassword(UUID playerID, String newPass) {
+    public boolean changePassword(UUID playerID, String newPass) {
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
             if (user.get("playerUUID").equals(playerID.toString())) {
                 user.put("username", newPass);
-                break;
+                return true;
+//                break;
             }
         }
-
+        return false;
     }
 
     /**

@@ -11,12 +11,12 @@
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="userNameLabel" text="Type your new Username">
+            <Label fx:id="usernameLabel" text="Type your new Username">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="newUserNameField" promptText="New Username">
+            <TextField fx:id="newUserNameField" onKeyTyped="#validateUser" promptText="New Username">
                <VBox.margin>
                   <Insets bottom="5.0" left="70.0" right="70.0" top="10.0" />
                </VBox.margin>
