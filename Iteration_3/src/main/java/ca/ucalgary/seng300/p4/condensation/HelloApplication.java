@@ -11,11 +11,11 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("WelcomeScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
 
-//        Image appIcon = new Image(getClass().getResourceAsStream("logo.png"));
-//        stage.getIcons().add(appIcon);
+        Image appIcon = new Image(getClass().getResourceAsStream("logo.png"));
+        stage.getIcons().add(appIcon);
 
         stage.setResizable(false);
         stage.setTitle("Condensation Application");
