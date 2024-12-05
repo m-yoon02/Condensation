@@ -40,6 +40,7 @@ public class LeaderboardTest {
         user1.put("gamesPlayedConnect4", 1);
         user1.put("winsInConnect4", 1);
         user1.put("connect4Elo", 1200);
+        user1.put("elo", 1200);
 
         mockData.add(user1);
 
@@ -49,7 +50,32 @@ public class LeaderboardTest {
         user2.put("password", "password2");
         user2.put("checkersElo", 1300);
         user2.put("recentMatches", new JSONArray());
+        user2.put("elo", 1300);
         mockData.add(user2);
+
+
+
+        JSONObject user3 = new JSONObject();
+        user3.put("playerUUID", UUID.randomUUID().toString());
+        user3.put("username", "player3");
+        user3.put("password", "password3");
+        user3.put("elo", 1400);
+        mockData.add(user3);
+
+        JSONObject user4 = new JSONObject();
+        user4.put("playerUUID", UUID.randomUUID().toString());
+        user4.put("username", "player4");
+        user4.put("password", "password4");
+        user4.put("elo", 1500);
+        mockData.add(user4);
+
+
+        JSONObject user5 = new JSONObject();
+        user5.put("playerUUID", UUID.randomUUID().toString());
+        user5.put("username", "player5");
+        user5.put("password", "password5");
+        user5.put("elo", 1600);
+        mockData.add(user5);
 
         try (FileWriter writer = new FileWriter(MOCK_LEADERBOARD_FILE)) {
             writer.write(mockData.toJSONString());
@@ -304,4 +330,41 @@ public class LeaderboardTest {
 
 
     }
+
+
+    @Test
+    public void testFetchTop5Players() throws IOException, IllegalAccessException, ParseException {
+        JSONArray mockArray = new JSONArray();
+
+        // adding mock data to the JSON array
+
+        // first reset the leaderboard instance and load the mock data
+        resetLeaderboardInstance();
+        leaderboard = Leaderboard.getInstance();
+        leaderboard.loadData();
+
+        // get the top 5 players
+        JSONArray top5Players = leaderboard.fetchTop5Players();
+
+        // verifying
+
+        assertNotNull("The top 5 players should not be null", top5Players);
+        assertEquals("The top 5 players should contain 5 players", 5, top5Players.size());
+
+        // testing to see if it puts the top 5 players in descending order based on elo
+        String[] expectedOrder = {"player5", "player4", "player3", "player2", "player1"};
+        for (int i = 0; i < top5Players.size(); i++) {
+            JSONObject player = (JSONObject) top5Players.get(i);
+            assertEquals("Players should be in correct order", expectedOrder[i], player.get("username"));
+        }
+
+    }
+
+
+
+
+
+
+
+
 }
