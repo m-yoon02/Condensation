@@ -53,5 +53,14 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
         assertNotNull(newNode);
     }
 
+    @Test
+    public void leaderboardButton_Test() throws Exception{
+        assertNotNull(leaderboardButton);
+        clickOn(leaderboardButton);
+        Parent newNode = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
+        assertNotNull(newNode);
+    }
+
+
 
 }
