@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.GameTimer;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,7 +58,7 @@ public class GameTimerTest {
 
     @Test
     public void testGetOtherPlayerUUID_1() {
-        assertEquals("UUID of other player should match!", gameTimer.getOtherPlayerID(p1ID), p2ID);
+        Assert.assertEquals("UUID of other player should match!", gameTimer.getOtherPlayerID(p1ID), p2ID);
     }
 
     @Test

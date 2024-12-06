@@ -6,11 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="e30402ac-a7a0-446c-a1b8-5a76fa4d02f5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/mockLeaderboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/mockLeaderboard.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManagerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageOptionsProvider">
+    <option name="myAddOrReplace" value="0" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -27,38 +33,132 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;fix__everything__lol&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "JUnit.GameSessionManagerTest.executor": "Coverage",
+    "JUnit.LeaderboardTest.executor": "Run",
+    "JUnit.NetworkManagerTest.editPassword.executor": "Run",
+    "JUnit.NetworkManagerTest.executor": "Coverage",
+    "JUnit.NetworkManagerTest.sendGameDataToClients.executor": "Run",
+    "JUnit.NetworkManagerTest.testGetNetworkInstance.executor": "Run",
+    "JUnit.NetworkManagerTest.testHandleQueuePlayer.executor": "Run",
+    "JUnit.NetworkManagerTest.testIsPlayerOnline.executor": "Run",
+    "JUnit.NetworkManagerTest.testPlayerLoginHandler_ValidCredentials.executor": "Run",
+    "JUnit.NetworkManagerTest.testPlayerSubscribed.executor": "Run",
+    "JUnit.NetworkManagerTest.testSendChatToClient.executor": "Run",
+    "JUnit.NetworkManagerTest.testSendCreatedGameSession.executor": "Coverage",
+    "JUnit.NetworkManagerTest.testSignUpHandler.executor": "Debug",
+    "JUnit.NetworkManagerTest.testSignUpHandler_ValidSignup.executor": "Run",
+    "JUnit.NetworkManagerTest.testValidateUserCredentials_InvalidCredentials.executor": "Run",
+    "JUnit.NetworkManagerTest.testValidateUserCredentials_ValidCredentials.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Mort__sam__testing",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager">
-    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.HelloApplication" />
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.NetworkManagerTest">
+    <configuration name="NetworkManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="condensation" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.*" />
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkManagerTest.editPassword" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="METHOD_NAME" value="editPassword" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkManagerTest.testHandleQueuePlayer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="METHOD_NAME" value="testHandleQueuePlayer" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkManagerTest.testPlayerLoginHandler_ValidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="METHOD_NAME" value="testPlayerLoginHandler_ValidCredentials" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkManagerTest.testValidateUserCredentials_InvalidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="METHOD_NAME" value="testValidateUserCredentials_InvalidCredentials" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.HelloApplication" />
+        <item itemvalue="JUnit.NetworkManagerTest" />
+        <item itemvalue="JUnit.NetworkManagerTest.testPlayerLoginHandler_ValidCredentials" />
+        <item itemvalue="JUnit.NetworkManagerTest.testHandleQueuePlayer" />
+        <item itemvalue="JUnit.NetworkManagerTest.editPassword" />
       </list>
     </recent_temporary>
   </component>
@@ -72,6 +172,7 @@
       <updated>1733353929016</updated>
       <workItem from="1733353930641" duration="3596000" />
       <workItem from="1733358193457" duration="9907000" />
+      <workItem from="1733457877990" duration="10789000" />
     </task>
     <servers />
   </component>
@@ -88,5 +189,26 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="testRunner" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testValidateUserCredentials_InvalidCredentials.ic" NAME="NetworkManagerTest.testValidateUserCredentials_InvalidCredentials Coverage Results" MODIFIED="1733459052513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$GameSessionManagerTest.ic" NAME="GameSessionManagerTest Coverage Results" MODIFIED="1733461637107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest.ic" NAME="NetworkManagerTest Coverage Results" MODIFIED="1733470396420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testSendCreatedGameSession.ic" NAME="NetworkManagerTest.testSendCreatedGameSession Coverage Results" MODIFIED="1733459033497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
+    </SUITE>
   </component>
 </project>
