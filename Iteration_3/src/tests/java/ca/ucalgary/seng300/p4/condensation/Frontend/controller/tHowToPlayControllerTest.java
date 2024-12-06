@@ -32,6 +32,7 @@ public class tHowToPlayControllerTest extends ApplicationTest {
         stage.show();
         tHowToPlayController = fxmlLoader.getController();
     }
+
     @Before
     public void setUp() throws Exception {
         backButton = (Button) lookup("#backbutton").queryAs(Button.class);

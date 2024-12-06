@@ -8,21 +8,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class HowToPlayConnect4ControllerTest  extends Application {
 
+    Button backButton;
     FXMLLoader fxmlLoader;
     Scene scene;
-    ActionEvent event = new ActionEvent();
+
     HowToPlayConnect4Controller howToPlayConnect4Controller;
+    HelloApplication application = new HelloApplication();
 
     @Override
     public void start(Stage stage) throws Exception {
+        application.start(stage);
+
         fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("howToPlayConnect4.fxml"));
         scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
@@ -30,10 +37,28 @@ public class HowToPlayConnect4ControllerTest  extends Application {
         howToPlayConnect4Controller = fxmlLoader.getController();
     }
 
+    @Before
+    public void setUp() throws Exception {
+        backButton = (Button) lookup("#backButton").queryAs(Button.class);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        backButton = null;
+    }
+
     @Test
     public void testOnHowToPlayBackBtnClick() throws Exception {
-        howToPlayConnect4Controller.goBack(event);
 
+        clickOn(backButton);
+
+        Node rootNode = backButton.getScene().getRoot();
+        assertNotNull(rootNode);
+
+        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
+        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
+
+        assertNotNull(expectedScene.getRoot());
 
     }
 }
