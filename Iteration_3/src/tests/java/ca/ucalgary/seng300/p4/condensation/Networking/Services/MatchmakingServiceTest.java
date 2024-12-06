@@ -3,6 +3,7 @@ package ca.ucalgary.seng300.p4.condensation.Networking.Services;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,9 +18,21 @@ public class MatchmakingServiceTest {
     private MatchmakingService matchmakingService;
     private MatchmakingPool pool;
 
+    private NetworkManager networkManager;
+
+    public static final String MOCK_LEADERBOARD_FILE = "mockLeaderboard.json";
+    public static final String TEMP_PLAYER_FILE = "tempPlayers.json";
+
     @Before
     public void setUp() throws IOException, org.json.simple.parser.ParseException {
+        NetworkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE;
+
+        NetworkManager.PLAYER_ID_FILE = TEMP_PLAYER_FILE;
+
+        networkManager = new NetworkManager();
+
         pool = new MatchmakingPool();
+
         matchmakingService = new MatchmakingService(pool);
     }
 
@@ -48,6 +61,8 @@ public class MatchmakingServiceTest {
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
         GameSession session = matchmakingService.findAndMatchPlayers();
 
         // Verify the match
@@ -58,8 +73,11 @@ public class MatchmakingServiceTest {
 
     @Test(expected = RuntimeException.class)
     public void testFindAndMatchPlayers_NotEnoughPlayers() throws IOException, org.json.simple.parser.ParseException {
+        pool.clearPool();
 
         // Find and match players final session should be null
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
@@ -93,6 +111,10 @@ public class MatchmakingServiceTest {
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
+
         // match will be null because GameTypes are different
         GameSession session = matchmakingService.findAndMatchPlayers();
 
@@ -110,9 +132,10 @@ public class MatchmakingServiceTest {
         // add 3 players because there is 13 already in the pool
         pool.addPlayer(player1);
         pool.addPlayer(player2);
-        pool.addPlayer(player3);
 
         // Find and match players
+        matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
