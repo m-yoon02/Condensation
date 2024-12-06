@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -185,20 +186,48 @@ public class CheckersControllerTest extends ApplicationTest {
     }
 
 
-//    @Test
-//    public void testOnCheckersButtonClick_IncompleteMove() throws IOException, ParseException {
-//        // Simulate clicking a valid piece at position (2, 2)
-//        int i = 2, j = 2;
-//        Button button22 = (Button) chessboardGrid.getChildren().get(18); // Adjust index based on layout
-//        clickOn(button22); // Simulate the first click
-//        String pieceStyleBefore = button22.getStyle(); // Store the initial style
-//
-//        clickOn(button22); // Simulate the first click
-//
-//        // Verify that the piece has not moved
-//        String pieceStyleAfter = button22.getStyle();
-//        assertEquals(pieceStyleBefore, pieceStyleAfter);
-//    }
+    @Test
+    public void testOnCheckersButtonClick_IncompleteMove() throws IOException, ParseException {
+        // Simulate clicking a valid piece at position (2, 2)
+        int i = 2, j = 2;
+        Button button22 = (Button) chessboardGrid.getChildren().get(18); // Adjust index based on layout
+        clickOn(button22); // Simulate the first click
+        String pieceStyleBefore = button22.getStyle(); // Store the initial style
+
+        clickOn(button22); // Simulate the first click
+
+        // Verify that the piece has not moved
+        String pieceStyleAfter = button22.getStyle();
+        assertEquals(pieceStyleBefore, pieceStyleAfter);
+    }
+
+    @Test
+    public void testHandleGameEnd_WinByPlayerOne() throws Exception {
+        // Simulate a payload for player one's win
+        JSONObject payload = new JSONObject();
+        payload.put("GameState", "WIN");
+        payload.put("PlayerWon", UUID.randomUUID());
+
+        // Invoke the handleGameEnd method
+        checkersController.handleGameEnd(payload);
+
+        // Verify turnLabel updates
+        assertEquals(String.format("Player %s won the game!", UUID.randomUUID()), turnLabel.getText());
+        assertEquals(Color.GREEN, turnLabel.getTextFill());
+    }
+
+    @Test
+    public void testHandleGameEnd_Tie() throws Exception {
+        // Simulate a payload for a tie
+        JSONObject payload = new JSONObject();
+        payload.put("GameState", "TIE");
+
+        // Invoke the handleGameEnd method
+        checkersController.handleGameEnd(payload);
+
+        // Verify turnLabel updates
+        assertEquals("The game ended in a tie!", turnLabel.getText());
+    }
 
 
     @Test
