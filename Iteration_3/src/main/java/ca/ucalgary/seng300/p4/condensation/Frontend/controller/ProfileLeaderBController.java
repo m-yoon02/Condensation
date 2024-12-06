@@ -118,18 +118,38 @@ public class ProfileLeaderBController {
             });
 
             // Sort the data by score for each game
-            ticTacToeData.sort((o1, o2) -> Long.compare((Long) o2.get("tictactoeElo"), (Long) o1.get("tictactoeElo")));
+            ticTacToeData.sort((o1, o2) -> {
+                // Get the values as Numbers
+                Number elo1 = (Number) o1.get("tictactoeElo");
+                Number elo2 = (Number) o2.get("tictactoeElo");
+
+                // Convert both to Longs and compare
+                return Long.compare(elo2.longValue(), elo1.longValue());
+            });
             for (int i = 0; i < ticTacToeData.size(); i++) {
                 ticTacToeData.get(i).put("rank", i + 1); // Rank starts at 1
             }
 
-            connect4Data.sort((o1, o2) -> Long.compare((Long) o2.get("connect4Elo"), (Long) o1.get("connect4Elo")));
+            connect4Data.sort((o1, o2) -> {
+                // Get the values as Numbers
+                Number elo1 = (Number) o1.get("connect4Elo");
+                Number elo2 = (Number) o2.get("connect4Elo");
+
+                // Convert both to Longs and compare
+                return Long.compare(elo2.longValue(), elo1.longValue());
+            });
             for (int i = 0; i < connect4Data.size(); i++) {
                 connect4Data.get(i).put("rank", i + 1); // Rank starts at 1
             }
 
-            checkersData.sort((o1, o2) -> Long.compare((Long) o2.get("checkersElo"), (Long) o1.get("checkersElo")));
-            for (int i = 0; i < checkersData.size(); i++) {
+            checkersData.sort((o1, o2) -> {
+                // Get the values as Numbers
+                Number elo1 = (Number) o1.get("checkersElo");
+                Number elo2 = (Number) o2.get("checkersElo");
+
+                // Convert both to Longs and compare
+                return Long.compare(elo2.longValue(), elo1.longValue());
+            });            for (int i = 0; i < checkersData.size(); i++) {
                 checkersData.get(i).put("rank", i + 1); // Rank starts at 1
             }
 
