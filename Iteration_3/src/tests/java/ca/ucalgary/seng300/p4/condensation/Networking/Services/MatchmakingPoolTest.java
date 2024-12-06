@@ -43,126 +43,16 @@ public class MatchmakingPoolTest {
 
     @Before
     public void setUp() throws Exception {
-        System.out.println("ah");
-
-        // Create a mock JSON file to simulate leaderboard data
-        JSONArray mockData = new JSONArray();
-
-        // Add sample user data
-        JSONObject user1 = new JSONObject();
-        user1.put("playerUUID", UUID.randomUUID().toString());
-        user1.put("username", "player1");
-        user1.put("password", "password1");
-        user1.put("checkersElo", 1200);
-        user1.put("recentMatches", new JSONArray());
-        user1.put("gamesPlayedCheckers", 1);
-        user1.put("winsInCheckers", 1);
-        user1.put("gamesPlayedTicTacToe", 1);
-        user1.put("winsInTicTacToe", 1);
-        user1.put("tictactoeElo", 1200);
-        user1.put("gamesPlayedConnect4", 1);
-        user1.put("winsInConnect4", 1);
-        user1.put("connect4Elo", 1200);
-        user1.put("elo", 1200);
-        user1.put("lossInCheckers", 0);
-        user1.put("lossInTicTacToe", 0);
-        user1.put("lossInConnect4", 0);
-
-        mockData.add(user1);
-
-        JSONObject user2 = new JSONObject();
-        user2.put("playerUUID", UUID.randomUUID().toString());
-        user2.put("username", "player2");
-        user2.put("password", "password2");
-        user2.put("checkersElo", 1300);
-        user2.put("recentMatches", new JSONArray());
-        user2.put("elo", 1300);
-        mockData.add(user2);
-
-        JSONObject user3 = new JSONObject();
-        user3.put("playerUUID", UUID.randomUUID().toString());
-        user3.put("username", "player3");
-        user3.put("password", "password3");
-        user3.put("elo", 1400);
-        mockData.add(user3);
-
-        JSONObject user4 = new JSONObject();
-        user4.put("playerUUID", UUID.randomUUID().toString());
-        user4.put("username", "player4");
-        user4.put("password", "password4");
-        user4.put("elo", 1500);
-        mockData.add(user4);
-
-
-        JSONObject user5 = new JSONObject();
-        user5.put("playerUUID", UUID.randomUUID().toString());
-        user5.put("username", "player5");
-        user5.put("password", "password5");
-        user5.put("elo", 1600);
-        mockData.add(user5);
-
-        System.out.println("hi");
-
         mockLeaderboard = new Leaderboard();
         Leaderboard.setInstance(mockLeaderboard);
 
-        try (FileWriter writer = new FileWriter(MOCK_LEADERBOARD_FILE)) {
-            writer.write(mockData.toJSONString());
-            System.out.println("a");
-        }
+        NetworkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE;
 
-        System.out.println("hello");
-        // Initialize the leaderboard with the mock file
-        networkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE;
-        mockLeaderboard = Leaderboard.getInstance();
-        System.out.println("gr");
+        NetworkManager.PLAYER_ID_FILE = TEMP_PLAYER_FILE;
 
-        // create a mock JSON file for fetchUserFromNewPLayerJSON test
-        JSONObject playerData = new JSONObject();
-        playerData.put("username", "testPlayer");
-
-        try (FileWriter writer = new FileWriter(TEMP_PLAYER_FILE)) {
-            writer.write(playerData.toJSONString());
-
-        }
-        System.out.println(mockLeaderboard.getAllUsers());
-        networkManager.PLAYER_ID_FILE = TEMP_PLAYER_FILE;
-
-        System.out.println("here");
+        networkManager = new NetworkManager();
 
         matchmakingPool = new MatchmakingPool();
-        System.out.println("woo");
-
-        System.out.println("hello");
-    }
-
-    @After
-    public void tearDown() throws IOException, IllegalAccessException {
-        // Clean up the mock file after tests
-
-        // reset leaderboard instance
-        resetLeaderboardInstance();
-
-
-        File file = new File(MOCK_LEADERBOARD_FILE);
-        if (file.exists()) {
-            file.delete();
-        }
-
-        NetworkManager.LEADERBOARD_FILE = null;
-        NetworkManager.PLAYER_ID_FILE = null;
-    }
-
-    private void resetLeaderboardInstance() throws IOException, IllegalAccessException {
-        // cited by ChatGPT: I didn't know how to reset Leaderboard instance without modifying Leaderboard to have some clear method
-        Field instanceField = null;
-        try {
-            instanceField = Leaderboard.class.getDeclaredField("instance");
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
-        instanceField.setAccessible(true);
-        instanceField.set(null, null);
     }
 
     @Test
