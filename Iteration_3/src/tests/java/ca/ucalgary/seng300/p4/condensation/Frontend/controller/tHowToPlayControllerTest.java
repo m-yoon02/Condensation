@@ -22,9 +22,12 @@ public class tHowToPlayControllerTest extends ApplicationTest {
     tHowToPlayController controller;
 
     Button backbutton;
+    HelloApplication application;
 
     @Override
     public void start(Stage stage) throws IOException {
+        HelloApplication application = new HelloApplication();
+        application.start(stage);
         loader = new FXMLLoader(HelloApplication.class.getResource("tHowToPlay.fxml"));
         scene = new Scene(loader.load());
         stage.setScene(scene);

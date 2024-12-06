@@ -6,6 +6,7 @@ import org.junit.Test;
 
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class PlayerTest {
     private Player player;
@@ -57,6 +58,6 @@ public class PlayerTest {
     public void testUniquePlayerID() {
         // Create another Player and verify IDs are unique
         Player anotherPlayer = new Player("anotherUser", 5, 1200);
-        assertNotEquals("Each Player should have a unique ID", player.getPlayerID(), anotherPlayer.getPlayerID());
+        assertNotEquals(player.getPlayerID(), anotherPlayer.getPlayerID(), "Each Player should have a unique ID");
     }
 }
