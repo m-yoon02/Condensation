@@ -1,4 +1,14 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.Services;
+
+/**
+ * NOTE: for testing fetch4RandomPlayers
+ *
+ * this file only can test 87% line coverage and 75% branch coverage because of the while
+ * loop in this method. This is untestable because if we were to test it in a way for it
+ * to satisfy that condition, it will become a never ending loop while in the actual application,
+ * this won't happen. That loop is there because it will fetch 4 players, add them to the pool, and stop there.
+ */
+
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 
@@ -28,10 +38,6 @@ public class MatchmakingPoolTest {
         Leaderboard.setInstance(leaderboardMock);
 
         matchmakingPool = new MatchmakingPool();
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test
