@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+.main-pane {
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-background-color: #091856;
+    -fx-pref-width: 400;
+    -fx-pref-height: 300;
+}
+.main-pane Button {
+    -fx-font-size: 16;
+    -fx-background-color: #2415E2;
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: White;
+    -fx-border-radius: 0;
+}
+.main-pane Label {
+    -fx-font-size: 16;
+    -fx-font-family: "Oswald", sans-serif;
+    -fx-text-fill: White;
+}
+
+
+#messageLabel {
+    -fx-font-size: 12;
+    -fx-text-fill: #091856;
+}

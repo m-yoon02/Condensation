@@ -182,24 +182,28 @@ public class Leaderboard {
         return null;
     }
 
-    public void changeName(UUID playerID, String newName) {
+    public boolean changeName(UUID playerID, String newName) throws IOException {
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
             if (user.get("playerUUID").equals(playerID.toString())) {
                 user.put("username", newName);
-                break;
+                saveData();
+                return true;
+//                break;
             }
         }
+        return false;
     }
-    public void changePassword(UUID playerID, String newPass) {
+    public boolean changePassword(UUID playerID, String newPass) {
         for (Object object : users) {
             JSONObject user = (JSONObject) object;
             if (user.get("playerUUID").equals(playerID.toString())) {
-                user.put("username", newPass);
-                break;
+                user.put("password", newPass);
+                return true;
+//                break;
             }
         }
-
+        return false;
     }
 
     /**
@@ -616,7 +620,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who lost the game.
      * @param sessionID The UUID of the game session where the loss occurred.
      */
-    private void updateEloForLosingPlayerCheckers(UUID playerID, UUID sessionID) {
+    public void updateEloForLosingPlayerCheckers(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -661,7 +665,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who lost the game.
      * @param sessionID The UUID of the game session where the loss occurred.
      */
-    private void updateEloForLosingPlayerTictactoe(UUID playerID, UUID sessionID) {
+    public void updateEloForLosingPlayerTictactoe(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -705,7 +709,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who lost the game.
      * @param sessionID The UUID of the game session where the loss occurred.
      */
-    private void updateEloForLosingPlayerConnect4(UUID playerID, UUID sessionID) {
+    public void updateEloForLosingPlayerConnect4(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -801,4 +805,12 @@ public class Leaderboard {
        }
       return null;
    }
+
+   //setter for testing
+    public static void setInstance(Leaderboard instance) {
+        Leaderboard.instance = instance;
+    }
+
+
+
 }
