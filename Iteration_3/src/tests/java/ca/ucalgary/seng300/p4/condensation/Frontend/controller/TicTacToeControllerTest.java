@@ -1,6 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.junit.After;
@@ -21,6 +24,7 @@ import org.testfx.framework.junit.ApplicationTest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -195,6 +199,50 @@ public class TicTacToeControllerTest extends ApplicationTest{
 
         System.setOut(System.out);  // Reset System.out
         assertTrue(consoleOutput.toString().contains("No"));  // Assert console output contains "Yes"
+    }
+
+    @Test
+    public void testYourTurn(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("UpdateType", "YOUR_TURN");
+        jsonObject.put("SessionID", UUID.randomUUID());
+        jsonObject.put("PlayerTurn", UUID.randomUUID());
+
+        JSONArray jArray = new JSONArray();
+        jsonObject.put("Changes",jArray);
+
+        for (int i = 0; i < 3; i++){
+            JSONArray outerArray = new JSONArray();
+            for (int j = 0; j < 3; j++){
+                if(i == 0 || i == 1 || i == 2 || i == 3) {
+                    outerArray.add("RED");
+                }
+                else{
+                    outerArray.add("BLUE");
+                }
+            }
+            jArray.add(outerArray);
+        }
+
+
+        Platform.runLater(() -> {
+            try {
+                ticTacToeController.receiveFromBackendTicTacToe(jsonObject);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
+    }
+
+    @Test
+    public void clickYesForfeit(){
+
+
+
+
+
     }
 
 
