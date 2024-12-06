@@ -122,7 +122,7 @@ public class EditUserControllerTest extends ApplicationTest {
         WaitForAsyncUtils.waitForFxEvents();
 
         // Verify that the messageLabel updates correctly
-        assertEquals("Changed Username successfully", messageLabel.getText());
+        assertEquals("Changed Username successfully", messageLabel.getText().toString());
 
         // Verify the username in the Leaderboard
         JSONObject updatedUser = Leaderboard.getInstance().findUserById(testPlayerUUID);
