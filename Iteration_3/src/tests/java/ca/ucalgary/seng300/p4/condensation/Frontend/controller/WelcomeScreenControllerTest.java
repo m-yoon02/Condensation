@@ -34,9 +34,12 @@ public class WelcomeScreenControllerTest extends ApplicationTest {
     MenuItem progItem;
     Button signUpButton;
     Button loginButton;
+    HelloApplication application;
 
     @Override
     public void start(Stage stage) throws IOException {
+        application = new HelloApplication();
+        application.start(stage);
         fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("WelcomeScreen.fxml"));
         scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);

@@ -528,7 +528,7 @@ public class NetworkManagerTest {
 
         UUID currentPlayerTurn = gameHandler.getFirstPlayerID();  //first player should have been changed after the move
         assertEquals(player1.getPlayerId(), currentPlayerTurn);  //player 1's turn should have ended
-        assertNotEquals(player2.getPlayerId(), currentPlayerTurn);  //now it should be player 2's turn
+        assertFalse(player2.getPlayerId().equals(currentPlayerTurn));  //now it should be player 2's turn
     }
 
     public void testForfeitGame(UUID sessionID, UUID forfeitedPlayerID) {
