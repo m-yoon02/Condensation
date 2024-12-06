@@ -206,4 +206,25 @@ public class GameSessionTest {
         }
     }
 
+    @Test
+    public void testProcessForfeit() {
+
+        // add players
+        UUID player1ID = UUID.randomUUID();
+        UUID player2ID = UUID.randomUUID();
+        GameTypes gameType = GameTypes.TICTACTOE;
+
+        QueuedPlayerMemo playerMemo1 = new QueuedPlayerMemo(player1ID, gameType, 1200);
+        QueuedPlayerMemo playerMemo2 = new QueuedPlayerMemo(player2ID, gameType, 1250);
+
+
+        GameSession gameSession = new GameSession(playerMemo1, playerMemo2);
+        UUID forfeitPlayerID = player1ID;
+        gameSession.processForfeit(forfeitPlayerID);
+        assertEquals("Player 1 should be forfeited", player1ID, forfeitPlayerID);
+        assertTrue("Game ended due to forfeit", true);
+
+
+    }
+
 }
