@@ -174,6 +174,41 @@ public class LeaderboardTest {
     }
 
     @Test
+    public void testUpdateForTieGame() throws IOException {
+        // Create and add players to the leaderboard
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        JSONObject user2 = leaderboard.findUserByName("player2");
+
+        UUID sessionID = UUID.randomUUID();
+
+        // Update for tie game
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        UUID player2ID = UUID.fromString((String) user2.get("playerUUID"));
+        leaderboard.updateForTieGame(player1ID, player2ID, sessionID, GameTypes.CHECKERS);
+
+        // update players
+        user1 = leaderboard.findUserByName("player1");
+        user2 = leaderboard.findUserByName("player2");
+
+        // Retrieve players from the leaderboard
+        // Verify players are not null
+        assertNotNull(user1);
+        assertNotNull(user2);
+
+        // Verify recent matches
+        JSONArray recentMatches1 = (JSONArray) user1.get("recentMatches");
+
+        assertEquals(2, recentMatches1.size());
+
+        // Verify the match details
+        JSONObject recentMatch1 = (JSONObject) recentMatches1.getFirst();
+
+        assertEquals(sessionID.toString(), recentMatch1.get("matchID"));
+        assertEquals(GameTypes.CHECKERS.toString(), recentMatch1.get("gameType"));
+        assertEquals("T", recentMatch1.get("outcome"));
+    }
+
+    @Test
     public void testUpdateForTieGameCheckers() throws IOException {
         // Create and add players to the leaderboard
         JSONObject user1 = leaderboard.findUserByName("player1");
