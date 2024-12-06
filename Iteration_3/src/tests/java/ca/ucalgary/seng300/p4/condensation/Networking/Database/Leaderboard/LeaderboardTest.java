@@ -5,6 +5,7 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import org.assertj.core.internal.bytebuddy.implementation.bind.MethodNameEqualityResolver;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.*;
 
@@ -564,6 +565,31 @@ public class LeaderboardTest {
 
 
     }
+
+
+    @Test
+    public void testFindUserByNameToString() throws ParseException {
+        // find an existing user
+        String player1Json = leaderboard.findUserByNameToString("player1");
+        // since this user should exist, test if it doesn't return null
+        assertNotNull("JSON string for player1 shouldn't be null", player1Json);
+
+        // have to parse the JSON string so we can verify its content
+        JSONParser parser = new JSONParser();
+        JSONObject player1Object = (JSONObject) parser.parse(player1Json);
+
+        // check if its content is the same
+        assertEquals("The username in JSON should be 'player1'", "player1", player1Object.get("username"));
+
+        // adding a dummy non existent user
+        String nonExistentPlayerJson = leaderboard.findUserByNameToString("nonExistentPlayer");
+
+        assertNull("JSON string for a non existent user should be null", nonExistentPlayerJson);
+
+
+    }
+
+
 
 
 
