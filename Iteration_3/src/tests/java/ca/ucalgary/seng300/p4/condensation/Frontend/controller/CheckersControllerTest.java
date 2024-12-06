@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.junit.Before;
 import org.junit.After;
@@ -115,6 +117,8 @@ public class CheckersControllerTest extends ApplicationTest {
         }
     }
 
+
+
 //    @Test
 //    public void testForfeitYesButtonClick()  {
 //
@@ -170,6 +174,22 @@ public class CheckersControllerTest extends ApplicationTest {
 
         // Verify that the chatBox is cleared after sending the message
         assertEquals("", chatBox.getText());
+    }
 
+    @Test
+    public void testPlayerResponse() {
+        // Set the text in the chat box (simulate player 1's message)
+        chatBox.setText("hello");
+
+        // Simulate clicking the send button for player 1's message
+        clickOn(sendBtn);
+
+        // Verify Player 2's response
+        HBox messageHBox2 = (HBox) paneInsideScrollPane.getChildren().get(1);  // Player 2's response is the second child
+        VBox messageBox2 = (VBox) messageHBox2.getChildren().get(0);
+        Label messageLabel2 = (Label) messageBox2.getChildren().get(1);  // The response message label
+
+        // Verify that the message matches Player 2's response
+        assertEquals("hello there noob", messageLabel2.getText());
     }
 }
