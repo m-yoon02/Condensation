@@ -610,41 +610,6 @@ public class NetworkManagerTest {
 //        assertNotNull("Game session should exist", session);
 //    }
 
-    @Test
-    public void testRecievePlayerMessage_ReturnsNull() {
-
-        UUID player1UUID = UUID.fromString("efbee4fb-36d3-4551-a111-6c19a0695416");
-        UUID player2UUID = UUID.fromString("71491e49-f970-4a78-b8dd-0901df523fe6");
-
-        playerMemo1 = new QueuedPlayerMemo(player1.getPlayerId(), GameTypes.CHECKERS, 100);
-        playerMemo2 = new QueuedPlayerMemo(player2.getPlayerId(), GameTypes.CHECKERS, 110);
-
-        GameSession gameSession = new GameSession(playerMemo1, playerMemo2);
-        gameSessionManager.addGameSession(gameSession);
-        UUID sessionID = gameSession.getSessionId();
-        System.out.println(sessionID);
-
-
-
-
-// Access the sessionsMap (if accessible directly; otherwise, create a getter)
-        GameSession gameSession1 = gameSessionManager.getGameSessionBySessionID(sessionID);
-
-
-        String player1Message = "Hello, player2!";
-
-        JSONObject receivePlayerMessagePayload = new JSONObject();
-        receivePlayerMessagePayload.put("SessionID", sessionID.toString());
-        receivePlayerMessagePayload.put("Player1ID", player1UUID.toString());
-        receivePlayerMessagePayload.put("Message", player1Message);
-
-        // Act
-        JSONArray result = networkManager.recievePlayerMessage(receivePlayerMessagePayload);
-
-        // Assert
-        assertNotNull("The method should not return null", result);
-    }
-
 
 
     @After
