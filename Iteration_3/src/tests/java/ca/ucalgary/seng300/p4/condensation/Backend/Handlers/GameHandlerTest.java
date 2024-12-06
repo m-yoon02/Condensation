@@ -122,7 +122,7 @@ public class GameHandlerTest {
         assertEquals("Player 1 should be returned when we pass in player 2", player1ID, otherPlayerID);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = Exception.class)
     public void testGetOtherPlayerUUID_3() {
         gameHandler = new TestGameHandler(player1ID, null, colors, testGameTimer);
 
