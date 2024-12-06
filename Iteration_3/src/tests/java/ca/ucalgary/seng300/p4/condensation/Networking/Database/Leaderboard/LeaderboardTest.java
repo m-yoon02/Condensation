@@ -659,6 +659,39 @@ public class LeaderboardTest {
 
     }
 
+    @Test
+    public void testChangePassword() throws IOException {
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        UUID playerID = UUID.fromString((String) user1.get("playerUUID"));
+        leaderboard.changePassword(playerID, "newPassword1");
+
+        JSONObject user = leaderboard.findUserById(playerID);
+        assertNotNull(user);
+        assertEquals("newPassword1", user.get("password"));
+    }
+
+    @Test
+    public void testChangeName() throws IOException {
+        // Retrieve an existing player
+        JSONObject user1 = leaderboard.findUserByName("player1");
+
+        // Verify that the existing player is not null
+        assertNotNull("Player1 should exist in the leaderboard", user1);
+
+        // Extract player details
+        UUID playerID = UUID.fromString((String) user1.get("playerUUID"));
+
+        // Change the player's name
+        leaderboard.changeName(playerID, "newName");
+
+        // Reload the user data to verify the name change
+        JSONObject updatedUser1 = leaderboard.findUserById(playerID);
+
+        // Verify that the name has been updated
+        assertNotNull("Updated user should not be null", updatedUser1);
+        assertEquals("The name should be updated to 'newName'", "newName", updatedUser1.get("username"));
+    }
+
 
 //    @Test
 //    public void testChangeName() throws IOException {
