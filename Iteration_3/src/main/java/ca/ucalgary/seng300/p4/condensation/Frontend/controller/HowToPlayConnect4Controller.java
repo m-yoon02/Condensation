@@ -17,7 +17,7 @@ public class HowToPlayConnect4Controller {
     private Button backButton;
 
     @FXML
-    private void goBack(ActionEvent event) throws IOException {
+    public void goBack(ActionEvent event) throws IOException {
         Scene scene;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/ConnectFourHomeMenu.fxml"));
         scene = new Scene(fxmlLoader.load());
