@@ -418,6 +418,11 @@ public class Connect4HandlerTest {
     }
 
     @Test
+    public void testMakeMove_WithMoveData_Tie() {
+
+    }
+
+    @Test
     public void testWinInDiagonalFrontslash_NoWin() {
         boolean result = c4Handler.winInDiagonalFrontslash(0, 0, PieceColor.BLUE);
 
