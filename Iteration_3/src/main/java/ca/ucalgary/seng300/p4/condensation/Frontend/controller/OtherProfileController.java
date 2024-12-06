@@ -1,8 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -163,7 +161,7 @@ public class OtherProfileController {
                 CheckersQueueController checkersQueueController = fxmlLoader.getController();
                 window.setScene(scene);
                 window.show();
-                checkersQueueController.start(window);
+                checkersQueueController.start();
             }
             case "tictactoequeue.fxml" -> {
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tictactoequeue.fxml"));
@@ -172,7 +170,7 @@ public class OtherProfileController {
                 TicTacToeQueueController ticTacToeQueueController = fxmlLoader.getController();
                 window.setScene(scene);
                 window.show();
-                ticTacToeQueueController.start(window);
+                ticTacToeQueueController.start();
             }
             case "connectfourqueue.fxml" -> {
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connectfourqueue.fxml"));
@@ -181,7 +179,7 @@ public class OtherProfileController {
                 ConnectFourQueueController connectFourQueueController = fxmlLoader.getController();
                 window.setScene(scene);
                 window.show();
-                connectFourQueueController.start(window);
+                connectFourQueueController.start();
             }
         }
 
