@@ -40,8 +40,10 @@ public class CheckersHowToPlayControllerTest extends ApplicationTest{
 
     @Test
     public void testOnHowToPlayBackBtnClick() throws Exception {
+        // Clicks back button
         clickOn(backButton);
 
+        // Checks if scene changed to checkers home menu
         Node rootNode = backButton.getScene().getRoot();
         assertNotNull(rootNode);
 
