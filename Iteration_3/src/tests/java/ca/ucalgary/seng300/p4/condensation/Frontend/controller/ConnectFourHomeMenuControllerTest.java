@@ -19,6 +19,8 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
+
+
     FXMLLoader fxmlLoader;
     Scene scene;
     ConnectFourHomeMenuController connectFourHomeMenuController;
