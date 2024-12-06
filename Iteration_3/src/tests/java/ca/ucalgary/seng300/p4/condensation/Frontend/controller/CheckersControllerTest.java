@@ -14,8 +14,6 @@ import javafx.stage.Stage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import org.junit.Before;
 import org.junit.After;
@@ -45,9 +43,12 @@ public class CheckersControllerTest extends ApplicationTest {
     CheckersController checkersController;
     LoginController loginController;
     CheckersQueueController checkersQueueController;
+    HelloApplication application = new HelloApplication();
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        application.start(stage);
 
         fxmlLoader2 = new FXMLLoader(HelloApplication.class.getResource("Login.fxml"));
         Scene loginScene = new Scene(fxmlLoader2.load());
@@ -72,14 +73,17 @@ public class CheckersControllerTest extends ApplicationTest {
         stage.setScene(queueScene);
         stage.show();
 
-        checkersQueueController.start(stage);
-        //checkersQueueController.sendToBackendCheckers();
+        checkersQueueController.start();
 
         fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
         scene = new Scene(fxmlLoader.load());
         checkersController = fxmlLoader.getController();
         stage.setScene(scene);
         stage.show();
+
+//        JSONObject playerInfoForGame = new JSONObject();
+//        String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
+//        GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
     }
 
     @Before
@@ -91,6 +95,7 @@ public class CheckersControllerTest extends ApplicationTest {
         chatBox = (TextArea) lookup("#chatBox").queryAs(TextArea.class);
         chatScrollPane = (ScrollPane) lookup("#chatScrollPane").queryAs(ScrollPane.class);
         paneInsideScrollPane = (VBox) lookup("#paneInsideScrollPane").queryAs(VBox.class);
+
     }
 
     @After
@@ -117,6 +122,20 @@ public class CheckersControllerTest extends ApplicationTest {
         }
     }
 
+    @Test
+    public void testOnCheckersButtonClick_IncompleteMove() throws IOException, ParseException {
+        // Simulate clicking a valid piece at position (2, 2)
+        int i = 2, j = 2;
+        Button button22 = (Button) chessboardGrid.getChildren().get(18); // Adjust index based on layout
+        clickOn(button22); // Simulate the first click
+        String pieceStyleBefore = button22.getStyle(); // Store the initial style
+
+        clickOn(button22); // Simulate the first click
+
+        // Verify that the piece has not moved
+        String pieceStyleAfter = button22.getStyle();
+        assertEquals(pieceStyleBefore, pieceStyleAfter);
+    }
 
 
 //    @Test
