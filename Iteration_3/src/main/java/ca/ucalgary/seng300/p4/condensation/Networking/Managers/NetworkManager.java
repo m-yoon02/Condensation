@@ -553,7 +553,8 @@ public class NetworkManager {
 
     /**
      * Handles a player's chat message by forwarding it to the recipient
-     * and broadcasting the chat data to clients in the game session.
+     * and broadcasting the chat data to clients in the game session. This should work in theory but we implementated chat
+     * in each of the game frontend controllers.
      * @param recievePlayerMessage the playerID and their message
      * @return Always returns {@code null}.
      * @throws RuntimeException if an error occurs during processing.
