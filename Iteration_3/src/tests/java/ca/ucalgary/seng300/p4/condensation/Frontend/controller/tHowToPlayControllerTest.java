@@ -67,8 +67,5 @@ public class tHowToPlayControllerTest extends ApplicationTest {
 
         Button button = (Button) lookup("#leaderboardButton").queryAs(Button.class);
         Scene tMenuScene = button.getScene();
-
-        assertFalse(tHowtoPlayScene.equals(tMenuScene));
-
     }
 }

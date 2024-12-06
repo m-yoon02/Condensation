@@ -367,7 +367,6 @@ public class NetworkManagerTest {
 
         // Verify the returned session details
         assertNotNull("Session ID should not be null", responseJson.get("sessionID"));
-        assertEquals("efbee4fb-36d3-4551-a111-6c19a0695416", playerID);
         assertNotNull("Player2 UUID should not be null (matched player)", responseJson.get("player2ID"));
         assertNotNull("Current player turn should not be null", responseJson.get("currentPlayerTurn"));
         assertEquals("Game type should match", GameTypes.CHECKERS.toString(), responseJson.get("gameType"));

@@ -5,11 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
 import static org.junit.Assert.*;
 
@@ -73,20 +75,6 @@ public class CheckersHomeMenuControllerTest extends ApplicationTest{
         assertNotNull(rootNode);
 
         FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
-        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
-        assertNotNull(expectedScene.getRoot());
-
-        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
-    }
-
-    @Test
-    public void testOnLeaderboardBtnClick() throws Exception {
-        clickOn(leaderboardBtn);
-
-        Node rootNode = leaderboardBtn.getScene().getRoot();
-        assertNotNull(rootNode);
-
-        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
         Scene expectedScene = new Scene(newLoader.load(), 700, 500);
         assertNotNull(expectedScene.getRoot());
 

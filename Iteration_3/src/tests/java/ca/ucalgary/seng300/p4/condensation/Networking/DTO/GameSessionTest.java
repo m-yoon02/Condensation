@@ -86,7 +86,7 @@ public class GameSessionTest {
             assertEquals("Simulated IOException", e.getCause().getMessage());
         }
     }
-    @Test (expected = NullPointerException.class)
+    @Test
     public void testProcessGameEnd_TieGame() throws Exception {
         // Arrange
         UUID player1ID = UUID.randomUUID();

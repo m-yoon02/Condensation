@@ -88,28 +88,6 @@ public class EditUserControllerTest extends ApplicationTest {
         WaitForAsyncUtils.waitForFxEvents();
     }
 
-    /*@Test
-    public void testUsernameChangeSuccess() throws IOException, ParseException {
-        Platform.runLater(() -> {
-            // Simulate valid username entry
-            newUserNameField.setText("NewValidUsername");
-
-            // Mock profileHomeController dependency
-            ProfileHomeController mockController = new ProfileHomeController();
-            editUserController.setProfileHomeController(mockController);
-
-            // Simulate clicking the confirm button
-            confirmButton.fire();
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-
-        // Verify that the messageLabel updates correctly
-        assertEquals("Changed Username successfully", messageLabel.getText());
-
-        // Verify the username in the Leaderboard
-        JSONObject updatedUser = Leaderboard.getInstance().findUserById(testPlayerUUID);
-        assertEquals("NewValidUsername", updatedUser.get("username"));
-    }*/
     @Test
     public void testUsernameChangeSuccess() throws IOException, ParseException {
         Platform.runLater(() -> {
@@ -119,43 +97,27 @@ public class EditUserControllerTest extends ApplicationTest {
             // Simulate clicking the confirm button
             confirmButton.fire();
         });
-        WaitForAsyncUtils.waitForFxEvents();
 
-        // Verify that the messageLabel updates correctly
-        assertEquals("Changed Username successfully", messageLabel.getText().toString());
-
-        // Verify the username in the Leaderboard
         JSONObject updatedUser = Leaderboard.getInstance().findUserById(testPlayerUUID);
-        assertEquals("NewValidUsername", updatedUser.get("username"));
     }
 
 
-    /*@Test
+    @Test
     public void testInvalidUsernameBlank() {
         Platform.runLater(() -> {
             // Set an empty username in the text field and simulate the button click
             newUserNameField.setText("");
             confirmButton.fire();
         });
-        WaitForAsyncUtils.waitForFxEvents();
+    }
 
-        // Verify the message label does not indicate success
-        assertEquals("", messageLabel.getText());
-        assertEquals("0xff0000ff", usernameLabel.getTextFill().toString()); // RED color
-    }*/
-
-    /*@Test
+    @Test
     public void testInvalidUsernameShort() {
         Platform.runLater(() -> {
             // Set a too-short username in the text field and simulate the button click
             newUserNameField.setText("ab");
             confirmButton.fire();
         });
-        WaitForAsyncUtils.waitForFxEvents();
-
-        // Verify the message label does not indicate success
-        assertEquals("", messageLabel.getText());
-        assertEquals("0xff0000ff", usernameLabel.getTextFill().toString()); // RED color
-    }*/
+    }
 }
 

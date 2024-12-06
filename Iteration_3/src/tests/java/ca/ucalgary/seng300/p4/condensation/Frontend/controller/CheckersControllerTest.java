@@ -25,6 +25,7 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
+import org.testfx.util.WaitForAsyncUtils;
 
 import static org.junit.Assert.*;
 
@@ -188,51 +189,94 @@ public class CheckersControllerTest extends ApplicationTest {
 
     @Test
     public void testOnCheckersButtonClick_IncompleteMove() throws IOException, ParseException {
-        // Simulate clicking a valid piece at position (2, 2)
-        int i = 2, j = 2;
-        Button button22 = (Button) chessboardGrid.getChildren().get(18); // Adjust index based on layout
-        clickOn(button22); // Simulate the first click
-        String pieceStyleBefore = button22.getStyle(); // Store the initial style
+        // Ensure chessboardGrid is not null
+        assertNotNull("chessboardGrid should not be null", chessboardGrid);
 
-        clickOn(button22); // Simulate the first click
+        int row = 2, col = 2;
+        int index = row * 8 + col;
 
-        // Verify that the piece has not moved
+        Node node = chessboardGrid.getChildren().get(index);
+        assertTrue("Node at (2,2) should be a Button", node instanceof Button);
+        Button button22 = (Button) node;
+
+        assertNotNull("Button at (2,2) should not be null", button22);
+
+        String pieceStyleBefore = button22.getStyle();
+
+        clickOn(button22);
+
+        WaitForAsyncUtils.waitForFxEvents();
+
+        clickOn(button22);
+
+        WaitForAsyncUtils.waitForFxEvents();
+
         String pieceStyleAfter = button22.getStyle();
-        assertEquals(pieceStyleBefore, pieceStyleAfter);
+
+        assertEquals("Piece style should remain unchanged after incomplete move", pieceStyleBefore, pieceStyleAfter);
+
+        assertNotNull("Piece should still be present at (2,2)", button22.getGraphic());
+
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                if (r == row && c == col) continue;
+                int currentIndex = r * 8 + c;
+                Node currentNode = chessboardGrid.getChildren().get(currentIndex);
+                if (currentNode instanceof Button) {
+                    Button currentButton = (Button) currentNode;
+                    if (currentButton.getGraphic() != null) {
+                        assertFalse("Piece should not have moved from (2,2) to (" + c + "," + r + ")",
+                                currentButton.getGraphic().equals(button22.getGraphic()));
+                    }
+                }
+            }
+        }
     }
 
     // Casting issues from UUID -> String need to fixed. Or else both tests should work
 
 
-//    @Test
-//    public void testHandleGameEnd_WinByPlayerOne() throws Exception {
-//        // Simulate a payload for player one's win
-//        JSONObject payload = new JSONObject();
-//        payload.put("GameState", "WIN");
-//        payload.put("PlayerWon", UUID.randomUUID());
-//
-//        // Invoke the handleGameEnd method
-//        checkersController.handleGameEnd(payload);
-//
-//        String playerOneUUIDStr = "123e4567-e89b-12d3-a456-426614174123";
-//
-//        // Verify turnLabel updates
-//        assertEquals(String.format("Player %s won the game!", playerOneUUIDStr), turnLabel.getText());
-//        assertEquals(Color.GREEN, turnLabel.getTextFill());
-//    }
-//
-//    @Test
-//    public void testHandleGameEnd_Tie() throws Exception {
-//        // Simulate a payload for a tie
-//        JSONObject payload = new JSONObject();
-//        payload.put("GameState", "TIE");
-//
-//        // Invoke the handleGameEnd method
-//        checkersController.handleGameEnd(payload);
-//
-//        // Verify turnLabel updates
-//        assertEquals("The game ended in a tie!", turnLabel.getText());
-//    }
+    @Test
+    public void testHandleGameEnd_WinByPlayerOne() throws Exception {
+        assertNotNull("turnLabel should not be null", turnLabel);
+
+        String playerOneUUIDStr = "123e4567-e89b-12d3-a456-426614174123";
+
+        JSONObject payload = new JSONObject();
+        payload.put("GameState", "WIN");
+        payload.put("PlayerWon", playerOneUUIDStr);
+
+        Platform.runLater(() -> {
+            try {
+                checkersController.handleGameEnd(payload);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        Thread.sleep(500);
+
+        String expectedText = String.format("Player %s won the game!", playerOneUUIDStr);
+        assertEquals("The turnLabel should indicate that player one has won the game.", expectedText, turnLabel.getText());
+    }
+
+    @Test
+    public void testHandleGameEnd_Tie() throws Exception {
+        JSONObject payload = new JSONObject();
+        payload.put("GameState", "TIE");
+
+        Platform.runLater(() -> {
+            try {
+                checkersController.handleGameEnd(payload);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        WaitForAsyncUtils.waitForFxEvents();
+
+        assertEquals("The game ended in a tie!", turnLabel.getText());
+    }
 
 
     @Test
@@ -251,32 +295,38 @@ public class CheckersControllerTest extends ApplicationTest {
 
     @Test
     public void testSendButtonMessageHandling() {
+        assertNotNull("chatBox should not be null", chatBox);
 
-        // Set the text in the chat box
-        chatBox.setText("Test chat message");
-        assertNotNull(chatBox);
+        interact(() -> {
+            chatBox.setText("Test chat message");
+        });
 
-        // Simulate clicking the send button
         clickOn(sendBtn);
 
-        // After clicking the send button, verify that the message is added to the pane
-        // We check the first child in the paneInsideScrollPane, which should be an HBox containing the message
-        HBox messageHBox = (HBox) paneInsideScrollPane.getChildren().get(0);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        int messageCount = paneInsideScrollPane.getChildren().size();
+        assertTrue("Chat pane should have at least one message", messageCount > 0);
+
+        HBox messageHBox = (HBox) paneInsideScrollPane.getChildren().get(messageCount - 1);
         VBox messageBox = (VBox) messageHBox.getChildren().get(0);
         Label messageLabel = (Label) messageBox.getChildren().get(1);
 
-        // Verify that the message text in the Label is the same as the chatBox content
-        assertEquals("Test chat message", messageLabel.getText());
+        assertEquals("The message text should match the input text", "Test chat message", messageLabel.getText());
 
         HBox nameTimeHBox = (HBox) messageBox.getChildren().get(0);
         Label timeSentLabel = (Label) nameTimeHBox.getChildren().get(1);
 
         String timeSent = timeSentLabel.getText();
-        assertNotNull(timeSent);
-        assertTrue(timeSent.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}"));
+        assertNotNull("Time sent should not be null", timeSent);
+        assertTrue("Time sent should match the expected format yyyy-MM-dd HH:mm",
+                timeSent.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}"));
 
-        // Verify that the chatBox is cleared after sending the message
-        assertEquals("", chatBox.getText());
+        assertEquals("Chat box should be cleared after sending the message", "", chatBox.getText());
     }
 
     @Test

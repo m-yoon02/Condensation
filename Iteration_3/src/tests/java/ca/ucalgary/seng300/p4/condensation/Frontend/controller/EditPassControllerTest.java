@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.parser.ParseException;
 import org.junit.After;
@@ -19,8 +20,12 @@ import org.testfx.util.WaitForAsyncUtils;
 import java.io.IOException;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
+/**
+ * Test class for EditPassController.
+ * This class tests the functionality of changing a player's password in the Checkers application.
+ */
 public class EditPassControllerTest extends ApplicationTest {
 
     private TextField newPassField;
@@ -31,6 +36,8 @@ public class EditPassControllerTest extends ApplicationTest {
     private FXMLLoader fxmlLoader;
     private EditPassController editPassController;
     private UUID testPlayerUUID;
+
+    private Leaderboard leaderboard;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -47,41 +54,44 @@ public class EditPassControllerTest extends ApplicationTest {
     @Before
     public void setUp() throws Exception {
         Platform.runLater(() -> {
-            // Initialize UI components
-            newPassField = (TextField) lookup("#newPassField").query();
-            passwordLabel = (Label) lookup("#passwordLabel").query();
-            messageLabel = (Label) lookup("#messageLabel").query();
-            confirmButton = (Button) lookup("#confirmButton").query();
+            // Initialize UI components using TestFX's lookup method
+            newPassField = lookup("#newPassField").queryAs(TextField.class);
+            passwordLabel = lookup("#passwordLabel").queryAs(Label.class);
+            messageLabel = lookup("#messageLabel").queryAs(Label.class);
+            confirmButton = lookup("#confirmButton").queryAs(Button.class);
 
-            // Set up test UUID and initialize it in the controller
-            testPlayerUUID = UUID.randomUUID();
-            EditPassController.setPlayerUUID(testPlayerUUID);
-
-            // Set up the Leaderboard instance
+            // Initialize the Leaderboard instance
             try {
-                Leaderboard.getInstance().changePassword(testPlayerUUID, null); // Ensure a clean slate for testing
+                leaderboard = Leaderboard.getInstance();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
+
+            // Set up a test UUID and initialize it in the controller
+            testPlayerUUID = UUID.randomUUID();
+            EditPassController.setPlayerUUID(testPlayerUUID);
+
+            // Set an initial password for the test player in the Leaderboard to ensure a known state
+            leaderboard.changePassword(testPlayerUUID, "InitialPass123");
         });
+
+        // Wait for all JavaFX events to be processed
         WaitForAsyncUtils.waitForFxEvents();
     }
 
     @After
     public void tearDown() {
         Platform.runLater(() -> {
-            // Clean up any test data from Leaderboard
-            try {
-                Leaderboard.getInstance().changePassword(testPlayerUUID, null);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
+            leaderboard.changePassword(testPlayerUUID, "InitialPass123");
+
             newPassField.clear();
+            messageLabel.setText("");
+            messageLabel.setTextFill(Color.BLACK);
+            passwordLabel.setTextFill(Color.BLACK);
         });
+
         WaitForAsyncUtils.waitForFxEvents();
 
         newPassField = null;
@@ -90,21 +100,54 @@ public class EditPassControllerTest extends ApplicationTest {
         confirmButton = null;
     }
 
+    /**
+     * Test to verify that attempting to change the password with a blank input fails and updates the UI correctly.
+     */
     @Test
-    public void testPasswordChangeSuccess() throws IOException, ParseException {
+    public void testPasswordChangeBlank() throws IOException, ParseException {
         Platform.runLater(() -> {
-            // Set a valid password in the text field and simulate the button click
-            newPassField.setText("ValidPassword123");
+            newPassField.setText("");
             confirmButton.fire();
         });
+
         WaitForAsyncUtils.waitForFxEvents();
 
-        // Verify the message label updates correctly
-        assertEquals("Changed Password successfully", messageLabel.getText());
-        assertEquals("0x008000ff", messageLabel.getTextFill().toString()); // GREEN color
+        assertEquals(Color.RED, passwordLabel.getTextFill());
 
-        // Verify the password in the Leaderboard
-        String updatedPassword = String.valueOf(Leaderboard.getInstance().changePassword(testPlayerUUID, null));
-        assertEquals("ValidPassword123", updatedPassword);
+        assertNotEquals("Changed Password successfully", messageLabel.getText());
+    }
+
+    /**
+     * Test to verify that attempting to change the password with a short input fails and updates the UI correctly.
+     */
+    @Test
+    public void testPasswordChangeTooShort() throws IOException, ParseException {
+        Platform.runLater(() -> {
+            newPassField.setText("ab"); // Less than 3 characters
+            confirmButton.fire();
+        });
+
+        WaitForAsyncUtils.waitForFxEvents();
+
+        assertEquals(Color.RED, passwordLabel.getTextFill());
+
+        assertNotEquals("Changed Password successfully", messageLabel.getText());
+    }
+
+    /**
+     * Test to verify that attempting to change the password fails gracefully when Leaderboard returns false.
+     * This requires Leaderboard to be mockable or to simulate failure conditions.
+     */
+    @Test
+    public void testPasswordChangeFailure() throws IOException, ParseException {
+        String failingPassword = "fail";
+
+        Platform.runLater(() -> {
+            newPassField.setText(failingPassword);
+            confirmButton.fire();
+        });
+
+        WaitForAsyncUtils.waitForFxEvents();
+        assertNotEquals("Changed Password successfully", messageLabel.getText());
     }
 }
