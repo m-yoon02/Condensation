@@ -93,3 +93,9 @@
     /*-fx-pref-height: 30;*/
     -fx-font-size: 16;
 }
+#challengeButton {
+    -fx-pref-width: 100;
+    -fx-pref-height: 33;
+    -fx-font-size: 16;
+}
+
