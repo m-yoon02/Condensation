@@ -33,7 +33,7 @@ public class NetworkManager {
 
     // client listener lists mapped to specific to their gameSessions
 
-    private Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
+    public Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final ChatService chatService;
 
@@ -239,6 +239,16 @@ public class NetworkManager {
      */
     public Client getClient(UUID playerId) {
         Client client = loggedInClients.get(playerId);
+
+        for (Map.Entry<UUID, Client> entry : loggedInClients.entrySet()) {
+            UUID clientId = entry.getKey();
+            Client client1 = entry.getValue();
+
+            // Print details about each logged-in client
+            System.out.println("Client ID: " + clientId);
+            System.out.println("Client Details: " + client);
+        }
+
         if (client == null) {
             throw new IllegalArgumentException("No client found for player ID: " + playerId);
         }
@@ -483,6 +493,7 @@ public class NetworkManager {
     public void sendCreatedGameSession(GameSession gameSession){
         UUID sessionID = gameSession.getSessionId();
         Client player1ID = getClient(gameSession.getPlayer1ID());
+        System.out.println("Client Player1ID :" + player1ID) ;
         Client player2ID = getClient(gameSession.getPlayer2ID());
 
         // Subscribe both players to the game session

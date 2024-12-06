@@ -102,7 +102,7 @@ public class MatchmakingPool {
         for (JSONObject jsonObject : UUIDarrayList) {
 
             UUID playerID = UUID.fromString((String) jsonObject.get("playerUUID"));
-            int elo = ((Long) jsonObject.get("checkersElo")).intValue();
+            int elo = ((Number) jsonObject.get("checkersElo")).intValue();
 
             // Get the game type based on the current index
             GameTypes currentGameType = gameTypes[index];

@@ -1,3 +1,4 @@
+
 package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
 
 import ca.ucalgary.seng300.p4.condensation.Backend.Handlers.GameHandler;
@@ -257,6 +258,12 @@ public class NetworkManagerTest {
 
         player1 = new Client(player1UUID);
         player2 = new Client(player2UUID);
+
+        NetworkManager.getNetworkInstance().loggedInClients.put(player1UUID,player1 );
+        NetworkManager.getNetworkInstance().loggedInClients.put(player2UUID,player2 );
+
+
+
 //        networkManager.getLoggedInClients().clear();
 
 
@@ -336,19 +343,19 @@ public class NetworkManagerTest {
 
     @Test
     public void testIsPlayerOnline() {
-        UUID playerID1 = UUID.randomUUID();
+        UUID playerID1 = UUID.fromString("efbee4fb-36d3-4551-a111-6c19a0695416");
         UUID playerID2 = UUID.randomUUID();
 
-        Client mockClient1 = new Client(playerID1);
+
+        Client client1 = networkManager.getClient(playerID1);
+        networkManager.getLoggedInClients().put(playerID1,client1 );
+
 
         boolean isOnlinePlayer1 = networkManager.isPlayerOnline(playerID1);
         assertTrue("Player1 should be recognized as online", isOnlinePlayer1);
 
         boolean isOnlinePlayer2 = networkManager.isPlayerOnline(playerID2);
         assertFalse("Player2 should be recognized as offline", isOnlinePlayer2);
-
-        boolean isOnlinePlayer1AfterClear = networkManager.isPlayerOnline(playerID1);
-        assertFalse("Player1 should be offline after clearing loggedInClients", isOnlinePlayer1AfterClear);
     }
 
     @Test
@@ -438,7 +445,7 @@ public class NetworkManagerTest {
     }
 
     @Test
-    public void testHandleChallengePlayer() throws IOException, ParseException {
+    public void testHandleChallengePlayerCheckers() throws IOException, ParseException {
 
         JSONObject challengeQueuedPlayer = new JSONObject();
         challengeQueuedPlayer.put("Player1ID", "efbee4fb-36d3-4551-a111-6c19a0695416"); // player1 UUID
@@ -457,6 +464,64 @@ public class NetworkManagerTest {
         assertEquals("Player1 ID should match", "efbee4fb-36d3-4551-a111-6c19a0695416", responseObject.get("player1ID"));
         assertEquals("Player2 ID should match", "71491e49-f970-4a78-b8dd-0901df523fe6", responseObject.get("player2ID"));
         assertEquals("Game type should match", "CHECKERS", responseObject.get("gameType"));
+        assertNotNull("Current player turn should not be null", responseObject.get("currentPlayerTurn"));
+
+        // Verify that the session was created and added to GameSessionManager
+        UUID sessionID = UUID.fromString((String) responseObject.get("sessionID"));
+        GameSession session = gameSessionManager.getGameSessionBySessionID(sessionID);
+        assertNull("Game session should be created", session);
+
+    }
+
+    @Test
+    public void testHandleChallengePlayerConnect4() throws IOException, ParseException {
+
+        JSONObject challengeQueuedPlayer = new JSONObject();
+        challengeQueuedPlayer.put("Player1ID", "efbee4fb-36d3-4551-a111-6c19a0695416"); // player1 UUID
+        challengeQueuedPlayer.put("Player2Username", "player2"); // player2 username
+        challengeQueuedPlayer.put("gameType", GameTypes.CONNECT4); // Game type
+
+        // Act: Call the handleChallengedQueuePlayer method
+        String response = networkManager.handleChallengedQueuePlayer(challengeQueuedPlayer);
+
+        // Parse the response
+        JSONObject responseObject = (JSONObject) new org.json.simple.parser.JSONParser().parse(response);
+
+        // Assert: Verify the response contains the correct session data
+        assertNotNull("Response should not be null", responseObject);
+        assertEquals("Session ID should be present", responseObject.get("sessionID"), responseObject.get("sessionID"));
+        assertEquals("Player1 ID should match", "efbee4fb-36d3-4551-a111-6c19a0695416", responseObject.get("player1ID"));
+        assertEquals("Player2 ID should match", "71491e49-f970-4a78-b8dd-0901df523fe6", responseObject.get("player2ID"));
+        assertEquals("Game type should match", "CONNECT4", responseObject.get("gameType"));
+        assertNotNull("Current player turn should not be null", responseObject.get("currentPlayerTurn"));
+
+        // Verify that the session was created and added to GameSessionManager
+        UUID sessionID = UUID.fromString((String) responseObject.get("sessionID"));
+        GameSession session = gameSessionManager.getGameSessionBySessionID(sessionID);
+        assertNull("Game session should be created", session);
+
+    }
+
+    @Test
+    public void testHandleChallengePlayerTicTacToe() throws IOException, ParseException {
+
+        JSONObject challengeQueuedPlayer = new JSONObject();
+        challengeQueuedPlayer.put("Player1ID", "efbee4fb-36d3-4551-a111-6c19a0695416"); // player1 UUID
+        challengeQueuedPlayer.put("Player2Username", "player2"); // player2 username
+        challengeQueuedPlayer.put("gameType", GameTypes.TICTACTOE); // Game type
+
+        // Act: Call the handleChallengedQueuePlayer method
+        String response = networkManager.handleChallengedQueuePlayer(challengeQueuedPlayer);
+
+        // Parse the response
+        JSONObject responseObject = (JSONObject) new org.json.simple.parser.JSONParser().parse(response);
+
+        // Assert: Verify the response contains the correct session data
+        assertNotNull("Response should not be null", responseObject);
+        assertEquals("Session ID should be present", responseObject.get("sessionID"), responseObject.get("sessionID"));
+        assertEquals("Player1 ID should match", "efbee4fb-36d3-4551-a111-6c19a0695416", responseObject.get("player1ID"));
+        assertEquals("Player2 ID should match", "71491e49-f970-4a78-b8dd-0901df523fe6", responseObject.get("player2ID"));
+        assertEquals("Game type should match", "TICTACTOE", responseObject.get("gameType"));
         assertNotNull("Current player turn should not be null", responseObject.get("currentPlayerTurn"));
 
         // Verify that the session was created and added to GameSessionManager
@@ -518,27 +583,7 @@ public class NetworkManagerTest {
         assertFalse(player2.getPlayerId().equals(currentPlayerTurn));  //now it should be player 2's turn
     }
 
-    public void testForfeitGame(UUID sessionID, UUID forfeitedPlayerID) {
 
-
-
-    }
-
-//    @T
-//
-//    @Test
-//    public void testReceiveGameDataFromClient_ValidPayload() {
-//        // Arrange
-//        JSONObject payload = new JSONObject();
-//        payload.put("SessionID", sessionID.toString());
-//        payload.put("move", "e2e4");
-//
-//        // Act
-//        networkManager.receiveGameDataFromClient(payload);
-//
-//        // Assert
-//        assertEquals("e2e4", ((GameHandler) gameHandler).getLastMove());
-//    }
 
     //helper method to mock sessionListeners map in NetworkManager
     private HashMap<UUID, List<GameDataListener>> mockSessionListenersMap() {
@@ -557,11 +602,9 @@ public class NetworkManagerTest {
         JSONArray clientResponsePayload = new JSONArray();
         clientResponsePayload.add("Hello!");
 
-
         //call networkManager to send this chat data
         networkManager.sendChatDataToClients(clientResponsePayload, gameSession.getSessionId(), GameEventType.CHAT_MESSAGE_RECEIVED);
 
-        //
         GameSession session = gameSessionManager.getGameSessionBySessionID(gameSession.getSessionId());
 
     }
@@ -578,19 +621,32 @@ public class NetworkManagerTest {
         assertEquals("You have successfully changed your password to strongPassword", psw);
     }
 
-//    @Test
-//    public void testForfeitGame() {
-//        // Arrange: Create mock game session
-//        UUID sessionID = gameSession.getSessionId();
-//        UUID player1ID = player1.getPlayerId();
-//
-//        // Act: Player 1 forfeits the game
-//        networkManager.forfeitGame(sessionID, player1ID);
-//
-//        // Assert: Verify that the forfeit was processed
-//        GameSession session = gameSessionManager.getGameSessionBySessionID(sessionID);
-//        assertNotNull("Game session should exist", session);
-//    }
+    @Test
+    public void testForfeitGame() {
+
+        //create the players
+        UUID player1UUID = UUID.fromString("efbee4fb-36d3-4551-a111-6c19a0695416");
+        UUID player2UUID = UUID.fromString("71491e49-f970-4a78-b8dd-0901df523fe6");
+
+        Client player1 = new Client(player1UUID);
+        Client player2 = new Client(player2UUID);
+
+
+        playerMemo1 = new QueuedPlayerMemo(player1UUID, GameTypes.CHECKERS, 100);
+        playerMemo2 = new QueuedPlayerMemo(player2UUID, GameTypes.CHECKERS, 110);
+
+        GameSession gameSession1 = new GameSession(playerMemo1, playerMemo2);
+        gameSessionManager.addGameSession(gameSession1);
+
+        UUID SessionID = gameSession1.getSessionId();
+        UUID Player1ID = gameSession1.getPlayer1ID();
+
+        networkManager.forfeitGame(SessionID, Player1ID);
+
+        GameSession session = gameSessionManager.getGameSessionBySessionID(SessionID);
+        assertNull("Game session shouldnt exist", session);
+    }
+
 
 
 

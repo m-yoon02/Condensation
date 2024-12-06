@@ -142,7 +142,7 @@ public class MatchmakingServiceTest {
         GameSession session = matchmakingService.findAndMatchPlayers();
 
         // Verify the match
-        assertNull("Game session should not null", session);
+        assertNotNull("Game session should not null", session);
     }
 
 }

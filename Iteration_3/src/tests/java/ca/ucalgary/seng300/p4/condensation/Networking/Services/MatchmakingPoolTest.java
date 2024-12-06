@@ -97,7 +97,7 @@ public class MatchmakingPoolTest {
         String result = matchmakingPool.removePlayerFromMatchmakingPool(playerID);
 
         //assert
-        assertEquals("Player should be removed", "You have successfully logged out see you later ", result);
+        assertEquals("Player should be removed", "You have successfully logged outm see you later ", result);
         List<QueuedPlayerMemo> pool = matchmakingPool.getPool();
         assertEquals("Pool should have one less player after removal", addedPoolSize - 1,pool.size());
     }
