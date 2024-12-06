@@ -1,9 +1,11 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -20,12 +22,6 @@ public class EditUserController {
     @FXML
     Label usernameLabel;
 
-    private ProfileHomeController profileHomeController;
-
-    // Setter for dependency injection
-    public void setProfileHomeController(ProfileHomeController profileHomeController) {
-        this.profileHomeController = profileHomeController;
-    }
     @FXML
     Label messageLabel;
 
@@ -50,20 +46,18 @@ public class EditUserController {
             newUsername = newUserNameField.getText();
             FileReader read = new FileReader(NetworkManager.PLAYER_ID_FILE);
             JSONParser parser = new JSONParser();
-            JSONObject meowlol = (JSONObject) parser.parse(read);
-            meowlol.put("username", newUsername);
+            JSONObject jsonObject = (JSONObject) parser.parse(read);
+            jsonObject.put("username", newUsername);
 
-            String username = (String) meowlol.get("username");
-            System.out.println("MEOWLOL" + meowlol);
             FileWriter writer = new FileWriter(NetworkManager.PLAYER_ID_FILE);
-            writer.write(meowlol.toJSONString());
+            writer.write(jsonObject.toJSONString());
             writer.flush();
             writer.close();
-            profileHomeController.usernameField.setText(username);
-            System.out.println("NEW USER NAME = " + profileHomeController.usernameField.getText());
-
 
             usernameLabel.setText(newUsername);
+
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ProfileHome.fxml"));
+            HelloApplication.setActiveScene(new Scene(fxmlLoader.load()), "Condensation Application - Profile");
         }
     }
 

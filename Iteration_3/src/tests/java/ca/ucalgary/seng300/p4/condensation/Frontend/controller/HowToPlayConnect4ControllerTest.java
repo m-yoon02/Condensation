@@ -7,14 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import org.testfx.framework.junit.ApplicationTest;
+
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
 
 import static org.junit.Assert.*;
 
-public class HowToPlayConnect4ControllerTest extends ApplicationTest {
+public class HowToPlayConnect4ControllerTest  extends ApplicationTest {
 
     Button backButton;
     FXMLLoader fxmlLoader;

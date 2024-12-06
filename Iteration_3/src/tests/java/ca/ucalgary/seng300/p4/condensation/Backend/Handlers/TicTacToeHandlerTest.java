@@ -228,7 +228,52 @@ public class TicTacToeHandlerTest {
 
         PieceColor color = ticTacToeHandler.getPlayerColorFromUUID(p1ID);
 
-        assertFalse("Player 1 should not win as all values in column are not the same", ticTacToeHandler.checkHorizontalWin(color));
+        assertFalse("Player 1 should not win as all values in column are not the same", ticTacToeHandler.checkVerticalWin(color));
+    }
+
+    @Test
+    public void testVerticalWins_NoVerticalWin_2_DoesUpdateBoard() throws IOException, ParseException {
+        MoveData md = new MoveData(p1ID, new Vector2(0, 0));
+        ticTacToeHandler.makeMove(md);
+
+        md = new MoveData(p2ID, new Vector2(1, 0));
+        ticTacToeHandler.makeMove(md);
+
+
+        md = new MoveData(p2ID, new Vector2(2, 0));
+        ticTacToeHandler.makeMove(md);
+
+        PieceColor color = ticTacToeHandler.getPlayerColorFromUUID(p1ID);
+
+        assertFalse("Player 2 should not win as all values in column are not the same", ticTacToeHandler.checkVerticalWin(color));
+    }
+
+    @Test
+    public void testVerticalWins_NoVerticalWin_3_DoesUpdateBoard() throws IOException, ParseException {
+        MoveData md = new MoveData(p1ID, new Vector2(0, 0));
+        ticTacToeHandler.makeMove(md);
+
+        md = new MoveData(p2ID, new Vector2(1, 0));
+        ticTacToeHandler.makeMove(md);
+
+
+        PieceColor color = ticTacToeHandler.getPlayerColorFromUUID(p1ID);
+
+        assertFalse("Column is only partially full", ticTacToeHandler.checkVerticalWin(color));
+    }
+
+    @Test
+    public void testVerticalWins_NoVerticalWin_4_DoesUpdateBoard() throws IOException, ParseException {
+        MoveData md = new MoveData(p1ID, new Vector2(0, 0));
+        ticTacToeHandler.makeMove(md);
+
+        md = new MoveData(p1ID, new Vector2(1, 0));
+        ticTacToeHandler.makeMove(md);
+
+
+        PieceColor color = ticTacToeHandler.getPlayerColorFromUUID(p1ID);
+
+        assertFalse("Column is only partially full", ticTacToeHandler.checkVerticalWin(color));
     }
 
 
@@ -477,5 +522,22 @@ public class TicTacToeHandlerTest {
         String invalidJSON = "Invalid JSON";
 
         ticTacToeHandler.makeMove(invalidJSON);
+    }
+
+    @Test
+    public void testMakeMove_Tie_BoardIsFull() throws IOException, ParseException {
+
+        ticTacToeHandler.makeMove(new MoveData(p2ID, new Vector2(0, 1)));
+        ticTacToeHandler.makeMove(new MoveData(p2ID, new Vector2(0, 0)));
+        ticTacToeHandler.makeMove(new MoveData(p1ID, new Vector2(0, 2)));
+
+        ticTacToeHandler.makeMove(new MoveData(p1ID, new Vector2(1, 1)));
+        ticTacToeHandler.makeMove(new MoveData(p1ID, new Vector2(1, 0)));
+        ticTacToeHandler.makeMove(new MoveData(p2ID, new Vector2(1, 2)));
+
+        ticTacToeHandler.makeMove(new MoveData(p2ID, new Vector2(2, 0)));
+        ticTacToeHandler.makeMove(new MoveData(p1ID, new Vector2(2, 1)));
+        ticTacToeHandler.makeMove(new MoveData(p1ID, new Vector2(2, 2)));
+        assertEquals("Game should tie",GameResult.TIE, gameEndListener.gameResult);
     }
 }
