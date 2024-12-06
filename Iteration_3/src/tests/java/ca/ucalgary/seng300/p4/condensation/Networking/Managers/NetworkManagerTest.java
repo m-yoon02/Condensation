@@ -14,11 +14,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -40,17 +42,25 @@ public class NetworkManagerTest {
     private QueuedPlayerMemo playerMemo2;
     private GameSession gameSession;
 
+
+    public static final String MOCK_LEADERBOARD_FILE = "mockLeaderboard.json";
+    public static final String TEMP_PLAYER_FILE = "tempPlayers.json";
+
     private GameDataListener gameDataListener; //mocking the GameDataListener interface
 
 
     @Before
     public void setUp() throws Exception {
+        // Initialize the leaderboard with the mock file
+        NetworkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE;
+
+        NetworkManager.PLAYER_ID_FILE = TEMP_PLAYER_FILE;
 
         JSONArray mockData = new JSONArray();
 
         // Add sample user data
         JSONObject user1 = new JSONObject();
-        user1.put("playerUUID", UUID.randomUUID().toString());
+        user1.put("playerUUID", "efbee4fb-36d3-4551-a111-6c19a0695416");
         user1.put("username", "player1");
         user1.put("password", "password1");
         user1.put("checkersElo", 1200);
@@ -71,7 +81,7 @@ public class NetworkManagerTest {
         mockData.add(user1);
 
         JSONObject user2 = new JSONObject();
-        user2.put("playerUUID", UUID.randomUUID().toString());
+        user2.put("playerUUID", "71491e49-f970-4a78-b8dd-0901df523fe6");
         user2.put("username", "player2");
         user2.put("password", "password2");
         user2.put("checkersElo", 1300);
@@ -88,13 +98,11 @@ public class NetworkManagerTest {
         user2.put("lossInCheckers", 1);
         user2.put("lossInTicTacToe", 1);
         user2.put("lossInConnect4", 1);
+
         mockData.add(user2);
 
-
-
-
         JSONObject user3 = new JSONObject();
-        user3.put("playerUUID", UUID.randomUUID().toString());
+        user3.put("playerUUID", "2f137003-8885-4a71-bf8c-34f69225cabc");
         user3.put("username", "player3");
         user3.put("password", "password3");
         user3.put("checkersElo", 1400);
@@ -111,11 +119,11 @@ public class NetworkManagerTest {
         user3.put("lossInCheckers", 1);
         user3.put("lossInTicTacToe", 1);
         user3.put("lossInConnect4", 1);
+
         mockData.add(user3);
 
-        // Create user4 with the same fields as user1 but different values
         JSONObject user4 = new JSONObject();
-        user4.put("playerUUID", UUID.randomUUID().toString());
+        user4.put("playerUUID", "fb67ee61-2f75-415e-9bd0-046d7f654cf7");
         user4.put("username", "player4");
         user4.put("password", "password4");
         user4.put("checkersElo", 1500);
@@ -132,11 +140,11 @@ public class NetworkManagerTest {
         user4.put("lossInCheckers", 1);
         user4.put("lossInTicTacToe", 1);
         user4.put("lossInConnect4", 1);
+
         mockData.add(user4);
 
-// Create user5 with the same fields as user1 but different values
         JSONObject user5 = new JSONObject();
-        user5.put("playerUUID", UUID.randomUUID().toString());
+        user5.put("playerUUID", "c0d6679a-4ad7-4346-8f16-191ec6627f3a");
         user5.put("username", "player5");
         user5.put("password", "password5");
         user5.put("checkersElo", 1600);
@@ -153,11 +161,11 @@ public class NetworkManagerTest {
         user5.put("lossInCheckers", 1);
         user5.put("lossInTicTacToe", 1);
         user5.put("lossInConnect4", 1);
+
         mockData.add(user5);
 
-// Create user6 with the same fields as user1 but different values
         JSONObject user6 = new JSONObject();
-        user6.put("playerUUID", UUID.randomUUID().toString());
+        user6.put("playerUUID", "e080d46b-d51b-402c-9505-cdb509220144");
         user6.put("username", "player6");
         user6.put("password", "password6");
         user6.put("checkersElo", 1700);
@@ -174,11 +182,11 @@ public class NetworkManagerTest {
         user6.put("lossInCheckers", 1);
         user6.put("lossInTicTacToe", 1);
         user6.put("lossInConnect4", 1);
+
         mockData.add(user6);
 
-// Create user7 with the same fields as user1 but different values
         JSONObject user7 = new JSONObject();
-        user7.put("playerUUID", UUID.randomUUID().toString());
+        user7.put("playerUUID", "f4f3a399-8b1a-462e-8501-6847c5595554");
         user7.put("username", "player7");
         user7.put("password", "password7");
         user7.put("checkersElo", 1800);
@@ -195,11 +203,11 @@ public class NetworkManagerTest {
         user7.put("lossInCheckers", 1);
         user7.put("lossInTicTacToe", 1);
         user7.put("lossInConnect4", 1);
+
         mockData.add(user7);
 
-// Create user8 with the same fields as user1 but different values
         JSONObject user8 = new JSONObject();
-        user8.put("playerUUID", UUID.randomUUID().toString());
+        user8.put("playerUUID", "db0d2e68-8a10-4fc7-82d6-7440261d4f02");
         user8.put("username", "player8");
         user8.put("password", "password8");
         user8.put("checkersElo", 1900);
@@ -216,15 +224,20 @@ public class NetworkManagerTest {
         user8.put("lossInCheckers", 1);
         user8.put("lossInTicTacToe", 1);
         user8.put("lossInConnect4", 1);
+
         mockData.add(user8);
 
         try (FileWriter writer = new FileWriter(MOCK_LEADERBOARD_FILE)) {
             writer.write(mockData.toJSONString());
         }
 
-        // Initialize the leaderboard with the mock file
-        networkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE;
+
+        networkManager = new NetworkManager();
         leaderboard = Leaderboard.getInstance();
+
+
+
+
 
         // create a mock JSON file for fetchUserFromNewPLayerJSON test
         JSONObject playerData = new JSONObject();
@@ -234,12 +247,10 @@ public class NetworkManagerTest {
             writer.write(playerData.toJSONString());
 
         }
-        networkManager.PLAYER_ID_FILE = TEMP_PLAYER_FILE;
+
         //create the players
         player1 = new Client(UUID.randomUUID());
         player2 = new Client(UUID.randomUUID());
-
-        networkManager = new NetworkManager();
 
         //Manually add the clients to the NetworkManager
         networkManager.getLoggedInClients().put(player1.getPlayerId(), player1);
@@ -291,11 +302,36 @@ public class NetworkManagerTest {
     @Test
     public void testValidateUserCredentials_InvalidCredentials() throws IOException, ParseException {
         // Validate credentials with an invalid password
-        JSONObject validatedUser = networkManager.validateUserCredentials("player1", "wrongpassword");
+        JSONObject validatedUser = networkManager.validateUserCredentials("player2", "wrongpassword");
 
         // Verify that the user is null
         assertNull("Validated user should be null for invalid credentials", validatedUser);
     }
+
+    @Test
+    public void testSignUpHandler() throws IOException, ParseException {
+        JSONObject signUpPayload = new JSONObject();
+        signUpPayload.put("username", "Samuel");
+        signUpPayload.put("password", "2005");
+
+        String response = networkManager.signUpHandler(signUpPayload);
+
+        assertEquals("Successfully created user with username Samuel", response);
+
+    }
+
+    @Test
+    public void editUsernameTest() throws  IOException, ParseException{
+        JSONObject editUsernamePayload = new JSONObject();
+        String Sam1 = "Sam1";
+        editUsernamePayload.put("playerID", "efbee4fb-36d3-4551-a111-6c19a0695416");
+        editUsernamePayload.put("NewUsername", "Sam1");
+
+        String response = networkManager.editUsername(editUsernamePayload);
+        assertEquals("You have successfully changed your username to Sam1", response);
+
+    }
+
 
     @Test
     public void testIsPlayerOnline() {
@@ -315,6 +351,35 @@ public class NetworkManagerTest {
         boolean isOnlinePlayer1AfterClear = networkManager.isPlayerOnline(playerID1);
         assertFalse("Player1 should be offline after clearing loggedInClients", isOnlinePlayer1AfterClear);
     }
+
+    @Test
+    public void testHandleQueuePlayer() throws IOException, ParseException {
+        JSONObject queuedPlayerPayload = new JSONObject();
+        String playerID = "efbee4fb-36d3-4551-a111-6c19a0695416";
+        queuedPlayerPayload.put("playerID", playerID);
+        queuedPlayerPayload.put("gameType", GameTypes.CHECKERS);
+
+        String response = networkManager.handleQueuePlayer(queuedPlayerPayload);
+
+        assertNotNull("Response should not be null", response);
+        JSONObject responseJson = (JSONObject) new org.json.simple.parser.JSONParser().parse(response);
+
+        // Verify the returned session details
+        assertNotNull("Session ID should not be null", responseJson.get("sessionID"));
+        assertEquals("Player1 UUID should match", playerID);
+        assertNotNull("Player2 UUID should not be null (matched player)", responseJson.get("player2ID"));
+        assertNotNull("Current player turn should not be null", responseJson.get("currentPlayerTurn"));
+        assertEquals("Game type should match", GameTypes.CHECKERS.toString(), responseJson.get("gameType"));
+
+        GameTypes gameType = (GameTypes) responseJson.get("gameType");
+        // Verify the matchmaking pool and game session manager
+        GameSession createdSession = gameSessionManager.getGameSessionBySessionID(
+                UUID.fromString((String) responseJson.get("sessionID"))
+        );
+        assertNotNull("Game session should be created", createdSession);
+        assertEquals("Game type should match in session", GameTypes.CHECKERS, gameType);
+    }
+
 
 
 

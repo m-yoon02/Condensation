@@ -136,6 +136,7 @@ public class Leaderboard {
      */
     public JSONObject findUserByName(String name) {
         for (Object object : users) {
+            System.out.println(object);
             JSONObject user = (JSONObject) object;
             if (user.get("username").equals(name)) {
                 return user;
@@ -216,8 +217,11 @@ public class Leaderboard {
         String uuidToString = uuid.toString();
 
         for (Object object : users) {
+            System.out.println(object);
+
             JSONObject user = (JSONObject) object;
             if (user.get("playerUUID").equals(uuidToString)) {
+                System.out.println("Not null");
                 return user;
             }
         }
