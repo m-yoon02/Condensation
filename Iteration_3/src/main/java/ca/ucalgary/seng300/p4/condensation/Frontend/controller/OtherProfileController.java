@@ -1,8 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -72,6 +70,8 @@ public class OtherProfileController {
     private Text statusMessage; // Displays messages to the user
     @FXML
     private Text playerStatus; // Displays the online/offline status of the player
+    @FXML
+    private Button challengeButton;
 
     // Data models for the tables
     private final ObservableList<PlayerProfile> overallStatsData = FXCollections.observableArrayList();
@@ -150,26 +150,70 @@ public class OtherProfileController {
         displayRecentMatches(username);
     }
 
-    // so this is where onChallenge
-    @FXML
-    public void on(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        CheckersQueueController checkersQueueController = fxmlLoader.getController();
-        window.setScene(scene);
-        window.show();
-        checkersQueueController.start();
+
+    private void navigateToScreen(ActionEvent event, String fxml) throws IOException {
+
+        switch(fxml){
+            case "checkersqueue.fxml" -> {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+                CheckersQueueController checkersQueueController = fxmlLoader.getController();
+                window.setScene(scene);
+                window.show();
+                checkersQueueController.start();
+            }
+            case "tictactoequeue.fxml" -> {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tictactoequeue.fxml"));
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+                TicTacToeQueueController ticTacToeQueueController = fxmlLoader.getController();
+                window.setScene(scene);
+                window.show();
+                ticTacToeQueueController.start();
+            }
+            case "connectfourqueue.fxml" -> {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connectfourqueue.fxml"));
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+                ConnectFourQueueController connectFourQueueController = fxmlLoader.getController();
+                window.setScene(scene);
+                window.show();
+                connectFourQueueController.start();
+            }
+        }
+
+
+    }
+
+    private String getCorrectQueueFXMLPlayer(GameTypes gameType){
+
+        String queueFXML = null;
+        switch(gameType){
+            case CHECKERS -> {
+                queueFXML = "checkersqueue.fxml";
+            }
+            case TICTACTOE -> {
+                queueFXML = "tictactoequeue.fxml";
+            }
+            case CONNECT4 -> {
+                queueFXML = "connectfourqueue.fxml";
+            }
+        }
+
+        return queueFXML;
     }
 
 
-    public void challengePlayer(ActionEvent event) throws IOException, ParseException {
+    // this
+
+    public void onChallengeClick(ActionEvent event) throws IOException, ParseException {
 
         String playerUser = usernameTextField.getText().strip();
         FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
         JSONParser jsonParser = new JSONParser();
         JSONObject loginUser = (JSONObject) jsonParser.parse(reader);
-        String uuid  = (String) loginUser.get("PlayerUUID");
+        String uuid  = (String) loginUser.get("playerID");
         UUID uuidToString = UUID.fromString(uuid);
 
 
@@ -190,55 +234,37 @@ public class OtherProfileController {
         // Wait for user selection
         alert.showAndWait().ifPresent(response -> {
             GameTypes gameTypes;
-            if (response == connect4Button) {
-              gameTypes = GameTypes.CONNECT4;
-              JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
-              String Jsonresponse = null;
-              try {
-                    Jsonresponse = NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
+            try {
+                if (response == connect4Button) {
+                    gameTypes = GameTypes.CONNECT4;
+                    JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
+                    NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-              } catch (ParseException e) {
-                    throw new RuntimeException(e);
-              }
+                    String fxml = getCorrectQueueFXMLPlayer(GameTypes.CONNECT4);
+                    navigateToScreen(event, fxml); // Pass the original event
 
+                } else if (response == checkersButton) {
+                    gameTypes = GameTypes.CHECKERS;
+                    JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
+                    NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
 
+                    String fxml = getCorrectQueueFXMLPlayer(GameTypes.CHECKERS);
+                    navigateToScreen(event, fxml); // Pass the original event
 
+                } else if (response == ticTacToeButton) {
+                    gameTypes = GameTypes.TICTACTOE;
+                    JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
+                    NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
 
+                    String fxml = getCorrectQueueFXMLPlayer(GameTypes.TICTACTOE);
+                    navigateToScreen(event, fxml); // Pass the original event
 
-
-
-            } else if (response == checkersButton) {
-                gameTypes = GameTypes.CHECKERS;
-                JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
-                String Jsonresponse = null;
-                try {
-                    Jsonresponse = NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
+                } else if (response == cancelButton) {
+                    System.out.println("Challenge canceled.");
                 }
-
-            } else if (response == ticTacToeButton) {
-                gameTypes = GameTypes.TICTACTOE;
-                JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
-                String Jsonresponse = null;
-                try {
-                    Jsonresponse = NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-
-                GameSessionRecord.getGameSessionRecord().fromJSON(Jsonresponse);
-            } else if (response == cancelButton) {
-                System.out.println("Challenge canceled.");
-                // Handle cancel logic if necessary
+            } catch (IOException | ParseException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error navigating to the queue screen.");
             }
         });
 
@@ -251,7 +277,6 @@ public class OtherProfileController {
         payload.put("Player1ID", uuid);
         payload.put("Player2Username", username);
         payload.put("gameType", gameTypes);
-
 
         return  payload;
     }

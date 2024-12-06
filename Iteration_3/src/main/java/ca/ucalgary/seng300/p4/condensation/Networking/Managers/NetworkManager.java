@@ -404,7 +404,7 @@ public class NetworkManager {
 
         // I need player1ID this is the logged in player from the playerId.json
         // we need a player2ID
-        UUID player1ID = UUID.fromString((String) challengeQueuedPlayer.get("Player1ID"));
+        UUID player1ID = UUID.fromString(String.valueOf(challengeQueuedPlayer.get("Player1ID")));
         JSONObject player1User = Leaderboard.getInstance().findUserById(player1ID);
         GameTypes gameType = (GameTypes) challengeQueuedPlayer.get("gameType");
 
