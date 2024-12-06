@@ -9,8 +9,6 @@
       <change beforePath="$PROJECT_DIR$/Iteration_3/mockLeaderboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/mockLeaderboard.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Services/MatchmakingPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Services/MatchmakingPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/HowToPlayConnect4ControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/HowToPlayConnect4ControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManagerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,6 +40,7 @@
     "JUnit.NetworkManagerTest.executor": "Coverage",
     "JUnit.NetworkManagerTest.sendGameDataToClients.executor": "Run",
     "JUnit.NetworkManagerTest.testGetNetworkInstance.executor": "Run",
+    "JUnit.NetworkManagerTest.testHandleQueuePlayer.executor": "Run",
     "JUnit.NetworkManagerTest.testIsPlayerOnline.executor": "Run",
     "JUnit.NetworkManagerTest.testPlayerLoginHandler_ValidCredentials.executor": "Run",
     "JUnit.NetworkManagerTest.testPlayerSubscribed.executor": "Run",
@@ -60,6 +59,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -68,7 +70,7 @@
       <recent name="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.NetworkManagerTest">
+  <component name="RunManager" selected="JUnit.NetworkManagerTest.testHandleQueuePlayer">
     <configuration name="NetworkManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="condensation" />
       <extension name="coverage">
@@ -100,6 +102,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="NetworkManagerTest.testHandleQueuePlayer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="METHOD_NAME" value="testHandleQueuePlayer" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="NetworkManagerTest.testPlayerLoginHandler_ValidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="condensation" />
       <extension name="coverage">
@@ -111,22 +129,6 @@
       <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
       <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
       <option name="METHOD_NAME" value="testPlayerLoginHandler_ValidCredentials" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NetworkManagerTest.testSignUpHandler" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="condensation" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
-      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
-      <option name="METHOD_NAME" value="testSignUpHandler" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -150,11 +152,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.NetworkManagerTest.testHandleQueuePlayer" />
         <item itemvalue="JUnit.NetworkManagerTest" />
         <item itemvalue="JUnit.NetworkManagerTest.editUsernameTest" />
         <item itemvalue="JUnit.NetworkManagerTest.testValidateUserCredentials_InvalidCredentials" />
         <item itemvalue="JUnit.NetworkManagerTest.testPlayerLoginHandler_ValidCredentials" />
-        <item itemvalue="JUnit.NetworkManagerTest.testSignUpHandler" />
       </list>
     </recent_temporary>
   </component>
@@ -168,7 +170,7 @@
       <updated>1733353929016</updated>
       <workItem from="1733353930641" duration="3596000" />
       <workItem from="1733358193457" duration="9907000" />
-      <workItem from="1733457877990" duration="7262000" />
+      <workItem from="1733457877990" duration="10789000" />
     </task>
     <servers />
   </component>
@@ -187,6 +189,19 @@
     </option>
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManagerTest.java</url>
+          <line>355</line>
+          <properties class="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" method="testHandleQueuePlayer">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
         <watch expression="testRunner" />
@@ -197,10 +212,13 @@
     <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testPlayerLoginHandler_ValidCredentials.ic" NAME="NetworkManagerTest.testPlayerLoginHandler_ValidCredentials Coverage Results" MODIFIED="1733463714816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testHandleQueuePlayer.ic" NAME="NetworkManagerTest.testHandleQueuePlayer Coverage Results" MODIFIED="1733467248100" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testSignUpHandler.ic" NAME="NetworkManagerTest.testSignUpHandler Coverage Results" MODIFIED="1733462198222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest.ic" NAME="NetworkManagerTest Coverage Results" MODIFIED="1733464758405" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest.ic" NAME="NetworkManagerTest Coverage Results" MODIFIED="1733465842472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testValidateUserCredentials_InvalidCredentials.ic" NAME="NetworkManagerTest.testValidateUserCredentials_InvalidCredentials Coverage Results" MODIFIED="1733463403447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
