@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -58,7 +59,7 @@ public class ProfileHomeController {
     private TableColumn<JSONObject, String> playerRecentgamesPlayedColumn;
 
     @FXML
-    private Label usernameField;
+    public Label usernameField;
     @FXML
     private Button leaderboardButton;
     @FXML
@@ -91,6 +92,7 @@ public class ProfileHomeController {
         // Set username and initialize leaderboard
         try {
             String usernameOfPlayer = Leaderboard.getInstance().fetchUserFromNewPlayerJson();
+            System.out.println("USERNAME OF PLAYER" + usernameOfPlayer);
             usernameField.setText(usernameOfPlayer);
         } catch (Exception e) {
             e.printStackTrace();
@@ -269,6 +271,66 @@ public class ProfileHomeController {
         }
     }
 
+    @FXML
+    void onEditUserButtonClicked(ActionEvent event) throws IOException, ParseException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("editUser.fxml"));
+        Parent root = fxmlLoader.load();
+        EditUserController editUserController = fxmlLoader.getController();
+
+        // Load the ProfileHome.fxml and get the controller
+        FXMLLoader meow = new FXMLLoader(HelloApplication.class.getResource("ProfileHome.fxml"));
+        Parent profileHomeRoot = meow.load(); // This initializes the controller
+        ProfileHomeController jesis = meow.getController(); // Retrieve the controller instance
+
+        // Inject the ProfileHomeController into EditUserController
+        editUserController.setProfileHomeController(jesis);
+
+        // Create a new Stage for the popup
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL); // Make it a modal dialog
+        stage.setTitle("Edit Username");
+
+        // Set the scene for the popup
+        Scene scene = new Scene(root, 400, 300);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+
+        FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
+        JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(reader);
+        String playerIDString = (String) object.get("playerID");
+        EditUserController.setPlayerUUID(UUID.fromString(playerIDString));
+
+    }
+
+    @FXML
+    void onEditPassButtonClicked(ActionEvent event) throws IOException, ParseException {
+        // Load the FXML for editing the username
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("editPass.fxml"));
+        Parent root = fxmlLoader.load();
+
+        // Create a new Stage for the popup
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL); // Make it a modal dialog
+        stage.setTitle("Edit Password");
+
+        // Set the scene for the popup
+        Scene scene = new Scene(root, 400, 300);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+
+        FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
+        JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(reader);
+        String playerIDString = (String) object.get("playerID");
+        EditPassController.setPlayerUUID(UUID.fromString(playerIDString));
+    }
+
+
     /**
      * Navigates to the specified screen.
      * @param event The ActionEvent triggered by the navigation.
@@ -282,4 +344,7 @@ public class ProfileHomeController {
         window.setScene(scene);
         window.show();
     }
+//    public static void setUsername(String username) {
+//        ProfileHomeController.usernameField.setText();
+//    }
 }

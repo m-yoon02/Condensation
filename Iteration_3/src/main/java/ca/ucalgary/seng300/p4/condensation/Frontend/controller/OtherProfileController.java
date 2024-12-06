@@ -2,6 +2,7 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,15 +14,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -67,6 +70,8 @@ public class OtherProfileController {
     private Text statusMessage; // Displays messages to the user
     @FXML
     private Text playerStatus; // Displays the online/offline status of the player
+    @FXML
+    private Button challengeButton;
 
     // Data models for the tables
     private final ObservableList<PlayerProfile> overallStatsData = FXCollections.observableArrayList();
@@ -112,6 +117,7 @@ public class OtherProfileController {
     void onSearchButtonClicked(ActionEvent event) throws IOException, ParseException {
         // Get the entered username
         String username = usernameTextField.getText().trim();
+
         if (username.isEmpty()) {
             statusMessage.setText("Please enter a username to search.");
             return;
@@ -142,6 +148,137 @@ public class OtherProfileController {
 
         // Populate the recent matches table
         displayRecentMatches(username);
+    }
+
+
+    private void navigateToScreen(ActionEvent event, String fxml) throws IOException {
+
+        switch(fxml){
+            case "checkersqueue.fxml" -> {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+                CheckersQueueController checkersQueueController = fxmlLoader.getController();
+                window.setScene(scene);
+                window.show();
+                checkersQueueController.start();
+            }
+            case "tictactoequeue.fxml" -> {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tictactoequeue.fxml"));
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+                TicTacToeQueueController ticTacToeQueueController = fxmlLoader.getController();
+                window.setScene(scene);
+                window.show();
+                ticTacToeQueueController.start();
+            }
+            case "connectfourqueue.fxml" -> {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connectfourqueue.fxml"));
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+                ConnectFourQueueController connectFourQueueController = fxmlLoader.getController();
+                window.setScene(scene);
+                window.show();
+                connectFourQueueController.start();
+            }
+        }
+
+
+    }
+
+    private String getCorrectQueueFXMLPlayer(GameTypes gameType){
+
+        String queueFXML = null;
+        switch(gameType){
+            case CHECKERS -> {
+                queueFXML = "checkersqueue.fxml";
+            }
+            case TICTACTOE -> {
+                queueFXML = "tictactoequeue.fxml";
+            }
+            case CONNECT4 -> {
+                queueFXML = "connectfourqueue.fxml";
+            }
+        }
+
+        return queueFXML;
+    }
+
+
+    // this
+
+    public void onChallengeClick(ActionEvent event) throws IOException, ParseException {
+
+        String playerUser = usernameTextField.getText().strip();
+        FileReader reader = new FileReader(NetworkManager.PLAYER_ID_FILE);
+        JSONParser jsonParser = new JSONParser();
+        JSONObject loginUser = (JSONObject) jsonParser.parse(reader);
+        String uuid  = (String) loginUser.get("playerID");
+        UUID uuidToString = UUID.fromString(uuid);
+
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Challenging Player");
+        alert.setContentText("Challenging " + playerUser + "...");
+        alert.showAndWait();
+
+        ButtonType connect4Button = new ButtonType("Connect4");
+        ButtonType checkersButton = new ButtonType("Checkers");
+        ButtonType ticTacToeButton = new ButtonType("TicTacToe");
+        ButtonType cancelButton = ButtonType.CANCEL;
+
+        // Add buttons to the alert
+        alert.getButtonTypes().setAll(connect4Button, checkersButton, ticTacToeButton, cancelButton);
+
+
+        // Wait for user selection
+        alert.showAndWait().ifPresent(response -> {
+            GameTypes gameTypes;
+            try {
+                if (response == connect4Button) {
+                    gameTypes = GameTypes.CONNECT4;
+                    JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
+                    NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
+
+                    String fxml = getCorrectQueueFXMLPlayer(GameTypes.CONNECT4);
+                    navigateToScreen(event, fxml); // Pass the original event
+
+                } else if (response == checkersButton) {
+                    gameTypes = GameTypes.CHECKERS;
+                    JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
+                    NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
+
+                    String fxml = getCorrectQueueFXMLPlayer(GameTypes.CHECKERS);
+                    navigateToScreen(event, fxml); // Pass the original event
+
+                } else if (response == ticTacToeButton) {
+                    gameTypes = GameTypes.TICTACTOE;
+                    JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
+                    NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
+
+                    String fxml = getCorrectQueueFXMLPlayer(GameTypes.TICTACTOE);
+                    navigateToScreen(event, fxml); // Pass the original event
+
+                } else if (response == cancelButton) {
+                    System.out.println("Challenge canceled.");
+                }
+            } catch (IOException | ParseException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error navigating to the queue screen.");
+            }
+        });
+
+
+    }
+
+
+    public JSONObject makeChallengePayload(GameTypes gameTypes, UUID uuid, String username) {
+        JSONObject payload = new JSONObject();
+        payload.put("Player1ID", uuid);
+        payload.put("Player2Username", username);
+        payload.put("gameType", gameTypes);
+
+        return  payload;
     }
 
     /**
@@ -234,10 +371,7 @@ public class OtherProfileController {
     void onHomeButtonClicked(ActionEvent event) throws IOException {
         Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileHome.fxml"));
         Scene homeScene = new Scene(homeParent);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
+        HelloApplication.setActiveScene(homeScene);
     }
 
     /**

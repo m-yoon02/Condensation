@@ -61,11 +61,7 @@ public class ProfileGameController {
         System.out.println("Tic Tac Toe Play button clicked");
         Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("tMenu.fxml"));
         Scene homeScene = new Scene(homeParent);
-
-        // Get the current stage and set the new scene
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
+        HelloApplication.setActiveScene(homeScene);
     }
 
     /**
@@ -78,11 +74,7 @@ public class ProfileGameController {
         System.out.println("Connect 4 Play button clicked");
         Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
         Scene homeScene = new Scene(homeParent);
-
-        // Get the current stage and set the new scene
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
+        HelloApplication.setActiveScene(homeScene);
     }
 
     /**
@@ -95,11 +87,7 @@ public class ProfileGameController {
         System.out.println("Checkers Play button clicked");
         Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
         Scene homeScene = new Scene(homeParent);
-
-        // Get the current stage and set the new scene
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
+        HelloApplication.setActiveScene(homeScene);
     }
 
     /**
@@ -115,10 +103,6 @@ public class ProfileGameController {
         // Load the Profile Home FXML file
         Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileHome.fxml"));
         Scene homeScene = new Scene(homeParent);
-
-        // Get the current stage and set the new scene
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
+        HelloApplication.setActiveScene(homeScene);
     }
 }
