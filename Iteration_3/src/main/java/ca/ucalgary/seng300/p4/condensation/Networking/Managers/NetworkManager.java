@@ -39,8 +39,8 @@ public class NetworkManager {
 
     private static final String ABSOLUTE_PATH;
     private static final String LEADERBOARD_DIR;
-    public static final String LEADERBOARD_FILE;
-    public static final String PLAYER_ID_FILE;
+    public static String LEADERBOARD_FILE;
+    public static String PLAYER_ID_FILE;
 
     static {
         Path basePath = Paths.get("").toAbsolutePath();
