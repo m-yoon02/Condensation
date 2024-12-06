@@ -125,22 +125,21 @@ public class ConnectFourController {
     private void handleTurnEnd(JSONObject update) {
         sessionID = (UUID) update.get("SessionID");
         newTurn = (UUID) update.get("PlayerTurn");
-        String playerTurnName = getUsernameFromUUID(newTurn.toString());
+        String playerTurnName = getUsernameFromUUID(newTurn);
         playerTurnText.setText(String.format("It's %s's turn!", playerTurnName));
 
         JSONArray changes = (JSONArray) update.get("Changes");
         updateBoard(changes);
     }
 
-    private static String getUsernameFromUUID(String playerUUID) {
+    private static String getUsernameFromUUID(UUID playerUUID) {
         try {
             File file = new File(NetworkManager.LEADERBOARD_FILE);
-            JSONParser parser = new JSONParser();
-            JSONArray leaderboard = (JSONArray) parser.parse(new FileReader(file));
+            JSONArray leaderboard = (JSONArray) new JSONParser().parse(new FileReader(file));
 
             for (Object obj : leaderboard) {
                 JSONObject player = (JSONObject) obj;
-                if (playerUUID.equals(player.get("playerUUID"))) {
+                if (playerUUID.equals(UUID.fromString((String) player.get("playerUUID")))) {
                     return (String) player.get("username");
                 }
             }

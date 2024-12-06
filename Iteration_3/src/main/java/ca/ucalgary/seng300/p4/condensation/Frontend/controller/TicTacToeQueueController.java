@@ -26,17 +26,24 @@ public class TicTacToeQueueController {
     @FXML
     private Button leaveQueue;
 
-    public void start() {
+    public void start(boolean fromChallenge) {
         // Allows user to leave
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished(e -> {
             try {
-                sendToBackendTicTacToe();
+                if (fromChallenge)
+                    switchToGameScene();
+                else
+                    sendToBackendTicTacToe();
             } catch (IOException | ParseException ex) {
                 throw new RuntimeException(ex);
             }
         });
         delay.play();
+    }
+
+    public void start() {
+        start(false);
     }
 
     @FXML
@@ -62,7 +69,10 @@ public class TicTacToeQueueController {
         playerInfoForGame.put("gameType", GameTypes.TICTACTOE);
         String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
         GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
+        switchToGameScene();
+    }
 
+    public void switchToGameScene() throws IOException, ParseException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tGame.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         TicTacToeController ticTacToeController = fxmlLoader.getController();

@@ -33,12 +33,15 @@ public class CheckersQueueController {
     private Scene createScene;
 
 
-    public void start() {
+    public void start(boolean fromChallenge) {
         // Allows user to leave
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished(e -> {
             try {
-                sendToBackendCheckers();
+                if (fromChallenge)
+                    switchToGameScene();
+                else
+                    sendToBackendCheckers();
             } catch (IOException | ParseException ex) {
                 throw new RuntimeException(ex);
             }
@@ -46,11 +49,8 @@ public class CheckersQueueController {
         delay.play();
     }
 
-    protected void returnToProfile(Event event) throws IOException
-    {
-        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Profile.fxml")));
-        createScene = new Scene(origin);
-        HelloApplication.setActiveScene(createScene);
+    public void start() {
+        start(false);
     }
 
     // get player id
@@ -68,6 +68,10 @@ public class CheckersQueueController {
         playerInfoForGame.put("gameType", GameTypes.CHECKERS);
         String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
         GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
+        switchToGameScene();
+    }
+
+    public void switchToGameScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         HelloApplication.setActiveScene(scene, "Checkers");

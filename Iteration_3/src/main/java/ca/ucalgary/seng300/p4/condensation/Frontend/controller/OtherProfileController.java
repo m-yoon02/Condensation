@@ -1,6 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
@@ -156,30 +158,24 @@ public class OtherProfileController {
         switch(fxml){
             case "checkersqueue.fxml" -> {
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(fxmlLoader.load(), 600, 400);
                 CheckersQueueController checkersQueueController = fxmlLoader.getController();
-                window.setScene(scene);
-                window.show();
-                checkersQueueController.start();
+                HelloApplication.setActiveScene(scene);
+                checkersQueueController.start(true);
             }
             case "tictactoequeue.fxml" -> {
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tictactoequeue.fxml"));
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(fxmlLoader.load(), 600, 400);
                 TicTacToeQueueController ticTacToeQueueController = fxmlLoader.getController();
-                window.setScene(scene);
-                window.show();
-                ticTacToeQueueController.start();
+                HelloApplication.setActiveScene(scene);
+                ticTacToeQueueController.start(true);
             }
             case "connectfourqueue.fxml" -> {
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connectfourqueue.fxml"));
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(fxmlLoader.load(), 600, 400);
                 ConnectFourQueueController connectFourQueueController = fxmlLoader.getController();
-                window.setScene(scene);
-                window.show();
-                connectFourQueueController.start();
+                HelloApplication.setActiveScene(scene);
+                connectFourQueueController.start(true);
             }
         }
 
@@ -238,7 +234,7 @@ public class OtherProfileController {
                 if (response == connect4Button) {
                     gameTypes = GameTypes.CONNECT4;
                     JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
-                    NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
+                    GameSessionRecord.getGameSessionRecord().fromJSON(NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload));
 
                     String fxml = getCorrectQueueFXMLPlayer(GameTypes.CONNECT4);
                     navigateToScreen(event, fxml); // Pass the original event
@@ -246,7 +242,7 @@ public class OtherProfileController {
                 } else if (response == checkersButton) {
                     gameTypes = GameTypes.CHECKERS;
                     JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
-                    NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
+                    GameSessionRecord.getGameSessionRecord().fromJSON(NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload));
 
                     String fxml = getCorrectQueueFXMLPlayer(GameTypes.CHECKERS);
                     navigateToScreen(event, fxml); // Pass the original event
@@ -254,7 +250,7 @@ public class OtherProfileController {
                 } else if (response == ticTacToeButton) {
                     gameTypes = GameTypes.TICTACTOE;
                     JSONObject payload = makeChallengePayload(gameTypes, uuidToString, playerUser);
-                    NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload);
+                    GameSessionRecord.getGameSessionRecord().fromJSON(NetworkManager.getNetworkInstance().handleChallengedQueuePlayer(payload));
 
                     String fxml = getCorrectQueueFXMLPlayer(GameTypes.TICTACTOE);
                     navigateToScreen(event, fxml); // Pass the original event

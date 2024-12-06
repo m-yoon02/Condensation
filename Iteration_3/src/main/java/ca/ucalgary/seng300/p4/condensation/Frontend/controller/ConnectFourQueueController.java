@@ -26,16 +26,23 @@ public class ConnectFourQueueController {
     @FXML
     private Button leaveQueue;
 
-    public void start() {
+    public void start(boolean fromChallenge) {
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished(_ -> {
             try {
-                sendToBackendConnectFour();
+                if (fromChallenge)
+                    switchToGameScene();
+                else
+                    sendToBackendConnectFour();
             } catch (IOException | ParseException ex) {
                 throw new RuntimeException(ex);
             }
         });
         delay.play();
+    }
+
+    public void start() {
+        start(false);
     }
 
 
@@ -60,7 +67,10 @@ public class ConnectFourQueueController {
         playerInfoForGame.put("gameType", GameTypes.CONNECT4);
         String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
         GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
+        switchToGameScene();
+    }
 
+    public void switchToGameScene() throws IOException {
         // Directing to the board
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("connect4-board.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
