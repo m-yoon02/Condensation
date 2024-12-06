@@ -70,7 +70,7 @@ public class ProfileLeaderBController {
         ticTacToePlayerColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty((String) cellData.getValue().get("username")));
         ticTacToeScoreColumn.setCellValueFactory(cellData ->
-                new SimpleIntegerProperty(((Long) cellData.getValue().get("tictactoeElo")).intValue()).asObject());
+                new SimpleIntegerProperty(((Number) cellData.getValue().get("tictactoeElo")).intValue()).asObject());
 
         // Configure Connect 4 columns
         connect4RankColumn.setCellValueFactory(cellData ->
@@ -78,7 +78,7 @@ public class ProfileLeaderBController {
         connect4PlayerColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty((String) cellData.getValue().get("username")));
         connect4ScoreColumn.setCellValueFactory(cellData ->
-                new SimpleIntegerProperty(((Long) cellData.getValue().get("connect4Elo")).intValue()).asObject());
+                new SimpleIntegerProperty(((Number) cellData.getValue().get("connect4Elo")).intValue()).asObject());
 
         // Configure Checkers columns
         checkersRankColumn.setCellValueFactory(cellData ->
@@ -86,7 +86,7 @@ public class ProfileLeaderBController {
         checkersPlayerColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty((String) cellData.getValue().get("username")));
         checkersScoreColumn.setCellValueFactory(cellData ->
-                new SimpleIntegerProperty(((Long) cellData.getValue().get("checkersElo")).intValue()).asObject());
+                new SimpleIntegerProperty(((Number) cellData.getValue().get("checkersElo")).intValue()).asObject());
 
         // Load leaderboard data dynamically
         loadLeaderboardData();
