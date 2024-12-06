@@ -1,111 +1,126 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
-import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
-import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
+import ca.ucalgary.seng300.p4.condensation.Frontend.GameSessionClient.GameSessionRecord;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.ClientReceiver;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.RecieverListener;
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import javafx.scene.control.Label;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TicTacToeController {
     @FXML
-    private Button btn00, btn01, btn02, btn10, btn11, btn12, btn20, btn21, btn22;
-    public int numberOfPiecesOnBoard = 0;
-    Button[][] buttons = new Button[][] {
-        {btn00, btn01, btn02},
-        {btn10, btn11, btn12},
-        {btn20, btn21, btn22}
-    };
+    private Button btn00;
+
+    @FXML
+    private Button btn01;
+
+    @FXML
+    private Button btn02;
+
+    @FXML
+    private Button btn10;
+
+    @FXML
+    private Button btn11;
+
+    @FXML
+    private Button btn12;
+
+    @FXML
+    private Button btn20;
+
+    @FXML
+    private Button btn21;
+
+    @FXML
+    private Button btn22;
+
+    private Button[][] buttons;
+
+    private String[][] boardRepresentation = new String[NUMBER_OF_ROWS][NUMBER_OF_COLS];
 
     public static final int NUMBER_OF_ROWS = 3;
     public static final int NUMBER_OF_COLS = 3;
-    public GameResult resultOfTicTacToe;
-    public UUID playerOne;
-    public UUID playerTwo;
-    public UUID sessionID;
-    public UUID newTurn;
+    private static final String[] COLORS = {PieceColor.RED.toString(), PieceColor.BLUE.toString()};
+
+    private UUID playerOne;
+    private UUID playerTwo;
+    private UUID sessionID;
+    private UUID newTurn;
 
     @FXML
-    public Label playerStatus;
+    public Button forfeitBtn;
 
-    @FXML
-    public void initialize() throws IOException, ParseException {
+    private class TicTacToeReceiver extends RecieverListener {
 
-        buttons = new Button[][] {
-                {btn00, btn01, btn02},
-                {btn10, btn11, btn12},
-                {btn20, btn21, btn22}
-        };
+        public TicTacToeReceiver() {
+            super(GameTypes.TICTACTOE);
+        }
 
-        playerOne = UUID.fromString("234e5678-e89c-34d4-a567-526725175000");
-        playerTwo = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
-        newTurn = playerOne;
-
-        QueuedPlayerMemo queuePlayerOneMemo = new QueuedPlayerMemo(playerOne, GameTypes.TICTACTOE, 1662);
-        QueuedPlayerMemo queuedPlayerTwoMemo = new QueuedPlayerMemo(playerTwo,GameTypes.TICTACTOE, 1999);
-        GameSession newGameSession = new GameSession(queuePlayerOneMemo, queuedPlayerTwoMemo);
-        sessionID = newGameSession.getSessionId();
-
-        playerStatus.setText("RED TURN - YOUR TURN");
-        playerStatus.setTextFill(Color.RED);
+        @Override
+        public void onReceive(JSONObject payload) throws IOException {
+            receiveFromBackendTicTacToe(payload);
+        }
     }
-    public void receiveFromBackendTicTacToe(JSONObject backendUpdate){
-        String win_or_not_win = (String) backendUpdate.get("UpdateType");
-        if (Objects.equals(win_or_not_win, "GAME_END")){
-            resultOfTicTacToe = (GameResult) backendUpdate.get("GameState");
-            if (resultOfTicTacToe == GameResult.WIN){
-                disableAllButtons();
-                // Switch to aftermath, send data now????
-                // Notification
-            }
-            else{
-                //Tie -> send data to Aftermath
+
+    public void start() throws IOException, ParseException {
+        GameSessionRecord gameSessionRecord = GameSessionRecord.getGameSessionRecord();
+        ClientReceiver.addClientReceiver(new TicTacToeReceiver());
+        playerOne = gameSessionRecord.getPlayer1ID();
+        playerTwo = gameSessionRecord.getPlayer2ID();
+        newTurn = gameSessionRecord.getCurrentPlayerID();
+        sessionID = gameSessionRecord.getSessionID();
+        buttons = new Button[][] {
+            {btn00, btn01, btn02},
+            {btn10, btn11, btn12},
+            {btn20, btn21, btn22}
+        };
+        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+            for (int j = 0; j < NUMBER_OF_COLS; j++) {
+                int fi = i;
+                int fj = j;
+                buttons[i][j].setOnMouseClicked(_ -> {
+                    try {
+                        onTicTacToeButtonPress(fi, fj);
+                    } catch (IOException | ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             }
         }
-        else{
-            sessionID = (UUID) backendUpdate.get("SessionID");
-            newTurn = (UUID) backendUpdate.get("PlayerTurn");
-            String[][] connectFourBackendBoard = (String[][]) backendUpdate.get("Changes");
-            int rowIndex = 0;
-            int colIndex;
-            for (String[] strings : connectFourBackendBoard) {
-                colIndex = 0;
-                for (String piece : strings) {
-                    Button buttonForBoard = buttons[rowIndex][colIndex];
-                    if (Objects.equals(piece, "RED")){
-                        buttonForBoard.setText("X");
-                        buttonForBoard.setTextFill(Color.RED);
-                    }
-                    else if (Objects.equals(piece, "BLUE")){
-                        buttonForBoard.setText("O");
-                        buttonForBoard.setTextFill(Color.BLUE);
-                    }
-                    else{
-                        buttonForBoard.setText("");
-                    }
-                }
-                rowIndex += 1;
-            }
-            if (newTurn.equals(playerTwo)){
-                playerStatus.setText("BLUE TURN - OPPONENT'S TURN");
-                playerStatus.setTextFill(Color.BLUE);
-            }
-            else{
-                playerStatus.setText("RED TURN - YOUR TURN");
-                playerStatus.setTextFill(Color.RED);
-            }
+        for (String[] strings : boardRepresentation){
+            Arrays.fill(strings, "EMPTY");
+        }
+    }
+
+    public void receiveFromBackendTicTacToe(JSONObject backendUpdate) throws IOException {
+        String win_or_not_win = (String) backendUpdate.get("UpdateType");
+        if (Objects.equals(win_or_not_win, "GAME_END")){
+            disableAllButtons();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Aftermath.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            HelloApplication.setActiveScene(scene, "Condensation Application - Aftermath");
+        } else{
+            onTurnEnd(backendUpdate);
         }
     }
 
@@ -117,46 +132,111 @@ public class TicTacToeController {
         }
     }
 
-    @FXML
-    public void returnToBackendTicTacToe(javafx.event.ActionEvent event) throws IOException, ParseException {
-        Button clickedButton = (Button) event.getSource();
-
-        int row = -1;
-        int col = -1;
-
-        boolean buttonFound = false;
+    private void onTurnEnd(JSONObject jsonObject) {
+        sessionID = (UUID) jsonObject.get("SessionID");
+        newTurn = (UUID) jsonObject.get("PlayerTurn");
+        GameSessionRecord.updateBoardRepresentationFromJSON(boardRepresentation, (JSONArray) jsonObject.get("Changes"));
         for (int i = 0; i < NUMBER_OF_ROWS; i++) {
-            if (buttonFound){
-                break;
-            }
             for (int j = 0; j < NUMBER_OF_COLS; j++) {
-                System.out.println(buttons[i][j]);
-                if (buttons[i][j].equals(clickedButton)) {
-                    row = i;
-                    col = j;
-                    buttonFound = true;
-                    break;
-                }
+                setButtonToPiece(boardRepresentation[i][j], buttons[i][j]);
             }
         }
+    }
 
-        if (row >= 0 && col >= 0){
+    private void onTicTacToeButtonPress(int i, int j) throws IOException, ParseException {
+        if (boardRepresentation[i][j].equals("EMPTY")) {
+            NetworkManager.getNetworkInstance().receiveGameDataFromClient(GameSessionRecord.parseMoveData(
+                    sessionID,
+                    newTurn,
+                    new int[] {j, i}
+            ));
+        }
+    }
 
-            JSONObject ticTacToeJSON = new JSONObject();
-            ticTacToeJSON.put("SessionID", sessionID);
-            if (newTurn == playerOne){
-                ticTacToeJSON.put("playerID", playerOne.toString());
-            }
-            else{
-                ticTacToeJSON.put("playerID", playerTwo.toString());
-            }
-            ticTacToeJSON.put("New Position", new Vector2(row, col));
-            ticTacToeJSON.put("gameType", GameTypes.TICTACTOE);
-            numberOfPiecesOnBoard += 1;
-            System.out.println(ticTacToeJSON);
-            JSONObject results = NetworkManager.getNetworkInstance().handleQueuePlayer(ticTacToeJSON);
-            receiveFromBackendTicTacToe(results);
+    private void setButtonToPiece(String color, Button buttonForBoard) {
+        if (color.equals("RED")) {
+            buttonForBoard.setTextFill(Color.RED);
+            buttonForBoard.setText("X");
+        } else if (color.equals("BLUE")) {
+            buttonForBoard.setTextFill(Color.BLUE);
+            buttonForBoard.setText("O");
+        } else {
+            buttonForBoard.setText("");
+        }
+    }
+
+    @FXML
+    public void onForfeitBtnClick() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
+        alert.setTitle("Forfeit");
+
+        Optional<ButtonType> choice = alert.showAndWait();
+        if (choice.isPresent() && choice.get() == ButtonType.OK) {
+            onForfeitYesClick();
+        } else if (choice.isPresent() && choice.get() == ButtonType.CANCEL) {
+            System.out.println("No");
+        }
+    }
+    @FXML
+    public void onForfeitYesClick() {
+        System.out.println("Forfeit confirmed. Closing the application window...");
+        try {
+            NetworkManager.getNetworkInstance().forfeitGame(sessionID, playerOne);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void onForfeitNoClick() {
+        System.out.println("Forfeit canceled. The window remains open.");
+    }
+
+    @FXML
+    private TextArea chatBox;
+
+    @FXML
+    private Button sendBtn;
+
+    @FXML
+    private ScrollPane chatScrollPane;
+
+    @FXML
+    private VBox paneInsideScrollPane;
+
+    private String username = "Me";
+
+    // TODOL: Connect
+    public void onSendBtnClick() {
+        String messageStr = chatBox.getText();
+        if (!messageStr.isEmpty()) {
+            HBox messageHBox = new HBox();
+            messageHBox.setStyle("    -fx-pref-width: 50;\n" +
+                    "    -fx-max-width: 200;");
+            messageHBox.setPadding(new Insets(5, 10, 5, 5));
+            messageHBox.setMaxHeight(Integer.MAX_VALUE);
+            Label senderName = new Label(username);
+            senderName.setStyle("-fx-font-size: 13;\n" +
+                    "    -fx-font-family: \"Oswald\", sans-serif;\n" +
+                    "    -fx-text-fill: White;\n" +
+                    "    -fx-font-weight: bold;");
+            senderName.setPadding(new Insets(0, 0, -3, 0));
+            Label message = new Label(messageStr);
+            message.setStyle("-fx-font-size: 12;\n" +
+                    "    -fx-font-family: \"Oswald\", sans-serif;\n" +
+                    "    -fx-text-fill: White;");
+            message.setWrapText(true);
+            message.setLineSpacing(-5);
+            VBox vBox = new VBox(senderName, message);
+            vBox.setMaxHeight(Integer.MAX_VALUE);
+            messageHBox.getChildren().addAll(vBox);
+            paneInsideScrollPane.getChildren().add(messageHBox);
+            chatBox.setText("");
+            chatScrollPane.setVvalue(1.0);
         }
     }
 }
+
+
+
 

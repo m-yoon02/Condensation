@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileLeaderBController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="main-pane" stylesheets="@ProfileLeaderB.css" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileLeaderBController">
    <children>
-      <Label layoutX="278.0" layoutY="14.0" text="Leaderboard">
+      <Label layoutX="301.0" layoutY="8.0" styleClass="titleText" text="Leaderboard">
          <font>
             <Font size="23.0" />
          </font>
@@ -39,15 +39,15 @@
             <TableColumn fx:id="checkersScoreColumn" prefWidth="72.79998779296875" text="Score" />
          </columns>
       </TableView>
-      <Label layoutX="79.0" layoutY="113.0" text="TIC TAC TOE">
+      <Label layoutX="85.0" layoutY="113.0" styleClass="game-label" text="TIC TAC TOE">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label layoutX="537.0" layoutY="113.0" text="CHECKERS">
+      <Label layoutX="532.0" layoutY="113.0" styleClass="game-label" text="CHECKERS">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label layoutX="300.0" layoutY="111.0" text="CONNECT 4">
+      <Label layoutX="316.0" layoutY="111.0" styleClass="game-label" text="CONNECT 4">
          <font>
             <Font size="16.0" />
          </font></Label>

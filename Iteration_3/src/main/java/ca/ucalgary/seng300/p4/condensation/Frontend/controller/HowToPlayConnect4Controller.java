@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,13 +18,9 @@ public class HowToPlayConnect4Controller {
 
     @FXML
     private void goBack(ActionEvent event) throws IOException {
-        Stage stage;
         Scene scene;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/ConnectFourHomeMenu.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(fxmlLoader.load(), 800, 600);
-        stage.setTitle("Connect 4 - Menu");
-        stage.setScene(scene);
-        stage.show();
+        scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Connect 4 - Menu");
     }
 }

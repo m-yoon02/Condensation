@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="407.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="407.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.CheckersQueueController">
    <children>
       <Label layoutX="241.0" layoutY="22.0" prefHeight="17.0" prefWidth="119.0" text="Checkers Queue" />
       <Button layoutX="258.0" layoutY="349.0" mnemonicParsing="false" text="Leave Queue" />
