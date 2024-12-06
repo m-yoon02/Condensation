@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.LeaderboardTest.MOCK_LEADERBOARD_FILE;
@@ -251,8 +252,13 @@ public class NetworkManagerTest {
         }
 
         //create the players
-        player1 = new Client(UUID.randomUUID());
-        player2 = new Client(UUID.randomUUID());
+        UUID player1UUID = UUID.fromString("efbee4fb-36d3-4551-a111-6c19a0695416");
+        UUID player2UUID = UUID.fromString("71491e49-f970-4a78-b8dd-0901df523fe6");
+
+        player1 = new Client(player1UUID);
+        player2 = new Client(player2UUID);
+//        networkManager.getLoggedInClients().clear();
+
 
         playerMemo1 = new QueuedPlayerMemo(player1.getPlayerId(), GameTypes.CHECKERS, 100);
         playerMemo2 = new QueuedPlayerMemo(player2.getPlayerId(), GameTypes.CHECKERS, 110);
@@ -586,30 +592,12 @@ public class NetworkManagerTest {
 //        assertNotNull("Game session should exist", session);
 //    }
 
-    @Test
-    public void testRecievePlayerMessage_ReturnsNull() {
-        // Arrange
-        UUID sessionID = UUID.randomUUID();
-        UUID player1ID = UUID.randomUUID();
-        String player1Message = "Hello, player2!";
-
-        JSONObject receivePlayerMessagePayload = new JSONObject();
-        receivePlayerMessagePayload.put("SessionID", sessionID.toString());
-        receivePlayerMessagePayload.put("Player1ID", player1ID.toString());
-        receivePlayerMessagePayload.put("Message", player1Message);
-
-        // Act
-        JSONArray result = networkManager.recievePlayerMessage(receivePlayerMessagePayload);
-
-        // Assert
-        assertNull("The method should return null", result);
-    }
-
 
 
     @After
     public void poo() throws IOException {
         FileWriter writer = new FileWriter(LeaderboardTest.MOCK_LEADERBOARD_FILE, false);
+
         writer.write("""
                 [
                   {

@@ -35,8 +35,19 @@ public class GameSessionManager {
      * @return The {@link GameSession} object associated with the given session ID, or {@code null} if not found.
      */
     public GameSession getGameSessionBySessionID(UUID SessionID){
+        System.out.println("Active Game Sessions:");
+        for (Map.Entry<UUID, GameSession> entry : sessionsMap.entrySet()) {
+            UUID sessionId = entry.getKey();
+            GameSession gameSession = entry.getValue();
+
+            System.out.println("Session ID: " + sessionId);
+            System.out.println("Player 1 ID: " + gameSession.getPlayer1ID());
+            System.out.println("Player 2 ID: " + gameSession.getPlayer2ID());
+            System.out.println("------------------------------------");
+        }
 
         GameSession gameSession = sessionsMap.get(SessionID);
+        System.out.println("Is gameSession null:" + gameSession);
         return gameSession;     // should return the gameSession object
     }
 
