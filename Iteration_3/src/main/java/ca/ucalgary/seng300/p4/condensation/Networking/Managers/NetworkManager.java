@@ -586,4 +586,12 @@ public class NetworkManager {
             throw new NullPointerException("GameSession instance is null!");
         }
     }
+    //getter methods for testing
+    public Map<UUID, Client> getLoggedInClients() {
+        return loggedInClients;
+    }
+
+    public Map<UUID, List<GameDataListener>> getSessionListeners() {
+        return sessionListeners;
+    }
 }
