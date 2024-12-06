@@ -38,8 +38,8 @@ public class NetworkManager {
     private final ChatService chatService;
 
     private static final String LEADERBOARD_DIR = "data";
-    public static final String LEADERBOARD_FILE = Paths.get(LEADERBOARD_DIR, "Leaderboard.json").toString();
-    public static final String PLAYER_ID_FILE = Paths.get(LEADERBOARD_DIR, "playerID.json").toString();
+    public static String LEADERBOARD_FILE = Paths.get(LEADERBOARD_DIR, "Leaderboard.json").toString();
+    public static String PLAYER_ID_FILE = Paths.get(LEADERBOARD_DIR, "playerID.json").toString();
 
     /**
      * constructor for network manager instance, when creating a new one
