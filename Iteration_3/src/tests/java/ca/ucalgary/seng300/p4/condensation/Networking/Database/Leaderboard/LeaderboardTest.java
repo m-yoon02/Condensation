@@ -5,6 +5,7 @@ import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import org.assertj.core.internal.bytebuddy.implementation.bind.MethodNameEqualityResolver;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.*;
 
@@ -18,8 +19,8 @@ public class LeaderboardTest {
 
     private NetworkManager networkManager;
     private Leaderboard leaderboard;
-    public static final String MOCK_LEADERBOARD_FILE = "mockLeaderboard.json";
-    public static final String TEMP_PLAYER_FILE = "tempPlayers.json";
+    private static final String MOCK_LEADERBOARD_FILE = "mockLeaderboard.json";
+    private static final String TEMP_PLAYER_FILE = "tempPlayers.json";
 
     @Before
     public void setUp() throws Exception {
@@ -173,6 +174,41 @@ public class LeaderboardTest {
     }
 
     @Test
+    public void testUpdateForTieGame() throws IOException {
+        // Create and add players to the leaderboard
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        JSONObject user2 = leaderboard.findUserByName("player2");
+
+        UUID sessionID = UUID.randomUUID();
+
+        // Update for tie game
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        UUID player2ID = UUID.fromString((String) user2.get("playerUUID"));
+        leaderboard.updateForTieGame(player1ID, player2ID, sessionID, GameTypes.CHECKERS);
+
+        // update players
+        user1 = leaderboard.findUserByName("player1");
+        user2 = leaderboard.findUserByName("player2");
+
+        // Retrieve players from the leaderboard
+        // Verify players are not null
+        assertNotNull(user1);
+        assertNotNull(user2);
+
+        // Verify recent matches
+        JSONArray recentMatches1 = (JSONArray) user1.get("recentMatches");
+
+        assertEquals(2, recentMatches1.size());
+
+        // Verify the match details
+        JSONObject recentMatch1 = (JSONObject) recentMatches1.getFirst();
+
+        assertEquals(sessionID.toString(), recentMatch1.get("matchID"));
+        assertEquals(GameTypes.CHECKERS.toString(), recentMatch1.get("gameType"));
+        assertEquals("T", recentMatch1.get("outcome"));
+    }
+
+    @Test
     public void testUpdateForTieGameCheckers() throws IOException {
         // Create and add players to the leaderboard
         JSONObject user1 = leaderboard.findUserByName("player1");
@@ -278,6 +314,7 @@ public class LeaderboardTest {
     }
 
 
+
     @Test
     public void testUpdateEloForWinningPlayerUsingMockDataForCheckers() throws IOException {
         // retrieve an existing player
@@ -321,6 +358,10 @@ public class LeaderboardTest {
         assertEquals("The game type should be CHECKERS.", GameTypes.CHECKERS.toString(), recentMatch.get("gameType"));
         assertEquals("The outcome should be 'W' for win.", "W", recentMatch.get("outcome"));
         assertEquals("The Elo score should match the updated Elo.", updatedElo, recentMatch.get("currentElo"));
+
+
+
+
     }
 
 
@@ -630,6 +671,29 @@ public class LeaderboardTest {
 
     }
 
+
+    @Test
+    public void testFindUserByNameToString() throws ParseException {
+        // find an existing user
+        String player1Json = leaderboard.findUserByNameToString("player1");
+        // since this user should exist, test if it doesn't return null
+        assertNotNull("JSON string for player1 shouldn't be null", player1Json);
+
+        // have to parse the JSON string so we can verify its content
+        JSONParser parser = new JSONParser();
+        JSONObject player1Object = (JSONObject) parser.parse(player1Json);
+
+        // check if its content is the same
+        assertEquals("The username in JSON should be 'player1'", "player1", player1Object.get("username"));
+
+        // adding a dummy non existent user
+        String nonExistentPlayerJson = leaderboard.findUserByNameToString("nonExistentPlayer");
+
+        assertNull("JSON string for a non existent user should be null", nonExistentPlayerJson);
+
+
+    }
+
     @Test
     public void testChangePassword() throws IOException {
         JSONObject user1 = leaderboard.findUserByName("player1");
@@ -663,10 +727,155 @@ public class LeaderboardTest {
         assertEquals("The name should be updated to 'newName'", "newName", updatedUser1.get("username"));
     }
 
+    @Test
+    public void testUpdateEloForLosingPlayer() throws IOException {
+        // Retrieve an existing player
+        JSONObject user1 = leaderboard.findUserByName("player1");
+
+        // Verify that the existing player is not null
+        assertNotNull("Player1 should exist in the leaderboard", user1);
+
+        // Extract player details
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        Number initialElo = (Number) user1.get("checkersElo");
+        Number initialLosses = (Number) user1.get("lossInCheckers");
+        Number initialGamesPlayed = (Number) user1.get("gamesPlayedCheckers");
+
+        // Create sessionID
+        UUID sessionID = UUID.randomUUID();
+
+        // Update Elo for losing player
+        leaderboard.updateEloForLosingPlayer(player1ID, GameTypes.CHECKERS, sessionID);
+
+        // Reload user1 to verify updates
+        JSONObject updatedUser1 = leaderboard.findUserByName("player1");
+
+        // Verify that Elo has decreased by 100
+        Number updatedElo = (Number) updatedUser1.get("checkersElo");
+        assertEquals("The Elo score should decrease by 100", initialElo.intValue() - 100, updatedElo.intValue());
+
+        // Verify that losses have increased by 1
+        Number updatedLosses = (Number) updatedUser1.get("lossInCheckers");
+        assertEquals("Losses should increase by 1", initialLosses.intValue() + 1, updatedLosses.intValue());
+
+        // Verify that games played have increased by 1
+        Number updatedGamesPlayed = (Number) updatedUser1.get("gamesPlayedCheckers");
+        assertEquals("Games played should increase by 1", initialGamesPlayed.intValue() + 1, updatedGamesPlayed.intValue());
+
+        // Verify the recent matches
+        JSONArray recentMatches = (JSONArray) updatedUser1.get("recentMatches");
+        assertEquals("Recent matches should contain one game", 1, recentMatches.size());
+        JSONObject recentMatch = (JSONObject) recentMatches.get(0);
+        assertEquals("The match ID should match the session ID.", sessionID.toString(), recentMatch.get("matchID"));
+        assertEquals("The game type should be CHECKERS.", GameTypes.CHECKERS.toString(), recentMatch.get("gameType"));
+        assertEquals("The outcome should be 'L' for loss.", "L", recentMatch.get("outcome"));
+        assertEquals("The Elo score should match the updated Elo.", updatedElo, recentMatch.get("currentElo"));
+    }
+
+    @Test
+    public void testSetInstance() throws IOException, ParseException {
+        // Create a new instance of Leaderboard
+        Leaderboard newInstance = new Leaderboard();
+
+        // Set the singleton instance to the new instance
+        Leaderboard.setInstance(newInstance);
+
+        // Retrieve the singleton instance
+        Leaderboard retrievedInstance = Leaderboard.getInstance();
+
+        // Verify that the retrieved instance is the same as the new instance
+        assertSame("The retrieved instance should be the same as the new instance", newInstance, retrievedInstance);
+    }
 
 
 
 
+
+
+    @Test
+    public void testPlayerNotFoundCheckers() throws IOException {
+        // create a non existing player
+        UUID nonExistentPlayerID = UUID.randomUUID(); // Not in the users list
+        UUID sessionID = UUID.randomUUID();
+
+        // need to capture the print statement of the output
+        java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
+        System.setOut(new java.io.PrintStream(outContent));
+
+        // update
+        leaderboard.updateEloForWinningPlayerCheckers(nonExistentPlayerID, sessionID);
+
+        // verify that there is no existing user
+        String output = outContent.toString();
+        assertTrue("Output should indicate player not found", output.contains("Cant find plater lmao"));
+
+
+    }
+
+    @Test
+    public void testPlayerNotFoundTicTacToe() throws IOException {
+        // create a non existing player
+        UUID nonExistentPlayerID = UUID.randomUUID(); // Not in the users list
+        UUID sessionID = UUID.randomUUID();
+
+        // need to capture the print statement of the output
+        java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
+        System.setOut(new java.io.PrintStream(outContent));
+
+        // update
+        leaderboard.updateEloForWinningPlayerTictactoe(nonExistentPlayerID, sessionID);
+
+        // verify that there is no existing user
+        String output = outContent.toString();
+        assertTrue("Output should indicate player not found", output.contains("Cant find plater lmao"));
+
+
+    }
+
+
+    @Test
+    public void testPlayerNotFoundConnect4() throws IOException {
+        // create a non existing player
+        UUID nonExistentPlayerID = UUID.randomUUID(); // Not in the users list
+        UUID sessionID = UUID.randomUUID();
+
+        // need to capture the print statement of the output
+        java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
+        System.setOut(new java.io.PrintStream(outContent));
+
+        // update
+        leaderboard.updateEloForWinningPlayerConnect4(nonExistentPlayerID, sessionID);
+
+        // verify that there is no existing user
+        String output = outContent.toString();
+        assertTrue("Output should indicate player not found", output.contains("Cant find plater lmao"));
+
+
+    }
+
+
+    @Test
+    public void testFindUserByNameReturnsNull() {
+
+        // trying to find a user that does not exist
+        JSONObject user = leaderboard.findUserByName("playerWho?");
+
+        // verify
+        assertNull("the method should return null when the user is not found", user);
+    }
+
+
+    @Test
+    public void testChangePasswordForNonExistentPlayer() {
+        // create non existing user
+        UUID nonExistentPlayerID = UUID.randomUUID();
+
+        // attempt to change the password for non existent player
+        boolean result = leaderboard.changePassword(nonExistentPlayerID, "newPassword1");
+
+        // verify
+        assertFalse("the method should return false", result);
+    }
 
 
 
