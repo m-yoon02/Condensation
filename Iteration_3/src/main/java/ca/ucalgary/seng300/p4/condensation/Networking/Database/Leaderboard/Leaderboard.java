@@ -200,7 +200,6 @@ public class Leaderboard {
             if (user.get("playerUUID").equals(playerID.toString())) {
                 user.put("password", newPass);
                 return true;
-//                break;
             }
         }
         return false;
@@ -419,7 +418,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who won the game.
      * @param sessionID The UUID of the game session where the win occurred.
      */
-    public void updateEloForWinningPlayerCheckers(UUID playerID, UUID sessionID) throws IOException {
+    private void updateEloForWinningPlayerCheckers(UUID playerID, UUID sessionID) throws IOException {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -473,7 +472,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who won the game.
      * @param sessionID The UUID of the game session where the win occurred.
      */
-    public void updateEloForWinningPlayerTictactoe(UUID playerID, UUID sessionID) {
+    private void updateEloForWinningPlayerTictactoe(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -518,7 +517,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who won the game.
      * @param sessionID The UUID of the game session where the win occurred.
      */
-    public void updateEloForWinningPlayerConnect4(UUID playerID, UUID sessionID) throws IOException {
+    private void updateEloForWinningPlayerConnect4(UUID playerID, UUID sessionID) throws IOException {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 

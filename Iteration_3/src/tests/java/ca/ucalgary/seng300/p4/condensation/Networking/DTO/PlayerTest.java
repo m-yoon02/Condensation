@@ -57,6 +57,6 @@ public class PlayerTest {
     public void testUniquePlayerID() {
         // Create another Player and verify IDs are unique
         Player anotherPlayer = new Player("anotherUser", 5, 1200);
-        assertNotEquals("Each Player should have a unique ID", player.getPlayerID(), anotherPlayer.getPlayerID());
+        assertFalse("Each Player should have a unique ID", player.getPlayerID().equals(anotherPlayer.getPlayerID()));
     }
 }

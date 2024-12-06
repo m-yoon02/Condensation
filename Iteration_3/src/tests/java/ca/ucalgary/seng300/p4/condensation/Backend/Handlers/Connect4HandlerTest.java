@@ -35,6 +35,7 @@ public class Connect4HandlerTest {
         @Override
         public void onGameEnd(GameResult gameResult, UUID winningPlayerID) {
             this.gameResult = gameResult;
+            System.out.println(gameResult.toString());
             this.winningPlayerID = winningPlayerID;
         }
     }
@@ -390,6 +391,8 @@ public class Connect4HandlerTest {
         assertEquals(p1ID, gameEndListener.winningPlayerID);
     }
 
+
+
     @Test
     public void testMakeMove_WithMoveData_ColumnFull() throws IOException, ParseException {
         int column = 0;
@@ -415,6 +418,69 @@ public class Connect4HandlerTest {
             fail("Expected RuntimeException due to invalid JSON");
         } catch (RuntimeException _) {
         }
+    }
+
+    @Test
+    public void testMakeMove_WithMoveData_Tie() {
+        // column 1
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(0, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(0, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(0, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(0, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(0, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(0, 0)));
+
+        // column 2
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(1, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(1, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(1, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(1, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(1, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(1, 0)));
+
+        // column 3
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(2, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(2, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(2, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(2, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(2, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(2, 0)));
+
+        // column 4
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(3, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(3, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(3, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(3, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(3, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(3, 0)));
+
+        // column 5
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(4, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(4, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(4, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(4, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(4, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(4, 0)));
+
+        // column 6
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(5, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(5, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(5, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(5, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(5, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(5, 0)));
+
+        // column 7
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(6, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(6, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(6, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(6, 0)));
+        c4Handler.makeMove(new MoveData(p2ID, new Vector2(6, 0)));
+        c4Handler.makeMove(new MoveData(p1ID, new Vector2(6, 0)));
+
+
+        assertEquals("game should tie",GameResult.TIE, gameEndListener.gameResult);
+
     }
 
     @Test

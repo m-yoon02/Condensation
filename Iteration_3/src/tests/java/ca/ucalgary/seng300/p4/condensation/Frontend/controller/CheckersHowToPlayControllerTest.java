@@ -19,9 +19,11 @@ public class CheckersHowToPlayControllerTest extends ApplicationTest{
     FXMLLoader fxmlLoader;
     Scene scene;
     CheckersHowToPlayController checkersHowToPlayController;
+    HelloApplication application = new HelloApplication();
 
     @Override
     public void start(Stage stage) throws Exception {
+        application.start(stage);
         fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersDescription.fxml"));
         scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
@@ -50,5 +52,7 @@ public class CheckersHowToPlayControllerTest extends ApplicationTest{
         FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
         Scene expectedScene = new Scene(newLoader.load(), 700, 500);
         assertNotNull(expectedScene.getRoot());
+
+        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
     }
 }
