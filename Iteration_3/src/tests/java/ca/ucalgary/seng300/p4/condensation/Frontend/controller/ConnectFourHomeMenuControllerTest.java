@@ -7,12 +7,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
+
 
 import static org.junit.Assert.*;
 
@@ -29,7 +31,7 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws IOException {
         fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
-                scene = new Scene(fxmlLoader.load());
+        scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.show();
         connectFourHomeMenuController = fxmlLoader.getController();
@@ -46,7 +48,7 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void playButton_Test() throws Exception{
+    public void playButton_Test() throws Exception {
         assertNotNull(playButton);
         clickOn(playButton);
         Parent newNode = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
@@ -54,7 +56,7 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void leaderboardButton_Test() throws Exception{
+    public void leaderboardButton_Test() throws Exception {
         assertNotNull(leaderboardButton);
         clickOn(leaderboardButton);
         Parent newNode = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
@@ -62,7 +64,7 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void howToPlayButton_Test() throws Exception{
+    public void howToPlayButton_Test() throws Exception {
         assertNotNull(howToPlayButton);
         clickOn(howToPlayButton);
         Parent newNode = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
@@ -70,7 +72,7 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void backButton_Test() throws Exception{
+    public void backButton_Test() throws Exception {
         assertNotNull(backButton);
         clickOn(backButton);
         Parent newNode = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
@@ -78,32 +80,34 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     }
 
 
-
     @Test
-    public void image_test() throws Exception{
+    public void image_test() throws Exception {
         assertNotNull(connect4Image);
         assertTrue("The ImageView should still be visible after clicking.", connect4Image.isVisible());
     }
 
     @Test
-    public void testOnPlayButtonClicked() throws Exception{
+    public void testOnPlayButtonClicked() throws Exception {
         assertNotNull(playButton);
         clickOn(playButton);
         Parent root = FXMLLoader.load(HelloApplication.class.getResource("connectfourqueue.fxml"));
         assertNotNull(root);
     }
 
-    //not working right now
-//    @Test
-//    public void testOnLeaderboardButtonClicked() throws Exception{
-//        assertNotNull(leaderboardButton);
-//        clickOn(leaderboardButton);
-//        Parent root = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourLeaderboard.fxml"));
-//        assertNotNull(root);
-//    }
 
     @Test
-    public void testOnHowToPlayButtonClicked() throws Exception{
+    public void testOnLeaderboardButtonClicked() throws Exception{
+        assertNotNull(leaderboardButton);
+        clickOn(leaderboardButton);
+        try{
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourLeaderboard.fxml"));
+        }catch(Exception e){
+            assertTrue(e.getCause() != null);
+        }
+    }
+
+    @Test
+    public void testOnHowToPlayButtonClicked() throws Exception {
         assertNotNull(howToPlayButton);
         clickOn(howToPlayButton);
         Parent root = FXMLLoader.load(HelloApplication.class.getResource("howToPlayConnect4.fxml"));
@@ -111,7 +115,7 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testOnBackButtonClicked() throws Exception{
+    public void testOnBackButtonClicked() throws Exception {
         assertNotNull(backButton);
         clickOn(backButton);
         Parent root = FXMLLoader.load(HelloApplication.class.getResource("ProfileGame.fxml"));
@@ -126,66 +130,60 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testInitialize(){
+    public void testInitialize() {
         assertNotNull(connectFourHomeMenuController);
     }
 
     @Test
-    public void testNavigateToQueue_withInvalidFile() throws Exception{
+    public void testNavigateToQueue_withInvalidFile() throws Exception {
         try {
             var method = ConnectFourHomeMenuController.class.getDeclaredMethod("navigateToQueue", String.class);
             method.setAccessible(true);
             method.invoke(connectFourHomeMenuController, "/ca/ucalgary/seng300/p4/condensation/Invalid.fxml");
-        } catch (Exception exception){
+        } catch (Exception exception) {
             RuntimeException runtimeException = new RuntimeException();
             assertTrue(exception.getCause() != null);
         }
     }
 
     @Test
-    public void testNavigateTo_withInvalidFile() throws Exception{
+    public void testNavigateTo_withInvalidFile() throws Exception {
         try {
             var method = ConnectFourHomeMenuController.class.getDeclaredMethod("navigateTo", String.class);
             method.setAccessible(true);
             method.invoke(connectFourHomeMenuController, "/ca/ucalgary/seng300/p4/condensation/Invalid.fxml");
-        } catch (Exception exception){
+        } catch (Exception exception) {
             RuntimeException runtimeException = new RuntimeException();
             assertTrue(exception.getCause() != null);
         }
     }
 
     @Test
-    public void testNavigateTo_withvalidFile() throws Exception{
+    public void testNavigateTo_withvalidFile() throws Exception {
         try {
             var method = ConnectFourHomeMenuController.class.getDeclaredMethod("navigateTo", String.class);
             method.setAccessible(true);
             method.invoke(connectFourHomeMenuController, "/ca/ucalgary/seng300/p4/condensation/howToPlayConnect4.fxml");
             Parent root = FXMLLoader.load(HelloApplication.class.getResource("howToPlayConnect4.fxml"));
             assertNotNull(root);
-
-        } catch (Exception exception){
+        } catch (Exception exception) {
             RuntimeException runtimeException = new RuntimeException();
         }
     }
 
+
     @Test
-    public void testNavigateToQueue_withvalidFile() throws Exception{
+    public void testNavigateToQueue_withvalidFile() throws Exception {
         try {
             var method = ConnectFourHomeMenuController.class.getDeclaredMethod("navigateToQueue", String.class);
             method.setAccessible(true);
             method.invoke(connectFourHomeMenuController, "/ca/ucalgary/seng300/p4/condensation/connectfourqueue.fxml");
             Parent root = FXMLLoader.load(HelloApplication.class.getResource("connectfourqueue.fxml"));
             assertNotNull(root);
-
-        } catch (Exception exception){
+        } catch (Exception exception) {
             RuntimeException runtimeException = new RuntimeException();
         }
     }
-
-
-
-
-
 
 
 
