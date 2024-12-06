@@ -727,6 +727,51 @@ public class LeaderboardTest {
         assertEquals("The name should be updated to 'newName'", "newName", updatedUser1.get("username"));
     }
 
+    @Test
+    public void testUpdateEloForLosingPlayer() throws IOException {
+        // Retrieve an existing player
+        JSONObject user1 = leaderboard.findUserByName("player1");
+
+        // Verify that the existing player is not null
+        assertNotNull("Player1 should exist in the leaderboard", user1);
+
+        // Extract player details
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        Number initialElo = (Number) user1.get("checkersElo");
+        Number initialLosses = (Number) user1.get("lossInCheckers");
+        Number initialGamesPlayed = (Number) user1.get("gamesPlayedCheckers");
+
+        // Create sessionID
+        UUID sessionID = UUID.randomUUID();
+
+        // Update Elo for losing player
+        leaderboard.updateEloForLosingPlayer(player1ID, GameTypes.CHECKERS, sessionID);
+
+        // Reload user1 to verify updates
+        JSONObject updatedUser1 = leaderboard.findUserByName("player1");
+
+        // Verify that Elo has decreased by 100
+        Number updatedElo = (Number) updatedUser1.get("checkersElo");
+        assertEquals("The Elo score should decrease by 100", initialElo.intValue() - 100, updatedElo.intValue());
+
+        // Verify that losses have increased by 1
+        Number updatedLosses = (Number) updatedUser1.get("lossInCheckers");
+        assertEquals("Losses should increase by 1", initialLosses.intValue() + 1, updatedLosses.intValue());
+
+        // Verify that games played have increased by 1
+        Number updatedGamesPlayed = (Number) updatedUser1.get("gamesPlayedCheckers");
+        assertEquals("Games played should increase by 1", initialGamesPlayed.intValue() + 1, updatedGamesPlayed.intValue());
+
+        // Verify the recent matches
+        JSONArray recentMatches = (JSONArray) updatedUser1.get("recentMatches");
+        assertEquals("Recent matches should contain one game", 1, recentMatches.size());
+        JSONObject recentMatch = (JSONObject) recentMatches.get(0);
+        assertEquals("The match ID should match the session ID.", sessionID.toString(), recentMatch.get("matchID"));
+        assertEquals("The game type should be CHECKERS.", GameTypes.CHECKERS.toString(), recentMatch.get("gameType"));
+        assertEquals("The outcome should be 'L' for loss.", "L", recentMatch.get("outcome"));
+        assertEquals("The Elo score should match the updated Elo.", updatedElo, recentMatch.get("currentElo"));
+    }
+
 
 //    @Test
 //    public void testChangeName() throws IOException {
