@@ -1,8 +1,13 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.testfx.framework.junit.ApplicationTest;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +19,8 @@ import javafx.stage.Stage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.After;
@@ -36,24 +43,23 @@ public class CheckersControllerTest extends ApplicationTest {
     Button loginButton;
 
     FXMLLoader fxmlLoader;
-    FXMLLoader fxmlLoader2;
-    FXMLLoader fxmlLoader3;
     Scene scene;
 
     CheckersController checkersController;
     LoginController loginController;
     CheckersQueueController checkersQueueController;
-    HelloApplication application = new HelloApplication();
+    HelloApplication application;
 
     @Override
     public void start(Stage stage) throws Exception {
 
+        application = new HelloApplication();
         application.start(stage);
 
-        fxmlLoader2 = new FXMLLoader(HelloApplication.class.getResource("Login.fxml"));
-        Scene loginScene = new Scene(fxmlLoader2.load());
-        loginController = fxmlLoader2.getController();
-        stage.setScene(loginScene);
+        fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Login.fxml"));
+        scene = new Scene(fxmlLoader.load());
+        loginController = fxmlLoader.getController();
+        stage.setScene(scene);
         stage.show();
 
         // Access Login.fxml nodes
@@ -67,10 +73,10 @@ public class CheckersControllerTest extends ApplicationTest {
 
         loginController.sendJSONObject();
 
-        fxmlLoader3 = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
-        Scene queueScene = new Scene(fxmlLoader3.load());
-        checkersQueueController = fxmlLoader3.getController();
-        stage.setScene(queueScene);
+        fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
+        scene = new Scene(fxmlLoader.load());
+        checkersQueueController = fxmlLoader.getController();
+        stage.setScene(scene);
         stage.show();
 
         checkersQueueController.start();
@@ -81,9 +87,6 @@ public class CheckersControllerTest extends ApplicationTest {
         stage.setScene(scene);
         stage.show();
 
-//        JSONObject playerInfoForGame = new JSONObject();
-//        String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
-//        GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
     }
 
     @Before
@@ -123,6 +126,67 @@ public class CheckersControllerTest extends ApplicationTest {
     }
 
     @Test
+    public void testDisableButtons() throws IOException {
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("UpdateType", "GAME_END");
+        Platform.runLater(() -> {
+            try {
+                checkersController.receiveCheckers(jsonObject);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        ArrayList<Button> buttons = new ArrayList<>();
+        Parent parent = forfeitBtn.getParent();
+        parent.lookupAll(".button").forEach(node -> {
+            if (node instanceof Button && node.getId() != null && node.getId().startsWith("btn")) {;
+                buttons.add((Button) node);}
+        });
+        buttons.forEach(button -> {
+            assertTrue(button.isDisabled());
+
+        });
+
+    }
+
+    @Test
+    public void testYourTurn(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("UpdateType", "YOUR_TURN");
+        jsonObject.put("SessionID", UUID.randomUUID());
+        jsonObject.put("PlayerTurn", UUID.randomUUID());
+
+        JSONArray jArray = new JSONArray();
+        jsonObject.put("Changes",jArray);
+
+        for (int i = 0; i < 8; i++){
+            JSONArray outerArray = new JSONArray();
+            for (int j = 0; j < 8; j++){
+                if(i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i == 7 || i == 8) {
+                    outerArray.add("RED");
+                }
+                else{
+                    outerArray.add("Black");
+                }
+            }
+            jArray.add(outerArray);
+        }
+
+
+        Platform.runLater(() -> {
+            try {
+                checkersController.receiveCheckers(jsonObject);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
+
+
+    @Test
     public void testOnCheckersButtonClick_IncompleteMove() throws IOException, ParseException {
         // Simulate clicking a valid piece at position (2, 2)
         int i = 2, j = 2;
@@ -137,19 +201,34 @@ public class CheckersControllerTest extends ApplicationTest {
         assertEquals(pieceStyleBefore, pieceStyleAfter);
     }
 
+    @Test
+    public void testHandleGameEnd_WinByPlayerOne() throws Exception {
+        // Simulate a payload for player one's win
+        JSONObject payload = new JSONObject();
+        payload.put("GameState", "WIN");
+        payload.put("PlayerWon", UUID.randomUUID());
 
-//    @Test
-//    public void testForfeitYesButtonClick()  {
-//
-//        assertTrue(forfeitBtn.getScene().getWindow().isFocused());
-//        clickOn(forfeitBtn);
-//        assertFalse(forfeitBtn.getScene().getWindow().isFocused());
-//
-//        assertTrue(true);
-//
-//        checkersController.onForfeitYesClick();
-//
-//    }
+        // Invoke the handleGameEnd method
+        checkersController.handleGameEnd(payload);
+
+        // Verify turnLabel updates
+        assertEquals(String.format("Player %s won the game!", UUID.randomUUID()), turnLabel.getText());
+        assertEquals(Color.GREEN, turnLabel.getTextFill());
+    }
+
+    @Test
+    public void testHandleGameEnd_Tie() throws Exception {
+        // Simulate a payload for a tie
+        JSONObject payload = new JSONObject();
+        payload.put("GameState", "TIE");
+
+        // Invoke the handleGameEnd method
+        checkersController.handleGameEnd(payload);
+
+        // Verify turnLabel updates
+        assertEquals("The game ended in a tie!", turnLabel.getText());
+    }
+
 
     @Test
     public void testForfeitNoButtonClick() {

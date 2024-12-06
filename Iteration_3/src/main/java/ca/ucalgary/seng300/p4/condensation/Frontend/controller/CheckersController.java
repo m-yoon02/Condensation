@@ -137,7 +137,7 @@ public class CheckersController {
         updateUIToMatchBoardRepresentation();
     }
 
-    private void handleGameEnd(JSONObject payload) throws IOException {
+    public void handleGameEnd(JSONObject payload) throws IOException {
         String gameState = (String) payload.get("GameState");
         if ("WIN".equals(gameState)) {
             String playerWon = (String) payload.get("PlayerWon");
