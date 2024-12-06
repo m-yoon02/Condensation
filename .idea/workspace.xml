@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e30402ac-a7a0-446c-a1b8-5a76fa4d02f5" name="Changes" comment="">
+    <list default="true" id="e30402ac-a7a0-446c-a1b8-5a76fa4d02f5" name="Changes" comment="changed workspace.xml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/OtherProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/OtherProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/ProfileHomeControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,22 +28,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;fix__everything__lol&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "JUnit.ProfileHomeControllerTest.emptyUserTest.executor": "Run",
+    "JUnit.ProfileHomeControllerTest.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "victoria__test",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RunManager" selected="JUnit.ProfileHomeControllerTest">
     <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.HelloApplication" />
       <module name="condensation" />
@@ -57,8 +59,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProfileHomeControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileHomeControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProfileHomeControllerTest.emptyUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.ProfileHomeControllerTest" />
+      <option name="METHOD_NAME" value="emptyUserTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ProfileHomeControllerTest" />
+        <item itemvalue="JUnit.ProfileHomeControllerTest.emptyUserTest" />
         <item itemvalue="Application.HelloApplication" />
       </list>
     </recent_temporary>
@@ -89,5 +124,21 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="did some tests" />
+    <MESSAGE value="changed workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed workspace.xml" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/seng300_f24_project$ProfileHomeControllerTest_emptyUserTest.ic" NAME="ProfileHomeControllerTest.emptyUserTest Coverage Results" MODIFIED="1733434837207" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Frontend.controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$ProfileHomeControllerTest_onPlayerProfilesButtonClickedTest.ic" NAME="ProfileHomeControllerTest.onPlayerProfilesButtonClickedTest Coverage Results" MODIFIED="1733433309546" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Frontend.controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$ProfileHomeControllerTest.ic" NAME="ProfileHomeControllerTest Coverage Results" MODIFIED="1733438387802" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Frontend.controller.*</FILTER>
+    </SUITE>
   </component>
 </project>

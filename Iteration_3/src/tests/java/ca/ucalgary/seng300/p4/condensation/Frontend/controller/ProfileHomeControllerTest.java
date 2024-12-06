@@ -16,10 +16,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.UUID;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import static javax.management.Query.times;
 import static org.junit.Assert.*;
@@ -114,10 +113,6 @@ public class ProfileHomeControllerTest extends ApplicationTest {
 
     }
 
-
-    /**
-     * Finished this test
-     */
     @Test
     public void onLeaderboardButtonClickedTest(){
         FxRobot robot = new FxRobot();
@@ -138,9 +133,7 @@ public class ProfileHomeControllerTest extends ApplicationTest {
         assertFalse(tMenuScene.equals(leaderBoardScene));
     }
 
-    /**
-     * Finished this test
-     */
+
     @Test
     public void onGamesButtonClickedTest(){
         FxRobot robot = new FxRobot();
@@ -161,9 +154,7 @@ public class ProfileHomeControllerTest extends ApplicationTest {
         assertFalse(tMenuScene.equals(profileGameScene));
     }
 
-    /**
-     * Finished this test
-     */
+
     @Test
     public void onPlayerProfilesButtonClickedTest(){
         FxRobot robot = new FxRobot();
