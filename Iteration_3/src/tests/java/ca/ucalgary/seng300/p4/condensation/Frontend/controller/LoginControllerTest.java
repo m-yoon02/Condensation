@@ -33,9 +33,13 @@ public class LoginControllerTest extends ApplicationTest {
 
     LoginController loginController;
 
+    HelloApplication application;
+
 
     @Override
     public void start(Stage stage) throws Exception {
+        application = new HelloApplication();
+        application.start(stage);
         fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Login.fxml"));
         scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);

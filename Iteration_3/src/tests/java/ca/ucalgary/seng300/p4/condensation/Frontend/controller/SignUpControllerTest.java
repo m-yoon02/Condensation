@@ -33,9 +33,13 @@ public class SignUpControllerTest extends ApplicationTest {
 
     SignUpController signUpController;
 
+    HelloApplication application;
+
 
     @Override
     public void start(Stage stage) throws Exception {
+        application = new HelloApplication();
+        application.start(stage);
         fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("SignUp.fxml"));
         scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
