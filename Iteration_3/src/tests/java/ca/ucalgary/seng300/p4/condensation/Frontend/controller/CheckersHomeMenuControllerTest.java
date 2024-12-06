@@ -19,6 +19,9 @@ public class CheckersHomeMenuControllerTest extends ApplicationTest{
     Scene scene;
     CheckersHomeMenuController checkersHomeMenuController;
     Button homeMenuBackBtn;
+    Button playBtn;
+    Button leaderboardBtn;
+    Button howToPlayBtn;
     HelloApplication application = new HelloApplication();
 
     @Override
@@ -35,22 +38,69 @@ public class CheckersHomeMenuControllerTest extends ApplicationTest{
     @Before
     public void setUp() throws Exception {
         homeMenuBackBtn = (Button) lookup("#homeMenuBackBtn").queryAs(Button.class);
+        playBtn = (Button) lookup("#playBtn").queryAs(Button.class);
+        leaderboardBtn = (Button) lookup("#leaderboardBtn").queryAs(Button.class);
+        howToPlayBtn = (Button) lookup("#howToPlayBtn").queryAs(Button.class);
     }
 
     @After
     public void tearDown() throws Exception {
         homeMenuBackBtn = null;
+        playBtn = null;
+        leaderboardBtn = null;
+        howToPlayBtn = null;
     }
 
     @Test
     public void testOnHomeMenuBackBtnClick() throws Exception {
-
         clickOn(homeMenuBackBtn);
 
         Node rootNode = homeMenuBackBtn.getScene().getRoot();
         assertNotNull(rootNode);
 
         FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("ProfileGame.fxml"));
+        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
+        assertNotNull(expectedScene.getRoot());
+
+        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
+    }
+
+    @Test
+    public void testOnPlayBtnClick() throws Exception {
+        clickOn(playBtn);
+
+        Node rootNode = playBtn.getScene().getRoot();
+        assertNotNull(rootNode);
+
+        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
+        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
+        assertNotNull(expectedScene.getRoot());
+
+        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
+    }
+
+    @Test
+    public void testOnLeaderboardBtnClick() throws Exception {
+        clickOn(leaderboardBtn);
+
+        Node rootNode = leaderboardBtn.getScene().getRoot();
+        assertNotNull(rootNode);
+
+        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
+        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
+        assertNotNull(expectedScene.getRoot());
+
+        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
+    }
+
+    @Test
+    public void testOnHowToPlayBtnClick() throws Exception {
+        clickOn(howToPlayBtn);
+
+        Node rootNode = howToPlayBtn.getScene().getRoot();
+        assertNotNull(rootNode);
+
+        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("checkersDescription.fxml"));
         Scene expectedScene = new Scene(newLoader.load(), 700, 500);
         assertNotNull(expectedScene.getRoot());
 
