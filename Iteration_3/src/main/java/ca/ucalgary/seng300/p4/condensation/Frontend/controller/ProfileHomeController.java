@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,7 +21,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
@@ -92,7 +90,6 @@ public class ProfileHomeController {
         // Set username and initialize leaderboard
         try {
             String usernameOfPlayer = Leaderboard.getInstance().fetchUserFromNewPlayerJson();
-            System.out.println("USERNAME OF PLAYER" + usernameOfPlayer);
             usernameField.setText(usernameOfPlayer);
         } catch (Exception e) {
             e.printStackTrace();
@@ -260,11 +257,8 @@ public class ProfileHomeController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/WelcomeScreen.fxml"));
             Pane root = loader.load();
 
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
-            window.setScene(scene);
-            window.setResizable(false);
-            window.show();
+            HelloApplication.setActiveScene(scene);
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -275,15 +269,10 @@ public class ProfileHomeController {
     void onEditUserButtonClicked(ActionEvent event) throws IOException, ParseException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("editUser.fxml"));
         Parent root = fxmlLoader.load();
-        EditUserController editUserController = fxmlLoader.getController();
 
         // Load the ProfileHome.fxml and get the controller
-        FXMLLoader meow = new FXMLLoader(HelloApplication.class.getResource("ProfileHome.fxml"));
-        Parent profileHomeRoot = meow.load(); // This initializes the controller
-        ProfileHomeController jesis = meow.getController(); // Retrieve the controller instance
 
         // Inject the ProfileHomeController into EditUserController
-        editUserController.setProfileHomeController(jesis);
 
         // Create a new Stage for the popup
         Stage stage = new Stage();
@@ -291,7 +280,7 @@ public class ProfileHomeController {
         stage.setTitle("Edit Username");
 
         // Set the scene for the popup
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -317,7 +306,7 @@ public class ProfileHomeController {
         stage.setTitle("Edit Password");
 
         // Set the scene for the popup
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -340,11 +329,6 @@ public class ProfileHomeController {
     private void navigateToScreen(ActionEvent event, String fxml) throws IOException {
         Parent parent = FXMLLoader.load(HelloApplication.class.getResource(fxml));
         Scene scene = new Scene(parent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        HelloApplication.setActiveScene(scene);
     }
-//    public static void setUsername(String username) {
-//        ProfileHomeController.usernameField.setText();
-//    }
 }

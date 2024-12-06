@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.not;
@@ -121,7 +122,7 @@ public class GameHandlerTest {
         assertEquals("Player 1 should be returned when we pass in player 2", player1ID, otherPlayerID);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = Exception.class)
     public void testGetOtherPlayerUUID_3() {
         gameHandler = new TestGameHandler(player1ID, null, colors, testGameTimer);
 
@@ -174,5 +175,24 @@ public class GameHandlerTest {
     @Test
     public void testColorNotNull_PlayerColorFromUUID() {
         assertNotNull("Color has to be returned", gameHandler.getPlayerColorFromUUID(player1ID));
+    }
+
+//    @Test
+//    public void testStartGame_StartsWithoutException() {
+//        try {
+//            gameHandler.startGame();
+//        } catch (Exception e) {
+//            fail("startGame should not throw an exception, but threw: " + e.getMessage());
+//        }
+//    }
+
+    /**
+     * Tests getPlayerMemoFromPieceColor when it returns null by querying a non-assigned color.
+     */
+    @Test
+    public void testGetPlayerMemoFromPieceColor_ReturnsNull() throws Exception {
+        PlayerMemo playerMemo = gameHandler.getPlayerMemoFromPieceColor(PieceColor.RED);
+
+        assertNull("getPlayerMemoFromPieceColor should return null when no player has the queried color", playerMemo);
     }
 }

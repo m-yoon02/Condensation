@@ -4,12 +4,8 @@ import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -19,37 +15,6 @@ import java.io.IOException;
  * or navigate back to the home screen.
  */
 public class ProfileGameController {
-
-    @FXML
-    private Label ticTacToeArea; // Description or status area for Tic Tac Toe
-
-    @FXML
-    private Label connect4Area; // Description or status area for Connect 4
-
-    @FXML
-    private Label checkersArea; // Description or status area for Checkers
-
-    @FXML
-    private Button ticTacToePlayButton; // Button to play Tic Tac Toe
-
-    @FXML
-    private Button connect4PlayButton; // Button to play Connect 4
-
-    @FXML
-    private Button checkersPlayButton; // Button to play Checkers
-
-    @FXML
-    private Button homeButton; // Button to navigate back to the home screen
-
-    /**
-     * Initializes the controller.
-     * This method is called automatically after the FXML file has been loaded.
-     */
-    @FXML
-    public void initialize() {
-        System.out.println("Game selection page initialized");
-        // Example: Additional initialization logic can go here
-    }
 
     /**
      * Handles the event when the "Play Tic Tac Toe" button is clicked.

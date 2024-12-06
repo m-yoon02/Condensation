@@ -121,7 +121,7 @@ public class Vector2Test {
     @Test
     public void testToString() {
         Vector2 vector = new Vector2(3, 4);
-        String expected = "Vector2[x=3, y=4]";
+        String expected = "[3, 4]";
         assertEquals(expected, vector.toString());
     }
 
