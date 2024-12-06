@@ -12,6 +12,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit4 Test Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -27,40 +34,135 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;fix__everything__lol&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "JUnit.tLeaderboardControllerTest.executor": "Coverage",
+    "JUnit.tLeaderboardControllerTest.testBackToMenuButtonInitialization.executor": "Run",
+    "JUnit.tLeaderboardControllerTest.testControllerInitialization.executor": "Run",
+    "JUnit.tLeaderboardControllerTest.testInitializeSetsButtonAction.executor": "Run",
+    "JUnit.tLeaderboardControllerTest.testNavigateToMenu.executor": "Run",
+    "JUnit.tLeaderboardControllerTest.testNavigateToMethodSuccess.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit4",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
+    "git-widget-placeholder": "tLeaderBoardControllerTests",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/uni1/fall 24/seng 3000/backend testing/seng300-f24-project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager">
-    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.HelloApplication" />
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.tLeaderboardControllerTest">
+    <configuration name="tLeaderboardControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="condensation" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.*" />
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.tLeaderboardControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tLeaderboardControllerTest.testBackToMenuButtonInitialization" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.tLeaderboardControllerTest" />
+      <option name="METHOD_NAME" value="testBackToMenuButtonInitialization" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tLeaderboardControllerTest.testControllerInitialization" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.tLeaderboardControllerTest" />
+      <option name="METHOD_NAME" value="testControllerInitialization" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tLeaderboardControllerTest.testNavigateToMenu" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.tLeaderboardControllerTest" />
+      <option name="METHOD_NAME" value="testNavigateToMenu" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tLeaderboardControllerTest.testNavigateToMethodSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Frontend.controller.tLeaderboardControllerTest" />
+      <option name="METHOD_NAME" value="testNavigateToMethodSuccess" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.HelloApplication" />
+        <item itemvalue="JUnit.tLeaderboardControllerTest" />
+        <item itemvalue="JUnit.tLeaderboardControllerTest.testNavigateToMethodSuccess" />
+        <item itemvalue="JUnit.tLeaderboardControllerTest.testBackToMenuButtonInitialization" />
+        <item itemvalue="JUnit.tLeaderboardControllerTest.testNavigateToMenu" />
+        <item itemvalue="JUnit.tLeaderboardControllerTest.testControllerInitialization" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-22-openjdk-22-3183f394aec4-bad0321e" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -88,5 +190,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/seng300_f24_project$tLeaderboardControllerTest.ic" NAME="tLeaderboardControllerTest Coverage Results" MODIFIED="1733438896623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Frontend.controller.*</FILTER>
+    </SUITE>
   </component>
 </project>
