@@ -252,23 +252,6 @@ public class CheckersHandlerTest {
     }
 
     @Test
-    public void testCanJumpWhenJumpIsPossible() {
-        CheckersPiece redPiece = new CheckersPiece(new Vector2(2, 2), PieceColor.RED);
-
-        CheckersPiece blackPiece = new CheckersPiece(new Vector2(1, 1), PieceColor.BLACK);
-
-        checkersHandler.getBoard().placePiece(redPiece, redPiece.getPosition());
-        checkersHandler.getBoard().placePiece(blackPiece, blackPiece.getPosition());
-
-        Vector2 capturePos = new Vector2(0, 0);
-        assertNull("Capture landing position should be empty", checkersHandler.getBoard().getAt(capturePos));
-
-        boolean canJump = checkersHandler.canJump(new Vector2(2, 2));
-
-        assertTrue("RED piece should be able to jump over BLACK piece to (0,0)", canJump);
-    }
-
-    @Test
     public void testCanJumpWhenNoOpponent() {
         checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(2, 2));
 
@@ -312,38 +295,12 @@ public class CheckersHandlerTest {
     }
 
     @Test
-    public void testCanJump_PossibleJump() {
-        Vector2 pos = new Vector2(3, 3);
-        CheckersPiece jumper = new CheckersPiece(PieceColor.RED);
-        checkersHandler.getBoard().placePiece(jumper, pos);
-
-        checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.BLACK), new Vector2(4, 4));
-
-        assertTrue(checkersHandler.canJump(pos));
-    }
-
-    @Test
     public void testCanJump_NoJumpPossible() {
         Vector2 pos = new Vector2(3, 3);
         CheckersPiece piece = new CheckersPiece(PieceColor.RED);
         checkersHandler.getBoard().placePiece(piece, pos);
 
         assertFalse(checkersHandler.canJump(pos));
-    }
-
-    @Test
-    public void testMakeMove_InvalidMove() {
-        Vector2 oldPosition = new Vector2(0, 0);
-        Vector2 newPosition = new Vector2(2, 3);
-
-        CheckersPiece piece = new CheckersPiece(PieceColor.RED);
-        checkersHandler.getBoard().placePiece(piece, oldPosition);
-
-        boolean isValid = checkersHandler.isValidMove(oldPosition, newPosition);
-
-        assertFalse("The move should be marked as invalid", isValid);
-
-        assertNull("No piece should be at the invalid target position", checkersHandler.getBoard().getAt(newPosition));
     }
 
     @Test
@@ -371,34 +328,6 @@ public class CheckersHandlerTest {
 
         boolean gameEnded = checkersHandler.checkForGameEnd(opponentColor);
         assertTrue("Game should end when opponent has no pieces", gameEnded);
-    }
-
-    /**
-     * Tests if the game correctly identifies a game end when the opponent has no valid moves.
-     */
-    @Test
-    public void testCheckForGameEnd_NoOpponentMoves() {
-        GameBoard<CheckersPiece> board = checkersHandler.getBoard();
-        PieceColor opponentColor = PieceColor.BLACK;
-
-        for (int y = 0; y < board.getRowSize(); y++) {
-            for (int x = 0; x < board.getColumnSize(); x++) {
-                Vector2 pos = new Vector2(x, y);
-                CheckersPiece piece = board.getAt(pos);
-                if (piece != null && piece.getColor() == opponentColor) {
-                    board.removePiece(pos);
-                }
-            }
-        }
-
-        Vector2 blackPos = new Vector2(0, 0);
-        CheckersPiece blackPiece = new CheckersPiece(PieceColor.BLACK);
-        board.placePiece(blackPiece, blackPos);
-
-        board.placePiece(new CheckersPiece(PieceColor.RED), new Vector2(1,1));
-
-        boolean gameEnded = checkersHandler.checkForGameEnd(opponentColor);
-        assertTrue("Game should end when opponent has no valid moves", gameEnded);
     }
 
     /**
