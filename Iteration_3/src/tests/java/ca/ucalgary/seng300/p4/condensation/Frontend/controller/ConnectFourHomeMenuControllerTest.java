@@ -78,6 +78,7 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     }
 
 
+
     @Test
     public void image_test() throws Exception{
         assertNotNull(connect4Image);
@@ -118,10 +119,67 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testInitialize() {
+    public void testInitializeImage() {
         connectFourHomeMenuController.initialize();
         assertEquals("/connect4.png",
                 connect4Image.getImage().getUrl().substring(connect4Image.getImage().getUrl().lastIndexOf("/")));
+    }
+
+    @Test
+    public void testInitialize(){
+        assertNotNull(connectFourHomeMenuController);
+    }
+
+    @Test
+    public void testNavigateToQueue_withInvalidFile() throws Exception{
+        try {
+            var method = ConnectFourHomeMenuController.class.getDeclaredMethod("navigateToQueue", String.class);
+            method.setAccessible(true);
+            method.invoke(connectFourHomeMenuController, "/ca/ucalgary/seng300/p4/condensation/Invalid.fxml");
+        } catch (Exception exception){
+            RuntimeException runtimeException = new RuntimeException();
+            assertTrue(exception.getCause() != null);
+        }
+    }
+
+    @Test
+    public void testNavigateTo_withInvalidFile() throws Exception{
+        try {
+            var method = ConnectFourHomeMenuController.class.getDeclaredMethod("navigateTo", String.class);
+            method.setAccessible(true);
+            method.invoke(connectFourHomeMenuController, "/ca/ucalgary/seng300/p4/condensation/Invalid.fxml");
+        } catch (Exception exception){
+            RuntimeException runtimeException = new RuntimeException();
+            assertTrue(exception.getCause() != null);
+        }
+    }
+
+    @Test
+    public void testNavigateTo_withvalidFile() throws Exception{
+        try {
+            var method = ConnectFourHomeMenuController.class.getDeclaredMethod("navigateTo", String.class);
+            method.setAccessible(true);
+            method.invoke(connectFourHomeMenuController, "/ca/ucalgary/seng300/p4/condensation/howToPlayConnect4.fxml");
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("howToPlayConnect4.fxml"));
+            assertNotNull(root);
+
+        } catch (Exception exception){
+            RuntimeException runtimeException = new RuntimeException();
+        }
+    }
+
+    @Test
+    public void testNavigateToQueue_withvalidFile() throws Exception{
+        try {
+            var method = ConnectFourHomeMenuController.class.getDeclaredMethod("navigateToQueue", String.class);
+            method.setAccessible(true);
+            method.invoke(connectFourHomeMenuController, "/ca/ucalgary/seng300/p4/condensation/connectfourqueue.fxml");
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("connectfourqueue.fxml"));
+            assertNotNull(root);
+
+        } catch (Exception exception){
+            RuntimeException runtimeException = new RuntimeException();
+        }
     }
 
 

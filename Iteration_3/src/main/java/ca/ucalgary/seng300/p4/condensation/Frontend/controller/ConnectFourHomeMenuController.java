@@ -40,7 +40,7 @@ public class ConnectFourHomeMenuController {
         backButton.setOnAction(event -> navigateTo("ProfileGame.fxml")); // Update with the actual previous page
     }
 
-    public void navigateToQueue(String fxml) {
+    private void navigateToQueue(String fxml) {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxml));
         Scene scene;
         try {
@@ -53,7 +53,7 @@ public class ConnectFourHomeMenuController {
         connectFourQueueController.start();
     }
 
-    public void navigateTo(String fxmlFile) {
+    private void navigateTo(String fxmlFile) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
             Scene scene = new Scene(fxmlLoader.load());
