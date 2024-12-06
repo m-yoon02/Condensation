@@ -33,11 +33,6 @@ public class MatchmakingPool {
         System.out.println("Player Added: " + player.PlayerID());
     }
 
-    // added for testing
-    public void clearPool() {
-        pool.clear();
-    }
-
 
     public String removePlayerFromMatchmakingPool(UUID playerID) {
         QueuedPlayerMemo playerToRemove = null;
@@ -45,7 +40,7 @@ public class MatchmakingPool {
         for (QueuedPlayerMemo queuedPlayer : pool) {
             if (queuedPlayer.PlayerID().equals(playerID)) {
                 pool.remove(queuedPlayer);
-                return String.format("You have successfully logged out see you later ");                 // Exit loop after finding the player
+                return String.format("You have successfully logged outm see you later ");                 // Exit loop after finding the player
             }
         }
         return String.format("Player not found in matchmaking pool: "+ playerID);
@@ -107,7 +102,7 @@ public class MatchmakingPool {
         for (JSONObject jsonObject : UUIDarrayList) {
 
             UUID playerID = UUID.fromString((String) jsonObject.get("playerUUID"));
-            int elo = ((Number) jsonObject.get("checkersElo")).intValue();
+            int elo = ((Long) jsonObject.get("checkersElo")).intValue();
 
             // Get the game type based on the current index
             GameTypes currentGameType = gameTypes[index];

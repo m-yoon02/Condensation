@@ -180,11 +180,10 @@ public class CheckersController {
         alert.setTitle("Forfeit");
 
         Optional<ButtonType> choice = alert.showAndWait();
-
         if (choice.isPresent() && choice.get() == ButtonType.OK) {
             onForfeitYesClick();
         } else if (choice.isPresent() && choice.get() == ButtonType.CANCEL) {
-            onForfeitNoClick();
+            System.out.println("No");
         }
     }
 
@@ -197,10 +196,6 @@ public class CheckersController {
         }
     }
 
-    @FXML
-    public void onForfeitNoClick() {
-        System.out.println("No");
-    }
 
     // chat
     @FXML

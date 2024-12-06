@@ -136,7 +136,6 @@ public class Leaderboard {
      */
     public JSONObject findUserByName(String name) {
         for (Object object : users) {
-            System.out.println(object);
             JSONObject user = (JSONObject) object;
             if (user.get("username").equals(name)) {
                 return user;
@@ -216,11 +215,8 @@ public class Leaderboard {
         String uuidToString = uuid.toString();
 
         for (Object object : users) {
-            System.out.println(object);
-
             JSONObject user = (JSONObject) object;
             if (user.get("playerUUID").equals(uuidToString)) {
-                System.out.println("Not null");
                 return user;
             }
         }
@@ -623,7 +619,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who lost the game.
      * @param sessionID The UUID of the game session where the loss occurred.
      */
-    public void updateEloForLosingPlayerCheckers(UUID playerID, UUID sessionID) {
+    void updateEloForLosingPlayerCheckers(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -668,7 +664,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who lost the game.
      * @param sessionID The UUID of the game session where the loss occurred.
      */
-    public void updateEloForLosingPlayerTictactoe(UUID playerID, UUID sessionID) {
+    void updateEloForLosingPlayerTictactoe(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -712,7 +708,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who lost the game.
      * @param sessionID The UUID of the game session where the loss occurred.
      */
-    public void updateEloForLosingPlayerConnect4(UUID playerID, UUID sessionID) {
+    void updateEloForLosingPlayerConnect4(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -808,12 +804,4 @@ public class Leaderboard {
        }
       return null;
    }
-
-   //setter for testing
-    public static void setInstance(Leaderboard instance) {
-        Leaderboard.instance = instance;
-    }
-
-
-
 }

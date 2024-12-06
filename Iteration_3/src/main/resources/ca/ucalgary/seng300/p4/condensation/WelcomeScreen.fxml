@@ -14,15 +14,15 @@
    <children>
       <MenuBar id="menuBar" layoutX="389.0" layoutY="38.0" prefHeight="45.0" prefWidth="392.0" styleClass="menuBar" stylesheets="@WelcomeScreenStyle.css">
          <menus>
-            <Menu id="teamMenu" mnemonicParsing="false" styleClass="menu" text="TEAM">
+            <Menu id="menu" mnemonicParsing="false" styleClass="menu" text="TEAM">
                <items>
                   <MenuItem fx:id="team" mnemonicParsing="false" onAction="#teamMenu" text="View Team" />
                </items></Menu>
-            <Menu id="aboutMenu" mnemonicParsing="false" text="ABOUT US">
-               <items >
+            <Menu mnemonicParsing="false" text="ABOUT US">
+               <items>
                   <MenuItem fx:id="about" mnemonicParsing="false" onAction="#aboutMenu" text="About Us" />
                </items></Menu>
-            <Menu id="progMenu" mnemonicParsing="false" text="PROGRAM INSTRUCTIONS">
+            <Menu mnemonicParsing="false" text="PROGRAM INSTRUCTIONS">
                <items>
                   <MenuItem fx:id="prog" mnemonicParsing="false" onAction="#progMenu" text="Program Instructions" />
                </items></Menu>
@@ -37,8 +37,8 @@
       <Label layoutX="400.0" layoutY="50.0" prefHeight="21.0" prefWidth="95.0" styleClass="logo" stylesheets="@WelcomeScreenStyle.css" text="CONDENSATION" />
       <Label layoutX="213.0" layoutY="181.0" prefHeight="90.0" prefWidth="423.0" styleClass="title" stylesheets="@WelcomeScreenStyle.css" text="WELCOME TO CONDENSATION" />
       <Label layoutX="340.0" layoutY="247.0" prefHeight="24.0" prefWidth="173.0" styleClass="logo" stylesheets="@WelcomeScreenStyle.css" text="YOUR ULTIMATE GAMING HUB" />
-      <Button fx:id="loginButton" layoutX="257.0" layoutY="281.0" mnemonicParsing="false" onMouseClicked="#moveToLogin" prefHeight="26.0" prefWidth="171.0" stylesheets="@WelcomeScreenStyle.css" text="LOGIN" />
-      <Button fx:id="signupButton" layoutX="435.0" layoutY="281.0" mnemonicParsing="false" onMouseClicked="#moveToSignup" prefHeight="26.0" prefWidth="171.0" text="SIGNUP" />
+      <Button layoutX="257.0" layoutY="281.0" mnemonicParsing="false" onMouseClicked="#moveToLogin" prefHeight="26.0" prefWidth="171.0" stylesheets="@WelcomeScreenStyle.css" text="LOGIN" />
+      <Button layoutX="435.0" layoutY="281.0" mnemonicParsing="false" onMouseClicked="#moveToSignup" prefHeight="26.0" prefWidth="171.0" text="SIGNUP" />
       <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="489.0" layoutY="46.0">
          <image>
             <Image url="@aroma.png" />

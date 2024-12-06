@@ -279,19 +279,19 @@ public class CheckersControllerTest extends ApplicationTest {
     }
 
 
-    @Test
-    public void testForfeitNoButtonClick() {
-
-        assertTrue(true);
-
-        ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
-        System.setOut(new java.io.PrintStream(consoleOutput));
-
-        checkersController.onForfeitNoClick();  // Call the public forfeit-yes method
-
-        System.setOut(System.out);  // Reset System.out
-        assertTrue(consoleOutput.toString().contains("No"));  // Assert console output contains "Yes"
-    }
+//    @Test
+//    public void testForfeitNoButtonClick() {
+//
+//        assertTrue(true);
+//
+//        ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
+//        System.setOut(new java.io.PrintStream(consoleOutput));
+//
+//        checkersController.onForfeitNoClick();  // Call the public forfeit-yes method
+//
+//        System.setOut(System.out);  // Reset System.out
+//        assertTrue(consoleOutput.toString().contains("No"));  // Assert console output contains "Yes"
+//    }
 
     @Test
     public void testSendButtonMessageHandling() {

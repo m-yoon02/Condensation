@@ -46,12 +46,12 @@ public class CheckersQueueController {
         delay.play();
     }
 
-//    protected void returnToProfile(Event event) throws IOException
-//    {
-//        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Profile.fxml")));
-//        createScene = new Scene(origin);
-//        HelloApplication.setActiveScene(createScene);
-//    }
+    protected void returnToProfile(Event event) throws IOException
+    {
+        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Profile.fxml")));
+        createScene = new Scene(origin);
+        HelloApplication.setActiveScene(createScene);
+    }
 
     // get player id
 

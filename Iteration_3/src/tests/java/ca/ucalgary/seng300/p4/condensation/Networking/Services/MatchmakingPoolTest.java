@@ -44,7 +44,6 @@ public class MatchmakingPoolTest {
     @Before
     public void setUp() throws Exception {
         mockLeaderboard = new Leaderboard();
-        Leaderboard.setInstance(mockLeaderboard);
 
         NetworkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE;
 
@@ -129,7 +128,6 @@ public class MatchmakingPoolTest {
 
     @Test
     public void testFetch4RandomPlayers() throws IOException, ParseException {
-        matchmakingPool.clearPool();
 
         QueuedPlayerMemo playerMemo1 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CHECKERS, 1500);
         QueuedPlayerMemo playerMemo2 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CONNECT4, 1400);

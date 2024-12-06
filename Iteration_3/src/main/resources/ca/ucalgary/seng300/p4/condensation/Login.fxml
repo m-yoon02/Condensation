@@ -17,7 +17,7 @@
             <Label fx:id="usernameLabel" layoutX="88.0" layoutY="51.0" styleClass="toplabel" stylesheets="@loginstyle.css" text="Username" />
             <Label fx:id="passwordLabel" layoutX="87.0" layoutY="117.0" styleClass="toplabel" stylesheets="@loginstyle.css" text="Password" />
             <Label fx:id="errorMessage" layoutX="103.0" layoutY="242.0" prefHeight="24.0" prefWidth="239.0" styleClass="error" stylesheets="@loginstyle.css" />
-            <Label fx:id="welcomeMessage" layoutX="149.0" layoutY="10.0" styleClass="welcome" stylesheets="@loginstyle.css" text="Welcome Back" />
+            <Label layoutX="149.0" layoutY="10.0" styleClass="welcome" stylesheets="@loginstyle.css" text="Welcome Back" />
          </children>
       </Pane>
       <Label layoutX="27.0" layoutY="25.0" styleClass="logo" stylesheets="@loginstyle.css" text="CONDENSATION" />

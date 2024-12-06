@@ -14,20 +14,13 @@ import java.io.IOException;
 public class HowToPlayConnect4Controller {
 
     @FXML
-    public Button backButton;
+    private Button backButton;
 
     @FXML
-    public void initialize() {
-        backButton.setOnAction(event -> navigateTo("ConnectFourHomeMenu.fxml"));
-    }
-
-    private void navigateTo(String fxmlFile) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
-            Scene scene = new Scene(fxmlLoader.load());
-            HelloApplication.setActiveScene(scene, "How to Play Connect 4!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void goBack(ActionEvent event) throws IOException {
+        Scene scene;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/ConnectFourHomeMenu.fxml"));
+        scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Connect 4 - Menu");
     }
 }

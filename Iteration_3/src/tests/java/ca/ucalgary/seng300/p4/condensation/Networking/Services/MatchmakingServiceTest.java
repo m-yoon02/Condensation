@@ -36,10 +36,6 @@ public class MatchmakingServiceTest {
         matchmakingService = new MatchmakingService(pool);
     }
 
-    @After
-    public void tearDown() {
-        pool.clearPool();
-    }
 
 
     @Test
@@ -73,7 +69,6 @@ public class MatchmakingServiceTest {
 
     @Test(expected = RuntimeException.class)
     public void testFindAndMatchPlayers_NotEnoughPlayers() throws IOException, org.json.simple.parser.ParseException {
-        pool.clearPool();
 
         // Find and match players final session should be null
         matchmakingService.findAndMatchPlayers();

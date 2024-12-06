@@ -152,9 +152,7 @@ public class NetworkManager {
     public JSONObject validateUserCredentials(String username, String password) throws IOException, ParseException {
 
         JSONObject jsonUsername = Leaderboard.getInstance().findUserByName(username);
-        System.out.println(LEADERBOARD_FILE);
         String databasePassword = (String) jsonUsername.get("password");
-
         // return null because user does not exist, probably a better way to handle but we need to iterate fas
         if(databasePassword.equals(password)){
             return jsonUsername;
@@ -208,11 +206,11 @@ public class NetworkManager {
      */
     public String editPassword(JSONObject editPasswordPayload) throws IOException, ParseException {
         UUID playedID = UUID.fromString((String) editPasswordPayload.get("playerID"));
-        String newPassword = (String) editPasswordPayload.get("password");
+        String newPassword = (String) editPasswordPayload.get("NewUsername");
 
-        Leaderboard.getInstance().changePassword(playedID, newPassword);
+        Leaderboard.getInstance().changeName(playedID, newPassword);
 
-        return String.format("You have successfully changed your password to %s", newPassword);
+        return String.format("You have successfully changed your username to %s", newPassword);
     }
 
 
@@ -351,18 +349,14 @@ public class NetworkManager {
         System.out.println(queuedPlayerPayload);
         // Extracts all neccessary Player1 information from database and payload and instantiates the queuedPlayer
         String playerIDString = (String) queuedPlayerPayload.get("playerID");
-        System.out.println("Poo" + playerIDString);
         UUID player1UUID = UUID.fromString(playerIDString);
-        System.out.println("Poo" + player1UUID);
-
         GameTypes gameType = (GameTypes) queuedPlayerPayload.get("gameType");
         JSONObject player1 = Leaderboard.getInstance().findUserById(player1UUID);
-        System.out.println("This is player1" + player1);
 
         Number elo = 0;
         switch(gameType){
             case CHECKERS -> {
-                elo = (Number) player1.get("checkersElo");
+                 elo = (Number) player1.get("checkersElo");
             }
             case TICTACTOE -> {
                 elo = (Number) player1.get("tictactoeElo");
@@ -390,7 +384,6 @@ public class NetworkManager {
         // preparing the json payload to be sent to the frontEnd
         JSONObject matchedSessionResponse = new JSONObject();
         matchedSessionResponse.put("sessionID", sessionID.toString());
-        System.out.println("sessionID: " + sessionID.toString());
         matchedSessionResponse.put("player1ID", player1UUID.toString());
         matchedSessionResponse.put("player2ID", player2UUID.toString());
         matchedSessionResponse.put("currentPlayerTurn", getFirstPlayerID.toString());
@@ -553,8 +546,7 @@ public class NetworkManager {
 
     /**
      * Handles a player's chat message by forwarding it to the recipient
-     * and broadcasting the chat data to clients in the game session. This should work in theory but we implementated chat
-     * in each of the game frontend controllers.
+     * and broadcasting the chat data to clients in the game session.
      * @param recievePlayerMessage the playerID and their message
      * @return Always returns {@code null}.
      * @throws RuntimeException if an error occurs during processing.
@@ -593,13 +585,5 @@ public class NetworkManager {
         } else {
             throw new NullPointerException("GameSession instance is null!");
         }
-    }
-    //getter methods for testing
-    public Map<UUID, Client> getLoggedInClients() {
-        return loggedInClients;
-    }
-
-    public Map<UUID, List<GameDataListener>> getSessionListeners() {
-        return sessionListeners;
     }
 }

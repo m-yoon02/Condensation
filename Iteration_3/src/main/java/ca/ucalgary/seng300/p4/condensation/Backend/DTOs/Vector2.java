@@ -7,11 +7,10 @@ public record Vector2(int x, int y) {
 
     /**
      * Creates a Vector2 from an integer array
-     *
      * @param array the integer array
      * @return the Vector2 created
      */
-    public static Vector2 fromArray(int[] array) {
+    public static Vector2 fromArray(int[] array){
         return new Vector2(array[0], array[1]);
     }
 
@@ -37,11 +36,10 @@ public record Vector2(int x, int y) {
 
     /**
      * Converts the Vector2 into an int array
-     *
      * @return the integer array representing the Vector2
      */
     public int[] toArray() {
-        return new int[]{x, y};
+        return new int[] {x, y};
     }
 
     @Override

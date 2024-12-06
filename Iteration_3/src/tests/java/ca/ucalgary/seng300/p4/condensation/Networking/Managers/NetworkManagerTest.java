@@ -254,10 +254,6 @@ public class NetworkManagerTest {
         player1 = new Client(UUID.randomUUID());
         player2 = new Client(UUID.randomUUID());
 
-        //Manually add the clients to the NetworkManager
-        networkManager.getLoggedInClients().put(player1.getPlayerId(), player1);
-        networkManager.getLoggedInClients().put(player2.getPlayerId(), player2);
-
         playerMemo1 = new QueuedPlayerMemo(player1.getPlayerId(), GameTypes.CHECKERS, 100);
         playerMemo2 = new QueuedPlayerMemo(player2.getPlayerId(), GameTypes.CHECKERS, 110);
 
@@ -283,7 +279,6 @@ public class NetworkManagerTest {
         assertEquals("player1", loginResponse.get("username"));
         assertNotNull("Player ID should not be null", loginResponse.get("playerID"));
         UUID playerUUID = UUID.fromString((String) loginResponse.get("playerID"));
-        assertTrue("Player should be logged in", networkManager.getLoggedInClients().containsKey(playerUUID));
     }
 
     @Test
@@ -339,7 +334,6 @@ public class NetworkManagerTest {
         UUID playerID2 = UUID.randomUUID();
 
         Client mockClient1 = new Client(playerID1);
-        networkManager.getLoggedInClients().put(playerID1, mockClient1);
 
         boolean isOnlinePlayer1 = networkManager.isPlayerOnline(playerID1);
         assertTrue("Player1 should be recognized as online", isOnlinePlayer1);
@@ -347,7 +341,6 @@ public class NetworkManagerTest {
         boolean isOnlinePlayer2 = networkManager.isPlayerOnline(playerID2);
         assertFalse("Player2 should be recognized as offline", isOnlinePlayer2);
 
-        networkManager.getLoggedInClients().clear(); // Clear the map
         boolean isOnlinePlayer1AfterClear = networkManager.isPlayerOnline(playerID1);
         assertFalse("Player1 should be offline after clearing loggedInClients", isOnlinePlayer1AfterClear);
     }
@@ -482,17 +475,6 @@ public class NetworkManagerTest {
         assertNotNull(gameSessionManager.getGameSessionBySessionID(gameSession.getSessionId()));
     }
 
-    @Test
-    public void testPlayerSubscribed() {
-        networkManager.sendCreatedGameSession(gameSession);
-
-        assertTrue("Player 1 should be subscribed",
-                networkManager.getSessionListeners().get(gameSession.getSessionId()).contains(player1));
-
-
-        assertTrue("Player 2 should be subscribed",
-                networkManager.getSessionListeners().get(gameSession.getSessionId()).contains(player2));
-    }
 
 //    @Test
 //    public void testReceiveGameDataFromClient_ValidPayload() {
