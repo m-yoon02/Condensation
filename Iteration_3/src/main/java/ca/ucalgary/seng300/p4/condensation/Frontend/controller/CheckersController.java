@@ -177,11 +177,8 @@ public class CheckersController {
     private Button forfeitNoBtn;
 
     @FXML
-    Alert alert;
-
-    @FXML
     public void onForfeitBtnClick() {
-        alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to forfeit?");
         alert.setTitle("Forfeit");
 
         Optional<ButtonType> choice = alert.showAndWait();
@@ -205,10 +202,6 @@ public class CheckersController {
     @FXML
     public void onForfeitNoClick() {
         System.out.println("No");
-    }
-
-    public Alert getAlert() {
-        return alert;
     }
 
     // chat

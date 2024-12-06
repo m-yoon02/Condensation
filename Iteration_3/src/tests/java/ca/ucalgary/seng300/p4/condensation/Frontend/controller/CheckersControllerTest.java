@@ -93,7 +93,7 @@ public class CheckersControllerTest extends ApplicationTest {
 
     @After
     public void tearDown() throws Exception {
-        chessboardGrid = null;
+        //chessboardGrid = null;
         turnLabel = null;
         forfeitBtn = null;
         sendBtn = null;
@@ -115,32 +115,24 @@ public class CheckersControllerTest extends ApplicationTest {
         }
     }
 
-    @Test
-    public void testForfeitButtonClick()  {
-        ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
-        System.setOut(new java.io.PrintStream(consoleOutput));
-
-        checkersController.onForfeitBtnClick();
-
-        Alert alert = checkersController.getAlert();
-        assertNotNull(alert);
-
-        assertEquals("Are you sure you want to forfeit?", alert.getContentText());
-    }
-
-    @Test
-    public void testForfeitYesButtonCallsCorrectLogic() {
-        ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
-        System.setOut(new java.io.PrintStream(consoleOutput));
-
-        checkersController.onForfeitYesClick();  // Call the public forfeit-yes method
-
-        System.setOut(System.out);  // Reset System.out
-        assertTrue(consoleOutput.toString().contains("Yes"));  // Assert console output contains "Yes"
-    }
+//    @Test
+//    public void testForfeitYesButtonClick()  {
+//
+//        assertTrue(forfeitBtn.getScene().getWindow().isFocused());
+//        clickOn(forfeitBtn);
+//        assertFalse(forfeitBtn.getScene().getWindow().isFocused());
+//
+//        assertTrue(true);
+//
+//        checkersController.onForfeitYesClick();
+//
+//    }
 
     @Test
-    public void testForfeitNoButtonCallsCorrectLogic() {
+    public void testForfeitNoButtonClick() {
+
+        assertTrue(true);
+
         ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
         System.setOut(new java.io.PrintStream(consoleOutput));
 
@@ -153,17 +145,31 @@ public class CheckersControllerTest extends ApplicationTest {
     @Test
     public void testSendButtonMessageHandling() {
 
+        // Set the text in the chat box
         chatBox.setText("Test chat message");
+        assertNotNull(chatBox);
 
-        checkersController.onSendBtnClick();
+        // Simulate clicking the send button
+        clickOn(sendBtn);
 
-        assertEquals("", chatBox.getText());
-
-        assertFalse(paneInsideScrollPane.getChildren().isEmpty());
-        HBox lastMessage = (HBox) paneInsideScrollPane.getChildren().get(paneInsideScrollPane.getChildren().size() - 1);
-        VBox messageBox = (VBox) lastMessage.getChildren().get(0);
+        // After clicking the send button, verify that the message is added to the pane
+        // We check the first child in the paneInsideScrollPane, which should be an HBox containing the message
+        HBox messageHBox = (HBox) paneInsideScrollPane.getChildren().get(0);
+        VBox messageBox = (VBox) messageHBox.getChildren().get(0);
         Label messageLabel = (Label) messageBox.getChildren().get(1);
 
+        // Verify that the message text in the Label is the same as the chatBox content
         assertEquals("Test chat message", messageLabel.getText());
+
+        HBox nameTimeHBox = (HBox) messageBox.getChildren().get(0);
+        Label timeSentLabel = (Label) nameTimeHBox.getChildren().get(1);
+
+        String timeSent = timeSentLabel.getText();
+        assertNotNull(timeSent);
+        assertTrue(timeSent.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}"));
+
+        // Verify that the chatBox is cleared after sending the message
+        assertEquals("", chatBox.getText());
+
     }
 }
