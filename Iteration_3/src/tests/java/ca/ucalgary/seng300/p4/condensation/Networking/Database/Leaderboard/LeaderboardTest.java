@@ -865,6 +865,19 @@ public class LeaderboardTest {
     }
 
 
+    @Test
+    public void testChangePasswordForNonExistentPlayer() {
+        // create non existing user
+        UUID nonExistentPlayerID = UUID.randomUUID();
+
+        // attempt to change the password for non existent player
+        boolean result = leaderboard.changePassword(nonExistentPlayerID, "newPassword1");
+
+        // verify
+        assertFalse("the method should return false", result);
+    }
+
+
 
 
 
