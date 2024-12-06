@@ -26,7 +26,6 @@ import java.util.UUID;
 import static ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.LeaderboardTest.MOCK_LEADERBOARD_FILE;
 import static ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.LeaderboardTest.TEMP_PLAYER_FILE;
 import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class NetworkManagerTest {
     private GameSessionManager gameSessionManager;
