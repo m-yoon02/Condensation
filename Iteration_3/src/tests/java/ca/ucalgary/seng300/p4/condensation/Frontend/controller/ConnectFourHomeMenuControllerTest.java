@@ -61,6 +61,28 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
         assertNotNull(newNode);
     }
 
+    @Test
+    public void howToPlayButton_Test() throws Exception{
+        assertNotNull(howToPlayButton);
+        clickOn(howToPlayButton);
+        Parent newNode = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
+        assertNotNull(newNode);
+    }
+
+    @Test
+    public void backButton_Test() throws Exception{
+        assertNotNull(backButton);
+        clickOn(backButton);
+        Parent newNode = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
+        assertNotNull(newNode);
+    }
+
+
+    @Test
+    public void image_test() throws Exception{
+        assertNotNull(connect4Image);
+        assertTrue("The ImageView should still be visible after clicking.", connect4Image.isVisible());
+    }
 
 
 }
