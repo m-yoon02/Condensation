@@ -1,13 +1,18 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -15,6 +20,12 @@ public class EditUserController {
     @FXML
     Label usernameLabel;
 
+    private ProfileHomeController profileHomeController;
+
+    // Setter for dependency injection
+    public void setProfileHomeController(ProfileHomeController profileHomeController) {
+        this.profileHomeController = profileHomeController;
+    }
     @FXML
     Label messageLabel;
 
@@ -37,7 +48,22 @@ public class EditUserController {
             messageLabel.setTextFill(Color.GREEN);
 
             newUsername = newUserNameField.getText();
-            // TODO change ProfileHomeController.usernameField
+            FileReader read = new FileReader(NetworkManager.PLAYER_ID_FILE);
+            JSONParser parser = new JSONParser();
+            JSONObject meowlol = (JSONObject) parser.parse(read);
+            meowlol.put("username", newUsername);
+
+            String username = (String) meowlol.get("username");
+            System.out.println("MEOWLOL" + meowlol);
+            FileWriter writer = new FileWriter(NetworkManager.PLAYER_ID_FILE);
+            writer.write(meowlol.toJSONString());
+            writer.flush();
+            writer.close();
+            profileHomeController.usernameField.setText(username);
+            System.out.println("NEW USER NAME = " + profileHomeController.usernameField.getText());
+
+
+            usernameLabel.setText(newUsername);
         }
     }
 

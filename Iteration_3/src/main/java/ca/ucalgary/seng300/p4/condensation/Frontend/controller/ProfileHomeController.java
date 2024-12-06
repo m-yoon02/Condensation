@@ -59,7 +59,7 @@ public class ProfileHomeController {
     private TableColumn<JSONObject, String> playerRecentgamesPlayedColumn;
 
     @FXML
-    private Label usernameField;
+    public Label usernameField;
     @FXML
     private Button leaderboardButton;
     @FXML
@@ -92,6 +92,7 @@ public class ProfileHomeController {
         // Set username and initialize leaderboard
         try {
             String usernameOfPlayer = Leaderboard.getInstance().fetchUserFromNewPlayerJson();
+            System.out.println("USERNAME OF PLAYER" + usernameOfPlayer);
             usernameField.setText(usernameOfPlayer);
         } catch (Exception e) {
             e.printStackTrace();
@@ -272,9 +273,17 @@ public class ProfileHomeController {
 
     @FXML
     void onEditUserButtonClicked(ActionEvent event) throws IOException, ParseException {
-        // Load the FXML for editing the username
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("editUser.fxml"));
         Parent root = fxmlLoader.load();
+        EditUserController editUserController = fxmlLoader.getController();
+
+        // Load the ProfileHome.fxml and get the controller
+        FXMLLoader meow = new FXMLLoader(HelloApplication.class.getResource("ProfileHome.fxml"));
+        Parent profileHomeRoot = meow.load(); // This initializes the controller
+        ProfileHomeController jesis = meow.getController(); // Retrieve the controller instance
+
+        // Inject the ProfileHomeController into EditUserController
+        editUserController.setProfileHomeController(jesis);
 
         // Create a new Stage for the popup
         Stage stage = new Stage();
