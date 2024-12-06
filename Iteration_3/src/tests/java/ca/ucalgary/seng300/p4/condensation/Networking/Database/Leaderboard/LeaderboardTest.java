@@ -173,7 +173,7 @@ public class LeaderboardTest {
     }
 
     @Test
-    public void testUpdateForTieGame() throws IOException {
+    public void testUpdateForTieGameCheckers() throws IOException {
         // Create and add players to the leaderboard
         JSONObject user1 = leaderboard.findUserByName("player1");
         JSONObject user2 = leaderboard.findUserByName("player2");
@@ -207,6 +207,75 @@ public class LeaderboardTest {
         assertEquals("T", recentMatch1.get("outcome"));
     }
 
+    @Test
+    public void testUpdateForTieGameTicTacToe() throws IOException {
+        // Create and add players to the leaderboard
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        JSONObject user2 = leaderboard.findUserByName("player2");
+
+        UUID sessionID = UUID.randomUUID();
+
+        // Update for tie game
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        UUID player2ID = UUID.fromString((String) user2.get("playerUUID"));
+        leaderboard.updateForTieGameTicTacToe(player1ID, player2ID, sessionID);
+
+        // update players
+        user1 = leaderboard.findUserByName("player1");
+        user2 = leaderboard.findUserByName("player2");
+
+        // Retrieve players from the leaderboard
+        // Verify players are not null
+        assertNotNull(user1);
+        assertNotNull(user2);
+
+        // Verify recent matches
+        JSONArray recentMatches1 = (JSONArray) user1.get("recentMatches");
+
+        assertEquals(2, recentMatches1.size());
+
+        // Verify the match details
+        JSONObject recentMatch1 = (JSONObject) recentMatches1.getFirst();
+
+        assertEquals(sessionID.toString(), recentMatch1.get("matchID"));
+        assertEquals(GameTypes.TICTACTOE.toString(), recentMatch1.get("gameType"));
+        assertEquals("T", recentMatch1.get("outcome"));
+    }
+
+    @Test
+    public void testUpdateForConnect4() throws IOException {
+        // Create and add players to the leaderboard
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        JSONObject user2 = leaderboard.findUserByName("player2");
+
+        UUID sessionID = UUID.randomUUID();
+
+        // Update for tie game
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        UUID player2ID = UUID.fromString((String) user2.get("playerUUID"));
+        leaderboard.updateForTieGameConnect4(player1ID, player2ID, sessionID);
+
+        // update players
+        user1 = leaderboard.findUserByName("player1");
+        user2 = leaderboard.findUserByName("player2");
+
+        // Retrieve players from the leaderboard
+        // Verify players are not null
+        assertNotNull(user1);
+        assertNotNull(user2);
+
+        // Verify recent matches
+        JSONArray recentMatches1 = (JSONArray) user1.get("recentMatches");
+
+        assertEquals(2, recentMatches1.size());
+
+        // Verify the match details
+        JSONObject recentMatch1 = (JSONObject) recentMatches1.getFirst();
+
+        assertEquals(sessionID.toString(), recentMatch1.get("matchID"));
+        assertEquals(GameTypes.CONNECT4.toString(), recentMatch1.get("gameType"));
+        assertEquals("T", recentMatch1.get("outcome"));
+    }
 
 
     @Test
@@ -252,10 +321,6 @@ public class LeaderboardTest {
         assertEquals("The game type should be CHECKERS.", GameTypes.CHECKERS.toString(), recentMatch.get("gameType"));
         assertEquals("The outcome should be 'W' for win.", "W", recentMatch.get("outcome"));
         assertEquals("The Elo score should match the updated Elo.", updatedElo, recentMatch.get("currentElo"));
-
-
-
-
     }
 
 
@@ -563,6 +628,39 @@ public class LeaderboardTest {
 
 
 
+    }
+
+    @Test
+    public void testChangePassword() throws IOException {
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        UUID playerID = UUID.fromString((String) user1.get("playerUUID"));
+        leaderboard.changePassword(playerID, "newPassword1");
+
+        JSONObject user = leaderboard.findUserById(playerID);
+        assertNotNull(user);
+        assertEquals("newPassword1", user.get("password"));
+    }
+
+    @Test
+    public void testChangeName() throws IOException {
+        // Retrieve an existing player
+        JSONObject user1 = leaderboard.findUserByName("player1");
+
+        // Verify that the existing player is not null
+        assertNotNull("Player1 should exist in the leaderboard", user1);
+
+        // Extract player details
+        UUID playerID = UUID.fromString((String) user1.get("playerUUID"));
+
+        // Change the player's name
+        leaderboard.changeName(playerID, "newName");
+
+        // Reload the user data to verify the name change
+        JSONObject updatedUser1 = leaderboard.findUserById(playerID);
+
+        // Verify that the name has been updated
+        assertNotNull("Updated user should not be null", updatedUser1);
+        assertEquals("The name should be updated to 'newName'", "newName", updatedUser1.get("username"));
     }
 
 

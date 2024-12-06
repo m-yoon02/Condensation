@@ -1,8 +1,19 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.Services;
+
+/**
+ * NOTE: for testing fetch4RandomPlayers
+ *
+ * this file only can test 87% line coverage and 75% branch coverage because of the while
+ * loop in this method. This is untestable because if we were to test it in a way for it
+ * to satisfy that condition, it will become a never ending loop while in the actual application,
+ * this won't happen. That loop is there because it will fetch 4 players, add them to the pool, and stop there.
+ */
+
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -22,16 +33,24 @@ public class MatchmakingPoolTest {
 
     private Leaderboard leaderboardMock;
 
+    private NetworkManager networkManager;
+
+    public static final String MOCK_LEADERBOARD_FILE = "mockLeaderboard.json";
+    public static final String TEMP_PLAYER_FILE = "tempPlayers.json";
+
     @Before
     public void setUp() throws Exception {
+        // Initialize the leaderboard with the mock file
+        NetworkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE;
+
+        NetworkManager.PLAYER_ID_FILE = TEMP_PLAYER_FILE;
+
+        networkManager = new NetworkManager();
+
         leaderboardMock = new Leaderboard();
         Leaderboard.setInstance(leaderboardMock);
 
         matchmakingPool = new MatchmakingPool();
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test
