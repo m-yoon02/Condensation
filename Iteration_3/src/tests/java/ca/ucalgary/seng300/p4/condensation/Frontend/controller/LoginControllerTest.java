@@ -1,4 +1,5 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
+import ca.ucalgary.seng300.p4.condensation.Frontend.controller.LoginController;
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.scene.layout.Pane;
 import org.junit.After;
