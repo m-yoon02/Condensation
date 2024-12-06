@@ -24,21 +24,17 @@ import java.util.concurrent.TimeUnit;
 
 public class CheckersQueueController {
 
-    private Stage stage;
-
     private Button leaveQueue;
 
     @FXML
     private Parent origin;
 
     @FXML
-    private Stage createWindow;
-    @FXML
     private Scene createScene;
 
-    public void start(Stage stage) {
+
+    public void start() {
         // Allows user to leave
-        this.stage = stage;
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished(e -> {
             try {
@@ -53,10 +49,8 @@ public class CheckersQueueController {
     protected void returnToProfile(Event event) throws IOException
     {
         origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Profile.fxml")));
-        createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         createScene = new Scene(origin);
-        createWindow.setScene(createScene);
-        createWindow.show();
+        HelloApplication.setActiveScene(createScene);
     }
 
     // get player id
@@ -75,12 +69,7 @@ public class CheckersQueueController {
         String startGameInfoPayload = NetworkManager.getNetworkInstance().handleQueuePlayer(playerInfoForGame);
         GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersInstance.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 650);
-        CheckersController checkersController = fxmlLoader.getController();
-        stage.setResizable(true);
-        checkersController.setStage(stage);
-        stage.setTitle("Checkers");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Checkers");
     }
 }

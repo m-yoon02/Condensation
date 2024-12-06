@@ -18,30 +18,17 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class TicTacToeQueueController {
 
     @FXML
     private Button leaveQueue;
 
-    @FXML
-    private Parent origin;
-
-    @FXML
-    private Stage createWindow;
-    @FXML
-    private Scene createScene;
-
-    private Stage stage;
-
-    public void start(Stage stage) {
+    public void start() {
         // Allows user to leave
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        this.stage = stage;
         delay.setOnFinished(e -> {
             try {
                 sendToBackendTicTacToe();
@@ -55,11 +42,9 @@ public class TicTacToeQueueController {
     @FXML
     protected void returnToTicTacToeMenu(Event event) throws IOException
     {
-        origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("tMenu.fxml")));
-        createWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        createScene = new Scene(origin);
-        createWindow.setScene(createScene);
-        createWindow.show();
+        Parent origin = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("tMenu.fxml")));
+        Scene createScene = new Scene(origin);
+        HelloApplication.setActiveScene(createScene);
     }
 
     // get player id
@@ -79,12 +64,9 @@ public class TicTacToeQueueController {
         GameSessionRecord.getGameSessionRecord().fromJSON(startGameInfoPayload);
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tGame.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 650);
+        Scene scene = new Scene(fxmlLoader.load());
         TicTacToeController ticTacToeController = fxmlLoader.getController();
-        ticTacToeController.start(stage);
-        stage.setResizable(true);
-        stage.setTitle("Condensation Application - Tic Tac Toe");
-        stage.setScene(scene);
-        stage.show();
+        ticTacToeController.start();
+        HelloApplication.setActiveScene(scene, "Condensation Application - Tic Tac Toe");
     }
 }
