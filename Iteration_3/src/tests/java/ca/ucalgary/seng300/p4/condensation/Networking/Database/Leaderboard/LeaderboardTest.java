@@ -854,6 +854,17 @@ public class LeaderboardTest {
     }
 
 
+    @Test
+    public void testFindUserByNameReturnsNull() {
+
+        // trying to find a user that does not exist
+        JSONObject user = leaderboard.findUserByName("playerWho?");
+
+        // verify
+        assertNull("the method should return null when the user is not found", user);
+    }
+
+
 
 
 
