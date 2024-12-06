@@ -12,16 +12,10 @@ import java.io.IOException;
 
 public class CheckersHowToPlayController {
 
-    private Stage stage;
     @FXML
     public void onHowToPlayBackBtnClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersHomeMenu.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Checkers Home Menu");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Checkers Home Menu");
     }
 }

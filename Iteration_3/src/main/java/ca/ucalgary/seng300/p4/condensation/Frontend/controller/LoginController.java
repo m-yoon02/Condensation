@@ -1,5 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import javafx.fxml.FXML;
 
@@ -29,9 +30,6 @@ import java.io.IOException;
  */
 public class LoginController {
 
-    // Path to the json file for storing the username and UUID
-    public static final String DEFAULT_PLAYER_ID_FILE = "Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/playerID.json";
-
     @FXML
     public Button loginBtn;
 
@@ -58,9 +56,6 @@ public class LoginController {
 
     @FXML
     private Pane root;
-
-    @FXML
-    private Stage window;
 
     @FXML
     private Scene scene;
@@ -156,15 +151,12 @@ public class LoginController {
                 errorMessage.setTextFill(Color.BLACK);
                 try {
                     // Load the profileHome.fxml file to change scene
-                    loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/profileHome.fxml"));
+                    loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/ProfileHome.fxml"));
                     root = loader.load();
 
                     // Set the window and scene to the login screen
-                    window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     scene = new Scene(root);
-                    window.setScene(scene);
-                    window.setResizable(false);
-                    window.show();
+                    HelloApplication.setActiveScene(scene);
                 } catch (IOException e) {
                     // Catch exception and print call stack
                     e.printStackTrace();
@@ -216,7 +208,7 @@ public class LoginController {
             JSONObject returnPayload = NetworkManager.getNetworkInstance().playerLoginHandler(createJSONObject());
 
             // Initialize a file writer to save username and UUID
-            FileWriter fileWriter = new FileWriter(DEFAULT_PLAYER_ID_FILE);
+            FileWriter fileWriter = new FileWriter(NetworkManager.PLAYER_ID_FILE);
 
             // Write the username and UUI
             fileWriter.write(returnPayload.toJSONString());
@@ -263,11 +255,8 @@ public class LoginController {
             root = loader.load();
 
             // Set the window and scene to the login screen
-            window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
-            window.setScene(scene);
-            window.setResizable(false);
-            window.show();
+            HelloApplication.setActiveScene(scene);
         } catch (IOException e) {
             // Catch exception and print call stack
             e.printStackTrace();

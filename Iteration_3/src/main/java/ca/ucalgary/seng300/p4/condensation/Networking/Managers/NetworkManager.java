@@ -2,7 +2,6 @@ package ca.ucalgary.seng300.p4.condensation.Networking.Managers;
 import ca.ucalgary.seng300.p4.condensation.Backend.Handlers.GameHandler;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
-//import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.DatabaseBuilder;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
@@ -17,11 +16,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class NetworkManager {
-
-
     /**
      * Network Manager acts as facade which abstracts a way syncing between game, chat and other elements.
      * Network manager implements singleton design pattern for network
@@ -34,14 +33,25 @@ public class NetworkManager {
 
     // client listener lists mapped to specific to their gameSessions
 
-    private final String DATA_FILE = "\\C:\\Users\\Richa\\IdeaProjects\\demo6\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json\\";
     private Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final ChatService chatService;
 
+    private static final String ABSOLUTE_PATH;
+    private static final String LEADERBOARD_DIR;
+    public static final String LEADERBOARD_FILE;
+    public static final String PLAYER_ID_FILE;
 
-
-
+    static {
+        Path basePath = Paths.get("").toAbsolutePath();
+        if (!basePath.endsWith("Iteration_3")) {
+            basePath = basePath.resolve("Iteration_3");
+        }
+        ABSOLUTE_PATH = basePath.normalize().toString();
+        LEADERBOARD_DIR = Paths.get(ABSOLUTE_PATH, "src", "main", "java", "ca", "ucalgary", "seng300", "p4", "condensation", "Networking", "Database", "Leaderboard").toString();
+        LEADERBOARD_FILE = Paths.get(LEADERBOARD_DIR, "Leaderboard.json").toString();
+        PLAYER_ID_FILE = Paths.get(LEADERBOARD_DIR, "playerID.json").toString();
+    }
 
     /**
      * constructor for network manager instance, when creating a new one
@@ -142,17 +152,10 @@ public class NetworkManager {
     public JSONObject validateUserCredentials(String username, String password) throws IOException, ParseException {
 
         JSONObject jsonUsername = Leaderboard.getInstance().findUserByName(username);
-
-        JSONObject jsonPassword =Leaderboard.getInstance().findUserByPassword(password);
-
+        String databasePassword = (String) jsonUsername.get("password");
         // return null because user does not exist, probably a better way to handle but we need to iterate fas
-        if(jsonUsername != null && jsonPassword != null){
-
-            if(jsonUsername.equals(jsonPassword)) {
-                return jsonPassword;
-            }
-
-            return null;
+        if(databasePassword.equals(password)){
+            return jsonUsername;
         }
 
         return null;
@@ -341,7 +344,7 @@ public class NetworkManager {
      * PostCondition: able to verify the client is logged in, and them to pool and returns a matchedGameSession object, which eventually sends created
      *               gameSession information to the GameSessionManager and finally uuids to the backend via (sendCreatedGameSession)
      */
-    public JSONObject handleQueuePlayer(JSONObject queuedPlayerPayload) throws IOException, ParseException {
+    public String handleQueuePlayer(JSONObject queuedPlayerPayload) throws IOException, ParseException {
 
         System.out.println(queuedPlayerPayload);
         // Extracts all neccessary Player1 information from database and payload and instantiates the queuedPlayer
@@ -380,15 +383,15 @@ public class NetworkManager {
 
         // preparing the json payload to be sent to the frontEnd
         JSONObject matchedSessionResponse = new JSONObject();
-        matchedSessionResponse.put("sessionID", sessionID);
-        matchedSessionResponse.put("player1ID", player1UUID);
-        matchedSessionResponse.put("player2ID", player2UUID);
-        matchedSessionResponse.put("currentPlayerTurn", getFirstPlayerID);
-        matchedSessionResponse.put("gameType", gameType);
+        matchedSessionResponse.put("sessionID", sessionID.toString());
+        matchedSessionResponse.put("player1ID", player1UUID.toString());
+        matchedSessionResponse.put("player2ID", player2UUID.toString());
+        matchedSessionResponse.put("currentPlayerTurn", getFirstPlayerID.toString());
+        matchedSessionResponse.put("gameType", gameType.toString());
 
         // also everytime client sends network a payload they will need to give sessionID so we can find the gameSession object and update the game handler field in the GameSession's object.
         // This way this.gamehandler recieves a payload and should then notify the frontend using the client listeners.
-        return matchedSessionResponse;
+        return matchedSessionResponse.toJSONString();
     }
 
 
@@ -397,13 +400,67 @@ public class NetworkManager {
      * @param challengeQueuedPlayer
      * @return
      */
-    public JSONObject handleChallengedQueuePlayer(JSONObject challengeQueuedPlayer){
+    public String handleChallengedQueuePlayer(JSONObject challengeQueuedPlayer) throws IOException, ParseException {
 
-        // Pseudocode :
-        // 1. The frontend will have a button in the player lookup which essentially allows you to challenge a player if they are online.
-        //
-        //
-        return null;
+        // I need player1ID this is the logged in player from the playerId.json
+        // we need a player2ID
+        UUID player1ID = UUID.fromString(String.valueOf(challengeQueuedPlayer.get("Player1ID")));
+        JSONObject player1User = Leaderboard.getInstance().findUserById(player1ID);
+        GameTypes gameType = (GameTypes) challengeQueuedPlayer.get("gameType");
+
+        String usernamePlayer2 = (String) challengeQueuedPlayer.get("Player2Username");
+        JSONObject player2User = Leaderboard.getInstance().findUserByName(usernamePlayer2);
+        UUID player2ID = UUID.fromString((String) player2User.get("playerUUID"));
+
+
+
+        Number player1Elo = 0;
+        Number player2Elo = 0;
+        switch(gameType){
+            case CHECKERS -> {
+                player1Elo = (Number) player1User.get("checkersElo");
+                player2Elo = (Number) player2User.get("checkersElo");
+
+            }
+            case TICTACTOE -> {
+                player1Elo = (Number) player1User.get("tictactoeElo");
+                player2Elo = (Number) player2User.get("tictactoeElo");
+
+            }
+            case CONNECT4 -> {
+                player1Elo = (Number) player1User.get("connect4Elo");
+                player2Elo = (Number) player2User.get("tictactoeElo");
+
+            }
+        }
+
+
+
+        // create QueuedPlayerMemos for player1 and player 2
+        QueuedPlayerMemo queuedPlayerMemo1 = new QueuedPlayerMemo(player1ID, gameType,  player1Elo.intValue());
+        QueuedPlayerMemo queuedPlayerMemo2 = new QueuedPlayerMemo(player2ID, gameType,  player2Elo.intValue());
+
+
+        //  now we need to bypass matchmaking and go directly create the game
+        GameSession matchedGameSession = new GameSession(queuedPlayerMemo1, queuedPlayerMemo2);
+        network.sendCreatedGameSession(matchedGameSession);
+        UUID sessionID = matchedGameSession.getSessionId();
+        UUID getFirstPlayerID = matchedGameSession.getGameHandler().getFirstPlayerID();
+
+        JSONObject matchedSessionResponse = new JSONObject();
+
+        // send session data to frontend
+
+        matchedSessionResponse.put("sessionID", sessionID.toString());
+        matchedSessionResponse.put("player1ID", player1ID.toString());
+        matchedSessionResponse.put("player2ID", player2ID.toString());
+        matchedSessionResponse.put("currentPlayerTurn", getFirstPlayerID.toString());
+        matchedSessionResponse.put("gameType", gameType.toString());
+
+        // also everytime client sends network a payload they will need to give sessionID so we can find the gameSession object and update the game handler field in the GameSession's object.
+        // This way this.gamehandler recieves a payload and should then notify the frontend using the client listeners.
+        return matchedSessionResponse.toJSONString();
+
     }
 
     /**
@@ -468,7 +525,8 @@ public class NetworkManager {
      */
     public void receiveGameDataFromClient(JSONObject receiveClientPayload){
 
-        UUID SessionID = (UUID) receiveClientPayload.get("SessionID");
+        //Treat this as a String, or it will become a malformed JSON string
+        UUID SessionID = UUID.fromString((String)receiveClientPayload.get("SessionID"));
         String moveDataPayload  = receiveClientPayload.toJSONString();
 
         // this receive the current gameSession from the sessions hashmap which should still be active
@@ -498,7 +556,7 @@ public class NetworkManager {
         try {
             // parse the JASONObject
             UUID sessionID = (UUID) recievePlayerMessage.get("SessionID");
-            UUID player1ID = (UUID) recievePlayerMessage.get("Player1D");
+            UUID player1ID = (UUID) recievePlayerMessage.get("Player1ID");
             String player1Message = (String) recievePlayerMessage.get("Message");
 
             // get the game session along with player 2's UUID associated w that game session
@@ -520,13 +578,12 @@ public class NetworkManager {
         return null;
     }
 
-    /**
-     * getDATA_FILE simply gets the path of the data file
-     * @return
-     */
-    public String getDATA_FILE(){
-        return DATA_FILE;
+    public void forfeitGame(UUID sessionID, UUID forfeitedPlayerID) {
+        GameSession gameSession = gameSessionManager.getGameSessionBySessionID(sessionID);
+        if (gameSession != null) {
+            gameSession.processForfeit(forfeitedPlayerID);
+        } else {
+            throw new NullPointerException("GameSession instance is null!");
+        }
     }
-
-
 }

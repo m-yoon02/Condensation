@@ -1,6 +1,7 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -50,8 +51,6 @@ public class CheckersLeaderboard {
     private TableColumn<Player, Double> winPercentageColumn;
 
     private ObservableList<Player> playerList;
-
-    private Stage stage;
 
     @FXML
     public void initialize() {
@@ -128,20 +127,15 @@ public class CheckersLeaderboard {
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Checkers Home Menu");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(530);
-        stage.show();
+        Scene scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Checkers Home Menu");
     }
 
 
     public static Team mainTeam;
 
     static {
-        File file = new File("Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
+        File file = new File(NetworkManager.LEADERBOARD_FILE);
 
         mainTeam = load(file);
         if (mainTeam == null) {

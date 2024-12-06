@@ -1,6 +1,8 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
+import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,8 +54,10 @@ public class ConnectFourLeaderboard {
 
     private ObservableList<Player> playerList;
 
+
+
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException, ParseException {
         // Bind each column's preferred width to a percentage of the table's total width
         rankColumn.prefWidthProperty().bind(leaderboardTable.widthProperty().multiply(0.05));
         nameColumn.prefWidthProperty().bind(leaderboardTable.widthProperty().multiply(0.4));
@@ -126,20 +131,24 @@ public class ConnectFourLeaderboard {
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/ca/ucalgary/seng300/p4/condensation/ConnectFourHomeMenu.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(fxmlLoader.load(), 800, 600);
-        stage.setTitle("Connect 4 - Menu");
-        stage.setScene(scene);
-        stage.show();
+        scene = new Scene(fxmlLoader.load());
+        HelloApplication.setActiveScene(scene, "Connect 4 - Menu");
     }
 
 
     public static Team mainTeam;
 
     static {
-        File file = new File("Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/Leaderboard.json");
-
+//        try {
+//            Leaderboard leaderboard = Leaderboard.getInstance();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+        File file = new File(NetworkManager.LEADERBOARD_FILE);
         mainTeam = load(file);
+
         if (mainTeam == null) {
             System.err.println("Failed to load the team data from JSON.");
         }
@@ -168,7 +177,6 @@ public class ConnectFourLeaderboard {
      * This class deals with all the process meant for the entire team and the storage of players and win-loss record
      */
     public static class Team {
-
         private ArrayList<Player> players;
 
         public Team(ArrayList<Player> players) {

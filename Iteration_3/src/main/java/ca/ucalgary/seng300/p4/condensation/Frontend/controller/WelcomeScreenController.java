@@ -1,14 +1,13 @@
 package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 
+import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 
 import java.awt.*;
@@ -32,12 +31,6 @@ public class WelcomeScreenController {
     @FXML
     private Pane root;
 
-    @FXML
-    private Stage window;
-
-    @FXML
-    private Scene scene;
-
     /**
      * Function: moveToLogin
      * @param event Triggered by mouse click
@@ -51,14 +44,8 @@ public class WelcomeScreenController {
         // Load the Login.fxml file to change scene
         loader = new FXMLLoader(getClass().getResource("/ca/ucalgary/seng300/p4/condensation/Login.fxml"));
         root = loader.load();
-
-        // Set the window to the current viewing screen
-        window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        window.setScene(scene);
-        // Set the window and scene to the login screen
-        window.setScene(scene);
-        window.show();
+        Scene scene = new Scene(root);
+        HelloApplication.setActiveScene(scene);
     }
 
     /**
@@ -77,13 +64,8 @@ public class WelcomeScreenController {
         root = loader.load();
 
         // Set the window to the current viewing screen
-        window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        window.setResizable(false);
-        // Set the window and scene to the login screen
-        window.setScene(scene);
-        window.show();
-
+        Scene scene = new Scene(root);
+        HelloApplication.setActiveScene(scene);
     }
 
     /**

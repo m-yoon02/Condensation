@@ -27,8 +27,6 @@ public class GameSession implements GameEndListener, TurnEndListener {
     // field for instantited GameHandler
     private final GameHandler gameHandler;
     private final GameTypes gameType;
-    private final String DATA_FILE = "\\C:\\Users\\Richa\\IdeaProjects\\demo6\\seng300-f24-project\\Iteration_3\\src\\main\\java\\ca\\ucalgary\\seng300\\p4\\condensation\\Networking\\Database\\Leaderboard\\Leaderboard.json\\";
-
 
     /**
      * When creating GameSession we initialize sessionID field, and player1 and player2 UUIDs which will be passed into some instance of GameHandler
@@ -37,26 +35,19 @@ public class GameSession implements GameEndListener, TurnEndListener {
      */
 
     public GameSession(QueuedPlayerMemo playerMemo1, QueuedPlayerMemo playerMemo2) {
-        GameHandler gameHandler1 = null;
         this.sessionId = UUID.randomUUID();
         this.player1ID =  playerMemo1.PlayerID();
         this.player2ID =  playerMemo2.PlayerID();
         this.gameType = playerMemo1.gameType();
 
         GameTypes gameType = playerMemo1.gameType();
-            switch (gameType) {
-                // since we basically handle the state of backend we would pass into gameHandler the PlayerIDs, and we simply send client payload to this.gamehandler
+        this.gameHandler = switch (gameType) {
+            // since we basically handle the state of backend we would pass into gameHandler the PlayerIDs, and we simply send client payload to this.gamehandler
+            case CHECKERS -> new CheckersHandler(this.player1ID, this.player2ID);
+            case TICTACTOE -> new TicTacToeHandler(this.player1ID, this.player2ID);
+            case CONNECT4 -> new Connect4Handler(this.player1ID, this.player2ID);
+        };
 
-                case CHECKERS :
-                    gameHandler1 = new CheckersHandler(this.player1ID, this.player2ID);
-                case TICTACTOE:
-                    gameHandler1 = new TicTacToeHandler(this.player1ID, this.player2ID);
-                case CONNECT4:
-                    gameHandler1 = new TicTacToeHandler(this.player1ID, this.player2ID);
-          }
-
-        // adding gameSession to listen to TurnEnd and GameEnd
-        this.gameHandler = gameHandler1;
         this.gameHandler.addTurnEndListener(this);
         this.gameHandler.addGameEndListener(this);
 
@@ -108,17 +99,17 @@ public class GameSession implements GameEndListener, TurnEndListener {
         GameEventType gameEventType = GameEventType.GAME_END;
         // we need to make the response payload here as well
         JSONObject gameEndPayload = new JSONObject();
-        gameEndPayload.put("UpdateType", gameEventType);
+        gameEndPayload.put("UpdateType", gameEventType.toString());
 
         // This handles the payload information of if some player wins
         // I can use ternary to make this cleaner lol.
         if(gameResult == GameResult.WIN){
-            gameEndPayload.put("GameState", GameResult.WIN);
+            gameEndPayload.put("GameState", GameResult.WIN.toString());
             if (winnerPlayer.equals(this.player1ID)) {
                 Leaderboard.getInstance().updateEloForWinningPlayer(this.player1ID, this.gameType, this.sessionId);
                 Leaderboard.getInstance().updateEloForLosingPlayer(this.player2ID, this.gameType, this.sessionId);
-                gameEndPayload.put("PlayerWon", this.player1ID);
-                gameEndPayload.put("PlayerLost", this.player2ID);
+                gameEndPayload.put("PlayerWon", this.player1ID.toString());
+                gameEndPayload.put("PlayerLost", this.player2ID.toString());
 
 
                 // as winner and player 2 as loser
@@ -126,12 +117,12 @@ public class GameSession implements GameEndListener, TurnEndListener {
                 // update leaderboard for player 2 winner, and player 1 as loser
                 Leaderboard.getInstance().updateEloForWinningPlayer(this.player2ID, this.gameType, this.sessionId);
                 Leaderboard.getInstance().updateEloForLosingPlayer(this.player1ID, this.gameType, this.sessionId);
-                gameEndPayload.put("PlayerWon", this.player2ID);
-                gameEndPayload.put("PlayerLost", this.player1ID);
+                gameEndPayload.put("PlayerWon", this.player2ID.toString());
+                gameEndPayload.put("PlayerLost", this.player1ID.toString());
             }
         }else{
             Leaderboard.getInstance().updateForTieGame(this.player1ID, this.player2ID, this.sessionId, this.gameType);
-            gameEndPayload.put("GameState", GameResult.TIE);
+            gameEndPayload.put("GameState", GameResult.TIE.toString());
             // Player fields will not exist and elo's will not change.
 
         }
@@ -164,7 +155,7 @@ public class GameSession implements GameEndListener, TurnEndListener {
         JSONObject responseClientPayload = new JSONObject();
         responseClientPayload.put("UpdateType", "TURN_END");
         responseClientPayload.put("SessionID", sessionId);
-        responseClientPayload.put("PlayerTurnID", playersTurnID);
+        responseClientPayload.put("PlayerTurn", playersTurnID);
         responseClientPayload.put("Changes", gameStateJson);
 
         try {
@@ -173,5 +164,9 @@ public class GameSession implements GameEndListener, TurnEndListener {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public void processForfeit(UUID forfeitedPlayerID) {
+        onGameEnd(GameResult.WIN, player1ID.equals(forfeitedPlayerID) ? player2ID : player1ID);
     }
 }

@@ -8,7 +8,6 @@ import ca.ucalgary.seng300.p4.condensation.Backend.GameTimer.TimerEndListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.UUID;
 
 public abstract class GameHandler implements IGameHandler{
@@ -30,14 +29,13 @@ public abstract class GameHandler implements IGameHandler{
     }
 
     public GameHandler(UUID player1ID, UUID player2ID, PieceColor[] colors){
-        Random rnd = new Random();
-        int player1ColorIndex = rnd.nextInt(2);
-        int player2ColorIndex = player1ColorIndex == 0 ? 1 : 0;
+        int player1ColorIndex = 0;
+        int player2ColorIndex = 1;
         playerMemoHashMap.put(player1ID, new PlayerMemo(player1ID, colors[player1ColorIndex]));
         playerMemoHashMap.put(player2ID, new PlayerMemo(player2ID, colors[player2ColorIndex]));
         firstPlayerID = getPlayerMemoFromPieceColor(colors[0]).playerID();
         gameTimer = new GameTimer(player1ID, player2ID, DEFAULT_TIME);
-        gameTimer.setTimerTo(player1ColorIndex == 0 ? player1ID : player2ID);
+        gameTimer.setTimerTo(player1ID);
         gameTimer.addTimerEndListener(new EndGameOnTimerEndListener());
     }
 

@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="main-pane" stylesheets="@otherProfile.css" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.OtherProfileController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="main-pane" stylesheets="@otherProfile.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.OtherProfileController">
     <children>
         <Pane prefHeight="500.0" prefWidth="700.0" styleClass="flexDisplay">
             <children>
@@ -19,6 +19,7 @@
                 <TextField fx:id="usernameTextField" layoutX="67.0" layoutY="58.0" prefHeight="30.0" prefWidth="515.0" promptText="Username" />
                 <Label layoutX="140.0" layoutY="33.0" prefHeight="20.0" prefWidth="403.0" styleClass="player-lookup-bar" text="Type in the Search Box and Press Search to Lookup Any Player:" />
                 <Button fx:id="searchButton" layoutX="590.0" layoutY="55.0" mnemonicParsing="false" onAction="#onSearchButtonClicked" prefHeight="36.0" prefWidth="100.0" styleClass="lookup-button" text="Search">
+
                <font>
                   <Font size="12.0" />
                </font></Button>
@@ -47,6 +48,11 @@
                 <Label layoutX="12.0" layoutY="286.0" styleClass="white" text="Player recent matches" />
             <Label layoutX="12.0" layoutY="122.0" prefHeight="21.0" prefWidth="41.0" text="Status:" textFill="#faf6f6" />
             <Text fx:id="playerStatus" fill="#73cf70" layoutX="53.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="227.2216033935547" />
+            <Button fx:id="challengeButton" layoutX="15.0" layoutY="449.0" mnemonicParsing="false" onAction="#onChallengeClick" prefHeight="36.0" prefWidth="174.0" styleClass="lookup-button" text="Challenge">
+               <font>
+                  <Font size="4.0" />
+               </font>
+            </Button>
             </children>
         </Pane>
         <Button fx:id="homeButton" layoutX="600" layoutY="451.0" mnemonicParsing="false" onAction="#onHomeButtonClicked" styleClass="lookup-button" text="Home" />

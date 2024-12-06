@@ -1,8 +1,6 @@
 package ca.ucalgary.seng300.p4.condensation.Networking.DTO;
 
-import ca.ucalgary.seng300.p4.condensation.Frontend.controller.CheckersController;
-import ca.ucalgary.seng300.p4.condensation.Frontend.controller.ConnectFourController;
-import ca.ucalgary.seng300.p4.condensation.Frontend.controller.TicTacToeController;
+import ca.ucalgary.seng300.p4.condensation.Frontend.Receiver.ClientReceiver;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Listeners.GameDataListener;
@@ -27,6 +25,7 @@ public class Client implements GameDataListener {
 
     @Override
     public void onChatEvent(GameEventType gameEventType, JSONArray clientResponsePayload){
+
         
     }
 
@@ -42,20 +41,6 @@ public class Client implements GameDataListener {
      */
     @Override
     public void onGameEvent(GameEventType eventType, JSONObject payload, GameTypes gameType) throws IOException {
-
-        // we can call a frontend recieveMethod(JSONObject gameData) that client will directly call
-
-        switch(gameType) {
-            case CHECKERS -> {
-                CheckersController.receiveCheckers(payload);
-            }
-            case TICTACTOE -> {
-                TicTacToeController.receiveFromBackendTicTacToe(payload);
-            }
-            case CONNECT4 -> {
-                ConnectFourController.receiveConnectFour(payload);
-            }
-        }
-
+        ClientReceiver.receive(playerId, gameType, payload);
     }
 }

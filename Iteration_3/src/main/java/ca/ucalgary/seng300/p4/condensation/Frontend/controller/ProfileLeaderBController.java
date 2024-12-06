@@ -70,7 +70,7 @@ public class ProfileLeaderBController {
         ticTacToePlayerColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty((String) cellData.getValue().get("username")));
         ticTacToeScoreColumn.setCellValueFactory(cellData ->
-                new SimpleIntegerProperty(((Long) cellData.getValue().get("tictactoeElo")).intValue()).asObject());
+                new SimpleIntegerProperty(((Number) cellData.getValue().get("tictactoeElo")).intValue()).asObject());
 
         // Configure Connect 4 columns
         connect4RankColumn.setCellValueFactory(cellData ->
@@ -78,7 +78,7 @@ public class ProfileLeaderBController {
         connect4PlayerColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty((String) cellData.getValue().get("username")));
         connect4ScoreColumn.setCellValueFactory(cellData ->
-                new SimpleIntegerProperty(((Long) cellData.getValue().get("connect4Elo")).intValue()).asObject());
+                new SimpleIntegerProperty(((Number) cellData.getValue().get("connect4Elo")).intValue()).asObject());
 
         // Configure Checkers columns
         checkersRankColumn.setCellValueFactory(cellData ->
@@ -86,7 +86,7 @@ public class ProfileLeaderBController {
         checkersPlayerColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty((String) cellData.getValue().get("username")));
         checkersScoreColumn.setCellValueFactory(cellData ->
-                new SimpleIntegerProperty(((Long) cellData.getValue().get("checkersElo")).intValue()).asObject());
+                new SimpleIntegerProperty(((Number) cellData.getValue().get("checkersElo")).intValue()).asObject());
 
         // Load leaderboard data dynamically
         loadLeaderboardData();
@@ -118,18 +118,38 @@ public class ProfileLeaderBController {
             });
 
             // Sort the data by score for each game
-            ticTacToeData.sort((o1, o2) -> Long.compare((Long) o2.get("tictactoeElo"), (Long) o1.get("tictactoeElo")));
+            ticTacToeData.sort((o1, o2) -> {
+                // Get the values as Numbers
+                Number elo1 = (Number) o1.get("tictactoeElo");
+                Number elo2 = (Number) o2.get("tictactoeElo");
+
+                // Convert both to Longs and compare
+                return Long.compare(elo2.longValue(), elo1.longValue());
+            });
             for (int i = 0; i < ticTacToeData.size(); i++) {
                 ticTacToeData.get(i).put("rank", i + 1); // Rank starts at 1
             }
 
-            connect4Data.sort((o1, o2) -> Long.compare((Long) o2.get("connect4Elo"), (Long) o1.get("connect4Elo")));
+            connect4Data.sort((o1, o2) -> {
+                // Get the values as Numbers
+                Number elo1 = (Number) o1.get("connect4Elo");
+                Number elo2 = (Number) o2.get("connect4Elo");
+
+                // Convert both to Longs and compare
+                return Long.compare(elo2.longValue(), elo1.longValue());
+            });
             for (int i = 0; i < connect4Data.size(); i++) {
                 connect4Data.get(i).put("rank", i + 1); // Rank starts at 1
             }
 
-            checkersData.sort((o1, o2) -> Long.compare((Long) o2.get("checkersElo"), (Long) o1.get("checkersElo")));
-            for (int i = 0; i < checkersData.size(); i++) {
+            checkersData.sort((o1, o2) -> {
+                // Get the values as Numbers
+                Number elo1 = (Number) o1.get("checkersElo");
+                Number elo2 = (Number) o2.get("checkersElo");
+
+                // Convert both to Longs and compare
+                return Long.compare(elo2.longValue(), elo1.longValue());
+            });            for (int i = 0; i < checkersData.size(); i++) {
                 checkersData.get(i).put("rank", i + 1); // Rank starts at 1
             }
 
@@ -157,10 +177,6 @@ public class ProfileLeaderBController {
         System.out.println("Home button clicked...redirecting to home.");
         Parent homeParent = FXMLLoader.load(HelloApplication.class.getResource("ProfileHome.fxml"));
         Scene homeScene = new Scene(homeParent);
-
-        // Get the current stage and set the new scene
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
+        HelloApplication.setActiveScene(homeScene);
     }
 }
