@@ -206,9 +206,5 @@ public class SignUpControllerTest extends ApplicationTest {
         Scene signup = continueBtn.getScene();
 
         assertFalse(signup.equals(welcomeScene));
-
-
     }
-
-
 }

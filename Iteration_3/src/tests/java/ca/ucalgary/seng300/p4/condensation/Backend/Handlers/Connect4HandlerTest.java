@@ -413,7 +413,8 @@ public class Connect4HandlerTest {
         try {
             c4Handler.makeMove(invalidJSON);
             fail("Expected RuntimeException due to invalid JSON");
-        } catch (RuntimeException _) {}
+        } catch (RuntimeException _) {
+        }
     }
 
     @Test

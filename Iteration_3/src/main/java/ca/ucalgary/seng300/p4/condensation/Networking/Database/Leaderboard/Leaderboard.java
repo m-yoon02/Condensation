@@ -200,7 +200,6 @@ public class Leaderboard {
             if (user.get("playerUUID").equals(playerID.toString())) {
                 user.put("password", newPass);
                 return true;
-//                break;
             }
         }
         return false;

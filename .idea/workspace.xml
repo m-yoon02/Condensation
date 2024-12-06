@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e30402ac-a7a0-446c-a1b8-5a76fa4d02f5" name="Changes" comment="" />
+    <list default="true" id="e30402ac-a7a0-446c-a1b8-5a76fa4d02f5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/mockLeaderboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/mockLeaderboard.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/tempPlayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/tempPlayers.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,9 +33,21 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.HelloApplication.executor": "Run",
+    "JUnit.LeaderboardTest.executor": "Run",
+    "JUnit.NetworkManagerTest.executor": "Coverage",
+    "JUnit.NetworkManagerTest.sendGameDataToClients.executor": "Run",
+    "JUnit.NetworkManagerTest.testGetNetworkInstance.executor": "Run",
+    "JUnit.NetworkManagerTest.testIsPlayerOnline.executor": "Run",
+    "JUnit.NetworkManagerTest.testPlayerLoginHandler_ValidCredentials.executor": "Run",
+    "JUnit.NetworkManagerTest.testPlayerSubscribed.executor": "Run",
+    "JUnit.NetworkManagerTest.testSendChatToClient.executor": "Run",
+    "JUnit.NetworkManagerTest.testSendCreatedGameSession.executor": "Coverage",
+    "JUnit.NetworkManagerTest.testSignUpHandler_ValidSignup.executor": "Run",
+    "JUnit.NetworkManagerTest.testValidateUserCredentials_InvalidCredentials.executor": "Coverage",
+    "JUnit.NetworkManagerTest.testValidateUserCredentials_ValidCredentials.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "fix__everything__lol",
+    "git-widget-placeholder": "test__everything__lol",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -40,23 +57,98 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.HelloApplication" />
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.NetworkManagerTest">
+    <configuration name="NetworkManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="condensation" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.*" />
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkManagerTest.sendGameDataToClients" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="METHOD_NAME" value="sendGameDataToClients" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkManagerTest.testGetNetworkInstance" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="METHOD_NAME" value="testGetNetworkInstance" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkManagerTest.testIsPlayerOnline" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="METHOD_NAME" value="testIsPlayerOnline" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkManagerTest.testSignUpHandler_ValidSignup" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="condensation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
+      <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
+      <option name="METHOD_NAME" value="testSignUpHandler_ValidSignup" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.HelloApplication" />
+        <item itemvalue="JUnit.NetworkManagerTest" />
+        <item itemvalue="JUnit.NetworkManagerTest.testIsPlayerOnline" />
+        <item itemvalue="JUnit.NetworkManagerTest.testSignUpHandler_ValidSignup" />
+        <item itemvalue="JUnit.NetworkManagerTest.testGetNetworkInstance" />
+        <item itemvalue="JUnit.NetworkManagerTest.sendGameDataToClients" />
       </list>
     </recent_temporary>
   </component>
@@ -70,6 +162,7 @@
       <updated>1733353929016</updated>
       <workItem from="1733353930641" duration="3596000" />
       <workItem from="1733358193457" duration="9907000" />
+      <workItem from="1733457877990" duration="3257000" />
     </task>
     <servers />
   </component>
@@ -86,5 +179,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest.ic" NAME="NetworkManagerTest Coverage Results" MODIFIED="1733460574653" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testValidateUserCredentials_InvalidCredentials.ic" NAME="NetworkManagerTest.testValidateUserCredentials_InvalidCredentials Coverage Results" MODIFIED="1733459052513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testSendCreatedGameSession.ic" NAME="NetworkManagerTest.testSendCreatedGameSession Coverage Results" MODIFIED="1733459033497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
+    </SUITE>
   </component>
 </project>
