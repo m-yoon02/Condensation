@@ -206,11 +206,11 @@ public class NetworkManager {
      */
     public String editPassword(JSONObject editPasswordPayload) throws IOException, ParseException {
         UUID playedID = UUID.fromString((String) editPasswordPayload.get("playerID"));
-        String newPassword = (String) editPasswordPayload.get("NewUsername");
+        String newPassword = (String) editPasswordPayload.get("password");
 
-        Leaderboard.getInstance().changeName(playedID, newPassword);
+        Leaderboard.getInstance().changePassword(playedID, newPassword);
 
-        return String.format("You have successfully changed your username to %s", newPassword);
+        return String.format("You have successfully changed your password to %s", newPassword);
     }
 
 

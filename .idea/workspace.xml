@@ -5,10 +5,65 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e30402ac-a7a0-446c-a1b8-5a76fa4d02f5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_dlsc_formsfx_formsfx_core_11_6_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_14_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_14_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_14_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_almasb_fxgl_17_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_almasb_fxgl_core_17_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_almasb_fxgl_entity_17_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_almasb_fxgl_gameplay_17_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_almasb_fxgl_io_17_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_almasb_fxgl_scene_17_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_gluonhq_attach_audio_4_0_17.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_gluonhq_attach_lifecycle_4_0_17.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_gluonhq_attach_storage_4_0_17.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_gluonhq_attach_util_4_0_17.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_json_simple_json_simple_1_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__eu_hansolo_fx_countries_21_0_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__eu_hansolo_fx_heatmap_21_0_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__eu_hansolo_tilesfx_21_0_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__eu_hansolo_toolbox_21_0_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__eu_hansolo_toolboxfx_21_0_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_13_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_synedra_validatorfx_0_5_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_3_13_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_controlsfx_controlsfx_11_2_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_2_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_2_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_13_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_1_8_10.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_common_1_8_10.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kordamp_bootstrapfx_bootstrapfx_core_0_4_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kordamp_ikonli_ikonli_core_12_3_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kordamp_ikonli_ikonli_javafx_12_3_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_mac_aarch64_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_mac_aarch64_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_mac_aarch64_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_mac_aarch64_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_media_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_media_mac_aarch64_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_swing_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_swing_mac_aarch64_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_web_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_web_mac_aarch64_23_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_osgi_org_osgi_core_6_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_testfx_testfx_core_4_0_18.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_testfx_testfx_junit_4_0_18.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/mockLeaderboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/mockLeaderboard.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/condensation.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/condensation.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/mockLeaderboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/mockLeaderboard.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/main/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/HowToPlayConnect4ControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Frontend/controller/HowToPlayConnect4ControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Managers/NetworkManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iteration_3/tempPlayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard/tempPlayers.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +89,8 @@
   "keyToString": {
     "Application.HelloApplication.executor": "Run",
     "JUnit.LeaderboardTest.executor": "Run",
-    "JUnit.NetworkManagerTest.executor": "Coverage",
+    "JUnit.NetworkManagerTest.editPassword.executor": "Run",
+    "JUnit.NetworkManagerTest.executor": "Run",
     "JUnit.NetworkManagerTest.sendGameDataToClients.executor": "Run",
     "JUnit.NetworkManagerTest.testGetNetworkInstance.executor": "Run",
     "JUnit.NetworkManagerTest.testIsPlayerOnline.executor": "Run",
@@ -47,7 +103,8 @@
     "JUnit.NetworkManagerTest.testValidateUserCredentials_ValidCredentials.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "test__everything__lol",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Mort__sam__testing",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -62,7 +119,7 @@
       <recent name="$PROJECT_DIR$/Iteration_3/src/tests/java/ca/ucalgary/seng300/p4/condensation/Networking/Database/Leaderboard" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.NetworkManagerTest">
+  <component name="RunManager" selected="JUnit.NetworkManagerTest.editPassword">
     <configuration name="NetworkManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="condensation" />
       <extension name="coverage">
@@ -78,7 +135,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NetworkManagerTest.sendGameDataToClients" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="NetworkManagerTest.editPassword" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="condensation" />
       <extension name="coverage">
         <pattern>
@@ -88,7 +145,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers" />
       <option name="MAIN_CLASS_NAME" value="ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManagerTest" />
-      <option name="METHOD_NAME" value="sendGameDataToClients" />
+      <option name="METHOD_NAME" value="editPassword" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -144,11 +201,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.NetworkManagerTest.editPassword" />
         <item itemvalue="JUnit.NetworkManagerTest" />
         <item itemvalue="JUnit.NetworkManagerTest.testIsPlayerOnline" />
         <item itemvalue="JUnit.NetworkManagerTest.testSignUpHandler_ValidSignup" />
         <item itemvalue="JUnit.NetworkManagerTest.testGetNetworkInstance" />
-        <item itemvalue="JUnit.NetworkManagerTest.sendGameDataToClients" />
       </list>
     </recent_temporary>
   </component>
@@ -181,10 +238,10 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest.ic" NAME="NetworkManagerTest Coverage Results" MODIFIED="1733460574653" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testValidateUserCredentials_InvalidCredentials.ic" NAME="NetworkManagerTest.testValidateUserCredentials_InvalidCredentials Coverage Results" MODIFIED="1733459052513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testValidateUserCredentials_InvalidCredentials.ic" NAME="NetworkManagerTest.testValidateUserCredentials_InvalidCredentials Coverage Results" MODIFIED="1733459052513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest.ic" NAME="NetworkManagerTest Coverage Results" MODIFIED="1733461910994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>ca.ucalgary.seng300.p4.condensation.Networking.Managers.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/seng300_f24_project$NetworkManagerTest_testSendCreatedGameSession.ic" NAME="NetworkManagerTest.testSendCreatedGameSession Coverage Results" MODIFIED="1733459033497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
