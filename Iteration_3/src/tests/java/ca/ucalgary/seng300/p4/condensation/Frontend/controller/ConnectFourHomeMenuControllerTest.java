@@ -2,6 +2,8 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -17,7 +19,7 @@ import static org.junit.Assert.*;
 public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
     FXMLLoader fxmlLoader;
     Scene scene;
-    WelcomeScreenController welcomeScreenController;
+    ConnectFourHomeMenuController connectFourHomeMenuController;
     Button playButton;
     Button leaderboardButton;
     Button howToPlayButton;
@@ -30,7 +32,7 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
                 scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.show();
-        welcomeScreenController = fxmlLoader.getController();
+        connectFourHomeMenuController = fxmlLoader.getController();
     }
 
     @Before
@@ -41,6 +43,14 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
         backButton = (Button) lookup("#backButton").queryAs(Button.class);
         connect4Image = (ImageView) lookup("#connect4Image").queryAs(ImageView.class);
 
+    }
+
+    @Test
+    public void playButton_Test() throws Exception{
+        assertNotNull(playButton);
+        clickOn(playButton);
+        Parent newNode = FXMLLoader.load(HelloApplication.class.getResource("ConnectFourHomeMenu.fxml"));
+        assertNotNull(newNode);
     }
 
 
