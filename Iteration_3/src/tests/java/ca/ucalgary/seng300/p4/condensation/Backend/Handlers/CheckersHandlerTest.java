@@ -1,12 +1,16 @@
 package ca.ucalgary.seng300.p4.condensation.Backend.Handlers;
 
+import ca.ucalgary.seng300.p4.condensation.Backend.Board.GameBoard;
 import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
+import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.CheckersMoveData;
 import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.CheckersPiece;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -324,5 +328,78 @@ public class CheckersHandlerTest {
         checkersHandler.getBoard().placePiece(new CheckersPiece(PieceColor.RED), new Vector2(3, 3));
 
         checkersHandler.makeMove(md);
+    }
+
+    @Test
+    public void testCheckForGameEnd_NoOpponentPieces() {
+        GameBoard<CheckersPiece> board = checkersHandler.getBoard();
+        PieceColor opponentColor = PieceColor.BLACK;
+
+        for (int y = 0; y < board.getRowSize(); y++) {
+            for (int x = 0; x < board.getColumnSize(); x++) {
+                Vector2 pos = new Vector2(x, y);
+                CheckersPiece piece = board.getAt(pos);
+                if (piece != null && piece.getColor() == opponentColor) {
+                    board.removePiece(pos);
+                }
+            }
+        }
+
+        boolean gameEnded = checkersHandler.checkForGameEnd(opponentColor);
+        assertTrue("Game should end when opponent has no pieces", gameEnded);
+    }
+
+    /**
+     * Tests if the game correctly identifies a game end when the opponent has no valid moves.
+     */
+    @Test
+    public void testCheckForGameEnd_NoOpponentMoves() {
+        GameBoard<CheckersPiece> board = checkersHandler.getBoard();
+        PieceColor opponentColor = PieceColor.BLACK;
+
+        for (int y = 0; y < board.getRowSize(); y++) {
+            for (int x = 0; x < board.getColumnSize(); x++) {
+                Vector2 pos = new Vector2(x, y);
+                CheckersPiece piece = board.getAt(pos);
+                if (piece != null && piece.getColor() == opponentColor) {
+                    board.removePiece(pos);
+                }
+            }
+        }
+
+        Vector2 blackPos = new Vector2(0, 0);
+        CheckersPiece blackPiece = new CheckersPiece(PieceColor.BLACK);
+        board.placePiece(blackPiece, blackPos);
+
+        board.placePiece(new CheckersPiece(PieceColor.RED), new Vector2(1,1));
+
+        boolean gameEnded = checkersHandler.checkForGameEnd(opponentColor);
+        assertTrue("Game should end when opponent has no valid moves", gameEnded);
+    }
+
+    /**
+     * Tests that the game does not end when the opponent has valid moves.
+     */
+    @Test
+    public void testCheckForGameEnd_OpponentHasMoves() {
+        GameBoard<CheckersPiece> board = checkersHandler.getBoard();
+        PieceColor opponentColor = PieceColor.BLACK;
+
+        for (int y = 0; y < board.getRowSize(); y++) {
+            for (int x = 0; x < board.getColumnSize(); x++) {
+                Vector2 pos = new Vector2(x, y);
+                CheckersPiece piece = board.getAt(pos);
+                if (piece != null && piece.getColor() == opponentColor) {
+                    board.removePiece(pos);
+                }
+            }
+        }
+
+        Vector2 blackPos = new Vector2(2, 3);
+        CheckersPiece blackPiece = new CheckersPiece(PieceColor.BLACK);
+        board.placePiece(blackPiece, blackPos);
+
+        boolean gameEnded = checkersHandler.checkForGameEnd(opponentColor);
+        assertFalse("Game should not end when opponent has valid moves", gameEnded);
     }
 }
