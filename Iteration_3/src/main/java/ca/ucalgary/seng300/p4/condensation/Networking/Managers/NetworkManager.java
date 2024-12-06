@@ -563,8 +563,8 @@ public class NetworkManager {
 
         try {
             // parse the JASONObject
-            UUID sessionID = (UUID) recievePlayerMessage.get("SessionID");
-            UUID player1ID = (UUID) recievePlayerMessage.get("Player1ID");
+            UUID sessionID = UUID.fromString((String) recievePlayerMessage.get("SessionID"));
+            UUID player1ID = UUID.fromString((String) recievePlayerMessage.get("Player1ID"));
             String player1Message = (String) recievePlayerMessage.get("Message");
 
             // get the game session along with player 2's UUID associated w that game session
@@ -596,6 +596,14 @@ public class NetworkManager {
     }
     //getter methods for testing
     public Map<UUID, Client> getLoggedInClients() {
+        System.out.println("LoggedInClients Contents:");
+        if (loggedInClients.isEmpty()) {
+            System.out.println("No clients are currently logged in.");
+        } else {
+            loggedInClients.forEach((uuid, client) ->
+                    System.out.println("UUID: " + uuid + ", Client: " + client)
+            );
+        }
         return loggedInClients;
     }
 
