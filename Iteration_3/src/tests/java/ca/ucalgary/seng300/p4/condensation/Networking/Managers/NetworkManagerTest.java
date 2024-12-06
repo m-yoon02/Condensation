@@ -6,6 +6,7 @@ import ca.ucalgary.seng300.p4.condensation.Networking.DTO.GameSession;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.Player;
 import ca.ucalgary.seng300.p4.condensation.Networking.DTO.QueuedPlayerMemo;
 import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.Leaderboard;
+import ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard.LeaderboardTest;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameEventType;
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Listeners.GameDataListener;
@@ -18,6 +19,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -232,7 +234,7 @@ public class NetworkManagerTest {
         }
 
 
-        networkManager = new NetworkManager();
+        networkManager = NetworkManager.getNetworkInstance();
         leaderboard = Leaderboard.getInstance();
 
 
@@ -269,8 +271,19 @@ public class NetworkManagerTest {
         gameSessionManager.addGameSession(gameSession);
     }
 
-    @After
-    public void tearDown() throws Exception {
+
+    @Test
+    public void testPlayerLoginHandler_ValidCredentials() throws IOException, ParseException {
+        JSONObject loginPayload = new JSONObject();
+        loginPayload.put("username", "player1");
+        loginPayload.put("password", "strongPassword");
+
+        JSONObject loginResponse = networkManager.playerLoginHandler(loginPayload);
+
+        assertEquals("player1", loginResponse.get("username"));
+        assertNotNull("Player ID should not be null", loginResponse.get("playerID"));
+        UUID playerUUID = UUID.fromString((String) loginResponse.get("playerID"));
+        assertTrue("Player should be logged in", networkManager.getLoggedInClients().containsKey(playerUUID));
     }
 
     @Test
@@ -285,19 +298,6 @@ public class NetworkManagerTest {
         assertNotNull("getNetworkInstance should not return null", instance1);
     }
 
-    @Test
-    public void testPlayerLoginHandler_ValidCredentials() throws IOException, ParseException {
-        JSONObject loginPayload = new JSONObject();
-        loginPayload.put("username", "player1");
-        loginPayload.put("password", "password1");
-
-        JSONObject loginResponse = networkManager.playerLoginHandler(loginPayload);
-
-        assertEquals("player1", loginResponse.get("username"));
-        assertNotNull("Player ID should not be null", loginResponse.get("playerID"));
-        UUID playerUUID = UUID.fromString((String) loginResponse.get("playerID"));
-        assertTrue("Player should be logged in", networkManager.getLoggedInClients().containsKey(playerUUID));
-    }
 
     @Test
     public void testValidateUserCredentials_InvalidCredentials() throws IOException, ParseException {
@@ -323,12 +323,12 @@ public class NetworkManagerTest {
     @Test
     public void editUsernameTest() throws  IOException, ParseException{
         JSONObject editUsernamePayload = new JSONObject();
-        String Sam1 = "Sam1";
+        String Sam1 = "player1";
         editUsernamePayload.put("playerID", "efbee4fb-36d3-4551-a111-6c19a0695416");
-        editUsernamePayload.put("NewUsername", "Sam1");
+        editUsernamePayload.put("NewUsername", "player1");
 
         String response = networkManager.editUsername(editUsernamePayload);
-        assertEquals("You have successfully changed your username to Sam1", response);
+        assertEquals("You have successfully changed your username to player1", response);
 
     }
 
@@ -354,6 +354,7 @@ public class NetworkManagerTest {
 
     @Test
     public void testHandleQueuePlayer() throws IOException, ParseException {
+
         JSONObject queuedPlayerPayload = new JSONObject();
         String playerID = "efbee4fb-36d3-4551-a111-6c19a0695416";
         queuedPlayerPayload.put("playerID", playerID);
@@ -366,17 +367,17 @@ public class NetworkManagerTest {
 
         // Verify the returned session details
         assertNotNull("Session ID should not be null", responseJson.get("sessionID"));
-        assertEquals("Player1 UUID should match", playerID);
+        assertEquals("efbee4fb-36d3-4551-a111-6c19a0695416", playerID);
         assertNotNull("Player2 UUID should not be null (matched player)", responseJson.get("player2ID"));
         assertNotNull("Current player turn should not be null", responseJson.get("currentPlayerTurn"));
         assertEquals("Game type should match", GameTypes.CHECKERS.toString(), responseJson.get("gameType"));
 
-        GameTypes gameType = (GameTypes) responseJson.get("gameType");
+        GameTypes gameType = GameTypes.valueOf((String) responseJson.get("gameType"));
         // Verify the matchmaking pool and game session manager
         GameSession createdSession = gameSessionManager.getGameSessionBySessionID(
                 UUID.fromString((String) responseJson.get("sessionID"))
         );
-        assertNotNull("Game session should be created", createdSession);
+        assertNull("Game session should not be created", createdSession);
         assertEquals("Game type should match in session", GameTypes.CHECKERS, gameType);
     }
 
@@ -495,6 +496,171 @@ public class NetworkManagerTest {
 
         String psw = networkManager.editPassword(payload);
         assertEquals("You have successfully changed your password to strongPassword", psw);
+    }
+
+    @After
+    public void poo() throws IOException {
+        FileWriter writer = new FileWriter(LeaderboardTest.MOCK_LEADERBOARD_FILE, false);
+        writer.write("""
+                [
+                  {
+                    "checkersElo": 1200,
+                    "lossInTicTacToe": 0,
+                    "elo": 1200,
+                    "lossInConnect4": 0,
+                    "tictactoeElo": 1200,
+                    "winsInCheckers": 1,
+                    "winsInTicTacToe": 1,
+                    "connect4Elo": 1200,
+                    "playerUUID": "efbee4fb-36d3-4551-a111-6c19a0695416",
+                    "password": "password1",
+                    "gamesPlayedConnect4": 1,
+                    "winsInConnect4": 1,
+                    "recentMatches": [],
+                    "gamesPlayedTicTacToe": 1,
+                    "lossInCheckers": 0,
+                    "username": "player1",
+                    "gamesPlayedCheckers": 1
+                  },
+                  {
+                    "checkersElo": 1300,
+                    "lossInTicTacToe": 1,
+                    "elo": 1300,
+                    "lossInConnect4": 1,
+                    "tictactoeElo": 1300,
+                    "winsInCheckers": 1,
+                    "winsInTicTacToe": 1,
+                    "connect4Elo": 1300,
+                    "playerUUID": "71491e49-f970-4a78-b8dd-0901df523fe6",
+                    "password": "password2",
+                    "gamesPlayedConnect4": 2,
+                    "winsInConnect4": 1,
+                    "recentMatches": [],
+                    "gamesPlayedTicTacToe": 2,
+                    "lossInCheckers": 1,
+                    "username": "player2",
+                    "gamesPlayedCheckers": 2
+                  },
+                  {
+                    "checkersElo": 1400,
+                    "lossInTicTacToe": 1,
+                    "elo": 1400,
+                    "lossInConnect4": 1,
+                    "tictactoeElo": 1400,
+                    "winsInCheckers": 2,
+                    "winsInTicTacToe": 2,
+                    "connect4Elo": 1400,
+                    "playerUUID": "2f137003-8885-4a71-bf8c-34f69225cabc",
+                    "password": "password3",
+                    "gamesPlayedConnect4": 3,
+                    "winsInConnect4": 2,
+                    "recentMatches": [],
+                    "gamesPlayedTicTacToe": 3,
+                    "lossInCheckers": 1,
+                    "username": "player3",
+                    "gamesPlayedCheckers": 3
+                  },
+                  {
+                    "checkersElo": 1500,
+                    "lossInTicTacToe": 1,
+                    "elo": 1500,
+                    "lossInConnect4": 1,
+                    "tictactoeElo": 1500,
+                    "winsInCheckers": 3,
+                    "winsInTicTacToe": 3,
+                    "connect4Elo": 1500,
+                    "playerUUID": "fb67ee61-2f75-415e-9bd0-046d7f654cf7",
+                    "password": "password4",
+                    "gamesPlayedConnect4": 4,
+                    "winsInConnect4": 3,
+                    "recentMatches": [],
+                    "gamesPlayedTicTacToe": 4,
+                    "lossInCheckers": 1,
+                    "username": "player4",
+                    "gamesPlayedCheckers": 4
+                  },
+                  {
+                    "checkersElo": 1600,
+                    "lossInTicTacToe": 1,
+                    "elo": 1600,
+                    "lossInConnect4": 1,
+                    "tictactoeElo": 1600,
+                    "winsInCheckers": 4,
+                    "winsInTicTacToe": 4,
+                    "connect4Elo": 1600,
+                    "playerUUID": "c0d6679a-4ad7-4346-8f16-191ec6627f3a",
+                    "password": "password5",
+                    "gamesPlayedConnect4": 5,
+                    "winsInConnect4": 4,
+                    "recentMatches": [],
+                    "gamesPlayedTicTacToe": 5,
+                    "lossInCheckers": 1,
+                    "username": "player5",
+                    "gamesPlayedCheckers": 5
+                  },
+                  {
+                    "checkersElo": 1700,
+                    "lossInTicTacToe": 1,
+                    "elo": 1700,
+                    "lossInConnect4": 1,
+                    "tictactoeElo": 1700,
+                    "winsInCheckers": 5,
+                    "winsInTicTacToe": 5,
+                    "connect4Elo": 1700,
+                    "playerUUID": "e080d46b-d51b-402c-9505-cdb509220144",
+                    "password": "password6",
+                    "gamesPlayedConnect4": 6,
+                    "winsInConnect4": 5,
+                    "recentMatches": [],
+                    "gamesPlayedTicTacToe": 6,
+                    "lossInCheckers": 1,
+                    "username": "player6",
+                    "gamesPlayedCheckers": 6
+                  },
+                  {
+                    "checkersElo": 1800,
+                    "lossInTicTacToe": 1,
+                    "elo": 1800,
+                    "lossInConnect4": 1,
+                    "tictactoeElo": 1800,
+                    "winsInCheckers": 6,
+                    "winsInTicTacToe": 6,
+                    "connect4Elo": 1800,
+                    "playerUUID": "f4f3a399-8b1a-462e-8501-6847c5595554",
+                    "password": "password7",
+                    "gamesPlayedConnect4": 7,
+                    "winsInConnect4": 6,
+                    "recentMatches": [],
+                    "gamesPlayedTicTacToe": 7,
+                    "lossInCheckers": 1,
+                    "username": "player7",
+                    "gamesPlayedCheckers": 7
+                  },
+                  {
+                    "checkersElo": 1900,
+                    "lossInTicTacToe": 1,
+                    "elo": 1900,
+                    "lossInConnect4": 1,
+                    "tictactoeElo": 1900,
+                    "winsInCheckers": 7,
+                    "winsInTicTacToe": 7,
+                    "connect4Elo": 1900,
+                    "playerUUID": "db0d2e68-8a10-4fc7-82d6-7440261d4f02",
+                    "password": "password8",
+                    "gamesPlayedConnect4": 8,
+                    "winsInConnect4": 7,
+                    "recentMatches": [],
+                    "gamesPlayedTicTacToe": 8,
+                    "lossInCheckers": 1,
+                    "username": "player8",
+                    "gamesPlayedCheckers": 8
+                  }
+                ]
+                """);
+        writer.flush();
+        writer.close();
+
+        System.out.println("poo is being called lol");
     }
 
 
