@@ -2,11 +2,8 @@ package ca.ucalgary.seng300.p4.condensation.Frontend.controller;
 
 import ca.ucalgary.seng300.p4.condensation.HelloApplication;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -14,10 +11,11 @@ import javafx.stage.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.testfx.framework.junit.ApplicationTest;
 
 import static org.junit.Assert.*;
 
-public class HowToPlayConnect4ControllerTest  extends Application {
+public class HowToPlayConnect4ControllerTest  extends ApplicationTest {
 
     Button backButton;
     FXMLLoader fxmlLoader;
