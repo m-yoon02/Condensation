@@ -109,6 +109,17 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
         assertNotNull(root);
     }
 
+    @Test
+    public void testOnBackButtonClicked() throws Exception{
+        assertNotNull(backButton);
+        clickOn(backButton);
+        Parent root = FXMLLoader.load(HelloApplication.class.getResource("ProfileGame.fxml"));
+        assertNotNull(root);
+    }
+
+
+
+
 
 
 
