@@ -117,6 +117,17 @@ public class ConnectFourHomeMenuControllerTest extends ApplicationTest {
         assertNotNull(root);
     }
 
+    @Test
+    public void testInitialize() {
+        connectFourHomeMenuController.initialize();
+        assertEquals("/connect4.png",
+                connect4Image.getImage().getUrl().substring(connect4Image.getImage().getUrl().lastIndexOf("/")));
+    }
+
+
+
+
+
 
 
 
