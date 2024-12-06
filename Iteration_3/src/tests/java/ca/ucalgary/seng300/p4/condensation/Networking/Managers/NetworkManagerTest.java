@@ -297,6 +297,27 @@ public class NetworkManagerTest {
         assertNull("Validated user should be null for invalid credentials", validatedUser);
     }
 
+    @Test
+    public void testIsPlayerOnline() {
+        UUID playerID1 = UUID.randomUUID();
+        UUID playerID2 = UUID.randomUUID();
+
+        Client mockClient1 = new Client(playerID1);
+        networkManager.getLoggedInClients().put(playerID1, mockClient1);
+
+        boolean isOnlinePlayer1 = networkManager.isPlayerOnline(playerID1);
+        assertTrue("Player1 should be recognized as online", isOnlinePlayer1);
+
+        boolean isOnlinePlayer2 = networkManager.isPlayerOnline(playerID2);
+        assertFalse("Player2 should be recognized as offline", isOnlinePlayer2);
+
+        networkManager.getLoggedInClients().clear(); // Clear the map
+        boolean isOnlinePlayer1AfterClear = networkManager.isPlayerOnline(playerID1);
+        assertFalse("Player1 should be offline after clearing loggedInClients", isOnlinePlayer1AfterClear);
+    }
+
+
+
 
 
     @Test
@@ -320,6 +341,21 @@ public class NetworkManagerTest {
                 networkManager.getSessionListeners().get(gameSession.getSessionId()).contains(player2));
     }
 
+//    @Test
+//    public void testReceiveGameDataFromClient_ValidPayload() {
+//        // Arrange
+//        JSONObject payload = new JSONObject();
+//        payload.put("SessionID", sessionID.toString());
+//        payload.put("move", "e2e4");
+//
+//        // Act
+//        networkManager.receiveGameDataFromClient(payload);
+//
+//        // Assert
+//        assertEquals("e2e4", ((GameHandler) gameHandler).getLastMove());
+//    }
+//
+
     @Test
     public void sendGameDataToClients() throws IOException {
         //make a mock JSONObject for clientPayload
@@ -341,12 +377,30 @@ public class NetworkManagerTest {
         assertNotEquals(player2.getPlayerId(), currentPlayerTurn);  //now it should be player 2's turn
     }
 
+//    @T
+//
+//    @Test
+//    public void testReceiveGameDataFromClient_ValidPayload() {
+//        // Arrange
+//        JSONObject payload = new JSONObject();
+//        payload.put("SessionID", sessionID.toString());
+//        payload.put("move", "e2e4");
+//
+//        // Act
+//        networkManager.receiveGameDataFromClient(payload);
+//
+//        // Assert
+//        assertEquals("e2e4", ((GameHandler) gameHandler).getLastMove());
+//    }
+
     //helper method to mock sessionListeners map in NetworkManager
     private HashMap<UUID, List<GameDataListener>> mockSessionListenersMap() {
         HashMap<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();
         sessionListeners.put(gameSession.getSessionId(), List.of(gameDataListener)); // Add a single mock listener to the session
         return sessionListeners;
     }
+
+
 
     @Test
     public void testSendChatToClient() {
