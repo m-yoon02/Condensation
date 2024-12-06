@@ -19,8 +19,8 @@ public class LeaderboardTest {
 
     private NetworkManager networkManager;
     private Leaderboard leaderboard;
-    private static final String MOCK_LEADERBOARD_FILE = "mockLeaderboard.json";
-    private static final String TEMP_PLAYER_FILE = "tempPlayers.json";
+    public static final String MOCK_LEADERBOARD_FILE = "mockLeaderboard.json";
+    public static final String TEMP_PLAYER_FILE = "tempPlayers.json";
 
     @Before
     public void setUp() throws Exception {

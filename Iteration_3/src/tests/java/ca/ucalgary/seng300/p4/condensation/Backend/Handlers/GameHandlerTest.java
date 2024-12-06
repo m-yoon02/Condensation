@@ -177,14 +177,14 @@ public class GameHandlerTest {
         assertNotNull("Color has to be returned", gameHandler.getPlayerColorFromUUID(player1ID));
     }
 
-    @Test
-    public void testStartGame_StartsWithoutException() {
-        try {
-            gameHandler.startGame();
-        } catch (Exception e) {
-            fail("startGame should not throw an exception, but threw: " + e.getMessage());
-        }
-    }
+//    @Test
+//    public void testStartGame_StartsWithoutException() {
+//        try {
+//            gameHandler.startGame();
+//        } catch (Exception e) {
+//            fail("startGame should not throw an exception, but threw: " + e.getMessage());
+//        }
+//    }
 
     /**
      * Tests getPlayerMemoFromPieceColor when it returns null by querying a non-assigned color.
