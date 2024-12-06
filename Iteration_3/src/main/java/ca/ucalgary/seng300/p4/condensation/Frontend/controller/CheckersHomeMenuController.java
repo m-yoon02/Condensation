@@ -59,7 +59,6 @@ public class CheckersHomeMenuController {
     @FXML
     public void onLeaderboardBtnClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("CheckersLeaderboard.fxml"));
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load());
         HelloApplication.setActiveScene(scene, "Checkers - Leaderboard");
     }

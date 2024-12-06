@@ -37,21 +37,9 @@ public class NetworkManager {
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final ChatService chatService;
 
-    private static final String ABSOLUTE_PATH;
-    private static final String LEADERBOARD_DIR;
-    public static final String LEADERBOARD_FILE;
-    public static final String PLAYER_ID_FILE;
-
-    static {
-        Path basePath = Paths.get("").toAbsolutePath();
-        if (!basePath.endsWith("Iteration_3")) {
-            basePath = basePath.resolve("Iteration_3");
-        }
-        ABSOLUTE_PATH = basePath.normalize().toString();
-        LEADERBOARD_DIR = Paths.get(ABSOLUTE_PATH, "src", "main", "java", "ca", "ucalgary", "seng300", "p4", "condensation", "Networking", "Database", "Leaderboard").toString();
-        LEADERBOARD_FILE = Paths.get(LEADERBOARD_DIR, "Leaderboard.json").toString();
-        PLAYER_ID_FILE = Paths.get(LEADERBOARD_DIR, "playerID.json").toString();
-    }
+    private static final String LEADERBOARD_DIR = "data";
+    public static final String LEADERBOARD_FILE = Paths.get(LEADERBOARD_DIR, "Leaderboard.json").toString();
+    public static final String PLAYER_ID_FILE = Paths.get(LEADERBOARD_DIR, "playerID.json").toString();
 
     /**
      * constructor for network manager instance, when creating a new one
@@ -213,19 +201,12 @@ public class NetworkManager {
         return String.format("You have successfully changed your username to %s", newPassword);
     }
 
-
     public String logoutHandler(UUID playerID){
 
         loggedInClients.remove(playerID);  // remove the client from the logged in clients list
         String response = matchmakingPool.removePlayerFromMatchmakingPool(playerID);
         return response;
     }
-
-
-
-
-
-
 
     /**
      * Retrieves a logged-in client by a playerID. This can be used during game or other actions that require client logged
@@ -328,9 +309,6 @@ public class NetworkManager {
         // Check if the playerID exists in the map
         return loggedInClients.containsKey(playerID);
     }
-
-
-
 
     // ---------------------------------------------------------------------------------------------------
     // Network methods that handles queueing, creating, and starting game session sequence.
