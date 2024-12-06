@@ -32,9 +32,9 @@ public class MatchmakingServiceTest {
     @Test
     public void testFindAndMatchPlayers_Success() throws IOException, org.json.simple.parser.ParseException {
         // Add players to the pool
-        QueuedPlayerMemo player1 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.TICTACTOE, 1500);
-        QueuedPlayerMemo player2 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.TICTACTOE, 1600);
-        QueuedPlayerMemo player3 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.TICTACTOE, 1700);
+        QueuedPlayerMemo player1 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CHECKERS, 1500);
+        QueuedPlayerMemo player2 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CHECKERS, 1600);
+        QueuedPlayerMemo player3 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CHECKERS, 1700);
 
         // add 3 players because there is 13 already in the pool
         pool.addPlayer(player1);
@@ -42,6 +42,7 @@ public class MatchmakingServiceTest {
         pool.addPlayer(player3);
 
         // Find and match players
+        matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
@@ -66,6 +67,7 @@ public class MatchmakingServiceTest {
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
+        matchmakingService.findAndMatchPlayers();
         // match will be null because there is not enough players
         GameSession session = matchmakingService.findAndMatchPlayers();
 
@@ -76,16 +78,15 @@ public class MatchmakingServiceTest {
     @Test(expected = RuntimeException.class)
     public void testFindAndMatchPlayers_NoMatch() throws IOException, org.json.simple.parser.ParseException {
         // Add players to the pool
-        QueuedPlayerMemo player1 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.TICTACTOE, 1500);
-        QueuedPlayerMemo player2 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CHECKERS, 1600);
-        QueuedPlayerMemo player3 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CONNECT4, 1700);
+        QueuedPlayerMemo player1 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.TICTACTOE, 100);
+        QueuedPlayerMemo player2 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CHECKERS, 5200);
 
         // add 3 players because there is 13 already in the pool
         pool.addPlayer(player1);
         pool.addPlayer(player2);
-        pool.addPlayer(player3);
 
         // Find and match players
+        matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
         matchmakingService.findAndMatchPlayers();
