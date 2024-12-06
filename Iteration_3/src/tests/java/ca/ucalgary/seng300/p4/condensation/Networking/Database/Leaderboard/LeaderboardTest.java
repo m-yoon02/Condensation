@@ -772,38 +772,20 @@ public class LeaderboardTest {
         assertEquals("The Elo score should match the updated Elo.", updatedElo, recentMatch.get("currentElo"));
     }
 
+    @Test
+    public void testSetInstance() throws IOException, ParseException {
+        // Create a new instance of Leaderboard
+        Leaderboard newInstance = new Leaderboard();
 
-//    @Test
-//    public void testChangeName() throws IOException {
-//        // retrieve an existing player
-//        JSONObject player1 = leaderboard.findUserByName("player1");
-//
-//        // verify that it is an existing player
-//        assertNotNull("Player1 should exist in the leaderboard", player1);
-//
-//        UUID player1ID = UUID.fromString((String) player1.get("playerUUID"));
-//
-//        // changing the player's name
-//        boolean result = leaderboard.changeName(player1ID, "richard");
-//        assertTrue("The changeName method should return true for a successful name change", result);
-//
-//        // verify that the new username was updated
-//        JSONObject updatedPlayer1 = leaderboard.findUserByName("richard");
-//        assertNotNull("player1 should be found with the new username", updatedPlayer1);
-//        assertEquals("The username should be updated to 'richard'", "richard", updatedPlayer1.get("username"));
-//
-//        // attempting to change the name of a non existent user
-//        UUID playerWho = UUID.randomUUID();
-//
-//        boolean nonExistentPlayerWho = leaderboard.changeName(playerWho, "fake richard");
-//
-//        assertFalse("The changeName method should return false for a non existent user", nonExistentPlayerWho);
-//    }
+        // Set the singleton instance to the new instance
+        Leaderboard.setInstance(newInstance);
 
+        // Retrieve the singleton instance
+        Leaderboard retrievedInstance = Leaderboard.getInstance();
 
-
-
-
+        // Verify that the retrieved instance is the same as the new instance
+        assertSame("The retrieved instance should be the same as the new instance", newInstance, retrievedInstance);
+    }
 
 
 
