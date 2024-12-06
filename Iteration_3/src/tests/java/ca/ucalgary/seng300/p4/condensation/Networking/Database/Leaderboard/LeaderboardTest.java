@@ -792,6 +792,68 @@ public class LeaderboardTest {
 
 
 
+    @Test
+    public void testPlayerNotFoundCheckers() throws IOException {
+        // create a non existing player
+        UUID nonExistentPlayerID = UUID.randomUUID(); // Not in the users list
+        UUID sessionID = UUID.randomUUID();
+
+        // need to capture the print statement of the output
+        java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
+        System.setOut(new java.io.PrintStream(outContent));
+
+        // update
+        leaderboard.updateEloForWinningPlayerCheckers(nonExistentPlayerID, sessionID);
+
+        // verify that there is no existing user
+        String output = outContent.toString();
+        assertTrue("Output should indicate player not found", output.contains("Cant find plater lmao"));
+
+
+    }
+
+    @Test
+    public void testPlayerNotFoundTicTacToe() throws IOException {
+        // create a non existing player
+        UUID nonExistentPlayerID = UUID.randomUUID(); // Not in the users list
+        UUID sessionID = UUID.randomUUID();
+
+        // need to capture the print statement of the output
+        java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
+        System.setOut(new java.io.PrintStream(outContent));
+
+        // update
+        leaderboard.updateEloForWinningPlayerTictactoe(nonExistentPlayerID, sessionID);
+
+        // verify that there is no existing user
+        String output = outContent.toString();
+        assertTrue("Output should indicate player not found", output.contains("Cant find plater lmao"));
+
+
+    }
+
+
+    @Test
+    public void testPlayerNotFoundConnect4() throws IOException {
+        // create a non existing player
+        UUID nonExistentPlayerID = UUID.randomUUID(); // Not in the users list
+        UUID sessionID = UUID.randomUUID();
+
+        // need to capture the print statement of the output
+        java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
+        System.setOut(new java.io.PrintStream(outContent));
+
+        // update
+        leaderboard.updateEloForWinningPlayerConnect4(nonExistentPlayerID, sessionID);
+
+        // verify that there is no existing user
+        String output = outContent.toString();
+        assertTrue("Output should indicate player not found", output.contains("Cant find plater lmao"));
+
+
+    }
+
+
 
 
 

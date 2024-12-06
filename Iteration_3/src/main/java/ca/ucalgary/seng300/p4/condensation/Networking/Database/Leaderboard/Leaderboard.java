@@ -419,7 +419,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who won the game.
      * @param sessionID The UUID of the game session where the win occurred.
      */
-    private void updateEloForWinningPlayerCheckers(UUID playerID, UUID sessionID) throws IOException {
+    public void updateEloForWinningPlayerCheckers(UUID playerID, UUID sessionID) throws IOException {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -473,7 +473,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who won the game.
      * @param sessionID The UUID of the game session where the win occurred.
      */
-    private void updateEloForWinningPlayerTictactoe(UUID playerID, UUID sessionID) {
+    public void updateEloForWinningPlayerTictactoe(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
@@ -518,7 +518,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who won the game.
      * @param sessionID The UUID of the game session where the win occurred.
      */
-    private void updateEloForWinningPlayerConnect4(UUID playerID, UUID sessionID) throws IOException {
+    public void updateEloForWinningPlayerConnect4(UUID playerID, UUID sessionID) throws IOException {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
