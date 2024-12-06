@@ -152,6 +152,7 @@ public class NetworkManager {
     public JSONObject validateUserCredentials(String username, String password) throws IOException, ParseException {
 
         JSONObject jsonUsername = Leaderboard.getInstance().findUserByName(username);
+        System.out.println(LEADERBOARD_FILE);
         String databasePassword = (String) jsonUsername.get("password");
         // return null because user does not exist, probably a better way to handle but we need to iterate fas
         if(databasePassword.equals(password)){

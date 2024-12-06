@@ -136,6 +136,7 @@ public class Leaderboard {
      */
     public JSONObject findUserByName(String name) {
         for (Object object : users) {
+            System.out.println(object);
             JSONObject user = (JSONObject) object;
             if (user.get("username").equals(name)) {
                 return user;
