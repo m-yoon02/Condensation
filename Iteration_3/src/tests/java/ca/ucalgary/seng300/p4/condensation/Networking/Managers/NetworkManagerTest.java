@@ -490,7 +490,7 @@ public class NetworkManagerTest {
 //        // Assert
 //        assertEquals("e2e4", ((GameHandler) gameHandler).getLastMove());
 //    }
-//
+
 
     @Test
     public void testSendGameDataToClients() throws IOException {
@@ -541,15 +541,15 @@ public class NetworkManagerTest {
 
 
 
-//    @Test
-//    public void editPassword () throws IOException, ParseException {
-//        JSONObject payload = new JSONObject();
-//        payload.put("playerID", "efbee4fb-36d3-4551-a111-6c19a0695416");
-//        payload.put("password", "strongPassword");
-//
-//        String psw = networkManager.editPassword(payload);
-//        assertEquals("You have successfully changed your password to null", psw);
-//    }
+    @Test
+    public void editPassword () throws IOException, ParseException {
+        JSONObject payload = new JSONObject();
+        payload.put("playerID", "efbee4fb-36d3-4551-a111-6c19a0695416");
+        payload.put("password", "strongPassword");
+
+        String psw = networkManager.editPassword(payload);
+        assertEquals("You have successfully changed your password to null", psw);
+    }
 
     @Test
     public void testForfeitGame() {

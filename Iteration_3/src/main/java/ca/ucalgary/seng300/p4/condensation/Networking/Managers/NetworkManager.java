@@ -33,7 +33,7 @@ public class NetworkManager {
 
     // client listener lists mapped to specific to their gameSessions
 
-    Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
+    public Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final ChatService chatService;
 
@@ -198,7 +198,7 @@ public class NetworkManager {
 
         Leaderboard.getInstance().changeName(playedID, newPassword);
 
-        return String.format("You have successfully changed your username to %s", newPassword);
+        return String.format("You have successfully changed your password to %s", newPassword);
     }
 
     public String logoutHandler(UUID playerID){
@@ -563,5 +563,21 @@ public class NetworkManager {
         } else {
             throw new NullPointerException("GameSession instance is null!");
         }
+    }
+
+    public Map<UUID, Client> getLoggedInClients() {
+        System.out.println("LoggedInClients Contents:");
+        if (loggedInClients.isEmpty()) {
+            System.out.println("No clients are currently logged in.");
+        } else {
+            loggedInClients.forEach((uuid, client) ->
+                    System.out.println("UUID: " + uuid + ", Client: " + client)
+            );
+        }
+        return loggedInClients;
+    }
+
+    public Map<UUID, List<GameDataListener>> getSessionListeners() {
+        return sessionListeners;
     }
 }
