@@ -94,7 +94,7 @@ public class OtherProfileController {
         // Bind recent matches columns to JSONObject properties
         playerRecentgameColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("gameType")));
         playerRecentoutcomeColumn.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get("outcome")));
-        playerRecentcurrentEloColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(((Long) cellData.getValue().get("currentElo")).intValue()));
+        playerRecentcurrentEloColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(((Number) cellData.getValue().get("currentElo")).intValue()));
         playerRecenttotalWinsColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(((Number) cellData.getValue().get("totalWins")).intValue()));
         playerRecentgamesPlayedColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(((Number) cellData.getValue().get("gamesPlayed")).intValue()));
 
@@ -330,16 +330,16 @@ public class OtherProfileController {
                     // Update match stats based on the game type
                     switch (gameType) {
                         case "TICTACTOE":
-                            totalWins = ((Long) user.get("winsInTicTacToe")).intValue();
-                            gamesPlayed = ((Long) user.get("gamesPlayedTicTacToe")).intValue();
+                            totalWins = ((Number) user.get("winsInTicTacToe")).intValue();
+                            gamesPlayed = ((Number) user.get("gamesPlayedTicTacToe")).intValue();
                             break;
                         case "CHECKERS":
-                            totalWins = ((Long) user.get("winsInCheckers")).intValue();
-                            gamesPlayed = ((Long) user.get("gamesPlayedCheckers")).intValue();
+                            totalWins = ((Number) user.get("winsInCheckers")).intValue();
+                            gamesPlayed = ((Number) user.get("gamesPlayedCheckers")).intValue();
                             break;
                         case "CONNECT4":
-                            totalWins = ((Long) user.get("winsInConnect4")).intValue();
-                            gamesPlayed = ((Long) user.get("gamesPlayedConnect4")).intValue();
+                            totalWins = ((Number) user.get("winsInConnect4")).intValue();
+                            gamesPlayed = ((Number) user.get("gamesPlayedConnect4")).intValue();
                             break;
                     }
 
