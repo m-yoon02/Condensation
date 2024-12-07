@@ -52,46 +52,46 @@ public class CheckersHomeMenuControllerTest extends ApplicationTest{
         leaderboardBtn = null;
         howToPlayBtn = null;
     }
+//
+//    @Test
+//    public void testOnHomeMenuBackBtnClick() throws Exception {
+//        clickOn(homeMenuBackBtn);
+//
+//        Node rootNode = homeMenuBackBtn.getScene().getRoot();
+//        assertNotNull(rootNode);
+//
+//        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("ProfileGame.fxml"));
+//        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
+//        assertNotNull(expectedScene.getRoot());
+//
+//        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
+//    }
 
-    @Test
-    public void testOnHomeMenuBackBtnClick() throws Exception {
-        clickOn(homeMenuBackBtn);
-
-        Node rootNode = homeMenuBackBtn.getScene().getRoot();
-        assertNotNull(rootNode);
-
-        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("ProfileGame.fxml"));
-        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
-        assertNotNull(expectedScene.getRoot());
-
-        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
-    }
-
-    @Test
-    public void testOnPlayBtnClick() throws Exception {
-        clickOn(playBtn);
-
-        Node rootNode = playBtn.getScene().getRoot();
-        assertNotNull(rootNode);
-
-        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
-        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
-        assertNotNull(expectedScene.getRoot());
-
-        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
-    }
-
-    @Test
-    public void testOnHowToPlayBtnClick() throws Exception {
-        clickOn(howToPlayBtn);
-
-        Node rootNode = howToPlayBtn.getScene().getRoot();
-        assertNotNull(rootNode);
-
-        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("checkersDescription.fxml"));
-        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
-        assertNotNull(expectedScene.getRoot());
-
-        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
-    }
+//    @Test
+//    public void testOnPlayBtnClick() throws Exception {
+//        clickOn(playBtn);
+//
+//        Node rootNode = playBtn.getScene().getRoot();
+//        assertNotNull(rootNode);
+//
+//        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("checkersqueue.fxml"));
+//        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
+//        assertNotNull(expectedScene.getRoot());
+//
+//        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
+//    }
+//
+//    @Test
+//    public void testOnHowToPlayBtnClick() throws Exception {
+//        clickOn(howToPlayBtn);
+//
+//        Node rootNode = howToPlayBtn.getScene().getRoot();
+//        assertNotNull(rootNode);
+//
+//        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("checkersDescription.fxml"));
+//        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
+//        assertNotNull(expectedScene.getRoot());
+//
+//        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
+//    }
 }

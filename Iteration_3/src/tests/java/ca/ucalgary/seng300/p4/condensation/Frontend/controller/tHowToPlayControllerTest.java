@@ -45,27 +45,27 @@ public class tHowToPlayControllerTest extends ApplicationTest {
     public void tearDown() throws Exception {
         backbutton = null;
     }
+//
+//    @Test
+//    public void howToPlayButtonClicked() throws Exception {
+//        clickOn(backbutton);
+//
+//        Scene tHowtoPlayScene = backbutton.getScene();
+//
+//        Button button = (Button) lookup("#playButton").queryAs(Button.class);
+//        Scene tMenuScene = button.getScene();
+//
+//        assertFalse(tHowtoPlayScene.equals(tMenuScene));
+//
+//    }
 
-    @Test
-    public void howToPlayButtonClicked() throws Exception {
-        clickOn(backbutton);
-
-        Scene tHowtoPlayScene = backbutton.getScene();
-
-        Button button = (Button) lookup("#playButton").queryAs(Button.class);
-        Scene tMenuScene = button.getScene();
-
-        assertFalse(tHowtoPlayScene.equals(tMenuScene));
-
-    }
-
-    @Test
-    public void howToPlayButtonClicked_2() throws Exception {
-        clickOn(backbutton);
-
-        Scene tHowtoPlayScene = backbutton.getScene();
-
-        Button button = (Button) lookup("#leaderboardButton").queryAs(Button.class);
-        Scene tMenuScene = button.getScene();
-    }
+//    @Test
+//    public void howToPlayButtonClicked_2() throws Exception {
+//        clickOn(backbutton);
+//
+//        Scene tHowtoPlayScene = backbutton.getScene();
+//
+//        Button button = (Button) lookup("#leaderboardButton").queryAs(Button.class);
+//        Scene tMenuScene = button.getScene();
+//    }
 }

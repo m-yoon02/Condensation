@@ -33,7 +33,7 @@ public class NetworkManager {
 
     // client listener lists mapped to specific to their gameSessions
 
-    private Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
+    Map<UUID, Client> loggedInClients;                                         // frontend will use this to access the client listeners for communication with backend
     private Map<UUID, List<GameDataListener>> sessionListeners = new HashMap<>();      // each session ID has a list of 2 client subscribers, that are notified on each phase of a game
     private final ChatService chatService;
 

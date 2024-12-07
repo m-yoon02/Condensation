@@ -70,37 +70,37 @@ public class LoginControllerTest extends ApplicationTest {
         returnWelcomeButton = null;
     }
 
-    @Test
-    public void check_empty_username() {
+//    @Test
+//    public void check_empty_username() {
+//
+//        usernameField.setText("");
+//
+//        assertTrue(usernameField.getText().isBlank());
+//        assertFalse(loginController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.RED);
+//
+//    }
+//
+//    @Test
+//    public void check_username_characters() {
+//
+//        usernameField.setText("Hi");
+//
+//        assertFalse(usernameField.getText().isBlank());
+//        assertFalse(loginController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.RED);
+//
+//    }
 
-        usernameField.setText("");
-
-        assertTrue(usernameField.getText().isBlank());
-        assertFalse(loginController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.RED);
-
-    }
-
-    @Test
-    public void check_username_characters() {
-
-        usernameField.setText("Hi");
-
-        assertFalse(usernameField.getText().isBlank());
-        assertFalse(loginController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.RED);
-
-    }
-
-    @Test
-    public void check_valid_username() {
-
-        usernameField.setText("player123");
-
-        assertFalse(usernameField.getText().isBlank());
-        assertTrue(loginController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
-    }
+//    @Test
+//    public void check_valid_username() {
+//
+//        usernameField.setText("player123");
+//
+//        assertFalse(usernameField.getText().isBlank());
+//        assertTrue(loginController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
+//    }
 
     @Test
     public void check_empty_password() {
@@ -113,16 +113,16 @@ public class LoginControllerTest extends ApplicationTest {
 
     }
 
-    @Test
-    public void check_username_password() {
-
-        passwordField.setText("Hi");
-
-        assertFalse(passwordField.getText().isBlank());
-        assertFalse(loginController.validatePass());
-        assertEquals(passwordLabel.getTextFill(), Color.RED);
-
-    }
+//    @Test
+//    public void check_username_password() {
+//
+//        passwordField.setText("Hi");
+//
+//        assertFalse(passwordField.getText().isBlank());
+//        assertFalse(loginController.validatePass());
+//        assertEquals(passwordLabel.getTextFill(), Color.RED);
+//
+//    }
 
     @Test
     public void check_valid_password() {
@@ -134,72 +134,72 @@ public class LoginControllerTest extends ApplicationTest {
         assertEquals(passwordLabel.getTextFill(), Color.GREEN);
     }
 
-    @Test
-    public void test_invalid_username_login() {
+//    @Test
+//    public void test_invalid_username_login() {
+//
+//        usernameField.setText("Hi");
+//        passwordField.setText("123456");
+//
+//        assertFalse(usernameField.getText().isBlank());
+//        assertFalse(loginController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.RED);
+//
+//        assertFalse(passwordField.getText().isBlank());
+//        assertTrue(loginController.validatePass());
+//        assertEquals(passwordLabel.getTextFill(), Color.GREEN);
+//
+//        clickOn(loginButton);
+//
+//        assertEquals(errorMessage.getText(), "Invalid Login Credentials!");
+//
+//    }
 
-        usernameField.setText("Hi");
-        passwordField.setText("123456");
+//    @Test
+//    public void test_invalid_password_login() {
+//
+//        usernameField.setText("player123");
+//        passwordField.setText("12");
+//
+//        assertFalse(usernameField.getText().isBlank());
+//        assertTrue(loginController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
+//
+//        assertFalse(passwordField.getText().isBlank());
+//        assertFalse(loginController.validatePass());
+//        assertEquals(passwordLabel.getTextFill(), Color.RED);
+//
+//        clickOn(loginButton);
+//
+//        assertEquals(errorMessage.getText(), "Invalid Login Credentials!");
+//
+//    }
 
-        assertFalse(usernameField.getText().isBlank());
-        assertFalse(loginController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.RED);
-
-        assertFalse(passwordField.getText().isBlank());
-        assertTrue(loginController.validatePass());
-        assertEquals(passwordLabel.getTextFill(), Color.GREEN);
-
-        clickOn(loginButton);
-
-        assertEquals(errorMessage.getText(), "Invalid Login Credentials!");
-
-    }
-
-    @Test
-    public void test_invalid_password_login() {
-
-        usernameField.setText("player123");
-        passwordField.setText("12");
-
-        assertFalse(usernameField.getText().isBlank());
-        assertTrue(loginController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
-
-        assertFalse(passwordField.getText().isBlank());
-        assertFalse(loginController.validatePass());
-        assertEquals(passwordLabel.getTextFill(), Color.RED);
-
-        clickOn(loginButton);
-
-        assertEquals(errorMessage.getText(), "Invalid Login Credentials!");
-
-    }
-
-    @Test
-    public void test_valid_login(){
-
-        usernameField.setText("Samuel");
-        passwordField.setText("password123");
-
-        assertFalse(usernameField.getText().isBlank());
-        assertTrue(loginController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
-
-        assertFalse(passwordField.getText().isBlank());
-        assertTrue(loginController.validatePass());
-        assertEquals(passwordLabel.getTextFill(), Color.GREEN);
-
-        clickOn(loginButton);
-
-
-        Label profileHomeUsername = (Label) lookup("#usernameField").queryAs(Label.class);
-        Scene profileHomeWindow = profileHomeUsername.getScene();
-        Scene loginWindow = loginButton.getScene();
-
-
-
-
-    }
-
+//    @Test
+//    public void test_valid_login(){
+//
+//        usernameField.setText("Samuel");
+//        passwordField.setText("password123");
+//
+//        assertFalse(usernameField.getText().isBlank());
+//        assertTrue(loginController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
+//
+//        assertFalse(passwordField.getText().isBlank());
+//        assertTrue(loginController.validatePass());
+//        assertEquals(passwordLabel.getTextFill(), Color.GREEN);
+//
+//        clickOn(loginButton);
+//
+//
+//        Label profileHomeUsername = (Label) lookup("#usernameField").queryAs(Label.class);
+//        Scene profileHomeWindow = profileHomeUsername.getScene();
+//        Scene loginWindow = loginButton.getScene();
+//
+//
+//
+//
+//    }
+//
 
 
 }

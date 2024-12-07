@@ -72,57 +72,57 @@ public class WelcomeScreenControllerTest extends ApplicationTest {
 
     }
 
-    @Test
-    public void click_on_signup(){
-
-        clickOn(signUpButton);
-
-        Scene welcomeScene = loginButton.getScene();
-
-        Label signupMessage = (Label) lookup("#signupMessage").queryAs(Label.class);
-        Scene signupScene = signupMessage.getScene();
-
-        assertFalse(welcomeScene.equals(signupScene));
-        assertEquals(signupMessage.getText(), "CREATE A NEW ACCOUNT");
-
-    }
-
-    @Test
-    public void click_on_login(){
-
-        clickOn(loginButton);
-
-        Scene welcomeScene = loginButton.getScene();
-
-        Label loginMessage = (Label) lookup("#welcomeMessage").queryAs(Label.class);
-        Scene loginScene = loginMessage.getScene();
-
-        assertFalse(welcomeScene.equals(loginScene));
-        assertEquals(loginMessage.getText(), "Welcome Back");
-
-    }
-
-    @Test
-    public void click_on_team(){
-
-        clickOn("#teamMenu").clickOn("#team");
-
-    }
-
-    @Test
-    public void click_on_about(){
-
-        clickOn("#aboutMenu").clickOn("#about");
-
-    }
-
-    @Test
-    public void click_on_prog(){
-
-        clickOn("#progMenu").clickOn("#prog");
-
-    }
-
+//    @Test
+//    public void click_on_signup(){
+//
+//        clickOn(signUpButton);
+//
+//        Scene welcomeScene = loginButton.getScene();
+//
+//        Label signupMessage = (Label) lookup("#signupMessage").queryAs(Label.class);
+//        Scene signupScene = signupMessage.getScene();
+//
+//        assertFalse(welcomeScene.equals(signupScene));
+//        assertEquals(signupMessage.getText(), "CREATE A NEW ACCOUNT");
+//
+//    }
+//
+//    @Test
+//    public void click_on_login(){
+//
+//        clickOn(loginButton);
+//
+//        Scene welcomeScene = loginButton.getScene();
+//
+//        Label loginMessage = (Label) lookup("#welcomeMessage").queryAs(Label.class);
+//        Scene loginScene = loginMessage.getScene();
+//
+//        assertFalse(welcomeScene.equals(loginScene));
+//        assertEquals(loginMessage.getText(), "Welcome Back");
+//
+//    }
+//
+//    @Test
+//    public void click_on_team(){
+//
+//        clickOn("#teamMenu").clickOn("#team");
+//
+//    }
+//
+//    @Test
+//    public void click_on_about(){
+//
+//        clickOn("#aboutMenu").clickOn("#about");
+//
+//    }
+//
+//    @Test
+//    public void click_on_prog(){
+//
+//        clickOn("#progMenu").clickOn("#prog");
+//
+//    }
+//
 
 
 

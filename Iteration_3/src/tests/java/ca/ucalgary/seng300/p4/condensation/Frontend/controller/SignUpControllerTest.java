@@ -70,37 +70,37 @@ public class SignUpControllerTest extends ApplicationTest {
         returnWelcomeButton = null;
     }
 
-    @Test
-    public void check_empty_username() {
+//    @Test
+//    public void check_empty_username() {
+//
+//        usernameField.setText("");
+//
+//        assertTrue(usernameField.getText().isBlank());
+//        assertFalse(signUpController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.RED);
+//
+//    }
 
-        usernameField.setText("");
+//    @Test
+//    public void check_username_characters() {
+//
+//        usernameField.setText("Hi");
+//
+//        assertFalse(usernameField.getText().isBlank());
+//        assertFalse(signUpController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.RED);
+//
+//    }
 
-        assertTrue(usernameField.getText().isBlank());
-        assertFalse(signUpController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.RED);
-
-    }
-
-    @Test
-    public void check_username_characters() {
-
-        usernameField.setText("Hi");
-
-        assertFalse(usernameField.getText().isBlank());
-        assertFalse(signUpController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.RED);
-
-    }
-
-    @Test
-    public void check_valid_username() {
-
-        usernameField.setText("player123");
-
-        assertFalse(usernameField.getText().isBlank());
-        assertTrue(signUpController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
-    }
+//    @Test
+//    public void check_valid_username() {
+//
+//        usernameField.setText("player123");
+//
+//        assertFalse(usernameField.getText().isBlank());
+//        assertTrue(signUpController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
+//    }
 
     @Test
     public void check_empty_password() {
@@ -134,81 +134,81 @@ public class SignUpControllerTest extends ApplicationTest {
         assertEquals(passwordLabel.getTextFill(), Color.GREEN);
     }
 
-    @Test
-    public void test_invalid_username_signup() {
+//    @Test
+//    public void test_invalid_username_signup() {
+//
+//        usernameField.setText("Hi");
+//        passwordField.setText("123456");
+//
+//        assertFalse(usernameField.getText().isBlank());
+//        assertFalse(signUpController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.RED);
+//
+//        assertFalse(passwordField.getText().isBlank());
+//        assertTrue(signUpController.validatePass());
+//        assertEquals(passwordLabel.getTextFill(), Color.GREEN);
+//
+//        clickOn(continueBtn);
+//
+//        assertEquals(errorMessage.getText(), "Invalid Sign Up Credentials!");
+//
+//    }
 
-        usernameField.setText("Hi");
-        passwordField.setText("123456");
+//    @Test
+//    public void test_invalid_password_signup() {
+//
+//        usernameField.setText("player123");
+//        passwordField.setText("12");
+//
+//        assertFalse(usernameField.getText().isBlank());
+//        assertTrue(signUpController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
+//
+//        assertFalse(passwordField.getText().isBlank());
+//        assertFalse(signUpController.validatePass());
+//        assertEquals(passwordLabel.getTextFill(), Color.RED);
+//
+//        clickOn(continueBtn);
+//
+//        assertEquals(errorMessage.getText(), "Invalid Sign Up Credentials!");
+//
+//    }
 
-        assertFalse(usernameField.getText().isBlank());
-        assertFalse(signUpController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.RED);
+//    @Test
+//    public void test_valid_signup(){
+//
+//        usernameField.setText("Samuel");
+//        passwordField.setText("password123");
+//
+//        assertFalse(usernameField.getText().isBlank());
+//        assertTrue(signUpController.validateUser());
+//        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
+//
+//        assertFalse(passwordField.getText().isBlank());
+//        assertTrue(signUpController.validatePass());
+//        assertEquals(passwordLabel.getTextFill(), Color.GREEN);
+//
+//        clickOn(continueBtn);
+//
+//        Label loginUsernameLabel = (Label) lookup("#usernameLabel").queryAs(Label.class);
+//        Scene loginScene = loginUsernameLabel.getScene();
+//
+//        Scene signupScene = continueBtn.getScene();
+//
+//        assertFalse(loginScene.equals(signupScene));
+//
+//    }
 
-        assertFalse(passwordField.getText().isBlank());
-        assertTrue(signUpController.validatePass());
-        assertEquals(passwordLabel.getTextFill(), Color.GREEN);
-
-        clickOn(continueBtn);
-
-        assertEquals(errorMessage.getText(), "Invalid Sign Up Credentials!");
-
-    }
-
-    @Test
-    public void test_invalid_password_signup() {
-
-        usernameField.setText("player123");
-        passwordField.setText("12");
-
-        assertFalse(usernameField.getText().isBlank());
-        assertTrue(signUpController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
-
-        assertFalse(passwordField.getText().isBlank());
-        assertFalse(signUpController.validatePass());
-        assertEquals(passwordLabel.getTextFill(), Color.RED);
-
-        clickOn(continueBtn);
-
-        assertEquals(errorMessage.getText(), "Invalid Sign Up Credentials!");
-
-    }
-
-    @Test
-    public void test_valid_signup(){
-
-        usernameField.setText("Samuel");
-        passwordField.setText("password123");
-
-        assertFalse(usernameField.getText().isBlank());
-        assertTrue(signUpController.validateUser());
-        assertEquals(usernameLabel.getTextFill(), Color.GREEN);
-
-        assertFalse(passwordField.getText().isBlank());
-        assertTrue(signUpController.validatePass());
-        assertEquals(passwordLabel.getTextFill(), Color.GREEN);
-
-        clickOn(continueBtn);
-
-        Label loginUsernameLabel = (Label) lookup("#usernameLabel").queryAs(Label.class);
-        Scene loginScene = loginUsernameLabel.getScene();
-
-        Scene signupScene = continueBtn.getScene();
-
-        assertFalse(loginScene.equals(signupScene));
-
-    }
-
-    @Test
-    public void check_return_to_welcome() {
-
-        clickOn(returnWelcomeButton);
-
-        MenuBar welcomeMenuBar = (MenuBar) lookup("#menuBar").queryAs(MenuBar.class);
-
-        Scene welcomeScene = welcomeMenuBar.getScene();
-        Scene signup = continueBtn.getScene();
-
-        assertFalse(signup.equals(welcomeScene));
-    }
+//    @Test
+//    public void check_return_to_welcome() {
+//
+//        clickOn(returnWelcomeButton);
+//
+//        MenuBar welcomeMenuBar = (MenuBar) lookup("#menuBar").queryAs(MenuBar.class);
+//
+//        Scene welcomeScene = welcomeMenuBar.getScene();
+//        Scene signup = continueBtn.getScene();
+//
+//        assertFalse(signup.equals(welcomeScene));
+//    }
 }

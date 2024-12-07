@@ -126,7 +126,7 @@ public class GameHandlerTest {
     public void testGetOtherPlayerUUID_3() {
         gameHandler = new TestGameHandler(player1ID, null, colors, testGameTimer);
 
-        UUID otherPlayerID = gameHandler.getOtherPlayerUUID(player2ID);
+        UUID otherPlayerID = gameHandler.getOtherPlayerUUID(player1ID);
     }
 
 

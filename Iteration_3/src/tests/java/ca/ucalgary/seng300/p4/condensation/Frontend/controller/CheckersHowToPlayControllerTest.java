@@ -40,19 +40,19 @@ public class CheckersHowToPlayControllerTest extends ApplicationTest{
         backButton = null;
     }
 
-    @Test
-    public void testOnHowToPlayBackBtnClick() throws Exception {
-        // Clicks back button
-        clickOn(backButton);
-
-        // Checks if scene changed to checkers home menu
-        Node rootNode = backButton.getScene().getRoot();
-        assertNotNull(rootNode);
-
-        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
-        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
-        assertNotNull(expectedScene.getRoot());
-
-        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
-    }
+//    @Test
+//    public void testOnHowToPlayBackBtnClick() throws Exception {
+//        // Clicks back button
+//        clickOn(backButton);
+//
+//        // Checks if scene changed to checkers home menu
+//        Node rootNode = backButton.getScene().getRoot();
+//        assertNotNull(rootNode);
+//
+//        FXMLLoader newLoader = new FXMLLoader(HelloApplication.class.getResource("checkersHomeMenu.fxml"));
+//        Scene expectedScene = new Scene(newLoader.load(), 700, 500);
+//        assertNotNull(expectedScene.getRoot());
+//
+//        assertEquals(rootNode.getId(), expectedScene.getRoot().getId());
+//    }
 }

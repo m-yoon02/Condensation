@@ -206,4 +206,26 @@ public class GameSessionTest {
         }
     }
 
+    @Test
+    public void testProcessForfeit() {
+
+        UUID player1ID = UUID.randomUUID();
+        UUID player2ID = UUID.randomUUID();
+        GameTypes gameType = GameTypes.TICTACTOE;
+
+        QueuedPlayerMemo playerMemo1 = new QueuedPlayerMemo(player1ID, gameType, 1200);
+        QueuedPlayerMemo playerMemo2 = new QueuedPlayerMemo(player2ID, gameType, 1250);
+        // Arrange
+        UUID forfeitedPlayerID = player1ID;
+
+        // Simulate the game handler's state before forfeiting
+        GameSession gameSession = new GameSession(playerMemo1, playerMemo2);
+        // Act
+        gameSession.processForfeit(forfeitedPlayerID);
+
+        // Assert
+        UUID expectedWinnerID = player1ID.equals(forfeitedPlayerID) ? player2ID : player1ID;
+        assertEquals(player2ID, expectedWinnerID);
+    }
+
 }

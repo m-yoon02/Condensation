@@ -5,6 +5,7 @@ import ca.ucalgary.seng300.p4.condensation.Backend.DTOs.Vector2;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.GameResult;
 import ca.ucalgary.seng300.p4.condensation.Backend.Enums.PieceColor;
 import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.CheckersMoveData;
+import ca.ucalgary.seng300.p4.condensation.Backend.MoveData.MoveData;
 import ca.ucalgary.seng300.p4.condensation.Backend.Pieces.CheckersPiece;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,12 +19,15 @@ import static org.junit.Assert.*;
 public class CheckersHandlerTest {
 
     private CheckersHandler checkersHandler;
+    private  UUID player1ID;
+    private  UUID player2ID;
 
     @Before
     public void setUp() {
-        UUID player1ID = UUID.randomUUID();
-        UUID player2ID = UUID.randomUUID();
+        player1ID = UUID.randomUUID();
+        player2ID = UUID.randomUUID();
         checkersHandler = new CheckersHandler(player1ID, player2ID);
+
     }
 
     @Test
@@ -354,5 +358,48 @@ public class CheckersHandlerTest {
 
         boolean gameEnded = checkersHandler.checkForGameEnd(opponentColor);
         assertFalse("Game should not end when opponent has valid moves", gameEnded);
+    }
+
+
+
+    @Test(expected = RuntimeException.class)
+    public void testMoveData_InvalidJson_test() {
+        checkersHandler.makeMove("");
+    }
+
+    @Test
+    public void testMoveData_ValidJson_test() {
+
+        String moveDataJSON = String.format("{"
+                + "\"PlayerID\": \"%s\", "
+                + "\"NewPosition\": [3,1] "
+                + "\"OldPosition\": [2, 0]"
+                + "}",player2ID.toString()
+                );
+        checkersHandler.makeMove(moveDataJSON);
+//        System.out.println(checkersHandler.getPlayerColorFromUUID(player2ID));
+//        System.out.println(checkersHandler.getBoard().getAt(new Vector2(3,1)).getColor());
+
+        assertEquals(checkersHandler.getBoard().getAt(new Vector2(3,1)).getColor(), checkersHandler.getPlayerColorFromUUID(player2ID));
+    }
+
+    @Test
+    public void testMoveData_CaptureMove_test() {
+
+
+        CheckersMoveData checkersMoveData = new CheckersMoveData(player1ID, new Vector2(2,4), new Vector2(3,5));
+        checkersHandler.makeMove(checkersMoveData);
+
+        checkersMoveData = new CheckersMoveData(player2ID, new Vector2(1,3), new Vector2(0,2));
+        checkersHandler.makeMove(checkersMoveData);
+
+        checkersMoveData = new CheckersMoveData(player1ID, new Vector2(0,2), new Vector2(2,4));
+        checkersHandler.makeMove(checkersMoveData);
+
+//        System.out.println(checkersHandler.getBoard().getAt(new Vector2(0,2)).getColor());
+
+        assertEquals("Red should be found", checkersHandler.getBoard().getAt(new Vector2(0,2)).getColor(), checkersHandler.getPlayerColorFromUUID(player1ID));
+        assertNull(checkersHandler.getBoard().getAt(new Vector2(1,3)));
+
     }
 }

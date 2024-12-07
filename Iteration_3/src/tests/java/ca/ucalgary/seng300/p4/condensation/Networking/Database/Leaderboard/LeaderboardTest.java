@@ -2,7 +2,6 @@ package ca.ucalgary.seng300.p4.condensation.Networking.Database.Leaderboard;
 
 import ca.ucalgary.seng300.p4.condensation.Networking.Enums.GameTypes;
 import ca.ucalgary.seng300.p4.condensation.Networking.Managers.NetworkManager;
-import org.assertj.core.internal.bytebuddy.implementation.bind.MethodNameEqualityResolver;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -18,11 +17,12 @@ public class LeaderboardTest {
 
     private NetworkManager networkManager;
     private Leaderboard leaderboard;
-    public static final String MOCK_LEADERBOARD_FILE = "mockLeaderboard.json";
-    public static final String TEMP_PLAYER_FILE = "tempPlayers.json";
+    public static final String MOCK_LEADERBOARD_FILE_DUMMY = "mockLeaderboard10.json";
+    public static final String TEMP_PLAYER_FILE_DUMMY = "tempPlayers10.json";
 
     @Before
     public void setUp() throws Exception {
+
         // Create a mock JSON file to simulate leaderboard data
         JSONArray mockData = new JSONArray();
 
@@ -81,23 +81,23 @@ public class LeaderboardTest {
         user5.put("elo", 1600);
         mockData.add(user5);
 
-        try (FileWriter writer = new FileWriter(MOCK_LEADERBOARD_FILE)) {
+        try (FileWriter writer = new FileWriter(MOCK_LEADERBOARD_FILE_DUMMY)) {
             writer.write(mockData.toJSONString());
         }
 
         // Initialize the leaderboard with the mock file
-        networkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE;
+        networkManager.LEADERBOARD_FILE = MOCK_LEADERBOARD_FILE_DUMMY;
         leaderboard = Leaderboard.getInstance();
 
         // create a mock JSON file for fetchUserFromNewPLayerJSON test
         JSONObject playerData = new JSONObject();
         playerData.put("username", "testPlayer");
 
-        try (FileWriter writer = new FileWriter(TEMP_PLAYER_FILE)) {
+        try (FileWriter writer = new FileWriter(TEMP_PLAYER_FILE_DUMMY)) {
             writer.write(playerData.toJSONString());
 
         }
-        networkManager.PLAYER_ID_FILE = TEMP_PLAYER_FILE;
+        networkManager.PLAYER_ID_FILE = TEMP_PLAYER_FILE_DUMMY;
     }
 
     @After
@@ -108,7 +108,7 @@ public class LeaderboardTest {
         resetLeaderboardInstance();
 
 
-        File file = new File(MOCK_LEADERBOARD_FILE);
+        File file = new File(MOCK_LEADERBOARD_FILE_DUMMY);
         if (file.exists()) {
             file.delete();
         }
@@ -167,9 +167,17 @@ public class LeaderboardTest {
 
     @Test
     public void testFindUserByName() {
+        // retrieve an existing user
         JSONObject user = leaderboard.findUserByName("player1");
         assertNotNull(user);
         assertEquals("player1", user.get("username"));
+
+        // testing for a non existent user
+        JSONObject user2 = leaderboard.findUserByName("playerWho?");
+        assertNull(user2);
+
+
+
     }
 
     @Test
@@ -260,6 +268,8 @@ public class LeaderboardTest {
 
 
 
+
+
     @Test
     public void testUpdateEloForWinningPlayerUsingMockDataForTicTacToe() throws IOException {
         // retrieve an existing player
@@ -304,10 +314,32 @@ public class LeaderboardTest {
         assertEquals("The outcome should be 'W' for win.", "W", recentMatch.get("outcome"));
         assertEquals("The Elo score should match the updated Elo.", updatedElo, recentMatch.get("currentElo"));
 
-
-
-
     }
+
+    @Test
+    public void testUpdateEloForWinningPlayerTictactoePlayerNotFound() throws IOException {
+        // create a non existing user
+        UUID nonExistentPlayerID = UUID.randomUUID();
+        UUID sessionID = UUID.randomUUID();
+
+        // take the console output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        try {
+            // call the method with a non-existent player ID
+            leaderboard.updateEloForWinningPlayerTictactoe(nonExistentPlayerID, sessionID);
+
+            // verify the output contains the expected message
+            String consoleOutput = outContent.toString();
+            assertTrue("Should log 'Cant find plater lmao'", consoleOutput.contains("Cant find plater lmao"));
+        } finally {
+            // reset System.out
+            System.setOut(originalOut);
+        }
+    }
+
 
 
     @Test
@@ -527,6 +559,30 @@ public class LeaderboardTest {
 
 
     @Test
+    public void testUpdateEloForLosingPlayerConnect4PlayerNotFound() {
+        // create a non existing player
+        UUID nonExistentPlayerID = UUID.randomUUID();
+        UUID sessionID = UUID.randomUUID();
+
+        // taking console output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        // call the method
+        leaderboard.updateEloForLosingPlayerConnect4(nonExistentPlayerID, sessionID);
+
+        // verify the output contains the expected message if no player was found
+        String consoleOutput = outContent.toString();
+        assertTrue("Should log message 'Cant find plater lmao'", consoleOutput.contains("Cant find plater lmao"));
+
+    }
+
+
+
+
+
+
+    @Test
     public void testRefreshLeaderboard() {
         // call the method to refresh the leaderboard
         leaderboard.refreshLeaderboard();
@@ -543,12 +599,49 @@ public class LeaderboardTest {
     }
 
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testRefreshLeaderboardMissingElo() {
+        // adding a user without the "elo" field to the leaderboard
+        JSONObject userWithoutElo = new JSONObject();
+        userWithoutElo.put("username", "missingEloUser");
+        leaderboard.getAllUsers().add(userWithoutElo);
+
+        // calling the method to refresh the leaderboard
+        leaderboard.refreshLeaderboard();
+
+        // if no exception is thrown, the test will fail
+        fail("Expected IllegalArgumentException due to a user missing the 'elo' field.");
+    }
+
+
+
     @Test
-    public void testFetchUserFromNewPLayerJson() {
+    public void testFetchUserFromNewPlayerJson() {
         try {
             String username = leaderboard.fetchUserFromNewPlayerJson();
         } catch (Exception e) {
             fail("Exception occured" + e.getMessage());
+        }
+
+    }
+
+
+    @Test
+    public void testFethUserFromNewPlayerBadJson() {
+        // Create a bad Json file
+        String malformedJson = "{ invalid json }"; // Invalid JSON format
+        try (FileWriter writer = new FileWriter(NetworkManager.PLAYER_ID_FILE)) {
+            writer.write(malformedJson);
+        } catch (IOException e) {
+            fail("Failed to write malformed JSON file: " + e.getMessage());
+        }
+
+        // Attempt to fetch user from the malformed JSON file
+        try {
+            String result = leaderboard.fetchUserFromNewPlayerJson();
+            assertNull("The method should return null if the JSON is malformed", result);
+        } catch (Exception e) {
+            fail("Unexpected exception: " + e.getMessage());
         }
     }
 
@@ -565,6 +658,211 @@ public class LeaderboardTest {
 
     }
 
+    @Test
+    public void testChangeName() throws IOException {
+        // retrieve an existing user
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        assertNotNull("User 'player1' should exist in the leaderboard", user1);
+
+        // get that existing user UUID
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+
+        // test changing the name successfully
+        String newName = "newPlayer1";
+        boolean success = leaderboard.changeName(player1ID, newName);
+        assertTrue("Name change should succeed", success);
+
+        // verify the name has been updated
+        JSONObject updatedUser1 = leaderboard.findUserByName(newName);
+        assertNotNull("Updated user should be found with the new name", updatedUser1);
+        assertEquals("The username should be updated to the new name", newName, updatedUser1.get("username"));
+
+        // test changing the name with a non-existent UUID
+        UUID nonExistentID = UUID.randomUUID();
+        boolean failure = leaderboard.changeName(nonExistentID, "doesNotExist");
+        assertFalse("Name change should fail for a non-existent UUID", failure);
+    }
+
+
+    @Test
+    public void testChangePassword() {
+        // retrieve an existing user
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        assertNotNull("User 'player1' should exist in the leaderboard", user1);
+
+        // extract user details
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+
+        // test changing the password successfully
+        String newPassword = "newPassword123";
+        boolean success = leaderboard.changePassword(player1ID, newPassword);
+        assertTrue("Password change should succeed", success);
+
+        // verify the password has been updated
+        JSONObject updatedUser1 = leaderboard.findUserByName("player1");
+        assertNotNull("Updated user should still be found with the same name", updatedUser1);
+        assertEquals("The password should be updated to the new password", newPassword, updatedUser1.get("password"));
+
+        // test changing the password with a non-existent UUID
+        UUID nonExistentID = UUID.randomUUID();
+        boolean failure = leaderboard.changePassword(nonExistentID, "nonExistentPass");
+        assertFalse("Password change should fail for a non-existent UUID", failure);
+    }
+
+    @Test
+    public void testUpdateForTieGameTicTacToe() throws IOException {
+        // Create and add players to the leaderboard
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        JSONObject user2 = leaderboard.findUserByName("player2");
+
+        UUID sessionID = UUID.randomUUID();
+
+        // Update for tie game
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        UUID player2ID = UUID.fromString((String) user2.get("playerUUID"));
+        leaderboard.updateForTieGameTicTacToe(player1ID, player2ID, sessionID);
+
+        // update players
+        user1 = leaderboard.findUserByName("player1");
+        user2 = leaderboard.findUserByName("player2");
+
+        // Retrieve players from the leaderboard
+        // Verify players are not null
+        assertNotNull(user1);
+        assertNotNull(user2);
+
+        // Verify recent matches
+        JSONArray recentMatches1 = (JSONArray) user1.get("recentMatches");
+
+        assertEquals(2, recentMatches1.size());
+
+        // Verify the match details
+        JSONObject recentMatch1 = (JSONObject) recentMatches1.getFirst();
+
+        assertEquals(sessionID.toString(), recentMatch1.get("matchID"));
+        assertEquals(GameTypes.TICTACTOE.toString(), recentMatch1.get("gameType"));
+        assertEquals("T", recentMatch1.get("outcome"));
+    }
+
+
+
+    @Test
+    public void testUpdateForTieGameCheckers() throws IOException {
+        // Create and add players to the leaderboard
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        JSONObject user2 = leaderboard.findUserByName("player2");
+
+        UUID sessionID = UUID.randomUUID();
+
+        // Update for tie game
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        UUID player2ID = UUID.fromString((String) user2.get("playerUUID"));
+        leaderboard.updateForTieGameCheckers(player1ID, player2ID, sessionID);
+
+        // update players
+        user1 = leaderboard.findUserByName("player1");
+        user2 = leaderboard.findUserByName("player2");
+
+        // Retrieve players from the leaderboard
+        // Verify players are not null
+        assertNotNull(user1);
+        assertNotNull(user2);
+
+        // Verify recent matches
+        JSONArray recentMatches1 = (JSONArray) user1.get("recentMatches");
+
+        assertEquals(2, recentMatches1.size());
+
+        // Verify the match details
+        JSONObject recentMatch1 = (JSONObject) recentMatches1.getFirst();
+
+        assertEquals(sessionID.toString(), recentMatch1.get("matchID"));
+        assertEquals(GameTypes.CHECKERS.toString(), recentMatch1.get("gameType"));
+        assertEquals("T", recentMatch1.get("outcome"));
+    }
+
+
+
+
+    @Test
+    public void testUpdateForTieGameConnect4() throws IOException {
+        // Create and add players to the leaderboard
+        JSONObject user1 = leaderboard.findUserByName("player1");
+        JSONObject user2 = leaderboard.findUserByName("player2");
+
+        UUID sessionID = UUID.randomUUID();
+
+        // Update for tie game
+        UUID player1ID = UUID.fromString((String) user1.get("playerUUID"));
+        UUID player2ID = UUID.fromString((String) user2.get("playerUUID"));
+        leaderboard.updateForTieGameConnect4(player1ID, player2ID, sessionID);
+
+        // update players
+        user1 = leaderboard.findUserByName("player1");
+        user2 = leaderboard.findUserByName("player2");
+
+        // Retrieve players from the leaderboard
+        // Verify players are not null
+        assertNotNull(user1);
+        assertNotNull(user2);
+
+        // Verify recent matches
+        JSONArray recentMatches1 = (JSONArray) user1.get("recentMatches");
+
+        assertEquals(2, recentMatches1.size());
+
+        // Verify the match details
+        JSONObject recentMatch1 = (JSONObject) recentMatches1.getFirst();
+
+        assertEquals(sessionID.toString(), recentMatch1.get("matchID"));
+        assertEquals(GameTypes.CONNECT4.toString(), recentMatch1.get("gameType"));
+        assertEquals("T", recentMatch1.get("outcome"));
+    }
+
+    @Test
+    public void testFindUserByNameToStringUserFound() {
+        // add an existing user to the users list
+        JSONObject user = leaderboard.findUserByName("player1");
+        assertNotNull("User 'player1' should exist in the leaderboard", user);
+
+        // convert the user details to a JSON string
+        String expectedJsonString = user.toJSONString();
+
+        // calling the method to find the user by name
+        String result = leaderboard.findUserByNameToString("player1");
+
+        // assert that the returned JSON string matches the expected one
+        assertNotNull("The method should return a JSON string for an existing user", result);
+        assertEquals("The returned JSON string should match the expected user details", expectedJsonString, result);
+    }
+
+    @Test
+    public void testFindUserByNameToStringUserNotFound() {
+        // try to find a user with a username that does not exist
+        String nonExistentUsername = "nonExistentUser";
+        String result = leaderboard.findUserByNameToString(nonExistentUsername);
+
+        // assert that the result is null
+        assertNull("The method should return null for a username that does not exist", result);
+    }
+
+
+
+
+    @Test
+    public void testFindUserByIDNoUserFound() {
+        // creating a non existent user
+        UUID nonExistentUUID = UUID.randomUUID();
+
+        // call the method with the non-existent UUID
+        JSONObject result = leaderboard.findUserById(nonExistentUUID);
+
+        // assert that the result is null
+        assertNull("The method should return null for a UUID that does not exist", result);
+    }
+
+
+
 
 
 
@@ -576,3 +874,12 @@ public class LeaderboardTest {
 
 
 }
+
+
+
+
+
+
+
+
+

@@ -129,6 +129,8 @@ public class MatchmakingPoolTest {
     @Test
     public void testFetch4RandomPlayers() throws IOException, ParseException {
 
+        matchmakingPool.clearPool();
+
         QueuedPlayerMemo playerMemo1 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CHECKERS, 1500);
         QueuedPlayerMemo playerMemo2 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.CONNECT4, 1400);
         QueuedPlayerMemo playerMemo3 = new QueuedPlayerMemo(UUID.randomUUID(), GameTypes.TICTACTOE, 1200);
