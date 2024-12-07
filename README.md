@@ -1,5 +1,30 @@
 # SENG 300 Project Group P-4
 
+## Condensation
+
+SENG 300 F24 P-4
+
+Online Multiplayer Board Game Platform built with JavaFX for SENG 300 in
+the Fall 2024 semester.
+
+## Running
+
+Make sure you have terminal open in the directory where condensation.jar is stored.
+A /data directory must exist in this directory and contain the following files:
+
+- Leaderboard.json
+- playerID.json
+
+Run the command:
+
+```bash
+java --module-path <path-to-javafx-sdk>/lib --add-modules javafx.controls,javafx.fxml -jar condensation.jar
+```
+
+The JavaFX sdk may be packaged with condensation.jar
+
+In this case **\<path-to-javafx-sdk>/lib** may be replaced with **javafx-sdk-23.0.1/lib**
+
 ## Iteration 1 Deliverables in `Iteration_1` (all files for Iteration 1 are here)
 - `Documentation`
   - `Backend_Planning`: Contains the planning document used by the backend team
@@ -31,6 +56,8 @@
     - `src\main\java` has the code
     - `src\main\resources` has the resource files
     - `src\tests` has the test files
+    - Deliverables have the Iteration 3 deliverables
+    - diagram_changes are the reviewed comments from the other teams 
 
 - `team.md`: in the main repository
 - `gitlab_link.txt`: the gitlab link in the main repository
