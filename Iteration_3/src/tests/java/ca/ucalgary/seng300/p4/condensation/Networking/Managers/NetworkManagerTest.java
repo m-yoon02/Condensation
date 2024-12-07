@@ -48,7 +48,7 @@ public class NetworkManagerTest {
 
 
     public static final String MOCK_LEADERBOARD_FILE = "mockLeaderboard.json";
-    public static final String TEMP_PLAYER_FILE = "tempPlayers.json";
+    public static final String TEMP_PLAYER_FILE = "tempPlayerID.json";
 
     private GameDataListener gameDataListener; //mocking the GameDataListener interface
 
@@ -245,36 +245,34 @@ public class NetworkManagerTest {
 
         // create a mock JSON file for fetchUserFromNewPLayerJSON test
         JSONObject playerData = new JSONObject();
-        playerData.put("username", "testPlayer");
+        playerData.put("username", "player1");
+        playerData.put("playerID", "efbee4fb-36d3-4551-a111-6c19a0695416");
 
         try (FileWriter writer = new FileWriter(TEMP_PLAYER_FILE)) {
             writer.write(playerData.toJSONString());
 
         }
 
-        //create the players
         UUID player1UUID = UUID.fromString("efbee4fb-36d3-4551-a111-6c19a0695416");
         UUID player2UUID = UUID.fromString("71491e49-f970-4a78-b8dd-0901df523fe6");
 
         player1 = new Client(player1UUID);
         player2 = new Client(player2UUID);
 
-        NetworkManager.getNetworkInstance().loggedInClients.put(player1UUID,player1 );
-        NetworkManager.getNetworkInstance().loggedInClients.put(player2UUID,player2 );
+        // this would usally be done by logging in the client
+        networkManager.loggedInClients.put(player1UUID,player1 );
+        networkManager.loggedInClients.put(player2UUID,player2 );
 
 
 
-//        networkManager.getLoggedInClients().clear();
 
 
         playerMemo1 = new QueuedPlayerMemo(player1.getPlayerId(), GameTypes.CHECKERS, 100);
         playerMemo2 = new QueuedPlayerMemo(player2.getPlayerId(), GameTypes.CHECKERS, 110);
 
-        //initialize all mock managers and objects
         gameSessionManager = new GameSessionManager();
         chatService = new ChatService();
 
-        //create a game session for these players
         gameSession = new GameSession(playerMemo1, playerMemo2);
 
         gameSessionManager.addGameSession(gameSession);
@@ -296,23 +294,17 @@ public class NetworkManagerTest {
 
     @Test
     public void testGetNetworkInstance() throws IOException, ParseException {
-        // Get the first instance of NetworkManager
         NetworkManager instance1 = NetworkManager.getNetworkInstance();
-        // Get the second instance of NetworkManager
         NetworkManager instance2 = NetworkManager.getNetworkInstance();
-        // Validate that both instances are the same (Singleton)
         assertSame("getNetworkInstance should return the same instance", instance1, instance2);
-        // Validate that the instance is not null
         assertNotNull("getNetworkInstance should not return null", instance1);
     }
 
 
     @Test
     public void testValidateUserCredentials_InvalidCredentials() throws IOException, ParseException {
-        // Validate credentials with an invalid password
         JSONObject validatedUser = networkManager.validateUserCredentials("player2", "wrongpassword");
 
-        // Verify that the user is null
         assertNull("Validated user should be null for invalid credentials", validatedUser);
     }
 
@@ -378,7 +370,7 @@ public class NetworkManagerTest {
         assertEquals("Game type should match", GameTypes.CHECKERS.toString(), responseJson.get("gameType"));
 
         GameTypes gameType = GameTypes.valueOf((String) responseJson.get("gameType"));
-        // Verify the matchmaking pool and game session manager
+
         GameSession createdSession = gameSessionManager.getGameSessionBySessionID(
                 UUID.fromString((String) responseJson.get("sessionID"))
         );
@@ -407,7 +399,7 @@ public class NetworkManagerTest {
         assertEquals("Game type should match", GameTypes.TICTACTOE.toString(), responseJson.get("gameType"));
 
         GameTypes gameType = GameTypes.valueOf((String) responseJson.get("gameType"));
-        // Verify the matchmaking pool and game session manager
+
         GameSession createdSession = gameSessionManager.getGameSessionBySessionID(
                 UUID.fromString((String) responseJson.get("sessionID"))
         );
@@ -428,7 +420,6 @@ public class NetworkManagerTest {
         assertNotNull("Response should not be null", response);
         JSONObject responseJson = (JSONObject) new org.json.simple.parser.JSONParser().parse(response);
 
-        // Verify the returned session details
         assertNotNull("Session ID should not be null", responseJson.get("sessionID"));
         assertEquals("efbee4fb-36d3-4551-a111-6c19a0695416", playerID);
         assertNotNull("Player2 UUID should not be null (matched player)", responseJson.get("player2ID"));
@@ -436,7 +427,6 @@ public class NetworkManagerTest {
         assertEquals("Game type should match", GameTypes.CONNECT4.toString(), responseJson.get("gameType"));
 
         GameTypes gameType = GameTypes.valueOf((String) responseJson.get("gameType"));
-        // Verify the matchmaking pool and game session manager
         GameSession createdSession = gameSessionManager.getGameSessionBySessionID(
                 UUID.fromString((String) responseJson.get("sessionID"))
         );
@@ -452,13 +442,10 @@ public class NetworkManagerTest {
         challengeQueuedPlayer.put("Player2Username", "player2"); // player2 username
         challengeQueuedPlayer.put("gameType", GameTypes.CHECKERS); // Game type
 
-        // Act: Call the handleChallengedQueuePlayer method
         String response = networkManager.handleChallengedQueuePlayer(challengeQueuedPlayer);
 
-        // Parse the response
         JSONObject responseObject = (JSONObject) new org.json.simple.parser.JSONParser().parse(response);
 
-        // Assert: Verify the response contains the correct session data
         assertNotNull("Response should not be null", responseObject);
         assertEquals("Session ID should be present", responseObject.get("sessionID"), responseObject.get("sessionID"));
         assertEquals("Player1 ID should match", "efbee4fb-36d3-4551-a111-6c19a0695416", responseObject.get("player1ID"));
@@ -466,7 +453,6 @@ public class NetworkManagerTest {
         assertEquals("Game type should match", "CHECKERS", responseObject.get("gameType"));
         assertNotNull("Current player turn should not be null", responseObject.get("currentPlayerTurn"));
 
-        // Verify that the session was created and added to GameSessionManager
         UUID sessionID = UUID.fromString((String) responseObject.get("sessionID"));
         GameSession session = gameSessionManager.getGameSessionBySessionID(sessionID);
         assertNull("Game session should be created", session);
@@ -481,13 +467,10 @@ public class NetworkManagerTest {
         challengeQueuedPlayer.put("Player2Username", "player2"); // player2 username
         challengeQueuedPlayer.put("gameType", GameTypes.CONNECT4); // Game type
 
-        // Act: Call the handleChallengedQueuePlayer method
         String response = networkManager.handleChallengedQueuePlayer(challengeQueuedPlayer);
 
-        // Parse the response
         JSONObject responseObject = (JSONObject) new org.json.simple.parser.JSONParser().parse(response);
 
-        // Assert: Verify the response contains the correct session data
         assertNotNull("Response should not be null", responseObject);
         assertEquals("Session ID should be present", responseObject.get("sessionID"), responseObject.get("sessionID"));
         assertEquals("Player1 ID should match", "efbee4fb-36d3-4551-a111-6c19a0695416", responseObject.get("player1ID"));
@@ -495,7 +478,6 @@ public class NetworkManagerTest {
         assertEquals("Game type should match", "CONNECT4", responseObject.get("gameType"));
         assertNotNull("Current player turn should not be null", responseObject.get("currentPlayerTurn"));
 
-        // Verify that the session was created and added to GameSessionManager
         UUID sessionID = UUID.fromString((String) responseObject.get("sessionID"));
         GameSession session = gameSessionManager.getGameSessionBySessionID(sessionID);
         assertNull("Game session should be created", session);
@@ -510,13 +492,10 @@ public class NetworkManagerTest {
         challengeQueuedPlayer.put("Player2Username", "player2"); // player2 username
         challengeQueuedPlayer.put("gameType", GameTypes.TICTACTOE); // Game type
 
-        // Act: Call the handleChallengedQueuePlayer method
         String response = networkManager.handleChallengedQueuePlayer(challengeQueuedPlayer);
 
-        // Parse the response
         JSONObject responseObject = (JSONObject) new org.json.simple.parser.JSONParser().parse(response);
 
-        // Assert: Verify the response contains the correct session data
         assertNotNull("Response should not be null", responseObject);
         assertEquals("Session ID should be present", responseObject.get("sessionID"), responseObject.get("sessionID"));
         assertEquals("Player1 ID should match", "efbee4fb-36d3-4551-a111-6c19a0695416", responseObject.get("player1ID"));
@@ -628,15 +607,13 @@ public class NetworkManagerTest {
         UUID player1UUID = UUID.fromString("efbee4fb-36d3-4551-a111-6c19a0695416");
         UUID player2UUID = UUID.fromString("71491e49-f970-4a78-b8dd-0901df523fe6");
 
-        Client player1 = new Client(player1UUID);
-        Client player2 = new Client(player2UUID);
 
 
         playerMemo1 = new QueuedPlayerMemo(player1UUID, GameTypes.CHECKERS, 100);
         playerMemo2 = new QueuedPlayerMemo(player2UUID, GameTypes.CHECKERS, 110);
 
         GameSession gameSession1 = new GameSession(playerMemo1, playerMemo2);
-        gameSessionManager.addGameSession(gameSession1);
+        networkManager.sendCreatedGameSession(gameSession1);
 
         UUID SessionID = gameSession1.getSessionId();
         UUID Player1ID = gameSession1.getPlayer1ID();
@@ -644,7 +621,7 @@ public class NetworkManagerTest {
         networkManager.forfeitGame(SessionID, Player1ID);
 
         GameSession session = gameSessionManager.getGameSessionBySessionID(SessionID);
-        assertNull("Game session shouldnt exist", session);
+        assertNull("Game session should exist", session);
     }
 
 
@@ -654,7 +631,8 @@ public class NetworkManagerTest {
     public void poo() throws IOException {
         FileWriter writer = new FileWriter(LeaderboardTest.MOCK_LEADERBOARD_FILE, false);
 
-        writer.write("""
+
+                        writer.write("""
                 [
                   {
                     "checkersElo": 1200,

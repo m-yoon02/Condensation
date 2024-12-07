@@ -38,7 +38,9 @@ public class ClientReceiver {
 
     private static UUID getCurrentClientPlayerID() {
         try (FileReader fileReader = new FileReader(NetworkManager.PLAYER_ID_FILE)) {
+            System.out.println("PlayerID_File: " + NetworkManager.PLAYER_ID_FILE);
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(fileReader);
+            System.out.println("JSON done" + jsonObject.toJSONString());
             return UUID.fromString((String) jsonObject.get("playerID"));
         } catch (IOException | ParseException e){
             throw new RuntimeException(e);
