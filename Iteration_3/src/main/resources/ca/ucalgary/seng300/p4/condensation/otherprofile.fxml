@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="main-pane" stylesheets="@otherProfile.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.OtherProfileController">
+    <children>
+        <Pane prefHeight="500.0" prefWidth="700.0" styleClass="flexDisplay">
+            <children>
+                <Label layoutX="222.0" layoutY="1.0" prefHeight="31.0" prefWidth="238.0" styleClass="titleText" text="Player Profile Lookup">
+                </Label>
+                <TextField fx:id="usernameTextField" layoutX="67.0" layoutY="58.0" prefHeight="30.0" prefWidth="515.0" promptText="Username" />
+                <Label layoutX="140.0" layoutY="33.0" prefHeight="20.0" prefWidth="403.0" styleClass="player-lookup-bar" text="Type in the Search Box and Press Search to Lookup Any Player:" />
+                <Button fx:id="searchButton" layoutX="590.0" layoutY="55.0" mnemonicParsing="false" onAction="#onSearchButtonClicked" prefHeight="36.0" prefWidth="100.0" styleClass="lookup-button" text="Search">
+
+               <font>
+                  <Font size="12.0" />
+               </font></Button>
+                <TableView fx:id="playerTableView" layoutX="12.0" layoutY="144.0" prefHeight="142.0" prefWidth="676.0">
+                    <columns>
+<!--                        <TableColumn fx:id="playerColumn" prefWidth="94.40002250671387" text="Player" />-->
+                        <TableColumn fx:id="gameColumn" prefWidth="85.0" text="Game" />
+                        <TableColumn fx:id="currentEloColumn" prefWidth="94.4000244140625" text="Current Elo" />
+                        <TableColumn fx:id="totalWinsColumn" prefWidth="86.39996337890625" text="Total Wins" />
+<!--                        <TableColumn fx:id="gamesPlayedColumn" prefWidth="111.99996948242188" text="Games Played" />-->
+<!--                        <TableColumn fx:id="statusColumn" prefWidth="104.800048828125" text="Status" />-->
+
+                    </columns>
+                </TableView>
+                <Text fx:id="statusMessage" fill="WHITE" layoutX="14.0" layoutY="472.0" wrappingWidth="566.2894115447998" />
+                <TableView fx:id="playerRecentTableView" layoutX="12.0" layoutY="306.0" prefHeight="142.0" prefWidth="676.0">
+                    <columns>
+                        <TableColumn fx:id="playerRecentgameColumn" prefWidth="91.20001983642578" text="Game" />
+                        <TableColumn fx:id="playerRecentoutcomeColumn" prefWidth="95.199951171875" text="Outcome" />
+                        <TableColumn fx:id="playerRecentcurrentEloColumn" prefWidth="94.4000244140625" text="CurrentElo" />
+                        <TableColumn fx:id="playerRecenttotalWinsColumn" prefWidth="104.800048828125" text="Total Wins" />
+                        <TableColumn fx:id="playerRecentgamesPlayedColumn" prefWidth="104.800048828125" text="Games Played" />
+                    </columns>
+                </TableView>
+                <Label layoutX="12.0" layoutY="101.0" styleClass="white" text="Player overall stats" />
+                <Label layoutX="12.0" layoutY="286.0" styleClass="white" text="Player recent matches" />
+            <Label layoutX="12.0" layoutY="122.0" prefHeight="21.0" prefWidth="41.0" text="Status:" textFill="#faf6f6" />
+            <Text fx:id="playerStatus" fill="#73cf70" layoutX="53.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="227.2216033935547" />
+            <Button fx:id="challengeButton" layoutX="15.0" layoutY="449.0" mnemonicParsing="false" onAction="#onChallengeClick" prefHeight="36.0" prefWidth="174.0" styleClass="lookup-button" text="Challenge">
+               <font>
+                  <Font size="4.0" />
+               </font>
+            </Button>
+            </children>
+        </Pane>
+        <Button fx:id="homeButton" layoutX="600" layoutY="451.0" mnemonicParsing="false" onAction="#onHomeButtonClicked" styleClass="lookup-button" text="Home" />
+    </children>
+</AnchorPane>

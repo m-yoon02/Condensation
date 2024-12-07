@@ -1,0 +1,24 @@
+module ca.ucalgary.seng300.p4.condensation {
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires javafx.web;
+
+    requires org.controlsfx.controls;
+    requires com.dlsc.formsfx;
+    requires net.synedra.validatorfx;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.bootstrapfx.core;
+    requires eu.hansolo.tilesfx;
+    requires com.almasb.fxgl.all;
+    requires json.simple;
+    requires com.fasterxml.jackson.databind;
+    requires java.desktop;
+    requires java.datatransfer;
+
+    opens ca.ucalgary.seng300.p4.condensation to javafx.fxml;
+    exports ca.ucalgary.seng300.p4.condensation;
+    exports ca.ucalgary.seng300.p4.condensation.Frontend.controller;
+    opens ca.ucalgary.seng300.p4.condensation.Frontend.controller to javafx.fxml;
+    exports ca.ucalgary.seng300.p4.condensation.Frontend.profile;
+    opens ca.ucalgary.seng300.p4.condensation.Frontend.profile to javafx.fxml;
+}

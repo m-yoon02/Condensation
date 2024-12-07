@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ucalgary.seng300.p4.condensation.Frontend.controller.tLeaderboardController">
+    <top>
+        <Label style="-fx-font-size: 24;" text="Leaderboard - Tic Tac Toe" BorderPane.alignment="CENTER" />
+    </top>
+    <center>
+        <TableView fx:id="leaderboardTable" prefHeight="300" prefWidth="1000">
+            <columns>
+                <TableColumn fx:id="rankColumn" prefWidth="55" text="Rank" />
+                <TableColumn fx:id="nameColumn" prefWidth="55" text="Name" />
+                <TableColumn fx:id="gamesPlayedColumn" prefWidth="55" text="GP" />
+                <TableColumn fx:id="winsColumn" prefWidth="55" text="W" />
+                <TableColumn fx:id="lossesColumn" prefWidth="55" text="L" />
+                <TableColumn fx:id="drawsColumn" prefWidth="55" text="D" />
+                <TableColumn fx:id="winPercentageColumn" prefWidth="55" text="Win %" />
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <Button fx:id="backToMenu" onAction="#handleBackButton" text="Back" BorderPane.alignment="CENTER" />
+    </bottom>
+</BorderPane>
