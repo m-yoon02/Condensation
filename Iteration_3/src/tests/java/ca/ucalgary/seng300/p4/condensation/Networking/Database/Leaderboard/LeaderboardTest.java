@@ -268,6 +268,8 @@ public class LeaderboardTest {
 
 
 
+
+
     @Test
     public void testUpdateEloForWinningPlayerUsingMockDataForTicTacToe() throws IOException {
         // retrieve an existing player
@@ -312,10 +314,32 @@ public class LeaderboardTest {
         assertEquals("The outcome should be 'W' for win.", "W", recentMatch.get("outcome"));
         assertEquals("The Elo score should match the updated Elo.", updatedElo, recentMatch.get("currentElo"));
 
-
-
-
     }
+
+    @Test
+    public void testUpdateEloForWinningPlayerTictactoePlayerNotFound() throws IOException {
+        // create a non existing user
+        UUID nonExistentPlayerID = UUID.randomUUID();
+        UUID sessionID = UUID.randomUUID();
+
+        // take the console output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        try {
+            // call the method with a non-existent player ID
+            leaderboard.updateEloForWinningPlayerTictactoe(nonExistentPlayerID, sessionID);
+
+            // verify the output contains the expected message
+            String consoleOutput = outContent.toString();
+            assertTrue("Should log 'Cant find plater lmao'", consoleOutput.contains("Cant find plater lmao"));
+        } finally {
+            // reset System.out
+            System.setOut(originalOut);
+        }
+    }
+
 
 
     @Test

@@ -455,16 +455,13 @@ public class Leaderboard {
             }
             System.out.println("Cant find plater lmao");
         }
-
-
-
-
-
-
-
-
         System.out.println("Elo has been updated for winning player with PlayerID: " + playerID);
     }
+
+
+
+
+
 
 
     /**
@@ -472,7 +469,7 @@ public class Leaderboard {
      * @param playerID  The UUID of the player who won the game.
      * @param sessionID The UUID of the game session where the win occurred.
      */
-    private void updateEloForWinningPlayerTictactoe(UUID playerID, UUID sessionID) {
+    public void updateEloForWinningPlayerTictactoe(UUID playerID, UUID sessionID) {
         String StringID = sessionID.toString();
         System.out.println("TYPE OF SESSION ID: " + StringID.getClass().getSimpleName());
 
