@@ -25,13 +25,16 @@
     - Files for Delta are in `Delta_Review\final_submission`
     - Files for Echo are in `Echo_Review\final_submission`
 ## Iteration 3 Deliverables in `Iteration_3`
+    - `releases` has the the executable files and the readme to run the file
+    
     - `Planning`: Code planning and documents
     - `src\main\java` has the code
-    - `src\main\resources` has the fxml files
-    - `tests` has the test files
+    - `src\main\resources` has the resource files
+    - `src\tests` has the test files
 
 - `team.md`: in the main repository
 - `gitlab_link.txt`: the gitlab link in the main repository
 - `contract.md`: the contract that people signed in the main repository
 - `SENG300_Project_Contract_Signed.pdf`: in the main repository
+- `group_demo.mp4` - final demo video
 
